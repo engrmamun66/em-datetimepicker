@@ -33,6 +33,6 @@ example-2:
     <p>{{ customer_company }}</p>
 </div>
 
-### Three
+#### Three
 Set temp-hidden attribute, to hide until ready the component
 
