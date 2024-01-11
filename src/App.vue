@@ -1,5 +1,6 @@
 <script setup>
 import { provide, inject, ref, computed } from 'vue';
+import AppHolder from './AppHolder.vue';
 import LoaderGlobal from '@components/LoaderGlobal.vue';
 let { Toaster } = inject('components');
 
@@ -21,7 +22,10 @@ provide('globalLoader', globalLoader);
 
 <template>
     <Toaster></Toaster>  
-    <LoaderGlobal v-if="showGlobalLoader"></LoaderGlobal>
+    <LoaderGlobal 
+        v-if="showGlobalLoader">
+    </LoaderGlobal>
+    <AppHolder></AppHolder>
 
 
     

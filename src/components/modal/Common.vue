@@ -1,6 +1,5 @@
 <script setup>
 import { ref, defineProps, defineEmits, onMounted, onBeforeUnmount } from 'vue';
-import CustomerLogin from '../../modules/login-register/views/CustomerLogin.vue'
 import { emitter } from '@/import-hub'; 
 
 const props = defineProps({
