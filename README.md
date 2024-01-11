@@ -34,5 +34,7 @@ example-2:
 </div>
 
 #### Three
+-- Sub 
+--- Sub2 
 Set temp-hidden attribute, to hide until ready the component
 
