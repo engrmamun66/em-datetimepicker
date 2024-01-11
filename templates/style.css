@@ -1,0 +1,4024 @@
+/*========================== 
+Rentmy Global css  
+=============================*/
+.RentMyWrapper {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.RentMyWrapper a {
+    text-decoration: none !important;
+}
+
+.RentMyWrapper a {
+    text-decoration: none !important;
+}
+
+.RentMyWrapper a.RentMyBtn:not([href]) {
+    color: #fff;
+}
+
+.RentMyWrapper img {
+    width: 100%;
+}
+
+.RentMyWrapper label {
+    font-size: 15px;
+    margin-bottom: 0;
+}
+
+.RentMyWrapper .RentMyInputGroup {
+    margin-bottom: 20px;
+}
+
+.RentMyWrapper .RentMyInputField {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    outline: 0;
+    box-shadow: none;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.RentMyWrapper .form-control {
+    border: 1px solid #ced4da;
+}
+
+.RentMyWrapper .form-control:focus,
+.RentMyWrapper .form-control:active,
+.RentMyWrapper .form-control:hover {
+    box-shadow: none;
+    outline: 0;
+}
+.RentMyWrapper input[type=date],
+.RentMyWrapper input[type=email],
+.RentMyWrapper input[type=number],
+.RentMyWrapper input[type=password],
+.RentMyWrapper input[type=search],
+.RentMyWrapper input[type=tel],
+.RentMyWrapper input[type=text],
+.RentMyWrapper input[type=url],
+.RentMyWrapper select,
+textarea {
+    border: 1px solid #ced4da;
+}
+.RentMyWrapper .RentMyInputFieldError,
+.RentMyWrapper .RentMyUploadFieldError,
+.RentMyWrapper .RentMyInputFieldError:invalid,
+.RentMyWrapper .RentMyInputField:invalid {
+    border-color: #dc3545;
+    padding-right: calc(1.5em + 0.75rem)!important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23dc3545' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+.RentMyWrapper select.RentMyInputFieldError,
+.RentMyWrapper select.RentMyUploadFieldError,
+.RentMyWrapper select.RentMyInputFieldError:invalid,
+.RentMyWrapper select.RentMyInputField:invalid {
+    background-position: right calc(.375em + .8575rem) center;
+}
+.RentMyWrapper label > sup{
+    color: rgb(247, 10, 10);
+    font-size: 13px;
+}
+
+.RentMyWrapper .RentMyBtn {
+    display: inline-block;
+    font-weight: 400;
+    color: #ffffff;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    outline: 0;
+    box-shadow: none;
+    cursor: pointer;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.RentMyBtnBlack:not(:disabled) {
+    background-color: #333;
+}
+
+.RentMyBtnBlack:disabled {
+    background-color: #acacac;
+}
+
+.RentMyBtnRed {
+    background-color: #da1e1e;
+}
+
+.RentMyWrapper .RentMyButtonGroup {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.RentMyWrapper .RentMyInputText {
+    font-size: 13px
+}
+
+.RentMyWrapper .RentMyAlertMessage {
+    color: #ef1212;
+}
+
+.RentMyAlertMessage {
+    position: relative;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    padding: 8px 15px;
+    margin-bottom: 15px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    font-size: 13px;
+    color: #721c24;
+    font-weight: 500;
+    min-width: 180px;
+    margin: auto;
+    margin-bottom: 15px;
+    display: table;
+    animation: fadeIn 1s ease-in;
+    transition: all 0.3s;
+    animation: shake 150ms 2 linear;
+    -moz-animation: shake 150ms 2 linear;
+    -webkit-animation: shake 150ms 2 linear;
+    -o-animation: shake 150ms 2 linear;
+}
+
+.RentMyAlertMessage:empty {
+    display: none;
+}
+
+.RentMyAlertMessage:not(:empty) {
+    display: block !important;
+}
+
+.shake {
+    animation: shake 150ms 2 linear;
+    -moz-animation: shake 150ms 2 linear;
+    -webkit-animation: shake 150ms 2 linear;
+    -o-animation: shake 150ms 2 linear;
+}
+
+
+.RentMyCheckboxInline .RentMyCheckbox,
+.RentMyCheckboxInline .RentMyRadio,
+.RentMyCheckbox,
+.RentMyRadio {
+    display: inline-block;
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+    padding-right: 10px;
+    color: #242424;
+}
+
+.RentMyCheckbox,
+.RentMyRadio {
+    width: 100%;
+    margin-bottom: 5px !important;
+}
+
+.RentMyCheckboxInline .RentMyCheckbox>input,
+.RentMyCheckboxInline .RentMyRadio>input,
+.RentMyCheckbox>input,
+.RentMyRadio>input {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.RentMyCheckboxInline input[type=checkbox],
+.RentMyCheckboxInline input[type=radio],
+.RentMyCheckbox input[type=checkbox],
+.RentMyRadio input[type=radio] {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+.RentMyCheckboxInline .RentMyCheckbox>span,
+.RentMyCheckboxInline .RentMyRadio>span,
+.RentMyCheckbox>span,
+.RentMyRadio>span {
+    border-radius: 3px;
+    background: 0 0;
+    position: absolute;
+    top: 4px;
+    left: 0;
+    height: 18px;
+    width: 18px;
+}
+
+.RentMyCheckboxInline .RentMyRadio>span,
+.RentMyCheckboxInline .RentMyCheckbox>span,
+.RentMyRadio>span,
+.RentMyCheckbox>span {
+    border: 1px solid #bdc3d4;
+}
+
+.RentMyCheckboxInline .RentMyRadio>input:checked~span,
+.RentMyCheckboxInline .RentMyCheckbox>input:checked~span,
+.RentMyRadio>input:checked~span,
+.RentMyCheckbox>input:checked~span {
+    border: 1px solid #bdc3d4;
+}
+
+.RentMyCheckboxInline .RentMyRadio>input:checked:disabled~span,
+.RentMyCheckboxInline .RentMyCheckbox>input:checked:disabled~span,
+.RentMyRadio>input:checked:disabled~span,
+.RentMyCheckbox>input:checked:disabled~span {
+    border: 1px solid #e0e0e0
+}
+
+.RentMyCheckboxInline .RentMyRadio>span:after,
+.RentMyCheckboxInline .RentMyCheckbox>span:after,
+.RentMyRadio>span:after,
+.RentMyCheckbox>span:after {
+    content: '';
+    position: absolute;
+    display: none;
+}
+
+.RentMyCheckboxInline .RentMyCheckbox>span:after,
+.RentMyCheckbox>span:after {
+    top: 50%;
+    left: 50%;
+    margin-left: -2px;
+    margin-top: -6px;
+    width: 5px;
+    height: 10px;
+    border-width: 0 2px 2px 0 !important;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.RentMyCheckboxInline .RentMyCheckbox>span:after,
+.RentMyCheckbox>span:after {
+    border: solid #7281a4;
+}
+
+.RentMyCheckboxInline .RentMyCheckbox>checkbox:disabled~span:after,
+.RentMyCheckbox>input:disabled~span:after {
+    border: solid #e1e1e1;
+}
+
+.RentMyCheckboxInline .RentMyRadio>span,
+.RentMyRadio>span {
+    border-radius: 50% !important;
+}
+
+.RentMyCheckboxInline .RentMyRadio>span:after,
+.RentMyRadio>span:after {
+    border: solid #7281a4;
+    background: #7281a4;
+}
+
+.RentMyCheckboxInline .RentMyRadio>span:after,
+.RentMyRadio>span:after {
+    top: 50%;
+    left: 50%;
+    margin-left: -3px;
+    margin-top: -3px;
+    height: 6px;
+    width: 6px;
+    border-radius: 100% !important;
+}
+
+.RentMyCheckboxInline .RentMyCheckbox>input:checked~span:after,
+.RentMyCheckboxInline .RentMyRadio>input:checked~span:after,
+.RentMyCheckbox>input:checked~span:after,
+.RentMyRadio>input:checked~span:after {
+    display: block;
+}
+
+.RentMyFlex {
+    display: flex;
+}
+
+@keyframes shake {
+    0% {
+        transform: translate(3px, 0);
+    }
+
+    50% {
+        transform: translate(-3px, 0);
+    }
+
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+.RentMyWrapper .RentMyRow {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -7.5px;
+    margin-right: -7.5px;
+}
+
+.RentMyWrapper .RentMyRow .RentMyHalfwidth {
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding-left: 7.5px;
+    padding-right: 7.5px;
+}
+
+.RentMyWrapper .RentMyRow .RentMyFullwidth {
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding-left: 7.5px;
+    padding-right: 7.5px;
+}
+
+.RentMyWrapper .RentMyRow .RentMyButtonGroup {
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding-left: 7.5px;
+    padding-right: 7.5px;
+}
+
+.RentMyWrapper .RentMyBackBtn {
+    background-color: #333;
+    color: #fff;
+    padding: 3px 13px;
+}
+
+.RentMyTable {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    border-collapse: collapse;
+}
+
+.RentMyTable tr th {
+    background-color: #eee;
+    font-weight: 600;
+}
+
+.RentMyTable thead tr th {
+    vertical-align: middle;
+    border-bottom: 1px solid #dee2e6;
+    border-block-start: none;
+}
+
+.RentMyTable tr td,
+.RentMyTable tr th {
+    font-size: 15px;
+    padding: 0.75rem;
+    vertical-align: middle;
+}
+
+.RentMyTable tr td {
+    border-top: 1px solid #dee2e6;
+}
+
+.RentMyTableStriped tbody tr:nth-of-type(odd) {
+    background-color: transparent;
+}
+
+.RentMyTableStriped tbody tr:nth-of-type(odd) td {
+    background-color: transparent;
+}
+
+.RentMyTable tr td .inventory-pragraph .btn {
+    font-size: 10px;
+    height: 22px;
+    width: 25px;
+    padding: 0;
+}
+
+.RentMyTable tr td .inventory-pragraph .quantity {
+    height: 22px !important;
+    width: 40px;
+    padding: 0;
+    text-align: center;
+}
+
+.RentMyNotBetween {
+    justify-content: unset !important;
+}
+
+
+/*======================== 
+Login css  
+==========================*/
+
+#RentMyCustomerRegistrationContainer,
+#RentMyCustomerLoginContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+#RentMyCustomerRegistrationContainer .RegistrationElement,
+#RentMyCustomerLoginContainer .LoginElement {
+    background-color: #fff;
+    width: 450px;
+    margin-top: 0;
+    box-shadow: 0 0 15px 0 #eee;
+    border-radius: 10px;
+    border: 1px solid #f2f3f8;
+    padding: 32px 25px;
+}
+
+:where(.modal-body #RentMyCustomerLoginContainer .LoginElement) {
+    box-shadow: 0 0 65px #00000036 !important;
+}
+
+#RentMyCustomerRegistrationContainer .RegistrationTitle,
+#RentMyCustomerLoginContainer .LoginTitle {
+    font-size: 28px;
+    text-align: center;
+    font-weight: 700;
+    padding-bottom: 30px;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+#RentMyCustomerRegistrationContainer .RentMyInputField,
+#RentMyCustomerLoginContainer .RentMyInputField {
+    width: 100%;
+    height: 50px;
+    padding: 13px 15px 13px 20px;
+    font-size: 15px;
+    color: #7f8c8d;
+    background: #edf1f5;
+    border: 1px solid #edf1f5;
+    outline: 0;
+}
+
+#RentMyCustomerRegistrationContainer .RegistrationBtn,
+#RentMyCustomerLoginContainer .LoginBtn {
+    background-color: #212529;
+    width: 130px;
+    height: 46px;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    font-size: 15px;
+}
+
+#RentMyCustomerRegistrationContainer .LoginHere,
+#RentMyCustomerLoginContainer .NewAccount,
+#RentMyCustomerLoginContainer .ForgotPassword
+ {
+    color: #555;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+#RentMyCustomerLoginContainer .ForgotPassword:has(~ *) {
+    margin-right: 20px;
+    font-weight: 400;
+    position: relative;
+}
+
+#RentMyCustomerLoginContainer .ForgotPassword:has(~*):after {
+    position: absolute;
+    content: "";
+    width: 1px;
+    height: 18px;
+    top: 2px;
+    right: -11px;
+    background-color: #7f7f7f;
+}
+
+#RentMyCustomerRegistrationContainer .LoginHere:hover,
+#RentMyCustomerLoginContainer .NewAccount:hover,
+#RentMyCustomerLoginContainer .ForgotPassword:hover
+ {
+    text-decoration: underline !important;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+
+/*======================== 
+Customer Profile css  
+==========================*/
+
+.RentMyCustomerPortalWrapper {
+    overflow: hidden;
+    border-left: 1px solid #eee;
+    border-right: 1px solid #eee;
+    border-color: #eee #e7e7e7;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 3px;
+    margin-top: 50px;
+}
+
+.RentMyCustomPortalRow {
+    display: flex;
+    flex-direction: row;
+    flex: 1 0 auto;
+    max-width: 100%;
+    width: 100%;
+}
+
+.RentMyLeftSidebarmenu {
+    width: 250px;
+    padding: 0;
+    flex: 0 0 auto;
+}
+
+.RentMyLeftSidebarmenuInner {
+    background-color: #fff;
+    height: 100%;
+    margin-top: 0;
+    box-shadow: 0 0 15px 0 rgba(51, 77, 136, .05);
+    border-radius: 3px;
+    border-right: 1px solid #eee;
+}
+
+.RentMyProfileImge {
+    margin-bottom: 20px;
+}
+
+.RentMyProfileImge img {
+    width: 100%;
+}
+
+h5.RentMyProfileName {
+    font-size: 20px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.RentMySideMenu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.RentMySideMenu ul li {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.RentMySideMenu ul li a {
+    padding: 6px 15px;
+    display: block;
+    font-size: 15px;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    text-decoration: none;
+}
+
+.RentMySideMenu ul li a.active {
+    background-color: #eee;
+}
+
+.RentMySideMenu ul li:last-child a {
+    border-bottom: none;
+}
+
+.RentMyRightContent {
+    padding: 0;
+    flex: 1 auto;
+    min-width: 0;
+    max-width: 100%;
+}
+
+.RentMyPageHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    height: 60px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.RentMyPageHeader h3 {
+    margin: 0;
+    padding: 0;
+    font-size: 22px;
+    line-height: 22px;
+}
+
+.RentMyContentBody {
+    padding: 20px 20px;
+}
+
+.RentMyCustomerInfo {
+    display: flex;
+    justify-content: space-between;
+}
+
+.RentmyCustomerDetails h5 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    line-height: 20px;
+}
+
+.RentmyCustomerDetails span {
+    font-size: 15px;
+}
+
+.RentMyWrapper .RentMyEditBtn {
+    background-color: #333;
+    color: #fff;
+    padding: 3px 13px;
+}
+.CustomerProfileBillingShipping {
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+.CustomerProfileBillingShipping h5 {
+    margin-bottom: 5px;
+    font-size: 20px;
+}
+.CustomerProfileBillingShipping ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    animation: delyShow;
+}
+.CustomerProfileBillingShipping ul li {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    padding: 2px 0;
+    font-size: 15px;
+}
+.CustomerProfileBillingShipping ul li i {
+    font-size: 6px;
+    margin-right: 5px;
+}
+.RentMyWrapper #RentmyCustomerEditForm .RentMyRow {
+    width: 500px;
+}
+
+.RentMyWrapper #RentmyCustomerEditForm .RentMyButtonGroup.RentMyNotBetween {
+    justify-content: flex-start;
+}
+
+.RentMyWrapper .RentMyCustomerInfoSubmit {
+    background-color: #333;
+    color: #fff;
+    padding: 4px 13px;
+}
+
+.RentMyWrapper .ContinueShoppingOnEmptyCart {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 24px;
+}
+
+.RentMyWrapper .RentMyCustomerInfoCancel {
+    background-color: #dc3545;
+    color: #fff;
+    padding: 4px 13px;
+    margin-left: 10px;
+}
+
+.RentMyWrapper #RentMyChangePasswordForm .RentMyRow {
+    width: 450px;
+}
+
+.RentMyWrapper #RentMyFileUploadForm .RentMyRow {
+    width: 450px;
+}
+
+.RentMyWrapper .RentMyUploadBtn,
+.RentMyWrapper .RentMyPassSubmitBtn {
+    background-color: #333;
+    color: #fff;
+    padding: 4px 12px;
+}
+
+.RentMyWrapper .RentMyBtn:has(.m-loader),
+.RentMyWrapper .RentMyUploadBtn:has(.m-loader),
+.RentMyWrapper .RentMyPassSubmitBtn:has(.m-loader)
+ {
+    padding-right: 20px;
+}
+
+/*======================== 
+Order Details css  
+==========================*/
+
+.RentMyMainTitle {
+    font-size: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 15px;
+    margin-top: 0;
+}
+
+.RentMyMainTitle strong {
+    font-weight: 600;
+}
+
+.RentMyDestitle {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    line-height: 18px;
+}
+
+.RentMyDestitle strong {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.RentMyDestitle span {
+    font-size: 15px;
+    font-weight: 400;
+    line-break: anywhere;
+}
+
+.RentMyCard {
+    border: 1px solid #eee;
+    margin-bottom: 25px;
+    border-radius: 3px;
+}
+
+.RentMyCardHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 52px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.RentMyCardHeader h3 {
+    color: #444;
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.RentMyCardBody {
+    padding: 15px;
+}
+
+.RentMyWrapper .RentMyAddItem {
+    background-color: #10b2bc;
+    padding: 4px 12px;
+}
+
+.RentMyPaymentOption {
+    display: flex;
+}
+
+.RentMyPaymentOption h5 {
+    font-size: 16px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+}
+
+.RentMyPaymentOption h5 strong {
+    font-weight: 600;
+}
+
+.RentMyPaymentOption h5 span {
+    font-weight: 400;
+}
+
+#RentMyNoteAddForm {
+    margin-bottom: 20px;
+}
+
+.RentMyWrapper textarea.RentMyInputField {
+    height: auto;
+}
+
+.RentMyCustomFile {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    margin-bottom: 0
+}
+
+.RentMyCustomFileInput {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    margin: 0;
+    overflow: hidden;
+    opacity: 0
+}
+
+.RentMyCustomFileLabel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    overflow: hidden;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.RentMyCustomFileLabel::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    display: block;
+    height: calc(1.5em + 0.75rem);
+    padding: 0.375rem 0.75rem;
+    line-height: 1.5;
+    color: #495057;
+    content: "Browse";
+    background-color: #e9ecef;
+    border-left: inherit;
+    border-radius: 0 0.25rem 0.25rem 0;
+}
+
+.RentMyWrapper .RentMyStatusBtn,
+.RentMyWrapper .RentMyAddNoteBtn,
+.RentMyWrapper .RentMyAddPaymentBtn,
+.RentMyWrapper .RentMyNoteBtn,
+.RentMyWrapper .RentMyNoteCancelBtn {
+    padding: 4px 13px;
+}
+
+.RentMyWrapper .RentMyStatusBtn {
+    background-color: #7b0aec;
+}
+
+.RentMyWrapper .RentMyAddNoteBtn {
+    background-color: #10b2bc;
+}
+
+.RentMyWrapper .RentMyAddPaymentBtn {
+    background-color: #10b2bc;
+}
+
+.RentMyWrapper .RentMyNoteBtn {
+    background-color: #333;
+}
+
+.RentMyWrapper .RentMyNoteCancelBtn {
+    background-color: #dc3545;
+    margin-left: 10px;
+}
+
+.TextDanger {
+    color: #dc3545;
+}
+
+.TextCenter {
+    text-align: center;
+}
+#RentMyOrderNoteTableData table tr td {
+    border-top: none;
+    border-bottom: 1px solid #dee2e6;
+}
+#RentMyOrderNoteTableData table tr td p {
+    margin-bottom: 8px;
+}
+#RentMyOrderNoteTableData table tr td img {
+    width: 40px;
+}
+#RentMyOrderNoteTableData table tr td span {
+    display: block;
+    font-size: 15px;
+}
+#RentMyOrderNoteTableData table tr td .badge {
+    font-weight: 400;
+    margin-top: 5px;
+}
+
+
+/*======================== 
+success and cancel css  
+==========================*/
+.AlertMessage {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 45px;
+    border-radius: 0px;
+    z-index: 99999;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.AlertMessageTextIcon {
+    display: flex;
+}
+
+.AlertMessageTextIcon i {
+    margin-right: 10px;
+    color: #fff;
+    font-size: 22px;
+}
+
+.SuccesMessage {
+    background-color: #45CCB1;
+}
+
+.CancelMessage {
+    background-color: #fd635b;
+}
+
+.AlertMessage h3 {
+    font-size: 15px;
+    color: #fff;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.AlertRemove {
+    cursor: pointer;
+}
+
+.AlertRemove i {
+    font-size: 18px;
+    color: #fff;
+}
+
+
+
+/*======================== 
+Product List css  
+==========================*/
+.RentMyProductRow {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.RentMyProductListRow {
+    display: flex;
+    flex-wrap: unset;
+    flex-direction: row;
+    flex: 1 0 auto;
+    max-width: 100%;
+    width: 100%;
+}
+
+.RentMyProductListRow .RentMyFilterArea {
+    width: 280px;
+    flex: 0 0 auto;
+}
+
+.RentMyProductListRow .RentMyProductArea {
+    flex: 1 auto;
+    min-width: 0;
+    max-width: 100%;
+}
+
+.RentMyProductArea {
+    width: 100%;
+}
+
+.RentMyFilterArea {
+    padding-right: 15px;
+}
+
+.RentMyFilterAreaInner {
+    box-shadow: 0 0 30px 0 rgba(51, 77, 136, .08);
+}
+
+.CategoryMenuList.scrollbar {
+    max-height: 300px;
+}
+
+.RentMyFilterTitle {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    font-size: 20px;
+    text-transform: uppercase;
+    padding-bottom: 0px;
+    height: 50px;
+    background-color: #f2f3f8;
+    line-height: 50px;
+    padding-left: 15px;
+    margin-bottom: 0 !important;
+}
+
+.CategoryMenu {
+    list-style: none;
+}
+
+ul.CategoryMenu {
+    padding: 0 !important;
+    margin: 0 !important;
+    margin-bottom: 10px !important;
+}
+
+ul.CategoryMenu li {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.CategoryMenu li a {
+    color: #333;
+    padding: 4px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.CategoryMenu li.Selected>a {
+    background-color: #f8f8f8;
+}
+.CategoryMenu li.Selected i{
+    transition: all 0.3s;
+}
+
+.CategoryMenu .Selected i,
+.CategoryMenu :has(.Selected) i
+{
+    transform: rotate(90deg);
+    animation: rotate90 0.3s ease-in-out;
+}
+
+@keyframes rotate90 {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(90deg);
+    }
+}
+
+.CategoryMenu li a i {
+    font-size: 12px;
+}
+
+.FilterCheckbox.scrollbar {
+    max-height: 300px;
+}
+
+.FilterCheckbox {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.RentMyFilterSubTitle {
+    padding-left: 15px;
+    padding-right: 15px;
+    border-top: 1px solid #eee;
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: 400;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.RentMyType,
+.RentMyPrice {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+}
+
+.RentMyWrapper .RentMyPrice .RentMyInputGroup {
+    margin-bottom: 15px;
+}
+
+.RentMyPrice .RentMyInputField {
+    height: 32px;
+}
+
+.RentMyWrapper .RentMyPrice .RentMyBtn {
+    padding: 0.23rem 0.55rem;
+    margin-right: 8px;
+}
+
+.RentMyWrapperProductList {
+    margin-top: 70px;
+}
+
+.SortProductRow {
+    justify-content: flex-end;
+    margin-bottom: 15px;
+}
+
+.SortProduct {
+    display: flex;
+    align-items: center;
+    padding-right: 7.5px;
+}
+
+.SortProduct label {
+    width: 80px;
+}
+
+.RentMyProductItem {
+    position: relative;
+    flex: 0 0 25%;
+    max-width: 25%;
+    padding-right: 7.5px;
+    padding-left: 7.5px;
+}
+
+.RentMyProductListRow .RentMyProductArea .RentMyProductItem {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+}
+
+.RentMyProductItemInner {
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    margin-bottom: 20px;
+}
+
+.RentMyProductImg {
+    position: relative;
+    overflow: hidden;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.RentMyProductImg img {
+    height: 200px;
+    object-fit: contain;
+    transition: all .3s;
+}
+
+.RentMyProductItemInner:hover .RentMyProductImg img {
+    transform: scale(1.1);
+}
+
+.RentMyProductOverlay {
+    position: absolute;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(105, 115, 112, .3);
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    transition: all .5s ease-in-out;
+    opacity: 0;
+    cursor: pointer;
+    pointer-events: none;
+}
+
+.RentMyProductOverlay * {
+    pointer-events: all;
+}
+
+.RentMyProductItemInner:hover .RentMyProductOverlay {
+    opacity: 1;
+    top: 0;
+}
+
+.ProductDetailsIcon,
+.ProductCartIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #333;
+    width: 40px;
+    height: 40px;
+    color: #fff;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 100px;
+    display: none;
+}
+
+.ProductDetailsIcon:hover,
+.ProductCartIcon:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+.RentMyProductBody {
+    position: relative;
+    padding: 20px 15px 20px;
+    text-align: center;
+    border-top: 1px solid #eee;
+}
+
+.ProductName {
+    color: #212529;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    line-height: 18px;
+}
+
+.ProductName a {
+    font-size: 20px;
+    font-weight: 500;
+    color: #212529;
+    line-height: 18px;
+    cursor: pointer;
+    text-decoration: none !important;
+}
+
+h5.ProductPrice,
+.ProductPrice {
+    /* font-size: 16px; */
+    font-size: 100%;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.ProductButton {
+    display: flex;
+    justify-content: center;
+}
+
+.ProductDetailsBtn {
+    height: 40px;
+    background-color: #333;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 400;
+    display: inline-block;
+    text-transform: capitalize;
+    line-height: 40px;
+    padding: 0 15px;
+    border: none;
+    box-shadow: none;
+    border-radius: 3px;
+    letter-spacing: 0.046875em;
+    cursor: pointer;
+    text-transform: uppercase;
+    text-decoration: none !important;
+}
+
+.ProductDetailsBtn:hover {
+    background-color: #444;
+    color: #fff;
+}
+
+.ProductCartBtn {
+    height: 40px;
+    background-color: #333;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 400;
+    display: inline-block;
+    text-transform: capitalize;
+    line-height: 40px;
+    padding: 0 15px;
+    border: none;
+    box-shadow: none;
+    border-radius: 3px;
+    letter-spacing: 0.046875em;
+    cursor: pointer;
+    text-transform: uppercase;
+    text-decoration: none;
+    margin-left: 5px;
+}
+
+.ProductCartBtn:hover {
+    background-color: #444;
+    color: #fff;
+}
+
+
+/*====== Item Circle Button css ========*/
+.RentMyProductItem.ItemCircleBtn .RentMyProductItemInner {
+    position: relative;
+    border: 1px solid #ececec;
+    transition: .5s;
+    box-shadow: none;
+    overflow: hidden;
+}
+.RentMyProductItem.ItemCircleBtn .RentMyProductImg img {
+    height: auto;
+}
+.RentMyProductItem.ItemCircleBtn .RentMyProductOverlay {
+    background-color: transparent;
+}
+.RentMyProductItem.ItemCircleBtn .ProductDetailsIcon,
+.RentMyProductItem.ItemCircleBtn .ProductCartIcon {
+    display: flex;
+    width: 46px;
+    height: 46px;
+}
+.RentMyProductItem.ItemCircleBtn .ProductDetailsIcon:hover,
+.RentMyProductItem.ItemCircleBtn .ProductCartIcon:hover {
+    background-color: #444;
+}
+.RentMyProductItem.ItemCircleBtn .ProductButton {
+    display: none;
+}
+.RentMyProductItem.ItemCircleBtn .RentMyProductBody {
+    border-top: none;
+}
+.RentMyProductItem.ItemCircleBtn .ProductPrice {
+    margin-bottom: 0;
+}
+
+
+/*====== Item Border, Text and Icon Button css ========*/
+
+.ItemBorderIconTextBtn .RentMyProductItemInner {
+    position: relative;
+    border: 1px solid #ececec;
+    padding: 12px 12px 0;
+    transition: .5s;
+    box-shadow: none;
+}
+.ItemBorderIconTextBtn .RentMyProductItemInner::before {
+    content: "";
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 0%;
+    height: 0%;
+    border-left: 1px solid #000;
+    border-top: 1px solid #000;
+    transition: .3s;
+    transition-delay: .5s;
+}
+.ItemBorderIconTextBtn .RentMyProductItemInner::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0px;
+    width: 0%;
+    height: 0%;
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+    transition: .3s;
+    transition-delay: .5s;
+}
+.RentMyProductItem.ItemBorderIconTextBtn .RentMyProductItemInner:hover::after,
+.RentMyProductItem.ItemBorderIconTextBtn .RentMyProductItemInner:hover::before {
+    width: 100%;
+    height: 100%;
+    transition-delay: 0s;
+}
+.RentMyProductItem.ItemBorderIconTextBtn .RentMyProductImg {
+    padding-top: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+.RentMyProductItem.ItemBorderIconTextBtn .RentMyProductImg img {
+    height: auto;
+}
+.RentMyProductItem.ItemBorderIconTextBtn .RentMyProductOverlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: .5s;
+    padding-bottom: 15px;
+    z-index: 1;
+}
+.RentMyProductItem.ItemBorderIconTextBtn .RentMyProductItemInner:hover .RentMyProductOverlay {
+    opacity: 1;
+    transform: scaleY(1);
+    transform-origin: bottom;
+}
+.RentMyProductItem.ItemBorderIconTextBtn .ProductDetailsIcon,
+.RentMyProductItem.ItemBorderIconTextBtn .ProductCartIcon {
+    display: flex;
+}
+.RentMyProductItem.ItemBorderIconTextBtn .ProductCartIcon {
+    position: relative;
+    width: auto;
+}
+.RentMyProductItem.ItemBorderIconTextBtn .ProductCartIcon i {
+    display: none;
+}
+.RentMyProductItem.ItemBorderIconTextBtn .ProductCartIcon::after {
+    content: "Add to Cart";
+    position: relative;
+    left: 0;
+    top: 0;
+    background-color: #111;
+    width: 110px;
+    height: 40px;
+    color: #fff;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 3px;
+}
+.RentMyProductItem.ItemBorderIconTextBtn .ProductDetailsIcon {
+    background-color: #111;
+    border-radius: 3px;
+}
+.RentMyProductItem.ItemBorderIconTextBtn .RentMyProductBody {
+    border-top: none;
+    padding-left: 0;
+    padding-right: 0;
+}
+.RentMyProductItem.ItemBorderIconTextBtn .RentMyProductBody .ProductButton {
+    display: none;
+}
+.RentMyProductItem.ItemBorderIconTextBtn .ProductName a {
+    font-size: 18px;
+    line-height: 22px;
+}
+.RentMyProductItem.ItemBorderIconTextBtn .ProductPrice {
+    margin-bottom: 0;
+    color: #878585;
+}
+
+
+/*====== Item Icon Button css ==============*/
+
+.ItemIconBtn .RentMyProductItemInner {
+    position: relative;
+    padding: 0;
+    transition: .5s;
+    box-shadow: none;
+}
+.RentMyProductItem.ItemIconBtn .RentMyProductImg {
+    padding-top: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+.RentMyProductItem.ItemIconBtn .RentMyProductImg img {
+    height: auto;
+}
+.RentMyProductItem.ItemIconBtn .RentMyProductOverlay {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    background-color: transparent;
+    padding-bottom: 40px;
+}
+.RentMyProductItem.ItemIconBtn .ProductDetailsIcon,
+.RentMyProductItem.ItemIconBtn .ProductCartIcon {
+    display: flex;
+    position: relative;
+    background-color: #fff;
+    width: 60px;
+    height: 50px;
+    border-radius: 0;
+    margin: 0;
+    color: #111;
+    box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.1);
+}
+.RentMyProductItem.ItemIconBtn .ProductCartIcon::before {
+    content: "";
+    position: absolute;
+    top: 13px;
+    left: 0;
+    background-color: #ddd;
+    width: 1px;
+    height: 25px;
+}
+.RentMyProductItem.ItemIconBtn .RentMyProductBody {
+    text-align: left;
+    border-top: none;
+    padding-left: 0;
+    padding-right: 0;
+}
+.RentMyProductItem.ItemIconBtn .RentMyProductBody .ProductButton {
+    display: none;
+}
+.RentMyProductItem.ItemIconBtn .ProductName a {
+    font-size: 16px;
+    line-height: 18px;
+}
+.RentMyProductItem.ItemIconBtn .ProductPrice {
+    margin-bottom: 0;
+    color: #878585;
+}
+
+
+/*====== Item Text Cart and View Icon btn css ========*/
+
+.ItemTextCartIconViewBtn .RentMyProductItemInner {
+    position: relative;
+    border: 1px solid #f2f3f8;
+    transition: .5s;
+    box-shadow: none;
+    border-radius: 12px;
+    overflow: hidden;
+}
+.ItemTextCartIconViewBtn .RentMyProductItemInner:hover {
+    border: 1px solid #111;
+}
+.RentMyProductItem.ItemTextCartIconViewBtn .RentMyProductImg {
+    padding-top: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+.RentMyProductItem.ItemTextCartIconViewBtn .RentMyProductImg img {
+    height: auto;
+}
+.RentMyProductItem.ItemTextCartIconViewBtn .RentMyProductOverlay {
+    background-color: transparent;
+}
+.RentMyProductItem.ItemTextCartIconViewBtn .ProductDetailsIcon,
+.RentMyProductItem.ItemTextCartIconViewBtn .ProductCartIcon {
+    display: flex;
+}
+.RentMyProductItem.ItemTextCartIconViewBtn .ProductCartIcon {
+    position: relative;
+    width: auto;
+}
+.RentMyProductItem.ItemTextCartIconViewBtn .ProductCartIcon i {
+    display: none;
+}
+.RentMyProductItem.ItemTextCartIconViewBtn .ProductDetailsIcon {
+    background-color: #fff;
+    width: 50px;
+    height: 50px;
+    color: #111;
+}
+.RentMyProductItem.ItemTextCartIconViewBtn .ProductDetailsIcon:hover {
+    background-color: #111;
+    color: #fff;
+}
+.RentMyProductItem.ItemTextCartIconViewBtn .RentMyProductBody {
+    border-top: none;
+}
+.RentMyProductItem.ItemTextCartIconViewBtn .ProductButton {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: #ffff;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: .5s;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.RentMyProductItem.ItemTextCartIconViewBtn .RentMyProductItemInner:hover .ProductButton {
+    opacity: 1;
+    transform: scaleY(1);
+    transform-origin: bottom;
+}
+.RentMyProductItem.ItemTextCartIconViewBtn .ProductCartBtn {
+    display: block;
+    width: 100%;
+    height: 42px;
+    line-height: 42px;
+    border-radius: 100px;
+    margin: 0;
+}
+.RentMyProductItem.ItemTextCartIconViewBtn .ProductDetailsBtn {
+    display: none;
+}
+.RentMyProductItem.ItemTextCartIconViewBtn .ProductCartBtn {
+    background-color: #fff;
+    color: #111;
+    border: 1px solid #111;
+    font-weight: 600;
+}
+.RentMyProductItem.ItemTextCartIconViewBtn .ProductCartBtn:hover {
+    background-color: #111;
+    color: #fff;
+}
+.RentMyProductItem.ItemTextCartIconViewBtn .ProductName a {
+    font-size: 18px;
+    line-height: 22px;
+}
+.RentMyProductItem.ItemTextCartIconViewBtn .ProductPrice {
+    margin-bottom: 0;
+    color: #878585;
+}
+
+
+
+
+/*======================== 
+Product Details css  
+==========================*/
+
+
+.RentMyWrapperProductDetails {
+    margin-top: 80px;
+    margin-bottom: 80px;
+}
+
+.RentMyProductDetailsRow {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.RentMyProductDetilsImg {
+    flex: 0 0 50%;
+    max-width: 50%;
+    display: flex;
+}
+
+.RentMyProductDetailsImgList {
+    width: 70px;
+    margin-right: 15px;
+}
+
+.RentMyProductDetailsImgList ul {
+    padding: 0;
+    list-style: none;
+}
+
+.RentMyProductDetailsImgList ul li {
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.RentMyProductDetailsImgList ul li.ActiveImg {
+    border-left: 3px solid #333;
+}
+
+.RentMyProductDetailsImgList ul li img {
+    width: 70px;
+    height: 70px;
+}
+
+.RentMyProductDetailsImgShow {
+    width: 100%;
+}
+
+.RentMyProductDetilsInfo {
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding-left: 20px;
+}
+
+.RentMyBuyRentToggle {
+    margin-bottom: 15px;
+}
+
+.BuyRentToggleSwitch {
+    display: inline-block;
+    height: 30px;
+    position: relative;
+    width: 58px;
+    margin-left: 40px;
+    margin-bottom: 0;
+}
+
+.BuyRentToggleSwitch:before {
+    content: "Buy";
+    left: -40px;
+    position: absolute;
+    top: 4px;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.BuyRentToggleSwitch:after {
+    content: "Rent";
+    right: -48px;
+    position: absolute;
+    top: 4px;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.BuyRentToggleSwitch input {
+    display: none;
+}
+
+.BuyRentToggleSwitch .ToggleSwitchRound {
+    background-color: #ccc;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+}
+
+.BuyRentToggleSwitch .ToggleSwitchRound:before {
+    background-color: #fff;
+    bottom: 4px;
+    content: "";
+    height: 22px;
+    left: 5px;
+    position: absolute;
+    transition: .4s;
+    width: 22px;
+}
+
+.BuyRentToggleSwitch .ToggleSwitchRound:before {
+    border-radius: 50%;
+}
+
+.BuyRentToggleSwitch input:checked+.ToggleSwitchRound:before {
+    transform: translateX(26px);
+}
+
+.BuyRentToggleSwitch .ToggleSwitchRound {
+    border-radius: 34px;
+}
+
+.BuyRentToggleSwitch input:checked+.ToggleSwitchRound {
+    background-color: #5183f5;
+}
+
+.RentMyProductName {
+    font-size: 2rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    line-height: 120%;
+    margin-bottom: 15px;
+}
+
+.RentMyProductPrice {
+    font-size: 3.5rem;
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 15px;
+}
+
+.CustomFieldInner {
+    display: inline-block;
+    margin-right: 15px;
+    margin-bottom: 20px;
+}
+
+.CustomFieldInner h6 {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 0;
+}
+
+.RentMyProductOptions ul {
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.RentMyProductOptions ul li {
+    display: inline-block;
+    border: 1px solid #ccc;
+    padding: 5px 12px;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-top: 10px;
+    border-radius: 3px;
+    font-weight: 400;
+    color: #777;
+    font-size: 14px;
+}
+
+.RentMyProductOptions ul li.ProductOptionsActive {
+    border: 1px solid #333;
+    color: #333;
+}
+.RentMyExactSelectTime,
+.RentMyExactSelectDuration,
+.RentMyDuration,
+.RentMyFulfillmentOptions,
+.RentMyRecurring,
+.RentMyVariant,
+.RentMySelectLocation,
+.RentMyDeliveryOptions,
+.RentMyRentalDateRange,
+.RentMyRentalStartDate {
+    margin-bottom: 15px;
+}
+
+.RentMyExactSelectTime h6,
+.RentMyExactSelectDuration h6,
+.RentMyDuration h6,
+.RentMyFulfillmentOptions h6,
+.RentMyRecurring h6,
+.RentMyVariant h6,
+.RentMySelectLocation h6,
+.RentMyDeliveryOptions h6,
+.RentMyRentalDateRange h6,
+.RentMyRentalStartDate h6 {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 0;
+}
+
+.RentMyExactSelectTime h6 a,
+.RentMyExactSelectDuration h6 a,
+.RentMyRecurring h6 a {
+    cursor: pointer;
+}
+
+.RentMyExactSelectTime ul,
+.RentMyExactSelectDuration ul,
+.RentMyDuration ul,
+.RentMyFulfillmentOptions ul,
+.RentMyRecurring ul,
+.RentMyVariant ul,
+.RentMySelectLocation ul,
+.RentMyDeliveryOptions ul,
+.RentMyRentalDateRange ul,
+.RentMyRentalStartDate ul {
+    padding: 0;
+    margin-bottom: 5px;
+}
+
+.RentMyExactSelectTime ul li,
+.RentMyExactSelectDuration ul li,
+.RentMyDuration ul li,
+.RentMyFulfillmentOptions ul li,
+.RentMyRecurring ul li,
+.RentMyVariant ul li,
+.RentMySelectLocation ul li,
+.RentMyDeliveryOptions ul li,
+.RentMyRentalDateRange ul li,
+.RentMyRentalStartDate ul li {
+    display: inline-block;
+    border: 1px solid #ccc;
+    padding: 5px 12px;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-top: 8px;
+    border-radius: 3px;
+    font-weight: 400;
+    color: #777;
+    font-size: 14px;
+}
+
+.RentMyRentalStartDate ul li[pickdate] {
+    border: none !important;
+}
+
+.RentMyStandardViewActive,
+.RentMyExactSelectTime ul li.ExactSelectTimeActive,
+.RentMyExactSelectDuration ul li.ExactSelectDurationActive,
+.RentMyDuration ul li.DurationActive,
+.RentMyFulfillmentOptions ul li.FulfilllmentActive,
+.RentMyRecurring ul li.RecurringActive,
+.RentMyVariant ul li.VariantActive,
+.RentMySelectLocation ul li.LocationActive,
+.RentMyDeliveryOptions ul li.StartDateActive,
+.RentMyRentalDateRange ul li.DateRangeActive,
+.RentMyRentalStartDate ul li.StartDateActive {
+    border: 1px solid #333 !important;
+    color: #333 !important;
+}
+
+.QuantityContainer {
+    margin-bottom: 15px;
+}
+
+.QuantityBtn {
+    display: flex;
+}
+
+.RentMyWrapper .QuantityBtn .RentMyBtn {
+    background-color: #444444;
+    border-radius: 0;
+}
+
+.RentMyWrapper .QuantityBtn .InputQuantity {
+    width: 90px;
+    outline: 0;
+    text-align: center;
+}
+
+.RentMyDepositAmount p {
+    font-size: 15px;
+    font-weight: 400;
+    color: #333;
+    margin-bottom: 18px;
+    line-height: 15px;
+}
+
+.RentMyWrapper .RentMyBtn.RentMyAddCartBtn {
+    background-color: #444444;
+    padding: 8px 30px;
+}
+
+.RentMyWrapper .RentMyBtn.RentMyAddCartBtn:disabled {
+    background-color: #acacac;
+}
+
+.RentMyProductDescription {
+    margin-top: 30px;
+}
+
+.RentMyProductDescription:has(.RentMyProductDesBody:empty) {
+    display: none;
+}
+
+.RentMyProductDesTitle {
+    font-weight: 400;
+    font-size: 20px;
+    text-transform: uppercase;
+    padding-bottom: 15px;
+    height: 50px;
+    background-color: #f2f3f8;
+    line-height: 50px;
+    padding-left: 15px;
+}
+
+.RentMyProductDesBody {
+    padding: 15px;
+}
+
+.RentMyRelatedProduct {
+    margin-top: 30px;
+}
+
+.RentMyRelatedProduct:has(.RentMyRelatedProductBody:empty) {
+    display: none;
+}
+
+.RentMyRelatedProductTitle {
+    font-weight: 400;
+    font-size: 20px;
+    text-transform: uppercase;
+    padding-bottom: 15px;
+    height: 50px;
+    background-color: #f2f3f8;
+    line-height: 50px;
+    padding-left: 15px;
+}
+
+.RentMyRelatedProductBody {
+    padding: 15px;
+}
+
+.RentMyProductPackageRow {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.RentMyProductPackageRow .RentMyProductDetilsImg {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+}
+
+.RentMyProductPackageRow .RentMyProductDetilsInfo {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+}
+
+.RentMyProductPackageRow .RentMyProductPackageArea {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+}
+
+.RentMyProductPackageAreaInner {
+    border: 1px solid #f2f3f8;
+    padding-bottom: 10px;
+}
+
+.RentMyProductPackageArea h6 {
+    padding: 10px 15px;
+    background-color: #f2f3f8;
+    border-bottom: 1px solid rgba(0, 0, 0, .125);
+    text-align: center;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 18px;
+}
+
+.PackageSingleProduct {
+    display: flex;
+    flex-direction: column;
+    padding: 0 15px 10px;
+}
+
+.PackageProductName,
+.PakageProductVarient {
+    width: 100%;
+}
+
+.PackageProductName h5 {
+    padding: 5px 0;
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.PakageProductVarientInner {
+    display: flex;
+}
+
+.PakageProductVarientInner select {
+    margin-right: 15px;
+    width: 300px;
+}
+
+
+/*======================== 
+Cart css  
+==========================*/
+
+.RentMyCartWrapper {
+	margin-top: 50px;
+}
+
+.RentMyCartWrapper .MakeContinue button:nth-child(2){
+	margin-left: 5px;
+}
+
+.RentMyCartWrapper .RentMyDatePicker:has(input){
+	margin-bottom: 15px;
+    display: flex;
+}
+.RentMyCartWrapper .RentMyDatePicker:has(input) [BtnCancel]{
+	order: 1;
+    margin-left: 5px;
+    width: 80px;
+}
+.RentMyCartWrapper .RentMyDatePicker input{
+	width: 400px;
+}
+
+@media screen and (max-width: 900px) {
+    .RentMyCartWrapper .RentMyDatePicker input{
+        width: 250px;
+    }   
+}
+
+.RentMyCartDateRange {
+	display: block;
+	font-weight: 400;
+	margin-bottom: 5px;
+}
+
+.RentMyCartDateRange b {
+	font-weight: 500;
+}
+.date-editicon {
+    font-size: 14px;
+    cursor: pointer;
+}
+.RentMyCartTable {
+	border-left: 1px solid #dee2e6;
+	border-right: 1px solid #dee2e6;
+	border-bottom: 1px solid #dee2e6;
+}
+
+.RentMyCartTable tr td img {
+	width: 40px;
+	height: 40px;
+	border: 1px solid #eee;
+}
+
+.RentMyCartTable tr td .CartItemTitle {
+	color: #444;
+    font-size: 15px;
+}
+
+.RentMyCartTable tr td .CartItemVariantName *,
+.RentMyCartTable ul.ProductCustomFields * {
+	color: #777;
+}
+
+.RentMyCartTable ul.ProductCustomFields {
+    margin: 0px;
+    padding: 0px;
+	list-style-type: none;
+}
+
+/* Hide ul when has only-one li with empty text */
+.RentMyCartTable ul:empty {
+	display: none;
+}
+
+.RentMyCartTable .QuantityContainer {
+	margin-bottom: 0px;
+}
+
+.RentMyWrapper .RentMyCartTable .QuantityBtn .RentMyBtn {
+	display: flex;
+	background-color: #444444;
+	border-radius: 0;
+	padding: 0px 8px;
+    height: 34px;
+    align-items: center;
+}
+
+.RentMyWrapper .RentMyCartTable .QuantityBtn .InputQuantity {
+	width: 40px;
+	outline: 0;
+	text-align: center;
+    height: 34px;
+}
+
+.RentMyWrapper img.RentMyEmptyBagImage {
+	width: 200px;
+    pointer-events: none;
+}
+
+.CartRemoveProduct {
+	background-color: #333;
+	width: 30px;
+	height: 30px;
+	border-radius: 100px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #fff;
+	cursor: pointer;
+}
+
+.CartRemoveProduct:hover {
+	background-color: #111;
+	color: #fff;
+}
+
+.CartRemoveProduct i {
+    font-size: 12px;
+    color: #fff;
+}
+
+.RentMyCouponCode {
+	margin-bottom: 30px;
+}
+
+.RentMyWrapper .RentMyCouponCode .RentMyBtn {
+	width: 180px;
+}
+
+.RentMyCouponCode .RentMyInputField {
+	margin-right: 20px;
+}
+
+.RentMyWrapper .RentMyRow .RentMyButtonGroup.CheckoutMakeContinueBtn {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.RentMyCouponCode .RentMyBtn,
+
+.CheckoutMakeContinueBtn .RentMyBtn {
+	text-transform: uppercase;
+	font-size: 14px;
+}
+
+.RentMyCartTotal {
+	background-color: #EEEEEE;
+	padding: 10px 15px 8px;
+	font-size: 20px;
+	margin-bottom: 0;
+}
+
+.RentMySummeryTable {
+	border-left: 1px solid #dee2e6;
+	border-right: 1px solid #dee2e6;
+	border-bottom: 1px solid #dee2e6;
+}
+
+.RentMySummeryTable tr td span {
+	margin-bottom: 0;
+}
+
+.RentMySummeryTable tr td h5 {
+	margin-bottom: 0;
+}
+.RentMyAddonProducts .RentMyRelatedProductBody {
+    padding: 15px 0px;
+}
+
+
+
+
+/*====================
+Scrollbar css
+======================*/
+.scrollbar {
+    overflow-y: scroll;
+    padding-right: 0;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.scrollbar::-webkit-scrollbar {
+    width: 3px;
+    background-color: #fff;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #eee;
+}
+
+
+/*====================
+Search css
+======================*/
+
+.RentMyProductSearch {
+    width: 420px;
+    margin: auto;
+    padding-top: 50px;
+    padding-bottom: 60px;
+}
+
+.RentMyProductSearchInner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    width: 100%;
+    height: 48px;
+    border: 1px solid #ddd;
+    padding-left: 15px;
+    border-radius: 3px;
+}
+
+.RentMyProductSearch input {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border-radius: 0;
+    color: #666666;
+    border: none;
+}
+
+.RentMyProductSearch input::placeholder {
+    color: #666666;
+}
+
+.RentMyProductSearch input:focus,
+.RentMyProductSearch input:active,
+.RentMyProductSearch input:hover {
+    outline: 0;
+    box-shadow: none;
+    border: none;
+}
+
+.RentMyProductSearch button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #353E4D;
+    height: 48px;
+    width: 120px;
+    color: #fff;
+    border-radius: 0 3px 3px 0;
+    border: none;
+    outline: 0;
+}
+
+.RentMyProductSearch button:active,
+.RentMyProductSearch button:focus,
+.RentMyProductSearch button:hover {
+    color: #fff;
+}
+
+.RentMyProductSearch button i {
+    font-size: 23px;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                             Start Mini Cart CSS                            */
+/* -------------------------------------------------------------------------- */
+.RentMyMiniCart {
+    position: relative !important;
+    width: 46px;
+}
+
+.RentMyMiniCart .icon-area {
+    position: relative;
+    padding: 3px;
+    width: 25px;
+    height: 25px;
+    line-height: 12px;
+    cursor: pointer;
+}
+
+.RentMyMiniCart .icon-area i {
+    font-size: 22px;
+    color: black;
+}
+
+.RentMyMiniCart .icon-area .count {
+    position: absolute;
+    top: -9px;
+    left: 7px;
+    background: #030303;
+    text-align: center;
+    font-size: 10px;
+    color: white;
+    width: 18px;
+    height: 19px;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.RentMyMiniCart .RentMyCartBody {
+    background: #fff;
+    border-left: 1px solid #f2f3f8;
+    border-right: 1px solid #f2f3f8;
+    border-bottom: 1px solid #f2f3f8;
+    width: 350px;
+    margin-top: 10px;
+    transform: scale(1);
+    transition: all .3s;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, .1);
+    position: absolute !important;
+    right: 0px;
+    top: 60px;
+    z-index: 999999991;
+}
+.RentMyMiniCart [RentMyMiniCartContents]:not(.Show) {
+    display: none;
+}
+
+.RentMyMiniCart [RentMyMiniCartContents].Show {
+    display: block;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.RentMyMiniCart .RentMyTopArrow {
+    position: absolute;
+    top: -20px;
+    right: 20px;
+    color: #fff;
+    font-size: 30px;
+}
+
+.RentMyMiniCart .RentMyTopArrow > i {
+    position: absolute;
+    top: 1px;
+    right: 0px;
+}
+
+.RentMyMiniCart .RentMyCartBodyInner {
+    max-height: 500px;
+    overflow: auto;
+    padding: 15px 0;
+}
+.RentMyMiniCart .RentMyCartBodyInner:has(.RentMyCartTotalBtn) {
+    min-height: 200px;
+}
+.RentMyMiniCart .RentMyCartBodyInner:not(:has(.RentMyCartTotalBtn)) {
+    min-height: 120px;
+}
+
+.RentMyMiniCart .RentMyCartItem {
+    display: flex;
+    min-height: 60px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    padding: 5px 15px;
+    line-height: 30px !important;
+}
+
+.RentMyMiniCart .RentMyCartItem img {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #eee;
+    object-fit: contain;
+}
+
+.RentMyMiniCart .RentMyCartNamePrice {
+    vertical-align: top;
+    padding-left: 10px;
+}
+
+.RentMyMiniCart .RentMyCartNamePrice h4 {
+    margin-bottom: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    width: 100%;
+}
+
+.RentMyMiniCart .RentMyCartNamePrice a{
+    text-decoration: none;
+}
+
+.RentMyMiniCart .RentMyCartNamePrice h4 a,
+.RentMyMiniCart .RentMyCartNamePrice span {
+    font-weight: 400;
+    font-size: 15px;
+}
+
+.RentMyMiniCart .RentMyCartTotalBtn {
+    padding: 0 15px;
+}
+
+.RentMyMiniCart .RentMyCartTotalPrice {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    line-height: 25px !important;
+}
+
+.RentMyMiniCart .RentMyCartTotalBtn h5 {
+    font-size: 15px;
+    text-transform: uppercase;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.RentMyMiniCart .RentMyCartTotalBtn h5 span {
+    float: right;
+    color: #555;
+    font-weight: 400;
+}
+
+.RentMyMiniCart .RentMyMiniCartBtn {
+    display: flex;
+    justify-content: space-between;
+}
+
+.RentMyMiniCart .MiniContinueShoppingBtn,
+.RentMyMiniCart .MiniCartBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background-color: #111;
+    height: 42px;
+    cursor: pointer;
+    border-radius: 100px;
+    font-size: 15px;
+    text-decoration: none !important;
+}
+
+.RentMyMiniCart .MiniContinueShoppingBtn {
+    width: 60%;
+    margin-right: 5px;
+}
+
+.RentMyMiniCart .MiniCartBtn {
+    width: 40%;
+}
+
+.RentMyMiniCart .MiniContinueShoppingBtn:hover,
+.RentMyMiniCart .MiniCartBtn:hover {
+    color: #fff;
+    text-decoration: none;
+}
+/* End Mini Cart CSS */
+
+
+@media (max-width: 1199px) {
+    .RentMyWrapper .RentMyRow.SummeryBillingDetails>.RentMyHalfwidth {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .RentMyProductItem {
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
+
+    .RentMyProductListRow .RentMyProductArea .RentMyProductItem {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+@media (max-width: 992px) {
+    .RentMyTableResponsive {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .RentMyWrapper #RentmyCustomerEditForm .RentMyRow {
+        width: unset;
+    }
+
+    .RentMyWrapper #RentMyChangePasswordForm .RentMyRow {
+        width: unset;
+    }
+
+    .RentMyWrapper #RentMyFileUploadForm .RentMyRow {
+        width: unset;
+    }
+
+    .RentMyWrapper .RentMyRow.SummeryBillingDetails .RentMyCard .RentMyRow .RentMyHalfwidth {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .RentMyPaymentOption {
+        flex-wrap: wrap;
+    }
+
+    .RentMyProductItem {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    .RentMyProductListRow .RentMyProductArea .RentMyProductItem {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .RentMyProductPackageRow .RentMyProductDetilsImg {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    .RentMyProductPackageRow .RentMyProductDetilsInfo {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    .RentMyProductPackageRow .RentMyProductPackageArea {
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin-top: 30px;
+    }
+    .RentMyWrapper .RentMyRow.RentMyCartSummery .RentMyHalfwidth {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .RentMyCouponCode {
+        margin-bottom: 20px;
+    }
+    .RentMyCartTotal {
+        margin-top: 25px;
+    }
+
+}
+
+@media (max-width: 767px) {
+    .RentMyCustomPortalRow {
+        flex-wrap: wrap;
+    }
+
+    .RentMyLeftSidebarmenu {
+        width: 100%;
+    }
+
+    .RentMyLeftSidebarmenu {
+        border-bottom: 1px solid #eee;
+        margin-bottom: 20px;
+    }
+
+    .RentMyProductListRow {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .RentMyProductListRow .RentMyFilterArea {
+        width: 100%;
+        margin-bottom: 25px;
+    }
+
+    .RentMyProductItem {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    .RentMyProductListRow .RentMyProductArea .RentMyProductItem {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    .ProductDetailsBtn,
+    .ProductCartBtn {
+        height: 36px;
+        font-size: 11px;
+        line-height: 36px;
+        padding: 0 12px;
+        letter-spacing: 0;
+    }
+
+    .RentMyProductDetilsImg {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .RentMyProductDetilsInfo {
+        flex: 0 0 100%;
+        max-width: 100%;
+        padding-left: 0;
+        margin-top: 40px;
+    }
+
+    .RentMyProductPackageRow .RentMyProductDetilsImg {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .RentMyProductPackageRow .RentMyProductDetilsInfo {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 575px) {
+
+    #RentMyCustomerRegistrationContainer,
+    #RentMyCustomerLoginContainer {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    #RentMyCustomerRegistrationContainer .RegistrationBtn,
+    #RentMyCustomerLoginContainer .LoginBtn {
+        width: 100px;
+        padding: 10px 5px;
+    }
+
+    #RentMyCustomerRegistrationContainer .RegistrationElement,
+    #RentMyCustomerLoginContainer .LoginElement {
+        padding: 32px 15px;
+    }
+
+    #RentMyCustomerRegistrationContainer .RentMyInputField,
+    #RentMyCustomerLoginContainer .RentMyInputField {
+        padding: 13px 10px 13px 10px;
+    }
+
+    .RentMyProductItem {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .RentMyProductListRow .RentMyProductArea .RentMyProductItem {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .ProductDetails {
+        height: 38px;
+        line-height: 38px;
+    }
+    .RentMyWrapper .RentMyCouponCode .RentMyBtn {
+        width: 220px;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .CheckoutMakeContinueBtn {
+        flex-wrap: wrap;
+    }
+    .MakeContinue {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+}
+
+
+/*============================= 
+Checkout Page Css  
+===============================*/
+
+.RentMyCheckoutWrapper {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+.CheckoutLeftSide {
+    flex: 0 0 55%;
+    max-width: 55%;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.ReturningCustomerTitle {
+    display: flex;
+    align-items: center;
+    background-color: #f2f3f8;
+    height: 50px;
+    margin-bottom: 25px;
+    padding-left: 15px;
+}
+.ReturningCustomerTitle h5 {
+    font-weight: 500;
+    font-size: 18px;
+    color: #555;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.ReturningCustomerTitle h5 a {
+    padding-left: 5px;
+    color: #59a9a1 !important;
+}
+.BillingDetailsLeftSideInner {
+    border: 3px solid #f2f3f8;
+    padding: 0 20px;
+    position: relative;
+    width: 100%;
+    padding-top: 25px;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+}
+.BillingDetailsLeftSideInner.BillingDetailsErrorBorder {
+    border: 3px solid #dc3545;
+}
+.BillingCheckoutTitle {
+    padding: 30px 0;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 22px;
+    letter-spacing: .5px;
+    position: absolute;
+    left: 11px;
+    top: -18px;
+    background-color: #fff;
+    width: auto;
+    padding: 0 10px;
+    height: 22px;
+}
+.RentMyCheckoutWrapper .RentMyInputGroup {
+    margin-bottom: 12px;
+}
+.RentMyCheckoutWrapper .RentMyInputGroup label {
+    font-weight: 500;
+    color: #555;
+    font-size: 15px;
+}
+.BillingCheckoutSubTitle {
+    display: flex;
+    align-items: center;
+    background-color: #f2f3f8;
+    height: 50px;
+    border-bottom: 1px solid #e5e7ec;
+    padding-left: 15px;
+    width: 100%;
+    margin-top: 12px;
+    margin-bottom: 15px;
+}
+.BillingCheckoutSubTitle h5 {
+    font-size: 20px;
+    line-height: 20px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.BillingCheckoutSubTitle h5 i {
+    font-size: 15px;
+}
+.FullfillmentTabList {
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+.FullfillmentTabList ul {
+    margin: 0;
+    padding: 0;
+}
+.FullfillmentTabList ul li {
+    display: inline-block;
+    margin-right: 15px;
+}
+.FullfillmentTabList ul li h5 {
+    color: #333;
+    font-weight: 500;
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.FullfillmentTabList ul li a.TabActive h5{
+    color: #5867dd;
+}
+.fullfilment-btn {
+    background-color: #f2f3f8;
+    position: relative;
+    width: 57px;
+    height: 57px;
+    padding: 12px;
+    margin: auto auto 8px;
+    border-radius: 100%;
+}
+.fullfilment-btn .icon {
+    display: block;
+}
+.fullfilment-btn .icon-active {
+    display: none;
+}
+.FullfillmentTabList ul li a.TabActive .fullfilment-btn {
+    background-color: #5867dd;
+}
+.FullfillmentTabList ul li a.TabActive .fullfilment-btn .icon {
+    display: none;
+}
+.FullfillmentTabList ul li a.TabActive .fullfilment-btn .icon-active {
+    display: block;
+}
+.FullfillmentPickup {
+    border-top: 1px solid #f2f3f8; 
+}
+.PickupRentMy-locations {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f2f3f8;
+}
+.RentMyGetShippingArea {
+    justify-content: flex-end !important;
+}
+.RentMyGetShippingBtn {
+    background-color: #333;
+    color: #fff;
+}
+.RentMyGetShippingBtn i {
+    font-size: 13px;
+}
+.FullfillmentTabBody .RentMyCheckbox>span, 
+.FullfillmentTabBody .RentMyRadio>span {
+    top: 2px;
+}
+
+/* Checkout rightside */
+.CheckoutRightSide {
+    flex: 0 0 45%;
+    max-width: 45%;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.OrderReviewWrapper {
+    position: relative;
+    padding: 20px 15px 35px;
+    border: 3px solid #65B3AC;
+}
+.OrderReviewTitle {
+    position: absolute;
+    top: -15px;
+    left: 2px;
+    display: inline-block;
+    font-size: 22px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 0 auto;
+    padding: 0 10px;
+    letter-spacing: .5px;
+    background-color: #fff;
+    line-height: 20px !important;
+}
+.CheckoutDatetimeShow {
+    display: block;
+    width: 100%;
+    font-size: 13px;
+    font-weight: 500;
+    margin-top: -14px;
+}
+.CheckoutDatetimeShow span {
+    color: #888;
+    font-size: 13px;
+}
+.CheckoutDatetimeShow span b {
+    font-weight: 400;
+}
+.CheckoutOrderList {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.CheckoutOrderItem {
+    display: flex;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 1px solid #eee;
+}
+.CheckoutOrderList .CheckoutOrderItem:last-child {
+    border-bottom: 1px solid #eee;
+}
+.OrderItemImg {
+    width: 60px;
+    min-width: 60px;
+    max-width: 60px;
+}
+.OrderItemContent {
+    padding-left: 10px;
+}
+.OrderItemImg img {
+    border: 1px solid #eee;
+    height: 65px;
+    object-fit: contain;
+}
+.OrderOtherInfo {
+    display: flex;
+}
+.OrderOtherInfo p {
+    font-size: 15px;
+    margin-bottom: 0;
+    margin-right: 10px;
+}
+.OrderSummaryTable {
+    border: none !important;
+}
+.OrderSummaryTable tr th {
+    background-color: transparent;
+}
+.OrderSummaryTable tr td {
+    border-top: none;
+    border-left: none;    
+}
+.OrderSummaryTable tr th,
+.OrderSummaryTable tr td {
+    padding: 5px 0;
+}
+
+.RentMyAdditionalChargeTitle {
+    font-weight: 500;
+    font-size: 18px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+  
+.RentMyOptionalService .RentMyRow .RentMyFullwidth .RentMyRow {
+    display: flex;
+    flex-wrap: unset;
+    padding-bottom: 15px;
+    margin-left: 0;
+    margin-right: 0;
+}
+  
+.RentMyCheckboxInline {
+    min-width: 30%;
+    -webkit-box-flex: 1;
+    -ms-flex: auto;
+    flex: auto;
+    max-width: max-content;
+}
+  
+.RentMyOptionalServiceContent {
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+    flex: auto;
+    max-width: max-content;
+}
+  
+.RentMyOptionalServiceContent .RentMyBtnToolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-top: -6px;
+}
+  
+.RentMyOptionalServiceContent label {
+    margin-top: 8px;
+    margin-right: 5px;
+}
+  
+.RentMyOptionalServiceContent .RentMyBtnToolbar .RentMyBtnGroup {
+    position: relative;
+    display: inline-flex;
+    vertical-align: middle;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    overflow: hidden;
+    border-radius: 4px;
+}
+  
+.RentMyOptionalServiceContent .RentMyBtnToolbar .RentMyBtnGroup .RentMyGroupBtn {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 14px;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    position: relative;
+    flex: 0 1 auto;
+    background: #f2f3f8;
+    border-color: #eee;
+    color: #333;
+    font-weight: 400;
+    border-radius: 0;
+}
+  
+.RentMyOptionalServiceContent .RentMyBtnToolbar select {
+    height: 34px;
+    width: auto;
+    border: 1px solid #eee;
+    border-radius: 3px;
+    padding: 0 5px;
+}
+.RentMyOptionalServiceContent .RentMyBtnToolbar select:hover,
+.RentMyOptionalServiceContent .RentMyBtnToolbar select:focus {
+    outline: 0;
+}
+  
+.RentMyOptionalServiceContent .RentMyInputAmountArea {
+    width: 100%;
+}
+.RentMyOptionalServiceContent .RentMyInputAmountArea .RentMyInputGroup {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 100%;
+    width: 230px;
+}
+.RentMyOptionalServiceContent .RentMyInputAmountArea .RentMyInputGroup input {
+    position: relative;
+    flex: 1 1 auto;
+    width: 1%;
+    margin-bottom: 0;
+    height: 34px !important;
+    border-radius: 0.25rem;
+    margin-right: 10px;
+    padding: 0px 5px;
+}
+  
+.RentMyOptionalServiceContent .RentMyInputAmountArea .RentMyInputGroup .RentMyInputGroupAppend {
+    margin-left: -1px;
+    display: flex;
+}
+  
+.RentMyOptionalServiceContent .RentMyInputAmountArea .RentMyInputGroup .RentMyInputGroupAppend .RentMyGroupBtn {
+    color: #fff;
+    background-color: #555;
+    background-image: none;
+    border-color: #555;
+    padding: 0;
+    width: 35px;
+    height: 32px;
+    text-align: center;
+    margin-top: 0px;
+    border-radius: 2px !important;
+    position: relative;
+    z-index: 2;
+    margin-right: 5px;
+    border: none;
+}
+  
+.RentMyOptionalServiceContent .RentMyInputAmountArea .RentMyInputGroup .RentMyInputGroupAppend .RentMyOptionalOkBtn {
+    color: #555 !important;
+    background-color: #f2f3f8 !important;
+    border-color: #f2f3f8 !important;
+}
+
+.RentMyOptionalServiceContent .RentMyBtnToolbar .RentMyBtnGroup .RentMyGroupBtn.BtnActive {
+    background: #555;
+    border-color: #555;
+    color: #fff;
+}
+
+
+
+/*====================== 
+Payment tab css  
+========================*/
+
+.PaymentTabList {
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+.PaymentTabList ul {
+    margin: 0;
+    padding: 0;
+}
+.PaymentTabList ul li {
+    display: inline-block;
+    margin-right: 15px;
+}
+.PaymentTabList ul li a {
+    text-align: center;
+}
+.PaymentTabList ul li h5 {
+    color: #333;
+    font-weight: 500;
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.PaymentTabList ul li a.TabActive h5{
+    color: #5867dd;
+}
+.PaymentBtn {
+    background-color: #f2f3f8;
+    position: relative;
+    width: 57px;
+    height: 57px;
+    padding: 12px;
+    margin: auto auto 8px;
+    border-radius: 100%;
+}
+.PaymentBtn .icon {
+    display: block;
+}
+.PaymentBtn .icon-active {
+    display: none;
+}
+.PaymentTabList ul li a.TabActive .PaymentBtn {
+    background-color: #5867dd;
+}
+.PaymentTabList ul li a.TabActive .PaymentBtn .icon {
+    display: none;
+}
+.PaymentTabList ul li a.TabActive .PaymentBtn .icon-active {
+    display: block;
+}
+.CheckoutBackcartPlaceorder {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+.RentMyBackCartBtn {
+    background-color: #2da4e0;
+}
+.RentMyPlaceOrder {
+    background-color: #65b3ab;
+}
+.RentMyWrapper .RentMyBtn.RentMyBackCartBtn,
+.RentMyWrapper .RentMyBtn.RentMyPlaceOrder {
+    padding: 0.45rem 0.75rem;
+}
+.CreateCustomerCheckbox label{
+    margin-bottom: 15px !important;
+}
+.TermsConditionsCheckbox label{
+    margin-bottom: 25px !important;
+}
+.TermsConditionsCheckbox a {
+    font-weight: 600;
+}
+
+@media (max-width:992px) {
+    .CheckoutLeftSide {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .CheckoutRightSide {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+/*======================== 
+Forgot Password css  
+==========================*/
+
+
+#RentMyResetPasswordContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+#RentMyResetPasswordContainer .Contents{
+    background-color: #fff;
+    width: 500px;
+    margin-top: 0;
+    box-shadow: 0 0 15px 0 #eee;
+    border-radius: 10px;
+    border: 1px solid #f2f3f8;
+    padding: 32px 25px;
+}
+#RentMyResetPasswordContainer .Describer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#RentMyResetPasswordContainer img{
+    max-width: 100%;
+
+}
+
+#RentMyResetPasswordContainer .Title{
+    text-align: center;
+    font-size: 35px;
+}
+
+#RentMyResetPasswordContainer p{
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    color: #555;
+}
+
+#RentMyResetPasswordContainer .RentMyInputField{
+    height: 44px;
+}
+
+#RentMyResetPasswordContainer .RentMyInputField{
+    margin-bottom: 1.2rem;
+}
+#RentMyResetPasswordContainer .RentMySubmitBtn,
+#RentMyResetPasswordContainer .RentMyReturnBtn
+{
+    padding: 8px 30px;
+}
+
+#RentMyResetPasswordContainer .RentMySubmitBtn:has(~ *)
+{
+    margin-right: 10px;
+}
+
+#RentMyResetPasswordContainer .RentMyReturnBtn
+{
+    background-color: #dc3545;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                         RentMy Event Management css                        */
+/* -------------------------------------------------------------------------- */
+#RentMyEventManagement ::selection {
+    background: #00b9a0;
+}
+
+#RentMyEventManagement ::-webkit-input-placeholder,
+#RentMyEventManagement :-ms-input-placeholder,
+#RentMyEventManagement ::-moz-placeholder {
+    color: #b3b3b3;
+}
+
+#RentMyEventManagement .app {
+    background: #ffffff;
+    width: 100%;
+    padding: 35px;
+    display: flex;
+    flex-direction: column;                       
+    border-radius: 8px;
+}
+@media screen and (max-width: 900px) {
+    #RentMyEventManagement .app {     
+        padding: 20px;
+    }
+}
+
+#RentMyEventManagement .nav {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+#RentMyEventManagement .nav__item {
+    margin-right: 30px;
+    color: #00b9a0;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 600;
+    transition: all 0.5s;
+    position: relative;
+}
+
+#RentMyEventManagement .nav__item:hover {
+    color: #222222;
+    outline: 0;
+}
+
+#RentMyEventManagement .nav__item:focus {
+    color: #00b9a0;
+    outline: 0;
+}
+
+#RentMyEventManagement .nav__item.active::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #00b9a0;
+    bottom: 34px;
+    left: 0;
+}
+
+#RentMyEventManagement .nav__item .hook_count {
+    color: #fff;
+    background-color: #00b9a0;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    transition: all .5s;
+    padding: 1px 6px;
+}
+#RentMyEventManagement .nav__item:hover .hook_count {
+    color: #fff;
+    background-color: #222222;
+    outline: 0;
+}
+
+@media screen and (max-width: 900px) {
+    #RentMyEventManagement .nav__item {
+        font-size: 13px;
+    }    
+    #RentMyEventManagement .nav__item .hook_count {
+        font-size: 12px;
+    }
+}
+
+#RentMyEventManagement .nav__item:last-child {
+    margin-right: 0;
+}
+#RentMyEventManagement .hook-title {
+    color: #00b9a0;
+    font-size: 34px;
+}
+#RentMyEventManagement .group-title {
+    font-size: 18px;
+    border-style: groove;
+    border-color: #ffffff6e;
+    color: #ffffff;
+    background-color: #1ab29e;
+    padding: 5px;
+    margin-top: 40px;
+}
+#RentMyEventManagement .group-title:first-child {
+    margin-top: 0px;
+}
+
+#RentMyEventManagement .add {
+    margin-bottom: 30px;
+    padding: 0 25px;
+    color: #222222;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#RentMyEventManagement .add__input {
+    width: 400px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 16px;
+    border: 1px solid #b3b3b357;
+    line-height: 1;
+    color: #048372;
+    border-color: #00b9a0;
+    transition: all .5s ease-in-out;
+    background-color: #fafffe;
+    border-left: 30px solid #00b9a0;
+    border-right: 30px solid #00b9a0;
+}
+
+#RentMyEventManagement .add__input:focus,
+#RentMyEventManagement .add__input:active {
+    border-left: 3px solid #00b9a0;
+    border-right: 3px solid #00b9a0;
+    outline: 0;
+    width: 400px;
+    box-shadow: inset 2px 3px 5px #cccccc;
+}
+
+#RentMyEventManagement .list {
+    max-height: calc(100vh - 350px);
+    overflow-y: scroll;
+    border-radius: 10px;
+    border: 1px solid #2c9a5a;
+    overflow-x: hidden;
+    padding: 20px;    
+}
+#RentMyEventManagement .sub-group {
+    text-align: center;
+    background: rgb(255,255,255);
+    background: linear-gradient(90deg,rgba(255,255,255,1) 10%,rgba(255,255,255,1) 0%,rgba(255,255,255,0) 0%,rgb(0 128 111 / 51%) 50%,rgba(255,255,255,0) 90%);
+    padding: 2px 0px;
+    margin: 20px 0px 11px 0px;
+}
+
+#RentMyEventManagement .sub-group > * {
+    background-color: #f6f5f5;
+    color: #008984;
+    padding: 1px 20px;
+    border-radius: 20px;
+    font-size: 18px;
+    padding-top: 0px;
+    font-weight: 500;
+}
+
+#RentMyEventManagement li {
+    list-style: none;
+}
+
+#RentMyEventManagement .item {
+    margin-bottom: 20px;
+    transition: all 0.1s linear;
+    color: #222222;
+    font-weight: 500;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+#RentMyEventManagement .switch-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: cursive;
+    color: #00b9a0;
+}
+#RentMyEventManagement .switch-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#RentMyEventManagement .switch-area .switch-area-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 250px;
+}
+
+#RentMyEventManagement .componentsBox .content {
+margin-bottom: 20px;
+}
+
+#RentMyEventManagement .Switch {
+    display: inline-block;
+    margin: 0 5px;
+}
+#RentMyEventManagement .Switch input {
+    display: none;
+}
+#RentMyEventManagement .Switch small {
+    display: inline-block;
+    width: 38px;
+    height: 15px;
+    background: #8abcb6;
+    border-radius: 30px;
+    position: relative;
+    cursor: pointer;
+}
+#RentMyEventManagement .Switch small:before {
+    content: "";
+    position: absolute;
+    width: 19px;
+    height: 19px;
+    background: #fff;
+    border-radius: 50%;
+    top: -2px;
+    left: -1px;
+    transition: .3s;
+    box-shadow: -3px 0 3px rgba(0,0,0,0.25);
+}
+#RentMyEventManagement .Switch input:checked ~ small {
+    background: #4fc5c5;
+    transition: .3s;
+}
+#RentMyEventManagement .Switch input:checked ~ small:before {
+    transform: translate(20px, 0px);
+    transition: .3s;
+    box-shadow: 3px 0 3px rgba(0,0,0,0.25);
+}
+
+
+
+#RentMyEventManagement .item.active{
+    color: #048372 !important;
+}
+
+@media screen and (max-width: 900px) {
+    #RentMyEventManagement .item .hook_type{
+        display: none;
+    }
+    #RentMyEventManagement .item [EventName]{
+        font-size: 13px;
+        max-width: calc(100% - 130px);
+    }
+}
+
+#RentMyEventManagement .callback_area {
+    transition: all 0.1s linear;
+    color: #222222;
+    font-weight: 500;
+    font-size: 16px;
+    position: relative;
+    padding-left: 50px;
+    scale: 0;
+    transition: all 0.3s ease-in-out;
+    display: none;
+    transform: skewX(20deg);
+}
+
+@media screen and (max-width: 900px) {
+    #RentMyEventManagement .callback_area {
+        padding-left: 10px;        
+    }
+}
+
+#RentMyEventManagement .callback_area.expand {
+    scale: 1;
+    transition: all 0.3s ease-in-out;
+    transform: skewX(0deg) ;
+    display: block;
+    animation: skewEffect 0.5s forwards;
+}
+
+@keyframes skewEffect {
+    0%{
+        transform: rotateY(90deg);;
+    }
+    100%{
+        transform: rotateY(0deg);
+    }
+}
+
+#RentMyEventManagement .item:last-child {
+    margin-bottom: 0;
+}
+
+#RentMyEventManagement .row-icons {
+    position: absolute;
+    right: -5px;
+    top: 1px;
+}
+
+
+#RentMyEventManagement .row-icons button {
+    border: 0;
+    background: none;
+    padding: 3px 10px;
+    cursor: pointer;
+    font-size: 18px;
+    transform: scale(.8);
+    transition: all 0.1s ease-in;
+    color: #008984;
+    background-color: white;
+    border: 1px solid #008984;
+    border-radius: 5px;
+}
+
+#RentMyEventManagement .row-icons button:hover {
+    color: white;
+    background-color: #008984;
+    border: 1px solid #008984;
+}
+
+#RentMyEventManagement .item .fa-check {
+    transition: all 0.15s ease-in-out;
+    transform: scale(0);
+}
+
+#RentMyEventManagement .item__checkbox {
+    border: 2px solid #e0e0e0;
+    color: #e0e0e0;
+    border-radius: 50%;
+    height: 26px;
+    flex: 0 0 26px;
+    display: block;
+    margin-right: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #555555;
+    border-color: #e2e2e2;
+}
+
+#RentMyEventManagement .item__checkbox.active {
+    color: #008984;
+    border-color: #008984;
+}
+
+#RentMyEventManagement .item__checkbox input {
+    display: none;
+}
+
+#RentMyEventManagement .item__checkbox input:checked+.fa-check {
+    transform: scale(1);
+}
+
+
+#RentMyEventManagement .description,
+#RentMyEventManagement .jsHookExample,
+#RentMyEventManagement .usingPages {
+    border: 1px dashed #dbdbdb;
+    background-color: rgba(233, 233, 233, 0.184);
+    position: relative;
+    font-size: 13px;
+    padding-top: 15px;
+    padding: 10px;
+    padding-left: 15px;
+    color: rgb(59, 59, 59);
+}
+
+#RentMyEventManagement .description::before,
+#RentMyEventManagement .usingPages::before,
+#RentMyEventManagement .jsHookExample::before
+ {
+    position: absolute;
+    top: -15px;
+    left: 10px;
+    background-color: white;
+    border: 1px solid #ffffff;
+    padding: 0px 5px;
+    font-size: 13px;
+
+}
+
+#RentMyEventManagement .description::before {
+    content: 'Description';
+}
+
+#RentMyEventManagement .jsHookExample::before {
+    content: 'Hook Example';
+}
+
+#RentMyEventManagement .usingPages::before {
+    content: 'Using In Pages';
+}
+
+#RentMyEventManagement .callback {
+    color: #048372;
+}
+
+#RentMyEventManagement .callback .parameter,
+#RentMyEventManagement .return_type,
+#RentMyEventManagement .hook_type {
+    color: #00b9a0;
+}
+
+#RentMyEventManagement .hook_type {
+    font-size: 18px;
+    text-transform: capitalize;
+    transform: translateY(4px);
+    margin-right: 8px;
+}
+
+
+#RentMyEventManagement [SingleEvent] .codeArea {
+    outline: unset;
+    text-align: left;
+    padding: 10px;
+    color: #048372;
+    width: calc(100% - 20px);
+    border-radius: 5px;
+    margin-left: 20px;
+    min-height: 56px;
+    border: 1px solid #cfcfcf;
+    background-color: aliceblue;
+    display: block;
+}
+
+#RentMyEventManagement [SingleEvent] .resetButton,
+#RentMyEventManagement [SingleEvent] .updateButton {
+    transform: translate(-20px, -20px);
+}
+#RentMyEventManagement [SingleEvent] .resetButton {
+    background-color: #b22c1a;
+    border: 1px solid #b22c1a;
+}
+#RentMyEventManagement [SingleEvent] .updateButton {
+    background-color: #1ab29e;
+    border: 1px solid #1ab29e;
+}
+
+.InputFileGroup {
+    position: relative;
+    display: block;
+    width: 100%;
+    min-height: calc(1.5em + 0.75rem + 2px);
+    padding: 5px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 4px;  
+}
+.InputFileGroup input {
+    position: absolute;
+    opacity: 0;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: transparent;
+}
+.InputFileGroup .IconAndFileName {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    display: flex;    
+    justify-content: space-between;
+    align-items: center;
+    pointer-events: none;
+    padding: 0px 5px;
+}
+.InputFileGroup .IconAndFileName:has(~ span:empty) {   
+    justify-content: start;   
+}
+.InputFileGroup .IconAndFileName i ~ span {   
+    width: calc(100% - 50px);
+}
+.InputFileGroup .IconAndFileName i {
+    padding-right: 10px;
+    font-size: 25px;    
+}
+.ShippingMethodArea h5 {
+    font-size: 18px;
+    padding-top: 15px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f2f3f8;
+    margin-bottom: 0;
+}
+.ShippingMethodArea [Title]:not(:has( ~ [AllMethods] [Method])),
+.ShippingCostArea [Title]:not(:has( ~ [Cost]))
+{
+    display: none !important;
+}
+.ShippingMethodArea .PickupRentMy-locations {
+    padding-left: 10px;
+}
+.ShippingMethodArea .PickupRentMy-locations:hover {
+    background-color: #f2f3f8;
+}
+.ShippingMethodArea label {
+    display: flex;
+    justify-content: space-between;
+}
+.ShippingMethodArea label b {
+    font-weight: 700;
+}
+.ShippingMethodArea .RentMyCheckbox, 
+.ShippingMethodArea .RentMyRadio {
+    margin-bottom: 0 !important;
+}
+.ShippingCostArea h5 {
+    font-size: 18px;
+    padding-top: 15px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f2f3f8;
+    margin-bottom: 0;
+}
+.ShippingCostArea .PickupRentMy-locations {
+    padding-left: 10px;
+}
+.ShippingCostArea .PickupRentMy-locations:hover {
+    background-color: #f2f3f8;
+}
+.ShippingCostArea label {
+    display: flex;
+    justify-content: space-between;
+}
+.ShippingCostArea label b {
+    font-weight: 700;
+}
+.ShippingCostArea .RentMyCheckbox, 
+.ShippingCostArea .RentMyRadio {
+    margin-bottom: 0 !important;
+}
+.DeliveryAddressMsg {
+    display: flex;
+    align-items: center;
+    background-color: #f2f3f8;
+    min-height: 70px;
+    padding: 5px 15px;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 400;
+}
+.DeliveryAddressErrorMsg {
+    display: flex;
+    align-items: center;
+    background-color: #f2f3f8;
+    min-height: 70px;
+    padding: 5px 15px;
+    line-height: 20px;
+    font-size: 16px;
+    color: #e13445;
+    font-weight: 400;
+}
+
+
+/*=============================== 
+Signature css  
+=================================*/
+.SignaturePadBody {
+    border-bottom: 2px solid #000;
+}
+.SignatureFooter {
+    display: flex;
+    justify-content: space-between;
+}
+.SignatureFooter p {
+    color: #666;
+    font-weight: 500;
+}
+.SignatureFooter a {
+    cursor: pointer;
+    font-weight: 500;
+    text-decoration: underline !important;
+    padding-left: 10px;
+}
+
+
+/*=============================== 
+Order Complete css  
+=================================*/
+.RentMyOrderCompleteWrapper {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.RentMyOrderCompleteWrapper .AfterOrderPageFooter,
+.RentMyOrderCompleteWrapper .OrderDetailsBack
+{
+    text-align: center;
+    margin-top: 20px;
+}
+.RentMyOrderCompleteWrapper .OrderDetailsBack [back]
+{
+    border: 1px solid black;
+    padding: 4px 20px;
+    color: black;
+    border-radius: 3px;
+    cursor: pointer;
+    background: none;
+    background-color: transparent;
+}
+.MessageTitle {
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 30px;
+}
+.MessageTitle h1 {
+    color: #0ab10a;
+    font-size: 45px;
+    line-height: 30px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+.MessageTitle h1 span {
+    color: #333;
+    font-size: 18px;
+    font-weight: 400;
+}
+.OrderCompleteRow {
+    justify-content: center;
+}
+.OrderCompleteBox {
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    cursor: pointer;
+}
+.OrderCompleteBox img {
+    width: 120px;
+    margin-bottom: 20px;
+    transition: all .3s;
+}
+.OrderCompleteBox:hover img {
+    transform: scaleY(1.1);
+    -webkit-transform: scaleY(1.1);
+}
+.OrderCompleteBox h3 {
+    font-size: 18px;
+    color: #444;
+}
+
+@media (max-width: 767px) {
+    .OrderCompleteBox {
+        width: 33.33333%;
+    }
+    .OrderCompleteBox img {
+        width: 60px;
+        margin-bottom: 15px;
+    }
+    .OrderCompleteBox h3  {
+        font-size: 14px;
+        line-height: 18px;
+    }
+}
+
+
+/*=========================== 
+Order Summary css  
+=============================*/
+
+.RentMyColumn8 {
+    flex: 0 0 70%;
+    max-width: 70%;
+    padding-left: 7.5px;
+    padding-right: 7.5px;
+}
+.OrderSummaryTitle {
+    text-align: center;
+}
+
+.RentMyColumn4 {
+    flex: 0 0 30%;
+    max-width: 30%;
+    padding-left: 7.5px;
+    padding-right: 7.5px;
+}
+.RentMySummaryDateRange {
+    display: block;
+    margin-top: 18px;
+}
+.RentMyOptionalService tr {
+    border: 1px solid #eee;
+}
+
+@media (max-width: 992px) {
+    .RentMyColumn8 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .RentMyColumn4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .RentMySummaryWrapper .RentMyCartTotal {
+        margin-top: 0;
+    }
+}
+
+
+/*=============================== 
+Location css  
+=================================*/
+.RentmyLocationWidget {
+    width: 250px;
+    border: 1px solid #eed;
+}
+.RentmyLocationWidget li {
+    list-style: none;
+}
+.RentMyLocations {
+    list-style: none;
+}
+.RentMyLocations:not(.Show) {
+    display: none !important;
+}
+.RentMyLocations.Show {
+    display: block !important;
+}
+.RentMyLocations > a {
+    display: block;
+    padding: 8px 15px;
+    color: #333;
+    text-decoration: none !important;
+}
+.RentMyLocations a i {
+    font-size: 14px;
+    margin-right: 5px;
+}
+.RentMyLocations [posticon] {
+    margin-left: 5px;
+}
+.RentMyLocations .LocationSubMenu {
+    padding: 0;
+    margin: 0;
+    border-top: 2px solid #666;
+    display: none;
+}
+.RentMyLocations:hover .LocationSubMenu {
+    display: block;
+}
+.RentMyLocations .LocationSubMenu li
+{
+    list-style: none;
+}
+.RentMyLocations li[Location]
+{
+    transition: transform 0.3s;
+}
+.RentMyLocations li[Location]:hover {
+    font-weight: 500;
+    transform: translateX(4px);
+}
+.RentMyLocations .LocationSubMenu li a {
+    display: block;
+    color: #555;
+    padding: 8px 15px;
+    text-decoration: none !important;
+}
+
+.DetailsPageDateRange{
+    padding: 4px 8px !important
+}
