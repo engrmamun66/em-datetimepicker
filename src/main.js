@@ -1,19 +1,11 @@
-import './assets/css/module.css';
+// import './assets/css/module.css';
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import App from './App.vue';
-import { send_css_in_header, minified_css } from './minified-css';
-import { emitter, utils, components, services } from './import-hub';
-if(window.location.host !== 'localhost'){
-    send_css_in_header(minified_css);
-  } 
+import { emitter, utils, components } from './import-hub';
 
 
-const { 
-    VITE_API_BASE_URL: baseURL, 
-    VITE_ASSET_URL: assetURL,
-    VITE_GOOGLE_MAP_API_KEY: mapAPIKey,
-} = import.meta.env
+const { VITE_THEME } = import.meta.env
 
 
 /**
@@ -43,10 +35,8 @@ const app = createApp(App)
 app.use(createPinia())
 
 if(document.getElementById('appDevLocal')){
-    window.IS_DEV_APP = true
     app.mount('#appDevLocal');
 } else {
-    window.IS_DEV_APP = false;
     let app_div = document.createElement('div');
     app_div.id = 'rentmy-app';
     app_div.style.display = 'none';
@@ -57,9 +47,8 @@ if(document.getElementById('appDevLocal')){
     .provide('global', {...window.RENTMY_GLOBAL, ...{ baseURL, assetURL }})
     .provide('utils', utils)
     .provide('emitter', emitter)
-    .provide('services', services)
     .provide('components', components)
-    .mount('#rentmy-app')
+    .mount('#emdatepicker-app')
 }
 
 
