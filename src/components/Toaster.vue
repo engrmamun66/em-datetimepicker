@@ -6,13 +6,12 @@ let toaster = useToaster()
 let animation = "left"; // 'left' | 'right' | 'top' | 'bottom'
 
 let hasMessage = computed(() => toaster?.messages?.length)
-let wp_current_user = window.RENTMY_GLOBAL?.wp_current_user
 
 </script>
 
 <template>
     <teleport to="body">
-        <section v-if="hasMessage" class="global-toaster justify-content-end" :style="wp_current_user ? 'padding-top:40px' : ''">
+        <section v-if="hasMessage" class="global-toaster justify-content-end">
             <div class="inner-contents">
             <template v-for="(message, index) in toaster?.messages" :key="index">                
                 <p

@@ -5,8 +5,6 @@ import LoaderGlobal from '@components/LoaderGlobal.vue';
 let { Toaster } = inject('components');
 
 let global = inject('global');
-let isProductListPage = location.href.includes(window.RENTMY_GLOBAL.page.products_list);
-provide('isProductListPage', isProductListPage);
 let showGlobalLoader = ref(false);
 let globalLoader = {
     show: (autoOfAfter=null) => {
@@ -25,9 +23,14 @@ provide('globalLoader', globalLoader);
     <LoaderGlobal 
         v-if="showGlobalLoader">
     </LoaderGlobal>
-    <AppHolder></AppHolder>
+    <AppHolder></AppHolder>    
 
-
-    
+    <teleport to="body">
+        <h1>hello</h1>
+    </teleport>
     
 </template>
+
+<style>
+@import url('https://fonts.cdnfonts.com/css/digital-numbers');
+</style>

@@ -1,9 +1,8 @@
-// import './assets/css/module.css';
+import './assets/css/module.css';
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import App from './App.vue';
 import { emitter, utils, components } from './import-hub';
-
 
 const { VITE_THEME } = import.meta.env
 
@@ -41,10 +40,7 @@ if(document.getElementById('appDevLocal')){
     app_div.id = 'rentmy-app';
     app_div.style.display = 'none';
     document.body.append(app_div);
-    window.RENTMY_GLOBAL = RENTMY_GLOBAL
-    window.RENTMY_GLOBAL.rentmy_customer_info = utils.cookie.getCookie('rentmy_customer_info');
     app
-    .provide('global', {...window.RENTMY_GLOBAL, ...{ baseURL, assetURL }})
     .provide('utils', utils)
     .provide('emitter', emitter)
     .provide('components', components)
