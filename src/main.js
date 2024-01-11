@@ -6,7 +6,6 @@ import { emitter, utils, components } from './import-hub';
 
 const { VITE_THEME } = import.meta.env
 
-
 /**
   We using global event. That's loading from our plugin
   If for some reason the file is not loaded, thi code will help to avoid fatal error
@@ -37,7 +36,7 @@ if(document.getElementById('appDevLocal')){
     app.mount('#appDevLocal');
 } else {
     let app_div = document.createElement('div');
-    app_div.id = 'rentmy-app';
+    app_div.id = 'emdatepicker-app';
     app_div.style.display = 'none';
     document.body.append(app_div);
     app

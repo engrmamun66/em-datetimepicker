@@ -15,7 +15,6 @@ let globalLoader = {
     isShowing: () => showGlobalLoader.value,
 };
 provide('globalLoader', globalLoader);
-
 </script>
 
 <template>
