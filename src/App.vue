@@ -2,7 +2,6 @@
 import { provide, inject, ref, computed } from 'vue';
 import LoaderGlobal from '@components/LoaderGlobal.vue';
 let { Toaster } = inject('components');
-let { cookie, helper } = inject('utils');
 
 let global = inject('global');
 let isProductListPage = location.href.includes(window.RENTMY_GLOBAL.page.products_list);
