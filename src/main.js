@@ -4,6 +4,10 @@ import { createPinia } from 'pinia';
 import App from './App.vue';
 import { emitter, utils, components } from './import-hub';
 
+HTMLElement.prototype.test = function () {
+    console.log('Hello world')
+}
+
 const { VITE_THEME } = import.meta.env
 
 /**

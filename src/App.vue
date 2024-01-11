@@ -23,13 +23,6 @@ provide('globalLoader', globalLoader);
         v-if="showGlobalLoader">
     </LoaderGlobal>
     <AppHolder></AppHolder>    
-
-    <teleport to="body">
-        <h1>hello</h1>
-    </teleport>
     
 </template>
 
-<style>
-@import url('https://fonts.cdnfonts.com/css/digital-numbers');
-</style>

@@ -4,760 +4,232 @@ import { ref } from 'vue';
 </script>
 
 <template>
-   <div class="app-container" ng-app="dateTimeApp" ng-controller="dateTimeCtrl as ctrl" ng-cloak>
-		
-	<div date-picker
-		 datepicker-title="Select Date"
-		 picktime="true"
-		 pickdate="true"
-		 pickpast="false"
-		 mondayfirst="false"
-		 custom-message="You have selected"
-		 selecteddate="ctrl.selected_date"
-		 updatefn="ctrl.updateDate(newdate)">
-	
-		<div class="datepicker"
-			 ng-class="{
-				'am': timeframe == 'am',
-				'pm': timeframe == 'pm',
-				'compact': compact
-			}">
-			<div class="datepicker-header">
-				<div class="datepicker-title" ng-if="datepicker_title">{{ datepickerTitle }}</div>
-				<div class="datepicker-subheader">{{ customMessage }} {{ selectedDay }} {{ monthNames[localdate.getMonth()] }} {{ localdate.getDate() }}, {{ localdate.getFullYear() }}</div>
-			</div>
-			<div class="datepicker-calendar">
-				<div class="calendar-header">
-					<div class="goback" ng-click="moveBack()" ng-if="pickdate">
-						<svg width="30" height="30">
-							<path fill="none" stroke="#0DAD83" stroke-width="3" d="M19,6 l-9,9 l9,9"/>
-						</svg>
-					</div>
-					<div class="current-month-container">{{ currentViewDate.getFullYear() }} {{ currentMonthName() }}</div>
-					<div class="goforward" ng-click="moveForward()" ng-if="pickdate">
-						<svg width="30" height="30">
-							<path fill="none" stroke="#0DAD83" stroke-width="3" d="M11,6 l9,9 l-9,9" />
-						</svg>
-					</div>
-				</div>
-				<div class="calendar-day-header">
-					<span ng-repeat="day in days" class="day-label">{{ day.short }}</span>
-				</div>
-				<div class="calendar-grid" ng-class="{false: 'no-hover'}[pickdate]">
-					<div
-						ng-class="{'no-hover': !day.showday}"
-						ng-repeat="day in month"
-						class="datecontainer"
-						ng-style="{'margin-left': calcOffset(day, $index)}"
-						track by $index>
-						<div class="datenumber" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
-							{{ day.daydate }}
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="timepicker" ng-if="picktime == 'true'">
-				<div ng-class="{'am': timeframe == 'am', 'pm': timeframe == 'pm' }">
-					<div class="timepicker-container-outer" selectedtime="time" timetravel>
-						<div class="timepicker-container-inner">
-							<div class="timeline-container" ng-mousedown="timeSelectStart($event)" sm-touchstart="timeSelectStart($event)">
-								<div class="current-time">
-									<div class="actual-time">{{ time }}</div>
-								</div>
-								<div class="timeline">
-								</div>
-								<div class="hours-container">
-									<div class="hour-mark" ng-repeat="hour in getHours() track by $index"></div>
-								</div>
-							</div>
-							<div class="display-time">
-								<div class="decrement-time" ng-click="adjustTime('decrease')">
-									<svg width="24" height="24">
-										<path stroke="white" stroke-width="2" d="M8,12 h8"/>
-									</svg>
-								</div>
-								<div class="time" ng-class="{'time-active': edittime.active}">
-									<input type="text" class="time-input" ng-model="edittime.input" ng-keydown="changeInputTime($event)" ng-focus="edittime.active = true; edittime.digits = [];" ng-blur="edittime.active = false"/>
-									<div class="formatted-time">{{ edittime.formatted }}</div>
-								</div>
-								<div class="increment-time" ng-click="adjustTime('increase')">
-									<svg width="24" height="24">
-										<path stroke="white" stroke-width="2" d="M12,7 v10 M7,12 h10"/>
-									</svg>
-								</div>
-							</div>
-							<div class="am-pm-container">
-								<div class="am-pm-button" ng-click="changetime('am');">am</div>
-								<div class="am-pm-button" ng-click="changetime('pm');">pm</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-			<div class="buttons-container">
-				<div class="cancel-button">CANCEL</div>
-				<div class="save-button">SAVE</div>
-			</div>
-			
-		</div>
-	</div>
-</div>
+  <h1>Hello</h1>
 </template>
 
 
-
 <style scoped>
-[ng\:cloak], [ng-cloak], .ng-cloak {
-  display: none;
-}
-
-* {
+@import url('https://fonts.cdnfonts.com/css/digital-numbers');
+.wall-clock {
+  /* Initial value */
+/*   --time: calc((60 * 60 * 3) + (60 * 47) + 6);  */
+  --time: 0;
+  /* starts from 00:00:00 am in seconds */
+  --time-plus: var(--time);
+  /*  Settings  */
+  --clock-size: 300px;
+  --clock-border-width: calc(0.025 * var(--clock-size));
+  --clock-rounded-size: calc(0.2 * var(--clock-size));
+  --color-light: #f0f0f030;
+  --color-shadow: #00000030;
+  --clock-hand-width: calc(0.05 * var(--clock-size));
+  --clock-hand-second-color: #ee2222;
+  background-color: inherit;
+  display: block;
+  position: relative;
+  min-width: var(--clock-size); /* Size won't relative to body size */
+  width: var(--clock-size);
+  height: var(--clock-size);
+  border: var(--clock-border-width) solid white;
+  padding: calc(0.025 * var(--clock-size));
   box-sizing: border-box;
+  box-shadow: 
+    calc(-1 * var(--clock-border-width)) calc(-1 * var(--clock-border-width)) calc(3 * var(--clock-border-width)) var(--color-light),
+    inset calc(-1 * var(--clock-border-width)) calc(-1 * var(--clock-border-width)) calc(3 * var(--clock-border-width)) var(--color-light),
+    calc(1 * var(--clock-border-width)) calc(1 * var(--clock-border-width)) calc(3 * var(--clock-border-width)) var(--color-shadow),
+    inset calc(1 * var(--clock-border-width)) calc(1 * var(--clock-border-width)) calc(3 * var(--clock-border-width)) var(--color-shadow);
+  
+  /* Centering clock content */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
-html, body {
+.wall-clock.rounded {
+  border-radius: var(--clock-rounded-size);
+}
+.wall-clock.circle {
+  border-radius: var(--clock-size);
+}
+/* Centering the clock */
+body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
   margin: 0;
-  background: #222;
 }
-
-.app-container {
-  border-radius: 4px;
-  overflow: hidden;
-  width: 720px;
-  height: auto;
-  max-width: 100%;
+/* The center point */
+.wall-clock::after {
+  content: '';
   position: absolute;
-  top: 120px;
-  left: 0;
-  right: 0;
-  margin: auto;
+  width: var(--clock-hand-width);
+  height: var(--clock-hand-width);
+  box-sizing: border-box;
+  border: calc(0.25 * var(--clock-hand-width)) solid var(--clock-hand-second-color);
+  border-radius: 50%;
+  background-color: inherit;
 }
 
-.buttons-container {
-  position: absolute;
-  bottom: 15px;
-  right: 0;
-  height: 40px;
-  font-family: "Roboto", sans-serif;
-}
-
-.cancel-button,
-.save-button {
-  float: left;
-  height: 40px;
-  line-height: 40px;
-  padding: 0 15px;
-  border-radius: 2px;
-  margin-right: 15px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.cancel-button {
-  background: white;
-  color: #0DAD83;
-}
-
-.save-button {
-  background: #0DAD83;
-  color: white;
-}
-
-/* Datepicker Stuff */
-.datepicker {
+/* Clock nums */
+.wall-clock-nums {
   position: relative;
-  width: 100%;
-  display: block;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -o-user-select: none;
-  user-select: none;
-  font-family: "Roboto", sans-serif;
-  overflow: hidden;
-  transition: background 0.15s ease;
-}
-
-.datepicker.am {
-  background: white;
-}
-
-.datepicker.pm {
-  background: #0DAD83;
-}
-
-.datepicker-header {
-  width: 100%;
-  color: white;
-  overflow: hidden;
-}
-
-.datepicker-title {
-  width: 50%;
-  float: left;
-  height: 60px;
-  line-height: 60px;
-  padding: 0 15px;
-  text-align: left;
-  font-size: 20px;
-}
-
-.datepicker-subheader {
-  width: 50%;
-  float: left;
-  height: 60px;
-  line-height: 60px;
-  font-size: 14px;
-  padding: 0 15px;
-  text-align: right;
-}
-
-.datepicker-calendar {
-  width: 50%;
-  float: left;
-  padding: 20px 15px 15px;
-  max-width: 400px;
-  display: block;
-}
-
-.calendar-header {
-  color: black;
-  font-weight: bolder;
-  text-align: center;
-  font-size: 18px;
-  padding: 10px 0;
-  position: relative;
-}
-
-.current-month-container {
-  display: inline-block;
-  height: 30px;
-  position: relative;
-}
-
-.goback,
-.goforward {
-  height: 30px;
-  width: 30px;
-  border-radius: 30px;
-  display: inline-block;
-  cursor: pointer;
-  position: relative;
-  top: -4px;
-}
-
-.goback path,
-.goforward path {
-  transition: stroke 0.15s ease;
-}
-
-.goback {
-  float: left;
-  margin-left: 3.8%;
-}
-
-.goforward {
-  float: right;
-  margin-right: 3.8%;
-}
-
-.calendar-day-header {
-  width: 100%;
-  position: relative;
-}
-
-.day-label {
-  color: #8A8A8A;
-  padding: 5px 0;
-  width: 14.2857142%;
-  display: inline-block;
-  text-align: center;
-}
-
-.datecontainer {
-  width: 14.2857142%;
-  display: inline-block;
-  text-align: center;
-  padding: 4px 0;
-}
-
-.datenumber {
-  max-width: 35px;
-  max-height: 35px;
-  line-height: 35px;
-  margin: 0 auto;
-  color: #8A8A8A;
-  position: relative;
-  text-align: center;
-  cursor: pointer;
-  z-index: 1;
-  transition: all 0.25s cubic-bezier(0.7, -0.12, 0.2, 1.12);
-}
-
-.no-hover .datenumber,
-.no-hover .datenumber:hover,
-.no-hover .datenumber:before,
-.no-hover .datenumber:hover::before {
-  cursor: default;
-  color: #8A8A8A;
-  background: transparent;
-  opacity: 0.5;
-}
-
-.no-hover .datenumber.day-selected {
-  color: white;
-}
-
-.datenumber:hover {
-  color: white;
-}
-
-.datenumber:before {
-  content: "";
-  display: block;
-  position: absolute;
-  height: 35px;
-  width: 35px;
-  border-radius: 100px;
-  z-index: -1;
-  background: transparent;
-  transform: scale(0.75);
-  transition: all 0.25s cubic-bezier(0.7, -0.12, 0.2, 1.12);
-  transition-property: background, transform, color, border;
-}
-
-.datenumber:hover::before {
-  background: #FFAB91;
-  transform: scale(1);
-}
-
-.day-selected {
-  color: white;
-}
-
-.datenumber.day-selected:before {
-  background: #FF6E40;
-  transform: scale(1);
-  -webkit-animation: select-date 0.25s forwards;
-  animation: select-date 0.25s forwards;
-}
-
-@-webkit-keyframes select-date {
-  0% {
-    background: #FFAB91;
-  }
-  100% {
-    background: #FF6E40;
-  }
-}
-@keyframes select-date {
-  0% {
-    background: #FFAB91;
-  }
-  100% {
-    background: #FF6E40;
-  }
-}
-/* timepicker styles */
-.timepicker-container-outer {
-  width: 50%;
-  max-width: 700px;
-  float: left;
-  display: block;
-  padding: 40px 30px 30px;
-  position: relative;
-  top: 50px;
-  overflow: hidden;
-  -webkit-tap-highlight-color: transparent;
-  transition: background 0.15s ease;
-}
-
-.timepicker-container-inner {
   width: 100%;
   height: 100%;
-  max-width: 320px;
-  margin: 0 auto;
-  position: relative;
-  display: block;
+  font-family: "Lucida Console", "Courier New", monospace;
+  font-weight: bold;
 }
-
-.timeline-container {
-  display: block;
-  float: left;
-  position: relative;
-  width: 100%;
-  height: 36px;
-}
-
-.current-time {
-  display: block;
-  position: absolute;
-  z-index: 1;
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
-  top: -25px;
-  left: -20px;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-.current-time::after {
-  content: "";
-  display: block;
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  background: #FF6E40;
-  transition: all 0.15s ease;
-  transform: rotate(45deg);
-  border-radius: 20px 20px 3px 20px;
-  z-index: -1;
-  top: 0;
-}
-
-.actual-time {
-  color: white;
-  line-height: 40px;
-  font-size: 12px;
-  text-align: center;
-  transition: all 0.15s ease;
-}
-
-.timeline {
-  display: block;
-  z-index: 1;
-  width: 100%;
-  height: 2px;
-  position: absolute;
-  bottom: 0;
-}
-
-.timeline::before, .timeline::after {
-  content: "";
-  display: block;
-  width: 2px;
-  height: 10px;
-  top: -6px;
-  position: absolute;
-  background: #0DAD83;
-  left: -1px;
-  transition: background 0.15s ease;
-}
-
-.timeline::after {
-  left: auto;
-  right: -1px;
-}
-
-.hours-container {
-  display: block;
-  z-index: 0;
-  width: 100%;
-  height: 10px;
-  position: absolute;
-  top: 31px;
-  left: 1px;
-}
-
-.hour-mark {
-  width: 2px;
-  display: block;
-  float: left;
-  height: 4px;
-  background: #0DAD83;
-  position: relative;
-  margin-left: calc((100% / 12) - 2px);
-  transition: background 0.15s ease;
-}
-
-.hour-mark:nth-child(3n) {
-  height: 6px;
-  top: -1px;
-}
-
-.display-time {
-  width: calc(60% - 30px);
-  display: block;
-  margin-top: 30px;
-  height: 36px;
-  line-height: 36px;
-  overflow: hidden;
-  float: left;
-  position: relative;
-  font-size: 20px;
-  text-align: center;
-  transition: color 0.15s ease;
-}
-
-.decrement-time,
-.increment-time {
-  cursor: pointer;
-  position: absolute;
-  display: block;
-  width: 24px;
-  height: 24px;
-  line-height: 24px;
-  top: 6px;
-  font-size: 20px;
-}
-
-.decrement-time {
-  left: 0;
-  text-align: left;
-}
-
-.increment-time {
-  right: 0;
-  text-align: right;
-}
-
-.increment-time path,
-.decrement-time path {
-  transition: all 0.15s ease;
-}
-
-.time {
-  width: calc(100% - 48px);
-  position: relative;
-  left: 24px;
-  height: 36px;
-}
-.time:after {
-  content: "";
-  height: 2px;
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-  background: white;
-  left: 0;
-  right: 0;
-  opacity: 0.5;
-  transition: all 0.15s ease;
-}
-
-.time.time-active:after {
-  display: none;
-}
-
-.time-input {
+.wall-clock-nums [num] {
+  --num-degree-pos: 0deg; /* for num 12 */
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 34px;
-  line-height: 34px;
-  bottom: 2px;
-  width: 100%;
-  border: none;
-  background: none;
+  bottom: 0;
+  transform: rotate(var(--num-degree-pos));
+/*   background-color: blue; */
+}
+.wall-clock-nums [num]::before {
+  content: attr(num);
+  line-height: calc(0.1 * var(--clock-size));
+  font-size: calc(0.1 * var(--clock-size));
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: calc(0.1 * var(--clock-size));
+  heigth: calc(0.1 * var(--clock-size));
   text-align: center;
-  color: white;
-  font-size: inherit;
-  opacity: 0;
-  transition: all 0.15s ease;
-  cursor: pointer;
+  transform: translateX(-50%) rotate(calc(-1 * var(--num-degree-pos)));
 }
-.time-input:focus, .time-input:active {
-  outline: none;
+.wall-clock-nums [num]:not(.numeric)::before {
+  --num-degree-pos: 0deg;
+  content: '';
+  background-color: var(--text-color);
+  width: calc(0.007 * var(--clock-size));
+  height: calc(0.05 * var(--clock-size));
+}
+.wall-clock-nums [num$=".5"]:not(.numeric)::before {
+  width: calc(0.001 * var(--clock-size));
+  height: calc(0.025 * var(--clock-size));
+}
+.wall-clock-nums [num="12.5"] {--num-degree-pos: 15deg;}
+.wall-clock-nums [num="1"] {--num-degree-pos: 30deg;}
+.wall-clock-nums [num="1.5"] {--num-degree-pos: 45deg;}
+.wall-clock-nums [num="2"] {--num-degree-pos: 60deg;}
+.wall-clock-nums [num="2.5"] {--num-degree-pos: 75deg;}
+.wall-clock-nums [num="3"] {--num-degree-pos: 90deg;}
+.wall-clock-nums [num="3.5"] {--num-degree-pos: 105deg;}
+.wall-clock-nums [num="4"] {--num-degree-pos: 120deg;}
+.wall-clock-nums [num="4.5"] {--num-degree-pos: 135deg;}
+.wall-clock-nums [num="5"] {--num-degree-pos: 150deg;}
+.wall-clock-nums [num="5.5"] {--num-degree-pos: 165deg;}
+.wall-clock-nums [num="6"] {--num-degree-pos: 180deg;}
+.wall-clock-nums [num="6.5"] {--num-degree-pos: 195deg;}
+.wall-clock-nums [num="7"] {--num-degree-pos: 210deg;}
+.wall-clock-nums [num="7.5"] {--num-degree-pos: 225deg;}
+.wall-clock-nums [num="8"] {--num-degree-pos: 240deg;}
+.wall-clock-nums [num="8.5"] {--num-degree-pos: 255deg;}
+.wall-clock-nums [num="9"] {--num-degree-pos: 270deg;}
+.wall-clock-nums [num="9.5"] {--num-degree-pos: 285deg;}
+.wall-clock-nums [num="10"] {--num-degree-pos: 300deg;}
+.wall-clock-nums [num="10.5"] {--num-degree-pos: 315deg;}
+.wall-clock-nums [num="11"] {--num-degree-pos: 330deg;}
+.wall-clock-nums [num="11.5"] {--num-degree-pos: 345deg;}
+
+/* Clock hands */
+.wall-clock-hands,
+.wall-clock-hands > *,
+.wall-clock-hands > *::before {
+  position: absolute;
+  box-shadow: 0 0 var(--clock-border-width) var(--color-shadow);
+}
+.wall-clock-hands > * {
+  --hand-rotate-deg-func: 6deg; /* for second */
+  transform : rotate(calc(var(--hand-rotate-deg-func) * var(--time)));
 }
 
-.formatted-time {
-  cursor: pointer;
+.wall-clock-hands__hour::before {
+  content: '';
+  height: calc(0.3 * var(--clock-size));
+  width: calc(0.75 * var(--clock-hand-width));
+  background-color: var(--text-color);
+  border-radius: var(--clock-hand-width);
+  transform: translate(-50%, -100%);
+}
+.wall-clock-hands__minute::before {
+  content: '';
+  height: calc(0.4 * var(--clock-size));
+  width: calc(0.5 * var(--clock-hand-width));
+  background-color: var(--text-color);
+  border-radius: var(--clock-hand-width);
+  transform: translate(-50%, -100%);
+}
+.wall-clock-hands__second::before {
+  content: '';
+  height: calc(0.5 * var(--clock-size));
+  width: calc(0.25 * var(--clock-hand-width));
+  background-color: var(--clock-hand-second-color);
+  border-radius: var(--clock-hand-width);
+  transform: translate(-50%, calc(-0.43 * var(--clock-size)));
+}
+.wall-clock-hands__hour {
+  --hand-rotate-deg-func: calc(6deg / 60 / 12);
+}
+.wall-clock-hands__minute {
+  --hand-rotate-deg-func: calc(6deg / 60);
+}
+.wall-clock-hands__second {
+  --hand-rotate-deg-func: 6deg;
 }
 
-.time-input:focus {
-  cursor: auto;
+/* Animation */
+.wall-clock.animate .wall-clock-hands > * {
+  animation: clock-time calc(1s * (12 * 60 * 60)) linear infinite;
 }
-.time-input:focus ~ .formatted-time {
-  border-radius: 2px;
-  background: #0DAD83;
-  color: white;
-  cursor: default;
+@keyframes clock-time {
+  to {
+    transform : rotate(calc(var(--hand-rotate-deg-func) * (var(--time) + (12 * 60 * 60))));
+  }
 }
 
-.am-pm-container {
-  width: 40%;
-  padding-left: 15px;
-  float: right;
-  height: 36px;
-  line-height: 36px;
-  display: block;
+
+/* CLOCK */
+.digital-clock { 
+  font-family: 'Digital Numbers', sans-serif;
+  margin: 30px 0;
+  padding: 8px 16px;
+  background-color: #0009;
+  color: #fff;
+  display: flex;
+  --corner:10px;
+  clip-path: polygon(
+    0 var(--corner),
+    var(--corner) 0,
+    calc(100% - var(--corner)) 0,
+    100% var(--corner),
+    100% calc(100% - var(--corner)),
+    calc(100% - var(--corner)) 100%,
+    var(--corner) 100%,
+    0% calc(100% - var(--corner)),
+    0% var(--corner)
+  );
+}
+.digital-clock > * {
   position: relative;
-  margin-top: 30px;
 }
-
-.am-pm-button {
-  width: calc(50% - 5px);
-  height: 36px;
-  line-height: 36px;
-  background: #2196F3;
-  text-align: center;
-  color: white;
-  border-radius: 4px;
-  float: left;
-  cursor: pointer;
-}
-
-.am-pm-button:first-child {
-  background: #0DAD83;
-  color: white;
-}
-
-.am-pm-button:last-child {
-  background: white;
-  color: #0DAD83;
-  margin-left: 10px;
-}
-
-@-webkit-keyframes select-date-pm {
-  0% {
-    background: rgba(255, 255, 255, 0.5);
-  }
-  100% {
-    background: #FFF;
-  }
-}
-@keyframes select-date-pm {
-  0% {
-    background: rgba(255, 255, 255, 0.5);
-  }
-  100% {
-    background: #FFF;
-  }
-}
-.datepicker.am .datepicker-header {
-  color: white;
-  background: #0DAD83;
-}
-.datepicker.am .current-time::after {
-  background: #0DAD83;
-}
-.datepicker.am .actual-time {
-  color: white;
-}
-.datepicker.am .display-time {
-  color: #FF6E40;
-}
-.datepicker.am .time-input {
-  color: #FF693C;
-}
-.datepicker.am .time:after {
-  background: #FF693C;
-}
-.datepicker.am .increment-time path,
-.datepicker.am .decrement-time path {
-  stroke: #FF693C;
-}
-
-.datepicker.pm .datepicker-header {
-  background: white;
-  color: #FF693C;
-}
-.datepicker.pm .datepicker-subheader {
-  color: #0DAD83;
-}
-.datepicker.pm .goback:before,
-.datepicker.pm .goback:after,
-.datepicker.pm .goforward:before,
-.datepicker.pm .goforward:after {
-  background: white;
-}
-.datepicker.pm .day-label {
-  color: white;
-}
-.datepicker.pm .datenumber {
-  color: white;
-}
-.datepicker.pm .datenumber:hover::before {
-  background: rgba(255, 255, 255, 0.5);
-  transform: scale(1);
-}
-.datepicker.pm .datenumber.day-selected {
-  color: #FF693C;
-}
-.datepicker.pm .datenumber.day-selected:before {
-  background: white;
-  -webkit-animation: select-date-pm 0.25s forwards;
-  animation: select-date-pm 0.25s forwards;
-}
-.datepicker.pm .current-month-container {
-  color: white;
-}
-.datepicker.pm .current-time::after {
-  background: white;
-}
-.datepicker.pm .actual-time {
-  color: #FF6E40;
-}
-.datepicker.pm .display-time {
-  color: white;
-}
-.datepicker.pm .timeline::before, .datepicker.pm .pm .timeline::after {
-  background: white;
-}
-.datepicker.pm .hour-mark {
-  background: white;
-}
-.datepicker.pm .am-pm-button:last-child {
-  color: #FF6E40;
-}
-.datepicker.pm .cancel-button {
-  background: none;
-  color: white;
-}
-.datepicker.pm .save-button {
-  background: white;
-  color: #FF693C;
-}
-.datepicker.pm .goback path,
-.datepicker.pm .goforward path {
-  stroke: white;
-}
-.datepicker.pm .time-input:focus ~ .formatted-time {
-  background: white;
-  color: #FF693C;
-}
-
-.datepicker.compact .datepicker-title,
-.datepicker.compact .datepicker-subheader {
-  width: 100%;
-  text-align: center;
-}
-.datepicker.compact .datepicker-title {
-  height: 50px;
-  line-height: 50px;
-}
-.datepicker.compact .datepicker-subheader {
-  height: 30px;
-  line-height: 30px;
-}
-.datepicker.compact .display-time {
-  width: 60%;
-  font-size: 20px;
-  line-height: 36px;
-}
-.datepicker.compact .app-container {
-  width: 100%;
-}
-.datepicker.compact .datepicker-calendar {
-  width: 100%;
-  margin: 0 auto;
-  float: none;
-}
-.datepicker.compact .timepicker-container-outer {
-  width: 100%;
-  margin: 0 auto;
-  float: none;
-  top: -15px;
-}
-.datepicker.compact .buttons-container {
+.digital-clock p {
+  font-size: 36px;
   position: relative;
-  float: right;
+  margin: 0;
+  z-index: 100;
 }
+.digital-clock p.placeholder {
+  color: #fff2;
+  z-index: 50;
+}
+.digital-clock .numbers :not(.placeholder) {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+/*END CLOCK*/
 </style>
