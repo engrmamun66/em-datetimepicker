@@ -18,7 +18,7 @@ yarn run cdn
 ```
 
 
-## Repo Link
+## Repo Link in npmjs.com
 
 ```sh
 https://www.npmjs.com/package/em-datetimepicker
