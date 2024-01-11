@@ -33,27 +33,6 @@ example-2:
     <p>{{ customer_company }}</p>
 </div>
 
-## Page Like in href of a tag
-a[RentMyPageLink="products_list"]
-a[RentMyPageLink="checkout"]
-a[RentMyPageLink="cart"]
-a[RentMyPageLink="login"]
-a[RentMyPageLink="logout"]
-a[RentMyPageLink="registration"]
-a[RentMyPageLink="reset_password"]
-a[RentMyPageLink="customer_profile"]
-a[RentMyPageLink="customer_change_password"]
-a[RentMyPageLink="customer_change_avatar"]
-a[RentMyPageLink="customer_order_history"]
-a[RentMyPageLink="product_details"][uid="product_uid"]
-a[RentMyPageLink="package_details"][uid="product_uid"]
-a[RentMyPageLink="event_management"]
-a[RentMyPageLink="rentmy_dashboard"]
+### Three
+Set temp-hidden attribute, to hide until ready the component
 
-## Global Logout class and id
-#rentmy_logout_btn || .rentmy_logout_btn
-
-## Some Important classes for wp menu
-.RentMy-login-page
-.RentMy-client-portal-page
-.RentMyMiniCart
