@@ -1,5 +1,4 @@
 ## Project Setup
-
 ```sh
 yarn install
 ```
@@ -16,6 +15,13 @@ yarn run prod
 
 ```sh
 yarn run cdn
+```
+
+
+## Repo Link
+
+```sh
+https://www.npmjs.com/package/em-datetimepicker
 ```
 
 
