@@ -1,14 +1,18 @@
 <script setup>
-import { ref, reactive, defineProps, onMounted, inject, defineEmits } from 'vue';
+import { ref, computed, reactive, defineProps, onMounted, inject, defineEmits } from 'vue';
 const { helper } = inject('utils');
 let emits = defineEmits(['open', 'close', 'change'])
 let { target, options, parentDiv } = defineProps(['target', 'options', 'parentDiv']);
 const defaultOptions = {
+    startDate: options?.rangePicker ?? new Date(),
     rangePicker: options?.rangePicker ?? false,
     adjustWeekday: options?.adjustWeekday ?? 0,
 };
 // let emDatetimepicker = inject('emDatetimepicker');
 
+const current= reactive({
+    day: ''
+});
 const picker= {};
 picker.setStartDate = function  (date) {
     
@@ -41,11 +45,11 @@ const state = reactive({
     }, 
 });
 
-const fn = {
+const get = {
     /**
      * @returns [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
     */
-    weekDays: function () { 
+    weekDays: computed( () => { 
         const daysOfWeek = [];
         const adjust = defaultOptions.adjustWeekday;
         for (let i = 1; i <= 7; i++) {
@@ -57,7 +61,31 @@ const fn = {
             daysOfWeek.push(dayOfWeek);
         }
         return daysOfWeek;
-    },
+    }),
+    weekDays: computed( () => { 
+        const monthIndex = new Date().getMonth();
+        const currentYear = new Date().getFullYear();
+        const firstDayOfMonth = new Date(currentYear, monthIndex, 1);
+        const lastDayOfMonth = new Date(currentYear, monthIndex + 1, 0); 
+        let days = [];
+        const options = {
+            weekday: 'long', // long or 'short', 'narrow'
+            year: 'numeric', // numeric or '2-digit'
+            month: 'long', // long or 'short', 'narrow'
+            day: 'numeric', // numeric or '2-digit'
+            hour: 'numeric', // numeric or '2-digit'
+            minute: 'numeric', // numeric or '2-digit'
+            second: 'numeric', // numeric or '2-digit'
+            timeZoneName: 'short', // short or 'long'
+        };       
+        for (let day = 1; day <= lastDayOfMonth.getDate(); day++) {
+            const currentDate = new Date(currentYear, monthIndex, day);
+            console.log(currentDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
+        }
+
+    }),
+
+
 };
 
 
@@ -67,7 +95,7 @@ onMounted(() => {
     console.log('mounted');
     console.log(options);
     // target.dispatchEvent(state.events.open());
-    console.log(fn.weekDays());
+    console.log(fn.weekDays);
 })
 
 </script>
@@ -80,16 +108,16 @@ onMounted(() => {
         <div class="days-month-box content">
             <header>
                 <i class='bx bx-chevron-left'></i>
-                <span class="cp" @click="state.current_view = 'months'">J`ANEIRO 2024</span>
+                <span class="cp" @click="state.current_view = 'months'">January 2024</span>
                 <i class='bx bx-chevron-right'></i>
             </header>
             <main class="main-weekdays">
-                <template v-for="(day, index) in fn.weekDays()" :key="index">
+                <template v-for="(day, index) in get.weekDays" :key="index">
                     <div class="active">{{ day }}</div>            
                 </template>
             </main>
             <main class="main-days">
-                <div class="">1</div>
+                <div class="active">1</div>
                 <div class="">2</div>
                 <div class="">3</div>
                 <div class="">4</div>
@@ -99,7 +127,7 @@ onMounted(() => {
                 <div class="">8</div>
                 <div class="">9</div>
                 <div class="">10</div>
-                <div class="active">11</div>
+                <div class="">11</div>
                 <div class="">12</div>
                 <div class="">13</div>
                 <div class="">14</div>
