@@ -12,7 +12,18 @@ const helpers = {
     printDaysOfMonth: function(monthIndex) {
         const currentYear = new Date().getFullYear();
         const firstDayOfMonth = new Date(currentYear, monthIndex, 1);
-        const lastDayOfMonth = new Date(currentYear, monthIndex + 1, 0);        
+        const lastDayOfMonth = new Date(currentYear, monthIndex + 1, 0); 
+        let days = [];
+        const options = {
+            weekday: 'long', // long or 'short', 'narrow'
+            year: 'numeric', // numeric or '2-digit'
+            month: 'long', // long or 'short', 'narrow'
+            day: 'numeric', // numeric or '2-digit'
+            hour: 'numeric', // numeric or '2-digit'
+            minute: 'numeric', // numeric or '2-digit'
+            second: 'numeric', // numeric or '2-digit'
+            timeZoneName: 'short', // short or 'long'
+        };       
         for (let day = 1; day <= lastDayOfMonth.getDate(); day++) {
             const currentDate = new Date(currentYear, monthIndex, day);
             console.log(currentDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));

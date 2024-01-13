@@ -7,15 +7,44 @@ class EmDatetimePickerClass {
 
     // adding Element 
     init(inputElement){
-        let element = null;        
-        if(inputElement.ajaxComplete){ 
-            element = inputElement?.[0]; // selected with jQuery
+        let element = null; 
+        if(!inputElement) return;
+        let type = typeof inputElement;
+        if(type === 'string'){
+            element = document.querySelector(inputElement);
         } else {
-            element = inputElement; // selected with vanila js
+            if(inputElement.ajaxComplete){ 
+                element = inputElement?.[0]; // selected with jQuery
+            } else {
+                element = inputElement; // selected with vanila js
+            }
         }
+        
         if(element instanceof HTMLElement){   
             this.elements = [...this.elements, element];
-        }         
+        }    
+        
+        /* -------------------------------------------------------------------------- */
+        /*                               With Prototype                               */
+        /* -------------------------------------------------------------------------- */
+
+        if (element instanceof HTMLElement) {
+            this.elements = [...this.elements, element];
+        
+            // Check if the method is not already defined
+            if (!element.addListener) {
+                Object.defineProperty(element, 'addListener', {
+                    value: function () {
+                        console.log('hello element');
+                    },
+                    writable: true,
+                    configurable: true,
+                });
+            }
+        }
+
+
+        return element;
     }  
 
     
@@ -24,14 +53,14 @@ class EmDatetimePickerClass {
     /*            Start Listener          */
     /* ---------------------------------- */
 
-    addListener(eventName, callback) {
+    fireEvent(eventName, callback) {
         if (!this.events[eventName]) {
             this.events[eventName] = [];
         }
         this.events[eventName].push(callback);
     }
 
-    fireEvent(eventName, data, useFilter=true) {
+    emit(eventName, data, useFilter=true) {
         const eventHandlers = this.events[eventName] || [];
         const allEventHandlers = this.events['*'] || [];
 
