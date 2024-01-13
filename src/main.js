@@ -46,5 +46,4 @@ window.addEventListener("DOMContentLoaded", (e) => {
     .provide('emitter', emitter)
     .provide('components', components)
     .mount('#em-datepicker-app');
-    console.log('MOunted');
 })

@@ -7,8 +7,7 @@ const state = reactive({
 });
 
 onMounted(() => {
-    console.log('target', target);
-    console.log('parentDiv', parentDiv);
+    console.log('mounted');
 })
 
 </script>

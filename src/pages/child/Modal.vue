@@ -13,9 +13,7 @@ let close = (event) => {
   emit('close');
   emit('update:modelValue', false);
 }
-onMounted(() => {
-  console.log('mounted modal');
-})
+
 </script>
 
 <template>
