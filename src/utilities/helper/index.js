@@ -8,7 +8,19 @@ const helpers = {
         let parser = new DOMParser();
         let dom = parser.parseFromString(html_content, 'text/html');
         return dom;
-    },    
+    },
+    printDaysOfMonth: function(monthIndex) {
+        const currentYear = new Date().getFullYear();
+        const firstDayOfMonth = new Date(currentYear, monthIndex, 1);
+        const lastDayOfMonth = new Date(currentYear, monthIndex + 1, 0);        
+        for (let day = 1; day <= lastDayOfMonth.getDate(); day++) {
+            const currentDate = new Date(currentYear, monthIndex, day);
+            console.log(currentDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
+        }
+    },
+      
+     
+       
     /* -------------------------------------------------------------------------- */
     /*                           Device Identify with JS                          */
     /* -------------------------------------------------------------------------- */

@@ -1,6 +1,8 @@
 <script setup>
-import { ref, reactive, defineProps, onMounted } from 'vue';
+import { ref, reactive, defineProps, onMounted, inject } from 'vue';
+const { helper } = inject('utils');
 let { target, parentDiv } = defineProps(['target', 'parentDiv']);
+
 
 const state = reactive({
     current_view: 'days',
@@ -8,6 +10,7 @@ const state = reactive({
 
 onMounted(() => {
     console.log('mounted');
+    console.log(helper.printDaysOfMonth(1));
 })
 
 </script>

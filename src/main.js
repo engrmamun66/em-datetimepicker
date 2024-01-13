@@ -2,36 +2,10 @@ import './assets/css/module.css';
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import App from './App.vue';
+import emDatetimepicker from './EventEmitter';
 import { emitter, utils, components } from './import-hub';
 
-HTMLElement.prototype.test = function () {
-    console.log('Hello world')
-}
-
-const { VITE_THEME } = import.meta.env
-
-/**
-  We using global event. That's loading from our plugin
-  If for some reason the file is not loaded, thi code will help to avoid fatal error
- */
-if(typeof RentMyEvent == 'undefined'){    
-    window.RentMyEvent = {
-        on: (eventName, callback)=> null,
-        emit: (eventName, data, useFilter=true)=> null,
-        off: (eventName, callback)=> null,
-        off_all: (eventName)=> null,
-        add_action: (eventName, callback)=> null,
-        do_action: (eventName, data, useFilter=true)=> null,
-        remove_action: (eventName, callback)=> null,
-        remove_actions: (eventName)=> null,
-        add_filter: (filterName, callback)=> null,
-        apply_filters: (filterName, data)=> data,
-        remove_filter: (filterName, callback)=> null,
-        remove_filters: (filterName)=> null,
-        clearAll(){}
-    };
-} 
-
+globalThis.emDatetimepicker = emDatetimepicker; 
 
 const app = createApp(App)
 app.use(createPinia())
@@ -45,5 +19,6 @@ window.addEventListener("DOMContentLoaded", (e) => {
     .provide('utils', utils)
     .provide('emitter', emitter)
     .provide('components', components)
+    .provide('emDatetimepicker', emDatetimepicker)
     .mount('#em-datepicker-app');
 })

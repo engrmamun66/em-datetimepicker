@@ -1,8 +1,12 @@
 <script setup>
-import { ref } from  'vue';
+import { ref, inject } from  'vue';
 import PickerHolder from './pages/PickerHolder.vue'
-let targets = Array.from(document.querySelectorAll('.em-datetimepicker'));
+
+let emDatetimepicker = inject('emDatetimepicker');
+let targets = emDatetimepicker.elements;
 let target_divs = ref([]);
+ 
+
 function wraperByDiv() {
     targets.forEach(target => {
         let div = document.createElement('div');
