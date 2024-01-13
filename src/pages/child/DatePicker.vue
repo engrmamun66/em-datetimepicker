@@ -47,12 +47,13 @@ const fn = {
     */
     weekDays: function () { 
         const daysOfWeek = [];
+        const adjust = defaultOptions.adjustWeekday;
         for (let i = 1; i <= 7; i++) {
             const currentDate = new Date();
-            currentDate.setDate(currentDate.getDate() + i);
+            currentDate.setDate(currentDate.getDate() + (i + adjust));
 
             const options = { weekday: 'short' };
-            const dayOfWeek = currentDate.toLocaleDateString('en-US', options);
+            const dayOfWeek = currentDate.toLocaleDateString('en-IN', options);
             daysOfWeek.push(dayOfWeek);
         }
         return daysOfWeek;
