@@ -1,28 +1,72 @@
 <script setup>
-import { ref, reactive, defineProps, onMounted, inject } from 'vue';
+import { ref, reactive, defineProps, onMounted, inject, defineEmits } from 'vue';
 const { helper } = inject('utils');
-let { target, parentDiv } = defineProps(['target', 'parentDiv']);
-let emDatetimepicker = inject('emDatetimepicker');
-
-const picker = {};
-let events = {
-    pickerOpne(data={}){
-        return new CustomEvent('picker:open', {
-            bubbles: true,
-            cancelable: true,
-            detail: { picker, ...data },
-        })
-    }
+let emits = defineEmits(['open', 'close', 'change'])
+let { target, options, parentDiv } = defineProps(['target', 'options', 'parentDiv']);
+const defaultOptions = {
+    rangePicker: options?.rangePicker ?? false,
+    adjustWeekday: options?.adjustWeekday ?? 0,
 };
- 
+// let emDatetimepicker = inject('emDatetimepicker');
+
+const picker= {};
+picker.setStartDate = function  (date) {
+    
+}
+picker.setEndDate = function  (date) {
+    
+}
+
 
 const state = reactive({
     current_view: 'days',
+    events: {
+        open: function(data={}) {
+            return helper.createEvent('picker:open', {picker, ...data})
+        },
+        close: function(data={}) {
+            return helper.createEvent('picker:close', {picker, ...data})
+        },
+        change: function(data={}) {
+            return helper.createEvent('picker:change', {picker, ...data})
+        },
+    },
+    selected: {
+        startDate: '',
+        endDate: '',
+        old: {
+            startDate: '',
+            endDate: '',
+        }
+    }, 
 });
+
+const fn = {
+    /**
+     * @returns [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
+    */
+    weekDays: function () { 
+        const daysOfWeek = [];
+        for (let i = 1; i <= 7; i++) {
+            const currentDate = new Date();
+            currentDate.setDate(currentDate.getDate() + i);
+
+            const options = { weekday: 'short' };
+            const dayOfWeek = currentDate.toLocaleDateString('en-US', options);
+            daysOfWeek.push(dayOfWeek);
+        }
+        return daysOfWeek;
+    },
+};
+
+
+
 
 onMounted(() => {
     console.log('mounted');
-   target.dispatchEvent(events.pickerOpne({startDate: '33/12/2024'}));
+    console.log(options);
+    // target.dispatchEvent(state.events.open());
+    console.log(fn.weekDays());
 })
 
 </script>
@@ -32,12 +76,17 @@ onMounted(() => {
     <!-- Months of year -->
     <template v-if="state.current_view=='days'">
         <!-- days of month -->
-        <div id="dayMonth" class="days-month-box content">
+        <div class="days-month-box content">
             <header>
                 <i class='bx bx-chevron-left'></i>
                 <span class="cp" @click="state.current_view = 'months'">J`ANEIRO 2024</span>
                 <i class='bx bx-chevron-right'></i>
             </header>
+            <main class="main-weekdays">
+                <template v-for="(day, index) in fn.weekDays()" :key="index">
+                    <div class="active">{{ day }}</div>            
+                </template>
+            </main>
             <main class="main-days">
                 <div class="">1</div>
                 <div class="">2</div>
@@ -132,7 +181,7 @@ onMounted(() => {
     padding: 32px;
     background-color: #fff;
     box-shadow: 0px 8px 32px rgba(0, 0, 0, .16);
-    border-radius: 16px;
+    border-radius: 6px;
     width: fit-content;
 }
 
@@ -163,6 +212,7 @@ header i:hover {
     gap: 16px;
 }
 
+.main-weekdays,
 .main-days {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -207,7 +257,6 @@ main>div.active {
     border-radius: 8px;
     font-weight: 700;
     color: white;
-
     position: relative;
 }
 

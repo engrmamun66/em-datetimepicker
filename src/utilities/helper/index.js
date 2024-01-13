@@ -5,6 +5,13 @@ const helpers = {
         let dom = parser.parseFromString(html_content, 'text/html');
         return dom;
     },
+    createEvent(eventName, data={}){
+        return new CustomEvent(eventName, {
+            bubbles: true,
+            cancelable: true,
+            detail: data,
+        })
+    },
     printDaysOfMonth: function(monthIndex) {
         const currentYear = new Date().getFullYear();
         const firstDayOfMonth = new Date(currentYear, monthIndex, 1);

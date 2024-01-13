@@ -9,11 +9,11 @@ let target_divs = ref([]);
 
 function wraperByDiv() {
     targets.forEach(target => {
+        let { element, options } = target;
         let div = document.createElement('div');
         div.style.position = 'relative';
-        // div.classList = 'light-theme';
-        target.insertAdjacentElement("beforebegin", div);
-        div.appendChild(target);
+        element.insertAdjacentElement("beforebegin", div);
+        div.appendChild(element);
         target_divs.value = [...target_divs.value, div];
     })
 }
@@ -22,6 +22,6 @@ wraperByDiv()
 
 <template>  
     <template v-for="(target, index) in targets" :key="index">   
-        <PickerHolder :target="target" :parentDiv="target_divs[index]"></PickerHolder>
+        <PickerHolder :target="target.element" :options="target.options" :parentDiv="target_divs[index]"></PickerHolder>
     </template>  
 </template>

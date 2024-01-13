@@ -26,16 +26,20 @@
         // });
 
         
-        emDatetimepicker.init('#input1')
-        .addEventListener('picker:open', ({detail: data}) => {
-            console.log('data', data);
-        });
+        // emDatetimepicker.init('#input1', {})
+        // .addEventListener('picker:open', ({detail: data}) => {
+        //     console.log('data', data);
+        // });
+        let options = {
+            rangePicker: false,
+            // adjustWeekday: 2,
+        }
 
         
-        // emDatetimepicker.init('#input1')
-        // $('#input1').on('picker:open', (data) => {
-        //     console.log('data', data);
-        // })
+        emDatetimepicker.init('#input1', options)
+        $('#input1').on('picker:open', ({detail: data}) => {
+            console.log('data', data);
+        })
    </script>
 </body>
 </html>

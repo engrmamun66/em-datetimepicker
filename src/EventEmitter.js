@@ -6,7 +6,7 @@ class EmDatetimePickerClass {
     }
 
     // adding Element 
-    init(inputElement){
+    init(inputElement, options={}){
         let element = null; 
         if(!inputElement) return;
         let type = typeof inputElement;
@@ -21,7 +21,7 @@ class EmDatetimePickerClass {
         }
         
         if(element instanceof HTMLElement){   
-            this.elements = [...this.elements, element];
+            this.elements = [...this.elements, { element, options }];
         }
 
         return element;
