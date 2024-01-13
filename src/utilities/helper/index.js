@@ -1,7 +1,3 @@
-import http from '../http';
-const { VITE_ASSET_URL: assetURL } = import.meta.env;
-
-
 const helpers = {
     domParser: function(html_content=''){
         if(!html_content) return;
