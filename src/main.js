@@ -36,19 +36,15 @@ if(typeof RentMyEvent == 'undefined'){
 const app = createApp(App)
 app.use(createPinia())
 
-if(document.getElementById('appDevLocal')){
-    app.mount('#appDevLocal');
-} else {
+window.addEventListener("DOMContentLoaded", (e) => {
     let app_div = document.createElement('div');
-    app_div.id = 'emdatepicker-app';
+    app_div.id = 'em-datepicker-app';
     app_div.style.display = 'none';
     document.body.append(app_div);
     app
     .provide('utils', utils)
     .provide('emitter', emitter)
     .provide('components', components)
-    .mount('#emdatepicker-app')
-}
-
-
-
+    .mount('#em-datepicker-app');
+    console.log('MOunted');
+})

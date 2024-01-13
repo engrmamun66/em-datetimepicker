@@ -1,6 +1,6 @@
 <script setup>
 import Picker from './child/DatePicker.vue';
-import PickerModal from '@components/modal/PickerModal.vue';
+import Modal from './child/Modal.vue';
 import { ref, defineProps, onMounted } from 'vue';
 let { target, parentDiv } = defineProps(['target', 'parentDiv']);
 let showModal = ref(false);
@@ -12,9 +12,9 @@ onMounted(() => {
 </script>
 
 <template>
-    <PickerModal v-if="showModal" v-model="showModal">
+    <Modal v-if="showModal" v-model="showModal">
         <Picker :target="target" :parentDiv="parentDiv"></Picker>
-    </PickerModal>
+    </Modal>
 
 </template>
 

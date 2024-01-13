@@ -136,6 +136,7 @@ header i {
     border-radius: 50%;
     color: #666;
     font-size: 20px;
+    cursor: pointer;
 }
 
 header i:hover {
