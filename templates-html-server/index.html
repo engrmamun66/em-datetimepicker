@@ -21,12 +21,21 @@
     <input id="input1" type="text" class="emDatetimepicker px-2" data-settings="">   
    <script>
         // let input = document.querySelector('#input1');
-        // emDatetimepicker.init(input);
+        // emDatetimepicker.init(input).addEventListener('picker:open', (data) => {
+        //     console.log('data', data);
+        // });
+
+        
         emDatetimepicker.init('#input1')
-        // .addListener('openpicker', (data) => {
-        //     console.log(data);
-        // } );
-        // console.log($('#input1'));
+        .addEventListener('picker:open', ({detail: data}) => {
+            console.log('data', data);
+        });
+
+        
+        // emDatetimepicker.init('#input1')
+        // $('#input1').on('picker:open', (data) => {
+        //     console.log('data', data);
+        // })
    </script>
 </body>
 </html>

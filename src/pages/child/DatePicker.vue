@@ -2,7 +2,19 @@
 import { ref, reactive, defineProps, onMounted, inject } from 'vue';
 const { helper } = inject('utils');
 let { target, parentDiv } = defineProps(['target', 'parentDiv']);
+let emDatetimepicker = inject('emDatetimepicker');
 
+const picker = {};
+let events = {
+    pickerOpne(data={}){
+        return new CustomEvent('picker:open', {
+            bubbles: true,
+            cancelable: true,
+            detail: { picker, ...data },
+        })
+    }
+};
+ 
 
 const state = reactive({
     current_view: 'days',
@@ -10,7 +22,7 @@ const state = reactive({
 
 onMounted(() => {
     console.log('mounted');
-    console.log(helper.printDaysOfMonth(1));
+   target.dispatchEvent(events.pickerOpne({startDate: '33/12/2024'}));
 })
 
 </script>

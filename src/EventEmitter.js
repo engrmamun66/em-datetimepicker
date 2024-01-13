@@ -22,27 +22,7 @@ class EmDatetimePickerClass {
         
         if(element instanceof HTMLElement){   
             this.elements = [...this.elements, element];
-        }    
-        
-        /* -------------------------------------------------------------------------- */
-        /*                               With Prototype                               */
-        /* -------------------------------------------------------------------------- */
-
-        if (element instanceof HTMLElement) {
-            this.elements = [...this.elements, element];
-        
-            // Check if the method is not already defined
-            if (!element.addListener) {
-                Object.defineProperty(element, 'addListener', {
-                    value: function () {
-                        console.log('hello element');
-                    },
-                    writable: true,
-                    configurable: true,
-                });
-            }
         }
-
 
         return element;
     }  
@@ -53,7 +33,7 @@ class EmDatetimePickerClass {
     /*            Start Listener          */
     /* ---------------------------------- */
 
-    fireEvent(eventName, callback) {
+    addListener(eventName, callback) {
         if (!this.events[eventName]) {
             this.events[eventName] = [];
         }
