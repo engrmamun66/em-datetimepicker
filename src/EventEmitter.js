@@ -7,7 +7,15 @@ class EmDatetimePickerClass {
 
     // adding Element 
     init(inputElement){
-        this.elements = [...this.elements, inputElement];
+        let element = null;        
+        if(inputElement.ajaxComplete){ 
+            element = inputElement?.[0]; // selected with jQuery
+        } else {
+            element = inputElement; // selected with vanila js
+        }
+        if(element instanceof HTMLElement){   
+            this.elements = [...this.elements, element];
+        }         
     }  
 
     
