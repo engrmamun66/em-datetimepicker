@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "vite build",
-    "build": "vite build --mode prod",
-    "prod": "vite build --mode prod",
+    "build": "vite build",
+    "watch": "vite build",
     "preview": "vite preview",
     "cdn": "cd dist && php -S localhost:4545"
   },

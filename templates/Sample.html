@@ -10,40 +10,16 @@
     <title>Date Picker</title>
 
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+    <style>       
 
-        html,
-        body {
-            font-family: 'Lato';
-        }
-
-        /* Alinhar ao centro tudo que estiver dentro do body */
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
+        /* =========================== */
+        /* Main Styles */
+        /* =========================== */
 
         .content {
             display: grid;
             grid-template-rows: 40px 1fr;
-            /* 40px: para a 1° linha(header) e 1fr para que a 2°(main) seja flexivel(use todo o conteúdo disponivel) */
             gap: 24px;
-
             padding: 32px;
             background-color: #fff;
             box-shadow: 0px 8px 32px rgba(0, 0, 0, .16);
@@ -138,7 +114,7 @@
 
 <body>
     <div class="container">
-        <div id="app" class="months-box content">
+        <div class="months-box content">
             <header>
                 <i class="ph-bold ph-caret-left"></i>
                 <span></span>
@@ -159,7 +135,7 @@
                 <div class="active">2024</div>
             </main>
         </div>
-        <div id="app" class="months-box content">
+        <div class="months-box content">
             <header>
                 <i class="ph-bold ph-caret-left"></i>
                 <span>2024</span>

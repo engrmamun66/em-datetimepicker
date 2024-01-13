@@ -1,22 +1,23 @@
 <script setup>
-import Picker from './pages/DatePicker.vue'
-let pickers = Array.from(document.querySelectorAll('.em-datetimepicker'));
-pickers.forEach(picker => {
-    let div = document.createElement('div');
-    div.style.position = 'relative';
-    div.insertAdjacentElement("beforebegin", picker);
-    div.appendChild(picker);
-    const parent = picker.parentElement;
-    if(parent) parent.appendChild(div);
-})
+import { ref } from  'vue';
+import PickerHolder from './pages/PickerHolder.vue'
+let targets = Array.from(document.querySelectorAll('.em-datetimepicker'));
+let target_divs = ref([]);
+function wraperByDiv() {
+    targets.forEach(target => {
+        let div = document.createElement('div');
+        div.style.position = 'relative';
+        // div.classList = 'light-theme';
+        target.insertAdjacentElement("beforebegin", div);
+        div.appendChild(target);
+        target_divs.value = [...target_divs.value, div];
+    })
+}
+wraperByDiv()
 </script>
 
 <template>  
-    <template v-for="(picker, index) in pickers" :key="index">
-        <teleport :to="picker">
-            <Picker></Picker>
-        </teleport>
-    </template>
-    
-    
+    <template v-for="(target, index) in targets" :key="index">   
+        <PickerHolder :target="target" :parentDiv="target_divs[index]"></PickerHolder>
+    </template>  
 </template>
