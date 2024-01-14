@@ -6,7 +6,8 @@ let emits = defineEmits(['init', 'open', 'cancel', 'close', 'change']);
 let { target, options, parentDiv, justInitializeValue } = defineProps(['target', 'options', 'parentDiv', 'justInitializeValue']);
 const moment = globalThis.moment;
 // local Example: https://docs.mobiscroll.com/javascript/languages
-const DIAPALY_FORMAT = (options.displayFormat ?? 'DD/MMM/YY');
+const FORMAT = (options.displayFormat ?? 'yyy-MM-DD');
+const DIAPALY_FORMAT = (options.displayFormat ?? 'DD/MMM/yyy');
 const TODAY = moment().format(DIAPALY_FORMAT);
 const defaults = {
     displayFormat: DIAPALY_FORMAT,
@@ -16,7 +17,7 @@ const defaults = {
     adjustWeekday: options?.adjustWeekday ?? 0,
     buttons: options?.buttons ?? true,
 };
-console.log(defaults);
+
  
 
 const picker= {};
@@ -51,6 +52,12 @@ const methods = {
         emits('change');
         target.dispatchEvent(state.events.change(state.pickerValues));
     },
+    /* -------------------------------------------------------------------------- */
+    /*                           Start With Date Picker                           */
+    /* -------------------------------------------------------------------------- */
+    onClickDay: function (day) {
+        
+    }
 };
  
 
@@ -85,6 +92,11 @@ const state = reactive({
     }, 
 });
 
+const temp = reactive({
+    // with Single Date
+    date1: '',
+})
+
 // @returns [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
 const weekDays = computed( () => { 
     const daysOfWeek = [];
@@ -100,25 +112,16 @@ const weekDays = computed( () => {
     return daysOfWeek;
 })
 const monthOfDays = computed( () => { 
-    const monthIndex = new Date().getMonth();
-    const currentYear = new Date().getFullYear();
-    const firstDayOfMonth = new Date(currentYear, monthIndex, 1);
-    const lastDayOfMonth = new Date(currentYear, monthIndex + 1, 0); 
+    const monthIndex = new Date(defaults.startDate).getMonth();
+    const firstDayOfMonth = moment().month(monthIndex).date(1);
+    const daysInMonth = firstDayOfMonth.daysInMonth();
     let days = [];
-    const options = {
-        weekday: 'long', // long or 'short', 'narrow'
-        year: 'numeric', // numeric or '2-digit'
-        month: 'long', // long or 'short', 'narrow'
-        day: 'numeric', // numeric or '2-digit'
-        hour: 'numeric', // numeric or '2-digit'
-        minute: 'numeric', // numeric or '2-digit'
-        second: 'numeric', // numeric or '2-digit'
-        timeZoneName: 'short', // short or 'long'
-    };       
-    for (let day = 1; day <= lastDayOfMonth.getDate(); day++) {
-        const currentDate = new Date(currentYear, monthIndex, day);
-        console.log(currentDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
+    for (let day = 1; day <= daysInMonth; day++) {
+        const currentDay = firstDayOfMonth.date(day);
+        console.log(currentDay.format(FORMAT));
     }
+
+
 });
 
 
@@ -126,12 +129,15 @@ const monthOfDays = computed( () => {
 
 
 onMounted(() => {
+    console.log(monthOfDays.value);
     state.pickerValues.startDate = defaults.startDate;
     state.pickerValues.endDate = defaults.endDate;
     if(justInitializeValue){
         methods.setElementValue();
         methods.initPicker();
     }
+
+
 })
 
 </script>
