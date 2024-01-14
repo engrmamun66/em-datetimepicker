@@ -10,7 +10,6 @@ let { target, options, parentDiv, justInitializeValue } = defineProps(['target',
 const moment = globalThis.moment;
 // local Example: https://docs.mobiscroll.com/javascript/languages
 const FORMATS = {
-    default: 'lll', //YYYY-MM-DD HH:mm:ss
     db: 'YYYY-MM-DD', //YYYY-MM-DD HH:mm:ss
     week_index: 'd', // 0 to 6
     day_index: 'D', // 1 to 31
@@ -20,7 +19,7 @@ const FORMATS = {
 const TODAY = moment().format(FORMATS.db);
 const defaults = {
     displayFormat: FORMATS.forDisplay,
-    startDate: moment().date( options?.startDate ?? TODAY ).format( FORMATS.forDisplay ),
+    startDate: helper.makeDate(options?.startDate ?? TODAY, FORMATS.forDisplay),
     endDate: moment().date( options?.endDate ?? TODAY ).format( FORMATS.forDisplay ),
     rangePicker: options?.rangePicker ?? false,
     adjustWeekday: options?.adjustWeekday ?? 0,
@@ -67,30 +66,16 @@ const methods = {
         emits('change');
         target.dispatchEvent(events.change(pickerValues));
     },
-    makeDate: function(dateTimeString, format){
-        let date = new Date(dateTimeString);
-        return moment().set({ 
-            year: date.getFullYear(), 
-            month: date.getMonth(),
-            date: date.getDate(),
-            hour: date.getHours(),
-            minute: date.getMinutes(),
-            second: date.getSeconds(),
-            }).format(format);
-
-    },
     setElementValue: function() {
         if(target.tagName == 'INPUT'){
             let { startDate, endDate } = pickerValues;
-            let _startDate = this.makeDate(startDate, FORMATS.forDisplay);
-            let _endDate = this.makeDate(endDate, FORMATS.forDisplay);         
+            let _startDate = helper.makeDate(startDate, FORMATS.forDisplay);
+            let _endDate = helper.makeDate(endDate, FORMATS.forDisplay);         
 
             let value = _startDate; 
             if(defaults.rangePicker){
                 value = value + ' - ' + _endDate;
             }
-
-            console.log('value', value);
             target.value = value;
         }
     },   

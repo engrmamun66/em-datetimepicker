@@ -1,3 +1,5 @@
+import moment from 'moment/moment';
+
 const helpers = {
     domParser: function(html_content=''){
         if(!html_content) return;
@@ -7,10 +9,22 @@ const helpers = {
     },
     createEvent(eventName, data={}){
         return new CustomEvent(eventName, {
-            bubbles: true,
-            cancelable: true,
+            bubbles: false,
+            cancelable: false,
             detail: data,
         })
+    },
+    makeDate: function(dateTimeString, format){
+        let date = new Date(dateTimeString);
+        return moment().set({ 
+            year: date.getFullYear(), 
+            month: date.getMonth(),
+            date: date.getDate(),
+            hour: date.getHours(),
+            minute: date.getMinutes(),
+            second: date.getSeconds(),
+            }).format(format);
+
     },
     printDaysOfMonth: function(monthIndex, FORMATS) {
         const firstDayOfMonth = moment().month(monthIndex).date(1);
