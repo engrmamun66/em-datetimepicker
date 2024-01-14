@@ -17,19 +17,19 @@ let current_view = ref('days');
 
 const events = reactive( {
     init: function(data={}) {
-        return helper.createEvent('picker:init', {picker, ...data})
+        return helper.createEvent('picker:init', {...data})
     },
     open: function(data={}) {
-        return helper.createEvent('picker:open', {picker, ...data})
+        return helper.createEvent('picker:open', {...data})
     },
     cancel: function(data={}) {
-        return helper.createEvent('picker:cancel', {picker, ...data})
+        return helper.createEvent('picker:cancel', {...data})
     },
     close: function(data={}) {
-        return helper.createEvent('picker:close', {picker, ...data})
+        return helper.createEvent('picker:close', {...data})
     },
     change: function(data={}) {
-        return helper.createEvent('picker:change', {picker, ...data})
+        return helper.createEvent('picker:change', {...data})
     },
 });
 
@@ -44,7 +44,6 @@ const defaults = {
     buttons: options?.buttons ?? true,
 }; 
 
-const picker= {};
 const methods = {
     setElementValue: function() {
         if(target.tagName == 'INPUT'){
@@ -138,6 +137,7 @@ const monthOfDays = computed( () => {
 
 onMounted(() => {
     // console.log(monthOfDays.value);
+    console.log(monthOfDays.pickerValues);
     pickerValues.startDate = defaults.startDate;
     pickerValues.endDate = defaults.endDate;
     if(justInitializeValue){
