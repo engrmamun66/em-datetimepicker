@@ -4,7 +4,9 @@ import { createPinia } from 'pinia';
 import App from './App.vue';
 import emDatetimepicker from './EventEmitter';
 import { emitter, utils, components } from './import-hub';
+import moment from 'moment/moment';
 
+globalThis.moment = moment; 
 globalThis.emDatetimepicker = emDatetimepicker; 
 
 window.addEventListener("DOMContentLoaded", (e) => {
