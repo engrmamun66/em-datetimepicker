@@ -126,7 +126,7 @@ const fn = {
                 
                 break;        
             case 'years':
-                if(picker.yearIndex < 0) picker.yearIndex++
+                picker.yearIndex = picker.yearIndex + 1;
                 break;        
             default:
                 break;
@@ -141,7 +141,7 @@ const fn = {
                 
                 break;        
             case 'years':
-                picker.yearIndex--
+                picker.yearIndex = picker.yearIndex - 1;
                 break;        
             default:
                 break;
@@ -167,18 +167,19 @@ const weekDays = computed( () => {
 })
 const monthOfDays = computed( () => { 
     let date = new Date(picker.date1);
-    let year = date.getFullYear()
     const monthIndex = picker.monthIndex;
-    const days = helper.daysOfMonth(year, monthIndex, FORMATS, {currentMonth: true});
+    const days = helper.daysOfMonth(date.getFullYear(), monthIndex, FORMATS, {currentMonth: true});
     const first_weekday_short = days[0]['weekday_short'];
-    picker.StartFrom = weekDays.value.findIndex(weekday => weekday === first_weekday_short);
+    const startFrom = weekDays.value.findIndex(weekday => weekday === first_weekday_short);
     // Left tailing
-    year = monthIndex==0 ? (year - 1) : year;
-    const previous_month_days = helper.daysOfMonth(year, monthIndex - 1, FORMATS).slice(-picker.StartFrom);
-    const days_after_left_tailing = [...previous_month_days, ...days];
+    let _date = new Date(picker.date1);
+    _date.setMonth(_date.getMonth() - 1);
+    const previous_month_days = helper.daysOfMonth(_date.getFullYear(), monthIndex - 1, FORMATS).slice(-startFrom);
+    const days_after_left_tailing = startFrom ? [...previous_month_days, ...days] : [...days];
     // Right tailing    
-    year = monthIndex==11 ? (year + 1) : year;
-    const next_month_days = helper.daysOfMonth(year, monthIndex + 1, FORMATS);
+    let __date = new Date(picker.date1);
+    __date.setMonth(__date.getMonth() + 1);
+    const next_month_days = helper.daysOfMonth(__date.getFullYear(), monthIndex + 1, FORMATS);
     const days_after_left_and_right_tailing = [...days_after_left_tailing, ...next_month_days];
     days_after_left_and_right_tailing.length = 35;
     return days_after_left_and_right_tailing;
