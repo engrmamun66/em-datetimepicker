@@ -6,19 +6,43 @@ let emits = defineEmits(['init', 'open', 'cancel', 'close', 'change']);
 let { target, options, parentDiv, justInitializeValue } = defineProps(['target', 'options', 'parentDiv', 'justInitializeValue']);
 const moment = globalThis.moment;
 // local Example: https://docs.mobiscroll.com/javascript/languages
-const FORMAT = (options.displayFormat ?? 'yyy-MM-DD');
-const DIAPALY_FORMAT = (options.displayFormat ?? 'DD/MMM/yyy');
-const TODAY = moment().format(DIAPALY_FORMAT);
+const FORMATS = {
+    db: 'yyy-MM-DD',
+    week_index: 'd', // 0 to 6
+    day_index: 'D', // 1 to 31
+    weekday_short: 'ddd', // Sat, Sun ...
+    forDisplay: (options.displayFormat ?? 'DD/MMM/yyy'),
+};
+let current_view = ref('days');
+
+const events = reactive( {
+    init: function(data={}) {
+        return helper.createEvent('picker:init', {picker, ...data})
+    },
+    open: function(data={}) {
+        return helper.createEvent('picker:open', {picker, ...data})
+    },
+    cancel: function(data={}) {
+        return helper.createEvent('picker:cancel', {picker, ...data})
+    },
+    close: function(data={}) {
+        return helper.createEvent('picker:close', {picker, ...data})
+    },
+    change: function(data={}) {
+        return helper.createEvent('picker:change', {picker, ...data})
+    },
+});
+
+
+const TODAY = moment().format(FORMATS.forDisplay);
 const defaults = {
-    displayFormat: DIAPALY_FORMAT,
-    startDate: moment().date( options?.startDate ?? TODAY ).format( DIAPALY_FORMAT ),
-    endDate: moment().date( options?.endDate ?? TODAY ).format( DIAPALY_FORMAT ),
+    displayFormat: FORMATS.forDisplay,
+    startDate: moment().date( options?.startDate ?? TODAY ).format( FORMATS.forDisplay ),
+    endDate: moment().date( options?.endDate ?? TODAY ).format( FORMATS.forDisplay ),
     rangePicker: options?.rangePicker ?? false,
     adjustWeekday: options?.adjustWeekday ?? 0,
     buttons: options?.buttons ?? true,
-};
-
- 
+}; 
 
 const picker= {};
 const methods = {
@@ -34,23 +58,23 @@ const methods = {
     },
     initPicker: function(){
         emits('init');
-        target.dispatchEvent(state.events.init());
+        target.dispatchEvent(events.init());
     },
     openPicker: function(){
         emits('open');
-        target.dispatchEvent(state.events.open());
+        target.dispatchEvent(events.open());
     },
     cancelPicker: function(){
         emits('cancel');
-        target.dispatchEvent(state.events.cancel());
+        target.dispatchEvent(events.cancel());
     },
     closePicker: function(){
         emits('close');
-        target.dispatchEvent(state.events.close());
+        target.dispatchEvent(events.close());
     },
     changePicker: function(){
         emits('change');
-        target.dispatchEvent(state.events.change(state.pickerValues));
+        target.dispatchEvent(events.change(pickerValues));
     },
     /* -------------------------------------------------------------------------- */
     /*                           Start With Date Picker                           */
@@ -59,37 +83,16 @@ const methods = {
         
     }
 };
- 
 
 
 
-const state = reactive({
-    current_view: 'days',
-    events: {
-        init: function(data={}) {
-            return helper.createEvent('picker:init', {picker, ...data})
-        },
-        open: function(data={}) {
-            return helper.createEvent('picker:open', {picker, ...data})
-        },
-        cancel: function(data={}) {
-            return helper.createEvent('picker:cancel', {picker, ...data})
-        },
-        close: function(data={}) {
-            return helper.createEvent('picker:close', {picker, ...data})
-        },
-        change: function(data={}) {
-            return helper.createEvent('picker:change', {picker, ...data})
-        },
-    },
-    pickerValues: {
+const pickerValues = reactive({
+    startDate: '',
+    endDate: '',
+    old: {
         startDate: '',
         endDate: '',
-        old: {
-            startDate: '',
-            endDate: '',
-        }
-    }, 
+    }
 });
 
 const temp = reactive({
@@ -112,16 +115,21 @@ const weekDays = computed( () => {
     return daysOfWeek;
 })
 const monthOfDays = computed( () => { 
-    const monthIndex = new Date(defaults.startDate).getMonth();
+    const monthIndex = new Date(defaults.startDate || TODAY).getMonth();
     const firstDayOfMonth = moment().month(monthIndex).date(1);
     const daysInMonth = firstDayOfMonth.daysInMonth();
     let days = [];
     for (let day = 1; day <= daysInMonth; day++) {
         const currentDay = firstDayOfMonth.date(day);
-        console.log(currentDay.format(FORMAT));
+        const _day = {
+            date: currentDay.format(FORMATS.db),
+            week_index: currentDay.format(FORMATS.week_index),
+            day_index: currentDay.format(FORMATS.day_index),
+            weekday_short: currentDay.format(FORMATS.weekday_short),
+        };
+        days = [...days, _day];
     }
-
-
+    return days;
 });
 
 
@@ -129,9 +137,9 @@ const monthOfDays = computed( () => {
 
 
 onMounted(() => {
-    console.log(monthOfDays.value);
-    state.pickerValues.startDate = defaults.startDate;
-    state.pickerValues.endDate = defaults.endDate;
+    // console.log(monthOfDays.value);
+    pickerValues.startDate = defaults.startDate;
+    pickerValues.endDate = defaults.endDate;
     if(justInitializeValue){
         methods.setElementValue();
         methods.initPicker();
@@ -145,12 +153,12 @@ onMounted(() => {
 <template>
     <template v-if="!justInitializeValue">
         <!-- Months of year -->
-        <template v-if="state.current_view=='days'">
+        <template v-if="current_view=='days'">
             <!-- days of month -->
             <div class="days-month-box content">
                 <header>
                     <i class='bx bx-chevron-left'></i>
-                    <span class="cp" @click="state.current_view = 'months'">January 2024</span>
+                    <span class="cp" @click="current_view = 'months'">January 2024</span>
                     <i class='bx bx-chevron-right'></i>
                 </header>
                 <main class="main-weekdays">
@@ -159,37 +167,15 @@ onMounted(() => {
                     </template>
                 </main>
                 <main class="main-days box">
-                    <div class="active">1</div>
-                    <div class="">2</div>
-                    <div class="">3</div>
-                    <div class="">4</div>
-                    <div class="">5</div>
-                    <div class="">6</div>
-                    <div class="">7</div>
-                    <div class="">8</div>
-                    <div class="">9</div>
-                    <div class="">10</div>
-                    <div class="">11</div>
-                    <div class="">12</div>
-                    <div class="">13</div>
-                    <div class="">14</div>
-                    <div class="">15</div>
-                    <div class="">16</div>
-                    <div class="">17</div>
-                    <div class="">18</div>
-                    <div class="">19</div>
-                    <div class="">20</div>
-                    <div class="">21</div>
-                    <div class="">22</div>
-                    <div class="">23</div>
-                    <div class="">24</div>
-                    <div class="">25</div>
-                    <div class="">26</div>
-                    <div class="">27</div>
-                    <div class="">28</div>
-                    <div class="">29</div>
-                    <div class="">30</div>
-                    <div class="">31</div>
+                    <template v-for="(monthDay, index) in monthOfDays" :key="index">
+                        <template v-if="monthDay">
+                            <div 
+                            @click="onClickDay"
+                            :class="{ 'active': new Date(pickerValues.startDate).getDay() == monthDay.day_index }">
+                            {{ monthDay.day_index }}
+                            </div>
+                        </template>
+                    </template>
                 </main>
                 <CancelAndApplyButton
                 :defaults="defaults"
@@ -198,30 +184,30 @@ onMounted(() => {
                 ></CancelAndApplyButton>
             </div>
         </template>
-        <template v-else-if="state.current_view == 'months'">
+        <template v-else-if="current_view == 'months'">
             <div class="months-box content">
                 <header>
                     <i class='bx bx-chevron-left'></i>
-                    <span class="cp" @click="state.current_view = 'years'">2024</span>
+                    <span class="cp" @click="current_view = 'years'">2024</span>
                     <i class='bx bx-chevron-right'></i>
                 </header>
                 <main class="main-months box">
-                    <div class="active" @click="state.current_view = 'days'">Jan</div>
-                    <div class="" @click="state.current_view = 'days'">Fev</div>
-                    <div class="" @click="state.current_view = 'days'">Mar</div>
-                    <div class="" @click="state.current_view = 'days'">Abr</div>
-                    <div class="" @click="state.current_view = 'days'">Mai</div>
-                    <div class="" @click="state.current_view = 'days'">Jun</div>
-                    <div class="" @click="state.current_view = 'days'">Jul</div>
-                    <div class="" @click="state.current_view = 'days'">Ago</div>
-                    <div class="" @click="state.current_view = 'days'">Set</div>
-                    <div class="" @click="state.current_view = 'days'">Out</div>
-                    <div class="" @click="state.current_view = 'days'">Nov</div>
-                    <div class="" @click="state.current_view = 'days'">Dez</div>
+                    <div class="active" @click="current_view = 'days'">Jan</div>
+                    <div class="" @click="current_view = 'days'">Fev</div>
+                    <div class="" @click="current_view = 'days'">Mar</div>
+                    <div class="" @click="current_view = 'days'">Abr</div>
+                    <div class="" @click="current_view = 'days'">Mai</div>
+                    <div class="" @click="current_view = 'days'">Jun</div>
+                    <div class="" @click="current_view = 'days'">Jul</div>
+                    <div class="" @click="current_view = 'days'">Ago</div>
+                    <div class="" @click="current_view = 'days'">Set</div>
+                    <div class="" @click="current_view = 'days'">Out</div>
+                    <div class="" @click="current_view = 'days'">Nov</div>
+                    <div class="" @click="current_view = 'days'">Dez</div>
                 </main>
             </div>
         </template>
-        <template v-else-if="state.current_view == 'years'">
+        <template v-else-if="current_view == 'years'">
             <div class="months-box content">
                 <header>
                     <i class='bx bx-chevron-left'></i>
@@ -229,18 +215,18 @@ onMounted(() => {
                     <i class='bx bx-chevron-right'></i>
                 </header>
                 <main class="main-months box">
-                    <div class="" @click="state.current_view = 'months'">2013</div>
-                    <div class="" @click="state.current_view = 'months'">2014</div>
-                    <div class="" @click="state.current_view = 'months'">2015</div>
-                    <div class="" @click="state.current_view = 'months'">2016</div>
-                    <div class="" @click="state.current_view = 'months'">2017</div>
-                    <div class="" @click="state.current_view = 'months'">2018</div>
-                    <div class="" @click="state.current_view = 'months'">2019</div>
-                    <div class="" @click="state.current_view = 'months'">2020</div>
-                    <div class="" @click="state.current_view = 'months'">2021</div>
-                    <div class="" @click="state.current_view = 'months'">2022</div>
-                    <div class="" @click="state.current_view = 'months'">2023</div>
-                    <div class="active" @click="state.current_view = 'months'">2024</div>
+                    <div class="" @click="current_view = 'months'">2013</div>
+                    <div class="" @click="current_view = 'months'">2014</div>
+                    <div class="" @click="current_view = 'months'">2015</div>
+                    <div class="" @click="current_view = 'months'">2016</div>
+                    <div class="" @click="current_view = 'months'">2017</div>
+                    <div class="" @click="current_view = 'months'">2018</div>
+                    <div class="" @click="current_view = 'months'">2019</div>
+                    <div class="" @click="current_view = 'months'">2020</div>
+                    <div class="" @click="current_view = 'months'">2021</div>
+                    <div class="" @click="current_view = 'months'">2022</div>
+                    <div class="" @click="current_view = 'months'">2023</div>
+                    <div class="active" @click="current_view = 'months'">2024</div>
                 </main>
             </div>
         </template>
