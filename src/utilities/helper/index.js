@@ -14,8 +14,13 @@ const helpers = {
             detail: data,
         })
     },
-    makeDate: function(dateTimeString, format){
-        let date = new Date(dateTimeString);
+    makeDate: function(dateTime, format){
+        if(!dateTime) return;
+        if(dateTime instanceof Date){
+            var date = dateTime;
+        } else {
+            var date = new Date(dateTime);
+        }
         return moment().set({ 
             year: date.getFullYear(), 
             month: date.getMonth(),
@@ -33,11 +38,11 @@ const helpers = {
         for (let day = 1; day <= daysInMonth; day++) {
             const currentDay = firstDayOfMonth.date(day);
             const _day = {
-                date: currentDay.format(FORMATS.db),
+                date: currentDay.format(FORMATS.output),
                 week_index: currentDay.format(FORMATS.week_index),
                 day_index: currentDay.format(FORMATS.day_index),
                 weekday_short: currentDay.format(FORMATS.weekday_short),
-                month_index: new Date(currentDay.format(FORMATS.db)).getMonth(),
+                month_index: new Date(currentDay.format(FORMATS.output)).getMonth(),
                 currentMonth: currentMonth ?? false,
             };
             days = [...days, _day];

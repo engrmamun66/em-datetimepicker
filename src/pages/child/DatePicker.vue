@@ -10,13 +10,13 @@ let { target, options, parentDiv, justInitializeValue } = defineProps(['target',
 const moment = globalThis.moment;
 // local Example: https://docs.mobiscroll.com/javascript/languages
 const FORMATS = {
-    db: 'YYYY-MM-DD', //YYYY-MM-DD HH:mm:ss
+    output: 'YYYY-MM-DD', //YYYY-MM-DD HH:mm:ss
     week_index: 'd', // 0 to 6
     day_index: 'D', // 1 to 31
     weekday_short: 'ddd', // Sat, Sun ...
     forDisplay: (options.displayFormat ?? 'DD MMM, YYYY'),
 };
-const TODAY = moment().format(FORMATS.db);
+const TODAY = moment().format(FORMATS.output);
 const defaults = {
     displayFormat: FORMATS.forDisplay,
     startDate: helper.makeDate(options?.startDate ?? TODAY, FORMATS.forDisplay),
@@ -24,6 +24,7 @@ const defaults = {
     rangePicker: options?.rangePicker ?? false,
     adjustWeekday: options?.adjustWeekday ?? 0,
     buttons: options?.buttons ?? true,
+    monthShorts: [ 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dec' ],
 }; 
 let current_view = ref('days');
 
@@ -100,6 +101,12 @@ const methods = {
         methods.setElementValue();
         this.changePicker();
         this.closePicker();
+    },
+    onClickMonth: function (monthIndex) { 
+        let date = new Date(temp.date1);
+        date.setMonth(monthIndex);
+        temp.date1 = helper.makeDate(date, FORMATS.output);
+        current_view.value = 'days';
     },
     onClickNext: function () { 
         switch (current_view.value) {
@@ -238,18 +245,9 @@ onMounted(() => {
                     <i class='bx bx-chevron-right'></i>
                 </header>
                 <main class="main-months box">
-                    <div class="active" @click="current_view = 'days'">Jan</div>
-                    <div class="" @click="current_view = 'days'">Fev</div>
-                    <div class="" @click="current_view = 'days'">Mar</div>
-                    <div class="" @click="current_view = 'days'">Abr</div>
-                    <div class="" @click="current_view = 'days'">Mai</div>
-                    <div class="" @click="current_view = 'days'">Jun</div>
-                    <div class="" @click="current_view = 'days'">Jul</div>
-                    <div class="" @click="current_view = 'days'">Ago</div>
-                    <div class="" @click="current_view = 'days'">Set</div>
-                    <div class="" @click="current_view = 'days'">Out</div>
-                    <div class="" @click="current_view = 'days'">Nov</div>
-                    <div class="" @click="current_view = 'days'">Dez</div>
+                    <template v-for="(monthShort, index) in defaults.monthShorts" :key="index">
+                        <div class="active" @click="onClickMonth(index)">{{ monthShort }}</div>
+                    </template>
                 </main>
             </div>
         </template>
@@ -332,8 +330,12 @@ header i:hover {
     align-items: center;
     justify-content: center;
     color: #777;
-    cursor: pointer;
     transition: all 300ms;
+}
+.main-months>div:not(.offset-date),
+.main-days>div:not(.offset-date)
+ {
+    cursor: pointer;
 }
 
 .main-days>div {
@@ -343,7 +345,6 @@ header i:hover {
     align-items: center;
     justify-content: center;
     color: #666;
-    cursor: pointer;
     transition: all 300ms;
 }
 .main-months>div.offset-date,
