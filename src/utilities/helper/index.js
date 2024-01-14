@@ -12,25 +12,22 @@ const helpers = {
             detail: data,
         })
     },
-    printDaysOfMonth: function(monthIndex) {
-        const currentYear = new Date().getFullYear();
-        const firstDayOfMonth = new Date(currentYear, monthIndex, 1);
-        const lastDayOfMonth = new Date(currentYear, monthIndex + 1, 0); 
+    printDaysOfMonth: function(monthIndex, FORMATS) {
+        const firstDayOfMonth = moment().month(monthIndex).date(1);
+        const daysInMonth = firstDayOfMonth.daysInMonth();
         let days = [];
-        const options = {
-            weekday: 'long', // long or 'short', 'narrow'
-            year: 'numeric', // numeric or '2-digit'
-            month: 'long', // long or 'short', 'narrow'
-            day: 'numeric', // numeric or '2-digit'
-            hour: 'numeric', // numeric or '2-digit'
-            minute: 'numeric', // numeric or '2-digit'
-            second: 'numeric', // numeric or '2-digit'
-            timeZoneName: 'short', // short or 'long'
-        };       
-        for (let day = 1; day <= lastDayOfMonth.getDate(); day++) {
-            const currentDate = new Date(currentYear, monthIndex, day);
-            console.log(currentDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
+        for (let day = 1; day <= daysInMonth; day++) {
+            const currentDay = firstDayOfMonth.date(day);
+            const _day = {
+                date: currentDay.format(FORMATS.db),
+                week_index: currentDay.format(FORMATS.week_index),
+                day_index: currentDay.format(FORMATS.day_index),
+                weekday_short: currentDay.format(FORMATS.weekday_short),
+                month_index: new Date(currentDay.format(FORMATS.db)).getMonth(),
+            };
+            days = [...days, _day];
         }
+        return days;
     },
       
      

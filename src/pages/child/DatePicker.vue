@@ -13,6 +13,15 @@ const FORMATS = {
     weekday_short: 'ddd', // Sat, Sun ...
     forDisplay: (options.displayFormat ?? 'DD/MMM/yyy'),
 };
+const TODAY = moment().format(FORMATS.db);
+const defaults = {
+    displayFormat: FORMATS.forDisplay,
+    startDate: moment().date( options?.startDate ?? TODAY ).format( FORMATS.forDisplay ),
+    endDate: moment().date( options?.endDate ?? TODAY ).format( FORMATS.forDisplay ),
+    rangePicker: options?.rangePicker ?? false,
+    adjustWeekday: options?.adjustWeekday ?? 0,
+    buttons: options?.buttons ?? true,
+}; 
 let current_view = ref('days');
 
 const events = reactive( {
@@ -33,28 +42,14 @@ const events = reactive( {
     },
 });
 
-
-const TODAY = moment().format(FORMATS.forDisplay);
-const defaults = {
-    displayFormat: FORMATS.forDisplay,
-    startDate: moment().date( options?.startDate ?? TODAY ).format( FORMATS.forDisplay ),
-    endDate: moment().date( options?.endDate ?? TODAY ).format( FORMATS.forDisplay ),
-    rangePicker: options?.rangePicker ?? false,
-    adjustWeekday: options?.adjustWeekday ?? 0,
-    buttons: options?.buttons ?? true,
-}; 
-
 const methods = {
     setElementValue: function() {
         if(target.tagName == 'INPUT'){
-            let { startDate, endDate } = defaults;
+            let { startDate, endDate } = pickerValues;
             let value = startDate;
             target.value = value;
         }
-    },
-    onApply: function() {
-        this.closePicker();
-    },
+    },    
     initPicker: function(){
         emits('init');
         target.dispatchEvent(events.init());
@@ -78,9 +73,24 @@ const methods = {
     /* -------------------------------------------------------------------------- */
     /*                           Start With Date Picker                           */
     /* -------------------------------------------------------------------------- */
-    onClickDay: function (day) {
-        
-    }
+    onClickDay: function ({date}) {
+        temp.date1 = date;
+        temp.date2 = date;
+        if(!defaults.buttons){
+            pickerValues.startDate = date;
+            methods.setElementValue();
+        }
+    },
+    onClickApply: function () {  
+        let startDate = temp.date1;
+        let endDate = temp.date2;
+        console.log('startDate', startDate);
+        pickerValues.startDate = moment().date(startDate).format(FORMATS.db);
+        pickerValues.endDate = moment().date(endDate).format(FORMATS.db);
+        methods.setElementValue();
+        this.changePicker();
+        this.closePicker();
+    },
 };
 
 
@@ -97,6 +107,7 @@ const pickerValues = reactive({
 const temp = reactive({
     // with Single Date
     date1: '',
+    date2: '',
 })
 
 // @returns [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
@@ -115,19 +126,7 @@ const weekDays = computed( () => {
 })
 const monthOfDays = computed( () => { 
     const monthIndex = new Date(defaults.startDate || TODAY).getMonth();
-    const firstDayOfMonth = moment().month(monthIndex).date(1);
-    const daysInMonth = firstDayOfMonth.daysInMonth();
-    let days = [];
-    for (let day = 1; day <= daysInMonth; day++) {
-        const currentDay = firstDayOfMonth.date(day);
-        const _day = {
-            date: currentDay.format(FORMATS.db),
-            week_index: currentDay.format(FORMATS.week_index),
-            day_index: currentDay.format(FORMATS.day_index),
-            weekday_short: currentDay.format(FORMATS.weekday_short),
-        };
-        days = [...days, _day];
-    }
+    let days = helper.printDaysOfMonth(monthIndex, FORMATS);
     return days;
 });
 
@@ -136,14 +135,16 @@ const monthOfDays = computed( () => {
 
 
 onMounted(() => {
-    // console.log(monthOfDays.value);
-    console.log(monthOfDays.pickerValues);
     pickerValues.startDate = defaults.startDate;
     pickerValues.endDate = defaults.endDate;
-    if(justInitializeValue){
-        methods.setElementValue();
-        methods.initPicker();
-    }
+    methods.setElementValue();
+    methods.initPicker();
+
+    // Reset temp data
+    temp.date1 = null;
+    
+    console.log(monthOfDays.value);
+    console.log(defaults); 
 
 
 })
@@ -170,9 +171,9 @@ onMounted(() => {
                     <template v-for="(monthDay, index) in monthOfDays" :key="index">
                         <template v-if="monthDay">
                             <div 
-                            @click="onClickDay"
-                            :class="{ 'active': new Date(pickerValues.startDate).getDay() == monthDay.day_index }">
-                            {{ monthDay.day_index }}
+                            @click="methods.onClickDay(monthDay)"
+                            :class="{ 'active': (new Date(temp.date1 || pickerValues.startDate).getDate() == monthDay.day_index) }">
+                                {{ monthDay.day_index }}
                             </div>
                         </template>
                     </template>
@@ -180,7 +181,7 @@ onMounted(() => {
                 <CancelAndApplyButton
                 :defaults="defaults"
                 @onCancel="methods.cancelPicker()"
-                @onApply="methods.onApply()"
+                @onApply="methods.onClickApply()"
                 ></CancelAndApplyButton>
             </div>
         </template>

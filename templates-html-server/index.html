@@ -32,13 +32,16 @@
         // });
         let options = {
             rangePicker: false,
-            adjustWeekday: -2,
+            adjustWeekday: 0,
             buttons: true,
         }
 
         
         emDatetimepicker.init('#input1', options)
         $('#input1').on('picker:open', ({detail: data}) => {
+            console.log('data', data);
+        })
+        .on('picker:change', ({detail: data}) => {
             console.log('data', data);
         })
    </script>
