@@ -150,9 +150,22 @@ const weekDays = computed( () => {
     return daysOfWeek;
 })
 const monthOfDays = computed( () => { 
+    let date = new Date(temp.date1);
+    let year = date.getFullYear()
     const monthIndex = temp.monthIndex;
-    let days = helper.daysOfMonth(monthIndex, FORMATS);
-    return days;
+    const days = helper.daysOfMonth(year, monthIndex, FORMATS, {currentMonth: true});
+    const first_weekday_short = days[0]['weekday_short'];
+    temp.start_from = weekDays.value.findIndex(weekday => weekday === first_weekday_short);
+    // Left tailing
+    year = monthIndex==0 ? (year - 1) : year;
+    const previous_month_days = helper.daysOfMonth(year, monthIndex - 1, FORMATS).slice(-temp.start_from);
+    const days_after_left_tailing = [...previous_month_days, ...days];
+    // Right tailing    
+    year = monthIndex==11 ? (year + 1) : year;
+    const next_month_days = helper.daysOfMonth(year, monthIndex + 1, FORMATS);
+    const days_after_left_and_right_tailing = [...days_after_left_tailing, ...next_month_days];
+    days_after_left_and_right_tailing.length = 35;
+    return days_after_left_and_right_tailing;
 });
 
 
@@ -199,9 +212,12 @@ onMounted(() => {
                     <template v-for="(monthDay, index) in monthOfDays" :key="index">
                         <template v-if="monthDay">
                             <div 
-                            @click.stop="methods.onClickDay(monthDay)"
-                            @dblclick.stop="methods.onClickApply()"
-                            :class="{ 'active': (new Date(temp.date1 || pickerValues.startDate).getDate() == monthDay.day_index) }">
+                            @click.stop="monthDay.currentMonth ? methods.onClickDay(monthDay) : false"
+                            @dblclick.stop="monthDay.currentMonth ? methods.onClickApply() : false"
+                            :class="{ 
+                                'active': monthDay.currentMonth && (new Date(temp.date1).getDate() == monthDay.day_index) ,
+                                'offset-date': !monthDay.currentMonth,
+                            }">
                                 {{ monthDay.day_index }}
                             </div>
                         </template>
@@ -315,7 +331,7 @@ header i:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #666;
+    color: #777;
     cursor: pointer;
     transition: all 300ms;
 }
@@ -330,13 +346,17 @@ header i:hover {
     cursor: pointer;
     transition: all 300ms;
 }
+.main-months>div.offset-date,
+.main-days>div.offset-date {
+    color: #d6d6d6 !important;
+}
 
-main.box>div:hover {
+main.box>div:not(.offset-date):hover {
     background-color: #ECE0FD;
     border-radius: 8px;
 }
 
-main.box>div.active {
+main.box>div:not(.offset-date).active {
     background: #6200EE;
     border-radius: 8px;
     font-weight: 700;
@@ -344,15 +364,7 @@ main.box>div.active {
     position: relative;
 }
 
-.----main.box>div.active::after {
-    content: '';
-    width: 4px;
-    height: 4px;
-    background-color: white;
-    border-radius: 50%;
-    position: absolute;
-    bottom: 6px;
-}
+
 .buttons{
     display: flex;
     justify-content: end;

@@ -12,6 +12,7 @@ const temp = reactive({
     date1: '',
     date2: '',
     monthIndex: 0,
+    start_from: 0,
 })
 const pickerValues = reactive({
     startDate: '',

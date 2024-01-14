@@ -26,8 +26,8 @@ const helpers = {
             }).format(format);
 
     },
-    daysOfMonth: function(monthIndex, FORMATS) {
-        const firstDayOfMonth = moment().month(monthIndex).date(1);
+    daysOfMonth: function(year, monthIndex, FORMATS, {currentMonth}={}) {
+        const firstDayOfMonth = moment().year(year).month(monthIndex).date(1);
         const daysInMonth = firstDayOfMonth.daysInMonth();
         let days = [];
         for (let day = 1; day <= daysInMonth; day++) {
@@ -38,6 +38,7 @@ const helpers = {
                 day_index: currentDay.format(FORMATS.day_index),
                 weekday_short: currentDay.format(FORMATS.weekday_short),
                 month_index: new Date(currentDay.format(FORMATS.db)).getMonth(),
+                currentMonth: currentMonth ?? false,
             };
             days = [...days, _day];
         }
