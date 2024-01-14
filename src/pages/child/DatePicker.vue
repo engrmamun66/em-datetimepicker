@@ -101,6 +101,36 @@ const methods = {
         this.changePicker();
         this.closePicker();
     },
+    onClickNext: function () { 
+        switch (current_view.value) {
+            case 'days':
+                temp.monthIndex += 1;
+                break;        
+            case 'months':
+                
+                break;        
+            case 'years':
+                
+                break;        
+            default:
+                break;
+        }
+    },
+    onClickPrev: function () { 
+        switch (current_view.value) {
+            case 'days':
+                temp.monthIndex -= 1;
+                break;        
+            case 'months':
+                
+                break;        
+            case 'years':
+                
+                break;        
+            default:
+                break;
+        }
+    },
 };
 
 
@@ -113,16 +143,14 @@ const weekDays = computed( () => {
     const adjust = defaults.adjustWeekday;
     for (let i = 1; i <= 7; i++) {
         const currentDate = new Date();
-        currentDate.setDate(currentDate.getDate() + (i + adjust));
-
-        const options = { weekday: 'short' };
-        const dayOfWeek = currentDate.toLocaleDateString('en-IN', options);
+        currentDate.setDate(currentDate.getDate() + i - 1 + adjust);
+        const dayOfWeek = currentDate.toLocaleDateString('en-IN', { weekday: 'short' });
         daysOfWeek.push(dayOfWeek);
     }
     return daysOfWeek;
 })
 const monthOfDays = computed( () => { 
-    const monthIndex = new Date(defaults.startDate || TODAY).getMonth();
+    const monthIndex = temp.monthIndex;
     let days = helper.printDaysOfMonth(monthIndex, FORMATS);
     return days;
 });
@@ -132,17 +160,18 @@ const monthOfDays = computed( () => {
 
 
 onMounted(() => {
-    if(!isMounted.value){
+    // if(!isMounted.value){
         pickerValues.startDate = defaults.startDate;
         pickerValues.endDate = defaults.endDate;
+
+        temp.date1 = defaults.startDate;
+        temp.date2 = defaults.endDate;   
+        temp.monthIndex = new Date(pickerValues.startDate).getMonth();   
+
         methods.setElementValue();
         methods.initPicker();
         isMounted.value = true;
-    }
-
-    // Reset temp data
-    temp.date1 = null;
-    temp.date2 = null;
+    // }
  
     // console.log(monthOfDays.value);
     // console.log(defaults); 
@@ -157,9 +186,9 @@ onMounted(() => {
             <!-- days of month -->
             <div class="days-month-box content">
                 <header>
-                    <i class='bx bx-chevron-left'></i>
-                    <span class="cp" @click="current_view = 'months'">January 2024</span>
-                    <i class='bx bx-chevron-right'></i>
+                    <i class='bx bx-chevron-left' @click="methods.onClickPrev()"></i>
+                    <span class="cp" @click="current_view = 'months'">{{ moment().month(temp.monthIndex).format('MMMM YYYY') }}</span>
+                    <i class='bx bx-chevron-right' @click="methods.onClickNext()"></i>
                 </header>
                 <main class="main-weekdays">
                     <template v-for="(day, index) in weekDays" :key="index">
