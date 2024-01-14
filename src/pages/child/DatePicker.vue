@@ -151,7 +151,7 @@ const weekDays = computed( () => {
 })
 const monthOfDays = computed( () => { 
     const monthIndex = temp.monthIndex;
-    let days = helper.printDaysOfMonth(monthIndex, FORMATS);
+    let days = helper.daysOfMonth(monthIndex, FORMATS);
     return days;
 });
 

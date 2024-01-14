@@ -26,7 +26,7 @@ const helpers = {
             }).format(format);
 
     },
-    printDaysOfMonth: function(monthIndex, FORMATS) {
+    daysOfMonth: function(monthIndex, FORMATS) {
         const firstDayOfMonth = moment().month(monthIndex).date(1);
         const daysInMonth = firstDayOfMonth.daysInMonth();
         let days = [];
