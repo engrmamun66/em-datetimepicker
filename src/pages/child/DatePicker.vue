@@ -126,7 +126,6 @@ const monthOfDays = computed( () => {
 
 
 onMounted(() => {
-    console.log('mounted');
     state.pickerValues.startDate = defaults.startDate;
     state.pickerValues.endDate = defaults.endDate;
     if(justInitializeValue){
