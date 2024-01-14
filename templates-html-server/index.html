@@ -18,12 +18,15 @@
     <input id="input1" type="text" class="emDatetimepicker px-2" data-settings="">   
     
     <h1>Heading 2</h1>
-    <input id="input1" type="text" class="emDatetimepicker px-2" data-settings="">   
+    <input id="input2" type="text" class="emDatetimepicker px-2" data-settings="">  
+    
+    <!-- <button class="btn btn-primary" onclick="setDate()">SET DATE</button> -->
    <script>
-        // let input = document.querySelector('#input1');
-        // emDatetimepicker.init(input).addEventListener('picker:open', (data) => {
-        //     console.log('data', data);
-        // });
+        let input = document.querySelector('#input2');
+        emDatetimepicker.init(input)
+        input.addEventListener('picker:open', (data) => {
+            console.log('data', data);
+        });
 
         
         // emDatetimepicker.init('#input1', {})
@@ -38,12 +41,20 @@
             buttons: true,
         }
 
+        function setDate() {
+            
+        }
+
         
         emDatetimepicker.init('#input1', options)
-        $('#input1').on('picker:open', ({detail: data}) => {
+        $('#input1')
+        .on('picker:open', ({detail: data}) => {
             console.log('data', data);
         })
         .on('picker:change', ({detail: data}) => {
+            console.log('data', data);
+        })
+        .on('picker:cancel', ({detail: data}) => {
             console.log('data', data);
         })
    </script>

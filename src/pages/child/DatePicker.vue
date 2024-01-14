@@ -83,13 +83,12 @@ const methods = {
     /*                           Start With Date Picker                           */
     /* -------------------------------------------------------------------------- */
     onClickDay: function ({date}) { 
-        let range = defaults.rangePicker; 
         temp.date1 = date;
         temp.date2 = date;
 
         let { date1, date2 } = temp;
         pickerValues.startDate = date1;
-        pickerValues.endDate = range ? date2 : date1; 
+        pickerValues.endDate = defaults.rangePicker ? date2 : date1; 
 
         if(!defaults.buttons){
             methods.setElementValue();
@@ -171,7 +170,8 @@ onMounted(() => {
                     <template v-for="(monthDay, index) in monthOfDays" :key="index">
                         <template v-if="monthDay">
                             <div 
-                            @click="methods.onClickDay(monthDay)"
+                            @click.stop="methods.onClickDay(monthDay)"
+                            @dblclick.stop="methods.onClickApply()"
                             :class="{ 'active': (new Date(temp.date1 || pickerValues.startDate).getDate() == monthDay.day_index) }">
                                 {{ monthDay.day_index }}
                             </div>
