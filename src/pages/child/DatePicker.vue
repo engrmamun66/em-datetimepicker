@@ -7,11 +7,12 @@ let { target, options, parentDiv, justInitializeValue } = defineProps(['target',
 const moment = globalThis.moment;
 // local Example: https://docs.mobiscroll.com/javascript/languages
 const FORMATS = {
-    db: 'yyy-MM-DD',
+    default: 'lll', //YYYY-MM-DD HH:mm:ss
+    db: 'YYYY-MM-DD', //YYYY-MM-DD HH:mm:ss
     week_index: 'd', // 0 to 6
     day_index: 'D', // 1 to 31
     weekday_short: 'ddd', // Sat, Sun ...
-    forDisplay: (options.displayFormat ?? 'DD/MMM/yyy'),
+    forDisplay: (options.displayFormat ?? 'DD MMM, YYYY'),
 };
 const TODAY = moment().format(FORMATS.db);
 const defaults = {
@@ -42,14 +43,7 @@ const events = reactive( {
     },
 });
 
-const methods = {
-    setElementValue: function() {
-        if(target.tagName == 'INPUT'){
-            let { startDate, endDate } = pickerValues;
-            let value = startDate;
-            target.value = value;
-        }
-    },    
+const methods = {     
     initPicker: function(){
         emits('init');
         target.dispatchEvent(events.init());
@@ -70,23 +64,35 @@ const methods = {
         emits('change');
         target.dispatchEvent(events.change(pickerValues));
     },
+    setElementValue: function() {
+        if(target.tagName == 'INPUT'){
+            let { startDate, endDate } = pickerValues;
+            let value = moment().date(startDate).format(FORMATS.forDisplay);
+            if(defaults.rangePicker){
+                value = value + ' - ' + moment().date(endDate || startDate).format(FORMATS.forDisplay);
+            }
+            target.value = value;
+        }
+    },   
     /* -------------------------------------------------------------------------- */
     /*                           Start With Date Picker                           */
     /* -------------------------------------------------------------------------- */
-    onClickDay: function ({date}) {
+    onClickDay: function ({date}) { 
+        let range = defaults.rangePicker; 
         temp.date1 = date;
         temp.date2 = date;
+
+        let { date1, date2 } = temp;
+        pickerValues.startDate = date1;
+        pickerValues.endDate = range ? date2 : date1; 
+
         if(!defaults.buttons){
-            pickerValues.startDate = date;
             methods.setElementValue();
+            this.changePicker();
+            this.closePicker();
         }
     },
-    onClickApply: function () {  
-        let startDate = temp.date1;
-        let endDate = temp.date2;
-        console.log('startDate', startDate);
-        pickerValues.startDate = moment().date(startDate).format(FORMATS.db);
-        pickerValues.endDate = moment().date(endDate).format(FORMATS.db);
+    onClickApply: function () { 
         methods.setElementValue();
         this.changePicker();
         this.closePicker();
@@ -142,9 +148,10 @@ onMounted(() => {
 
     // Reset temp data
     temp.date1 = null;
-    
-    console.log(monthOfDays.value);
-    console.log(defaults); 
+    temp.date2 = null;
+ 
+    // console.log(monthOfDays.value);
+    // console.log(defaults); 
 
 
 })
