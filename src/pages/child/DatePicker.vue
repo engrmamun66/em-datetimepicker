@@ -1,18 +1,23 @@
 <script setup>
+import moment from 'moment/moment';
 import { ref, computed, reactive, defineProps, onMounted, inject, defineEmits } from 'vue';
 const { helper } = inject('utils');
 let emits = defineEmits(['open', 'close', 'change'])
 let { target, options, parentDiv } = defineProps(['target', 'options', 'parentDiv']);
+// local Example: https://docs.mobiscroll.com/javascript/languages
 const defaultOptions = {
+    displayFormat: moment().format('dd/MM/YYY'),
     startDate: options?.rangePicker ?? new Date(),
     rangePicker: options?.rangePicker ?? false,
     adjustWeekday: options?.adjustWeekday ?? 0,
+    buttons: options?.buttons ?? true,
 };
+console.log(defaultOptions);
 // let emDatetimepicker = inject('emDatetimepicker');
 
-const current= reactive({
-    day: ''
-});
+const current_day = computed(()=>{
+
+})
 const picker= {};
 picker.setStartDate = function  (date) {
     
@@ -45,48 +50,42 @@ const state = reactive({
     }, 
 });
 
-const get = {
-    /**
-     * @returns [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
-    */
-    weekDays: computed( () => { 
-        const daysOfWeek = [];
-        const adjust = defaultOptions.adjustWeekday;
-        for (let i = 1; i <= 7; i++) {
-            const currentDate = new Date();
-            currentDate.setDate(currentDate.getDate() + (i + adjust));
+// @returns [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
+const weekDays = computed( () => { 
+    const daysOfWeek = [];
+    const adjust = defaultOptions.adjustWeekday;
+    for (let i = 1; i <= 7; i++) {
+        const currentDate = new Date();
+        currentDate.setDate(currentDate.getDate() + (i + adjust));
 
-            const options = { weekday: 'short' };
-            const dayOfWeek = currentDate.toLocaleDateString('en-IN', options);
-            daysOfWeek.push(dayOfWeek);
-        }
-        return daysOfWeek;
-    }),
-    weekDays: computed( () => { 
-        const monthIndex = new Date().getMonth();
-        const currentYear = new Date().getFullYear();
-        const firstDayOfMonth = new Date(currentYear, monthIndex, 1);
-        const lastDayOfMonth = new Date(currentYear, monthIndex + 1, 0); 
-        let days = [];
-        const options = {
-            weekday: 'long', // long or 'short', 'narrow'
-            year: 'numeric', // numeric or '2-digit'
-            month: 'long', // long or 'short', 'narrow'
-            day: 'numeric', // numeric or '2-digit'
-            hour: 'numeric', // numeric or '2-digit'
-            minute: 'numeric', // numeric or '2-digit'
-            second: 'numeric', // numeric or '2-digit'
-            timeZoneName: 'short', // short or 'long'
-        };       
-        for (let day = 1; day <= lastDayOfMonth.getDate(); day++) {
-            const currentDate = new Date(currentYear, monthIndex, day);
-            console.log(currentDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
-        }
+        const options = { weekday: 'short' };
+        const dayOfWeek = currentDate.toLocaleDateString('en-IN', options);
+        daysOfWeek.push(dayOfWeek);
+    }
+    return daysOfWeek;
+})
+const monthOfDays = computed( () => { 
+    const monthIndex = new Date().getMonth();
+    const currentYear = new Date().getFullYear();
+    const firstDayOfMonth = new Date(currentYear, monthIndex, 1);
+    const lastDayOfMonth = new Date(currentYear, monthIndex + 1, 0); 
+    let days = [];
+    const options = {
+        weekday: 'long', // long or 'short', 'narrow'
+        year: 'numeric', // numeric or '2-digit'
+        month: 'long', // long or 'short', 'narrow'
+        day: 'numeric', // numeric or '2-digit'
+        hour: 'numeric', // numeric or '2-digit'
+        minute: 'numeric', // numeric or '2-digit'
+        second: 'numeric', // numeric or '2-digit'
+        timeZoneName: 'short', // short or 'long'
+    };       
+    for (let day = 1; day <= lastDayOfMonth.getDate(); day++) {
+        const currentDate = new Date(currentYear, monthIndex, day);
+        console.log(currentDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
+    }
+});
 
-    }),
-
-
-};
 
 
 
@@ -95,7 +94,7 @@ onMounted(() => {
     console.log('mounted');
     console.log(options);
     // target.dispatchEvent(state.events.open());
-    console.log(fn.weekDays);
+    console.log(weekDays.value);
 })
 
 </script>
@@ -112,11 +111,11 @@ onMounted(() => {
                 <i class='bx bx-chevron-right'></i>
             </header>
             <main class="main-weekdays">
-                <template v-for="(day, index) in get.weekDays" :key="index">
+                <template v-for="(day, index) in weekDays" :key="index">
                     <div class="active">{{ day }}</div>            
                 </template>
             </main>
-            <main class="main-days">
+            <main class="main-days box">
                 <div class="active">1</div>
                 <div class="">2</div>
                 <div class="">3</div>
@@ -149,6 +148,12 @@ onMounted(() => {
                 <div class="">30</div>
                 <div class="">31</div>
             </main>
+            <template v-if="defaultOptions.buttons">
+                <div class="buttons">
+                    <button class="btn-cancel">Cancel</button>
+                    <button class="btn-apply">Apply</button>
+                </div>
+            </template>
         </div>
     </template>
     <template v-else-if="state.current_view == 'months'">
@@ -158,7 +163,7 @@ onMounted(() => {
                 <span class="cp" @click="state.current_view = 'years'">2024</span>
                 <i class='bx bx-chevron-right'></i>
             </header>
-            <main class="main-months">
+            <main class="main-months box">
                 <div class="active" @click="state.current_view = 'days'">Jan</div>
                 <div class="" @click="state.current_view = 'days'">Fev</div>
                 <div class="" @click="state.current_view = 'days'">Mar</div>
@@ -181,7 +186,7 @@ onMounted(() => {
                 <span></span>
                 <i class='bx bx-chevron-right'></i>
             </header>
-            <main class="main-months">
+            <main class="main-months box">
                 <div class="" @click="state.current_view = 'months'">2013</div>
                 <div class="" @click="state.current_view = 'months'">2014</div>
                 <div class="" @click="state.current_view = 'months'">2015</div>
@@ -197,6 +202,7 @@ onMounted(() => {
             </main>
         </div>
     </template>
+    
 
     
 </template>
@@ -218,7 +224,6 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     font-weight: 700;
     color: #333;
 }
@@ -251,13 +256,10 @@ header i:hover {
 .main-months>div {
     width: 82px;
     height: 40px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     color: #666;
-
     cursor: pointer;
     transition: all 300ms;
 }
@@ -265,23 +267,20 @@ header i:hover {
 .main-days>div {
     width: 40px;
     height: 40px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     color: #666;
-
     cursor: pointer;
     transition: all 300ms;
 }
 
-main>div:hover {
+main.box>div:hover {
     background-color: #ECE0FD;
     border-radius: 8px;
 }
 
-main>div.active {
+main.box>div.active {
     background: #6200EE;
     border-radius: 8px;
     font-weight: 700;
@@ -289,7 +288,7 @@ main>div.active {
     position: relative;
 }
 
-main>div.active::after {
+.----main.box>div.active::after {
     content: '';
     width: 4px;
     height: 4px;
@@ -297,5 +296,26 @@ main>div.active::after {
     border-radius: 50%;
     position: absolute;
     bottom: 6px;
+}
+.buttons{
+    display: flex;
+    justify-content: end;
+}
+.buttons .btn-cancel, .btn-apply{
+    padding: 6px 15px;
+    border:none;
+    text-align: center;
+    border-radius: 4px;
+}
+.buttons .btn-cancel{
+    color: black;
+    background-color: #e2e3ee;
+}
+.buttons .btn-cancel:has(~.btn-apply){
+    margin-right: 10px;
+}
+.buttons .btn-apply{
+    color: white;
+    background-color: #6200EE;
 }
 </style>
