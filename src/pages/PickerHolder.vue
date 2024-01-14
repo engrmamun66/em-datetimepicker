@@ -1,10 +1,28 @@
 <script setup>
 import Picker from './child/DatePicker.vue';
 import Modal from './child/Modal.vue';
-import { ref, inject, defineProps, onMounted } from 'vue';
+import { ref, provide, reactive, defineProps, onMounted } from 'vue';
 let { target, options, parentDiv } = defineProps(['target', 'options', 'parentDiv']);
 let showModal = ref(false);
 let isShowInitilaztionValue = ref(true);
+
+let isMounted = ref(false);
+const temp = reactive({
+    // with Single Date
+    date1: '',
+    date2: '',
+})
+const pickerValues = reactive({
+    startDate: '',
+    endDate: '',
+    old: {
+        startDate: '',
+        endDate: '',
+    }
+});
+provide('isMounted', isMounted);
+provide('temp', temp);
+provide('pickerValues', pickerValues);
 
 onMounted(() => {
     target.addEventListener('click', (e)=> {

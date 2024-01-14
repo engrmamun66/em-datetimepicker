@@ -2,6 +2,9 @@
 import { ref, computed, reactive, defineProps, onMounted, inject, defineEmits } from 'vue';
 import CancelAndApplyButton from './CancelAndApplyButton.vue'
 const { helper } = inject('utils');
+const isMounted = inject('isMounted');
+const temp = inject('temp');
+const pickerValues = inject('pickerValues');
 let emits = defineEmits(['init', 'open', 'cancel', 'close', 'change']);
 let { target, options, parentDiv, justInitializeValue } = defineProps(['target', 'options', 'parentDiv', 'justInitializeValue']);
 const moment = globalThis.moment;
@@ -64,13 +67,30 @@ const methods = {
         emits('change');
         target.dispatchEvent(events.change(pickerValues));
     },
+    makeDate: function(dateTimeString, format){
+        let date = new Date(dateTimeString);
+        return moment().set({ 
+            year: date.getFullYear(), 
+            month: date.getMonth(),
+            date: date.getDate(),
+            hour: date.getHours(),
+            minute: date.getMinutes(),
+            second: date.getSeconds(),
+            }).format(format);
+
+    },
     setElementValue: function() {
         if(target.tagName == 'INPUT'){
             let { startDate, endDate } = pickerValues;
-            let value = moment().date(startDate).format(FORMATS.forDisplay);
+            let _startDate = this.makeDate(startDate, FORMATS.forDisplay);
+            let _endDate = this.makeDate(endDate, FORMATS.forDisplay);         
+
+            let value = _startDate; 
             if(defaults.rangePicker){
-                value = value + ' - ' + moment().date(endDate || startDate).format(FORMATS.forDisplay);
+                value = value + ' - ' + _endDate;
             }
+
+            console.log('value', value);
             target.value = value;
         }
     },   
@@ -101,20 +121,7 @@ const methods = {
 
 
 
-const pickerValues = reactive({
-    startDate: '',
-    endDate: '',
-    old: {
-        startDate: '',
-        endDate: '',
-    }
-});
 
-const temp = reactive({
-    // with Single Date
-    date1: '',
-    date2: '',
-})
 
 // @returns [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
 const weekDays = computed( () => { 
@@ -141,10 +148,13 @@ const monthOfDays = computed( () => {
 
 
 onMounted(() => {
-    pickerValues.startDate = defaults.startDate;
-    pickerValues.endDate = defaults.endDate;
-    methods.setElementValue();
-    methods.initPicker();
+    if(!isMounted.value){
+        pickerValues.startDate = defaults.startDate;
+        pickerValues.endDate = defaults.endDate;
+        methods.setElementValue();
+        methods.initPicker();
+        isMounted.value = true;
+    }
 
     // Reset temp data
     temp.date1 = null;
@@ -152,8 +162,6 @@ onMounted(() => {
  
     // console.log(monthOfDays.value);
     // console.log(defaults); 
-
-
 })
 
 </script>
