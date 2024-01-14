@@ -11,8 +11,9 @@ const picker = reactive({
     // with Single Date
     date1: '',
     date2: '',
+    yearIndex: 0,
     monthIndex: 0,
-    start_from: 0,
+    StartFrom: 0,
 })
 const pickerValues = reactive({
     startDate: '',

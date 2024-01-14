@@ -16,6 +16,8 @@ const FORMATS = {
     weekday_short: 'ddd', // Sat, Sun ...
     forDisplay: (options.displayFormat ?? 'DD MMM, YYYY'),
     forHeading: 'MMMM YYYY',
+    year: 'YYYY',
+    monthShort: 'MMM',
 };
 const TODAY = moment().format(FORMATS.output);
 const defaults = {
@@ -106,10 +108,14 @@ const fn = {
     onClickMonth: function (monthIndex) { 
         let date = new Date(picker.date1);
         date.setMonth(monthIndex);
-        picker.date1 = picker.date2 = helper.makeDate(date, FORMATS.output);
-        console.log('date', picker.date2);
-        
+        picker.date1 = picker.date2 = helper.makeDate(date, FORMATS.output);        
         current_view.value = 'days';
+    },
+    onClickYear: function (year) { 
+        let date = new Date(picker.date1);
+        date.setFullYear(year);        date.setFullYear(year);
+        picker.date1 = picker.date2 = helper.makeDate(date, FORMATS.output); 
+        current_view.value = 'months';
     },
     onClickNext: function () { 
         switch (current_view.value) {
@@ -120,7 +126,7 @@ const fn = {
                 
                 break;        
             case 'years':
-                
+                if(picker.yearIndex < 0) picker.yearIndex++
                 break;        
             default:
                 break;
@@ -135,7 +141,7 @@ const fn = {
                 
                 break;        
             case 'years':
-                
+                picker.yearIndex--
                 break;        
             default:
                 break;
@@ -165,10 +171,10 @@ const monthOfDays = computed( () => {
     const monthIndex = picker.monthIndex;
     const days = helper.daysOfMonth(year, monthIndex, FORMATS, {currentMonth: true});
     const first_weekday_short = days[0]['weekday_short'];
-    picker.start_from = weekDays.value.findIndex(weekday => weekday === first_weekday_short);
+    picker.StartFrom = weekDays.value.findIndex(weekday => weekday === first_weekday_short);
     // Left tailing
     year = monthIndex==0 ? (year - 1) : year;
-    const previous_month_days = helper.daysOfMonth(year, monthIndex - 1, FORMATS).slice(-picker.start_from);
+    const previous_month_days = helper.daysOfMonth(year, monthIndex - 1, FORMATS).slice(-picker.StartFrom);
     const days_after_left_tailing = [...previous_month_days, ...days];
     // Right tailing    
     year = monthIndex==11 ? (year + 1) : year;
@@ -177,7 +183,13 @@ const monthOfDays = computed( () => {
     days_after_left_and_right_tailing.length = 35;
     return days_after_left_and_right_tailing;
 });
-
+const years = computed(() => {
+    let limit = 12
+    let start = new Date().getFullYear() - (picker.yearIndex * limit);
+    let end = start + limit;
+    let rangeArray = Array.from({ length: end - start }, (_, index) => start - index);
+    return rangeArray;
+})
 
 
 
@@ -240,12 +252,14 @@ onMounted(() => {
             <div class="months-box content">
                 <header>
                     <i class='bx bx-chevron-left'></i>
-                    <span class="cp" @click="current_view = 'years'">{{ picker?.date1 }}</span>
+                    <span class="cp" @click="current_view = 'years'">{{ helper.makeDate(picker?.date1, FORMATS.year) }}</span>
                     <i class='bx bx-chevron-right'></i>
                 </header>
                 <main class="main-months box">
                     <template v-for="(monthShort, index) in defaults.monthShorts" :key="index">
-                        <div class="active" @click="fn.onClickMonth(index)">{{ monthShort }}</div>
+                        <div 
+                        :class="{'active': helper.makeDate(picker?.date1, FORMATS.monthShort) === monthShort}" 
+                        @click="fn.onClickMonth(index)">{{ monthShort }}</div>
                     </template>
                 </main>
             </div>
@@ -258,18 +272,11 @@ onMounted(() => {
                     <i class='bx bx-chevron-right'></i>
                 </header>
                 <main class="main-months box">
-                    <div class="" @click="current_view = 'months'">2013</div>
-                    <div class="" @click="current_view = 'months'">2014</div>
-                    <div class="" @click="current_view = 'months'">2015</div>
-                    <div class="" @click="current_view = 'months'">2016</div>
-                    <div class="" @click="current_view = 'months'">2017</div>
-                    <div class="" @click="current_view = 'months'">2018</div>
-                    <div class="" @click="current_view = 'months'">2019</div>
-                    <div class="" @click="current_view = 'months'">2020</div>
-                    <div class="" @click="current_view = 'months'">2021</div>
-                    <div class="" @click="current_view = 'months'">2022</div>
-                    <div class="" @click="current_view = 'months'">2023</div>
-                    <div class="active" @click="current_view = 'months'">2024</div>
+                    <template v-for="(year, index) in years" :key="index">
+                        <div 
+                        :class="{'active': new Date(picker.date1).getFullYear() == year}" 
+                        @click="fn.onClickYear(year)"> {{ year }}</div>
+                    </template>
                 </main>
             </div>
         </template>
