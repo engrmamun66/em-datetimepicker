@@ -1,7 +1,8 @@
 <script setup>
 import { ref, computed, reactive, defineProps, onMounted, inject, defineEmits } from 'vue';
+import CancelAndApplyButton from './CancelAndApplyButton.vue'
 const { helper } = inject('utils');
-let emits = defineEmits(['init', 'open', 'cancel', 'close', 'change'])
+let emits = defineEmits(['init', 'open', 'cancel', 'close', 'change']);
 let { target, options, parentDiv, justInitializeValue } = defineProps(['target', 'options', 'parentDiv', 'justInitializeValue']);
 const moment = globalThis.moment;
 // local Example: https://docs.mobiscroll.com/javascript/languages
@@ -27,19 +28,27 @@ const methods = {
             target.value = value;
         }
     },
+    onApply: function() {
+        this.closePicker();
+    },
     initPicker: function(){
+        emits('init');
         target.dispatchEvent(state.events.init());
     },
     openPicker: function(){
+        emits('open');
         target.dispatchEvent(state.events.open());
     },
     cancelPicker: function(){
+        emits('cancel');
         target.dispatchEvent(state.events.cancel());
     },
     closePicker: function(){
+        emits('close');
         target.dispatchEvent(state.events.close());
     },
-    change: function(){
+    changePicker: function(){
+        emits('change');
         target.dispatchEvent(state.events.change(state.pickerValues));
     },
 };
@@ -122,7 +131,6 @@ onMounted(() => {
     state.pickerValues.endDate = defaults.endDate;
     if(justInitializeValue){
         methods.setElementValue();
-        emits('init');
         methods.initPicker();
     }
 })
@@ -178,12 +186,11 @@ onMounted(() => {
                     <div class="">30</div>
                     <div class="">31</div>
                 </main>
-                <template v-if="defaults.buttons">
-                    <div class="buttons">
-                        <button class="btn-cancel">Cancel</button>
-                        <button class="btn-apply">Apply</button>
-                    </div>
-                </template>
+                <CancelAndApplyButton
+                :defaults="defaults"
+                @onCancel="methods.cancelPicker()"
+                @onApply="methods.onApply()"
+                ></CancelAndApplyButton>
             </div>
         </template>
         <template v-else-if="state.current_view == 'months'">
@@ -347,3 +354,4 @@ main.box>div.active {
     background-color: #6200EE;
 }
 </style>
+
