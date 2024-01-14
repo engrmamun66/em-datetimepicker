@@ -3,7 +3,7 @@ import { ref, computed, reactive, defineProps, onMounted, inject, defineEmits } 
 import CancelAndApplyButton from './CancelAndApplyButton.vue'
 const { helper } = inject('utils');
 const isMounted = inject('isMounted');
-const temp = inject('temp');
+const picker = inject('picker');
 const pickerValues = inject('pickerValues');
 let emits = defineEmits(['init', 'open', 'cancel', 'close', 'change']);
 let { target, options, parentDiv, justInitializeValue } = defineProps(['target', 'options', 'parentDiv', 'justInitializeValue']);
@@ -15,6 +15,7 @@ const FORMATS = {
     day_index: 'D', // 1 to 31
     weekday_short: 'ddd', // Sat, Sun ...
     forDisplay: (options.displayFormat ?? 'DD MMM, YYYY'),
+    forHeading: 'MMMM YYYY',
 };
 const TODAY = moment().format(FORMATS.output);
 const defaults = {
@@ -24,7 +25,7 @@ const defaults = {
     rangePicker: options?.rangePicker ?? false,
     adjustWeekday: options?.adjustWeekday ?? 0,
     buttons: options?.buttons ?? true,
-    monthShorts: [ 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dec' ],
+    monthShorts: [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ],
 }; 
 let current_view = ref('days');
 
@@ -46,7 +47,7 @@ const events = reactive( {
     },
 });
 
-const methods = {     
+const fn = {     
     initPicker: function(){
         emits('init');
         target.dispatchEvent(events.init());
@@ -84,34 +85,36 @@ const methods = {
     /*                           Start With Date Picker                           */
     /* -------------------------------------------------------------------------- */
     onClickDay: function ({date}) { 
-        temp.date1 = date;
-        temp.date2 = date;
+        picker.date1 = date;
+        picker.date2 = date;
 
-        let { date1, date2 } = temp;
+        let { date1, date2 } = picker;
         pickerValues.startDate = date1;
         pickerValues.endDate = defaults.rangePicker ? date2 : date1; 
 
         if(!defaults.buttons){
-            methods.setElementValue();
+            fn.setElementValue();
             this.changePicker();
             this.closePicker();
         }
     },
     onClickApply: function () { 
-        methods.setElementValue();
+        fn.setElementValue();
         this.changePicker();
         this.closePicker();
     },
     onClickMonth: function (monthIndex) { 
-        let date = new Date(temp.date1);
+        let date = new Date(picker.date1);
         date.setMonth(monthIndex);
-        temp.date1 = helper.makeDate(date, FORMATS.output);
+        picker.date1 = picker.date2 = helper.makeDate(date, FORMATS.output);
+        console.log('date', picker.date2);
+        
         current_view.value = 'days';
     },
     onClickNext: function () { 
         switch (current_view.value) {
             case 'days':
-                temp.monthIndex += 1;
+                picker.monthIndex += 1;
                 break;        
             case 'months':
                 
@@ -126,7 +129,7 @@ const methods = {
     onClickPrev: function () { 
         switch (current_view.value) {
             case 'days':
-                temp.monthIndex -= 1;
+                picker.monthIndex -= 1;
                 break;        
             case 'months':
                 
@@ -157,15 +160,15 @@ const weekDays = computed( () => {
     return daysOfWeek;
 })
 const monthOfDays = computed( () => { 
-    let date = new Date(temp.date1);
+    let date = new Date(picker.date1);
     let year = date.getFullYear()
-    const monthIndex = temp.monthIndex;
+    const monthIndex = picker.monthIndex;
     const days = helper.daysOfMonth(year, monthIndex, FORMATS, {currentMonth: true});
     const first_weekday_short = days[0]['weekday_short'];
-    temp.start_from = weekDays.value.findIndex(weekday => weekday === first_weekday_short);
+    picker.start_from = weekDays.value.findIndex(weekday => weekday === first_weekday_short);
     // Left tailing
     year = monthIndex==0 ? (year - 1) : year;
-    const previous_month_days = helper.daysOfMonth(year, monthIndex - 1, FORMATS).slice(-temp.start_from);
+    const previous_month_days = helper.daysOfMonth(year, monthIndex - 1, FORMATS).slice(-picker.start_from);
     const days_after_left_tailing = [...previous_month_days, ...days];
     // Right tailing    
     year = monthIndex==11 ? (year + 1) : year;
@@ -180,35 +183,31 @@ const monthOfDays = computed( () => {
 
 
 onMounted(() => {
-    // if(!isMounted.value){
+    if(!isMounted.value){
         pickerValues.startDate = defaults.startDate;
         pickerValues.endDate = defaults.endDate;
 
-        temp.date1 = defaults.startDate;
-        temp.date2 = defaults.endDate;   
-        temp.monthIndex = new Date(pickerValues.startDate).getMonth();   
+        picker.date1 = defaults.startDate;
+        picker.date2 = defaults.endDate;   
+        picker.monthIndex = new Date(pickerValues.startDate).getMonth();   
 
-        methods.setElementValue();
-        methods.initPicker();
+        fn.setElementValue();
+        fn.initPicker();
         isMounted.value = true;
-    // }
- 
-    // console.log(monthOfDays.value);
-    // console.log(defaults); 
+    }
 })
 
 </script>
 
 <template>
     <template v-if="!justInitializeValue">
-        <!-- Months of year -->
+        <!-- days of month -->
         <template v-if="current_view=='days'">
-            <!-- days of month -->
             <div class="days-month-box content">
                 <header>
-                    <i class='bx bx-chevron-left' @click="methods.onClickPrev()"></i>
-                    <span class="cp" @click="current_view = 'months'">{{ moment().month(temp.monthIndex).format('MMMM YYYY') }}</span>
-                    <i class='bx bx-chevron-right' @click="methods.onClickNext()"></i>
+                    <i class='bx bx-chevron-left' @click="fn.onClickPrev()"></i>
+                    <span class="cp" @click="current_view = 'months'">{{ helper.makeDate(picker.date1, FORMATS.forHeading) }}</span>
+                    <i class='bx bx-chevron-right' @click="fn.onClickNext()"></i>
                 </header>
                 <main class="main-weekdays">
                     <template v-for="(day, index) in weekDays" :key="index">
@@ -219,10 +218,10 @@ onMounted(() => {
                     <template v-for="(monthDay, index) in monthOfDays" :key="index">
                         <template v-if="monthDay">
                             <div 
-                            @click.stop="monthDay.currentMonth ? methods.onClickDay(monthDay) : false"
-                            @dblclick.stop="monthDay.currentMonth ? methods.onClickApply() : false"
+                            @click.stop="monthDay.currentMonth ? fn.onClickDay(monthDay) : false"
+                            @dblclick.stop="monthDay.currentMonth ? fn.onClickApply() : false"
                             :class="{ 
-                                'active': monthDay.currentMonth && (new Date(temp.date1).getDate() == monthDay.day_index) ,
+                                'active': monthDay.currentMonth && (new Date(picker.date1).getDate() == monthDay.day_index) ,
                                 'offset-date': !monthDay.currentMonth,
                             }">
                                 {{ monthDay.day_index }}
@@ -232,8 +231,8 @@ onMounted(() => {
                 </main>
                 <CancelAndApplyButton
                 :defaults="defaults"
-                @onCancel="methods.cancelPicker()"
-                @onApply="methods.onClickApply()"
+                @onCancel="fn.cancelPicker()"
+                @onApply="fn.onClickApply()"
                 ></CancelAndApplyButton>
             </div>
         </template>
@@ -241,12 +240,12 @@ onMounted(() => {
             <div class="months-box content">
                 <header>
                     <i class='bx bx-chevron-left'></i>
-                    <span class="cp" @click="current_view = 'years'">2024</span>
+                    <span class="cp" @click="current_view = 'years'">{{ picker?.date1 }}</span>
                     <i class='bx bx-chevron-right'></i>
                 </header>
                 <main class="main-months box">
                     <template v-for="(monthShort, index) in defaults.monthShorts" :key="index">
-                        <div class="active" @click="onClickMonth(index)">{{ monthShort }}</div>
+                        <div class="active" @click="fn.onClickMonth(index)">{{ monthShort }}</div>
                     </template>
                 </main>
             </div>

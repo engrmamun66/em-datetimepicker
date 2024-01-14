@@ -7,7 +7,7 @@ let showModal = ref(false);
 let isShowInitilaztionValue = ref(true);
 
 let isMounted = ref(false);
-const temp = reactive({
+const picker = reactive({
     // with Single Date
     date1: '',
     date2: '',
@@ -23,7 +23,7 @@ const pickerValues = reactive({
     }
 });
 provide('isMounted', isMounted);
-provide('temp', temp);
+provide('picker', picker);
 provide('pickerValues', pickerValues);
 
 onMounted(() => {

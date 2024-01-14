@@ -1,6 +1,5 @@
 .modal {
   background-color: rgba(0, 0, 0, 0.678) !important;
-  backdrop-filter: blur(1px);
 }
 
 .modal.show .modal-body{
