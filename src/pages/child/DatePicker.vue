@@ -211,7 +211,8 @@ const fn = {
     onClickPrev: function () { 
         switch (current_view.value) {
             case 'days':
-                picker.monthIndex -= 1;
+                if(picker.monthIndex > 0)
+                    picker.monthIndex -= 1;
                 break;        
             case 'years':
                 picker.yearIndex = picker.yearIndex + 1;
