@@ -145,20 +145,28 @@ const fn = {
     onClickDay: function ({date}) {
         if(defaults.rangePicker){
             if(selectingStartDate.value){
+                // For Date 1
                 selecting.value = true;
                 picker.date2 = '';
                 picker.date1 = date;
                 selectingStartDate.value = false;
             } else {
-                picker.date2 = date;
-                selecting.value = false;
-                console.log('here');
-
+                if(date >= picker.date1){
+                    picker.date2 = date;
+                    selecting.value = false;
+               } else {
+                // return to ► For Date 1
+                    selecting.value = true;
+                    picker.date2 = '';
+                    picker.date1 = date;
+                    selectingStartDate.value = false;
+               }
                 if(!defaults.buttons){
                     fn.setElementValue();
                     this.changePicker();
                     this.closePicker();
                 }
+
             }
 
             
@@ -212,9 +220,7 @@ const fn = {
                 if(picker.yearIndex > 0){
                     picker.yearIndex = picker.yearIndex - 1;
                 }
-                break;        
-            default:
-                break;
+                break; 
         }
     },
     onClickPrev: function () { 
@@ -224,9 +230,7 @@ const fn = {
                 break;        
             case 'years':
                 picker.yearIndex = picker.yearIndex + 1;
-                break;        
-            default:
-                break;
+                break; 
         }
     },
     /* -------------------------------------------------------------------------- */
@@ -242,17 +246,13 @@ const fn = {
         return picker.date2 = date;
     },
     isInSelectedDate: function ({date}) { 
-        // let { date1, date2 } = picker;
-        // let d1 = new Date(date1);
-        // let d2 = new Date(date2 || date1);
-        // let d3 = new Date(date);
-        // return d3 > d1 && d3 < d2;
-        return false;
+        let { date1, date2 } = picker;
+        let d1 = new Date(date1);
+        let d2 = new Date(date2 || date1);
+        let d3 = new Date(date);
+        return d3 > d1 && d3 < d2;
     },
 };
-
-
-
 
 
 // @returns [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
@@ -366,9 +366,6 @@ onMounted(() => {
                         </template>
                     </template>
                 </main>
-                <div>
-                 {{ picker }}
-                </div>
                 <Buttons
                 :defaults="defaults"
                 @onCancel="fn.cancelPicker()"
@@ -469,7 +466,7 @@ header i:hover {
 .main-days {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 8px;
+    gap: 0px;
 }
 
 .main-months>div {
@@ -488,7 +485,7 @@ header i:hover {
 }
 
 .main-days>div {
-    width: 40px;
+    width: 50px;
     height: 40px;
     display: flex;
     align-items: center;
@@ -501,7 +498,7 @@ header i:hover {
     color: #d6d6d6 !important;
 }
 
-main.box>div:not(.offset-date):hover {
+main.box>div:not(.offset-date):not(.date-in-selected-range):hover {
     background-color: #ECE0FD;
     border-radius: 8px;
 }
@@ -529,9 +526,7 @@ main.box>div.end-date {
 main.box>div.date-in-selected-range {
     background: #6300ee1c;
     border-radius: 0px;
-    border: 1px dashed #6200EE;
 }
-
 
 .buttons{
     display: flex;
