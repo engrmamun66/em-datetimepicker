@@ -1,6 +1,9 @@
 <script setup>
 import { ref, computed, reactive, defineProps, onMounted, inject, defineEmits } from 'vue';
-let { defaults } = defineProps(['defaults']);
+let { defaults, applyBtn } = defineProps({
+    defaults: { required: false },
+    applyBtn: { required: true },
+});
 let emits = defineEmits(['onCancel', 'onApply']);
 function handleClick(from=''){
     if(from == 'cancel'){
@@ -16,7 +19,7 @@ function handleClick(from=''){
     <template v-if="defaults.buttons">
         <div class="buttons">
             <button class="btn-cancel" @click.stop="handleClick('cancel')">Cancel</button>
-            <button class="btn-apply" @click.stop="handleClick('apply')">Apply</button>
+            <button v-if="applyBtn" class="btn-apply" @click.stop="handleClick('apply')">Apply</button>
         </div>
     </template>
 </template>

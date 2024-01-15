@@ -140,9 +140,6 @@ const fn = {
             case 'days':
                 picker.monthIndex -= 1;
                 break;        
-            case 'months':
-                
-                break;        
             case 'years':
                 picker.yearIndex = picker.yearIndex + 1;
                 break;        
@@ -262,9 +259,9 @@ onMounted(() => {
         <template v-else-if="current_view == 'months'">
             <div class="months-box content">
                 <header>
-                    <i class='bx bx-chevron-left' @click="fn.onClickPrev()"></i>
+                    <i class='bx bx-chevron-left visibility-hidden'></i>
                     <span class="cp" @click="current_view = 'years'">{{ helper.makeDate(picker?.date1, FORMATS.year) }}</span>
-                    <i class='bx bx-chevron-right' @click="fn.onClickNext()"></i>
+                    <i class='bx bx-chevron-right visibility-hidden'></i>
                 </header>
                 <main class="main-months box">
                     <template v-for="(monthShort, index) in defaults.monthShorts" :key="index">
@@ -273,6 +270,12 @@ onMounted(() => {
                         @click="fn.onClickMonth(index)">{{ monthShort }}</div>
                     </template>
                 </main>
+                <CancelAndApplyButton
+                :defaults="defaults"
+                @onCancel="fn.cancelPicker()"
+                @onApply="fn.onClickApply()"
+                :applyBtn="false"
+                ></CancelAndApplyButton>
             </div>
         </template>
         <template v-else-if="current_view == 'years'">
@@ -289,6 +292,12 @@ onMounted(() => {
                         @click="fn.onClickYear(year)"> {{ year }}</div>
                     </template>
                 </main>
+                <CancelAndApplyButton
+                :defaults="defaults"
+                @onCancel="fn.cancelPicker()"
+                @onApply="fn.onClickApply()"
+                :applyBtn="false"
+                ></CancelAndApplyButton>
             </div>
         </template>
     </template>
@@ -403,6 +412,10 @@ main.box>div:not(.offset-date).active {
 .buttons .btn-apply{
     color: white;
     background-color: #6200EE;
+}
+.visibility-hidden{
+    visibility: hidden;
+    pointer-events: none;
 }
 </style>
 
