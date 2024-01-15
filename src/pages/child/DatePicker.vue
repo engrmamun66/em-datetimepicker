@@ -28,6 +28,7 @@ const defaults = {
     adjustWeekday: options?.adjustWeekday ?? 0,
     buttons: options?.buttons ?? true,
     monthShorts: [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ],
+    row: (options.row && options.row >= 2 && options.row <= 10) ? options.row : 5,
 }; 
 let current_view = ref('days');
 
@@ -181,7 +182,7 @@ const monthOfDays = computed( () => {
     __date.setMonth(__date.getMonth() + 1);
     const next_month_days = helper.daysOfMonth(__date.getFullYear(), monthIndex + 1, FORMATS);
     const days_after_left_and_right_tailing = [...days_after_left_tailing, ...next_month_days];
-    days_after_left_and_right_tailing.length = 35;
+    days_after_left_and_right_tailing.length = defaults.row * 7;
     return days_after_left_and_right_tailing;
 });
 const years = computed(() => {
@@ -231,8 +232,8 @@ onMounted(() => {
                     <template v-for="(monthDay, index) in monthOfDays" :key="index">
                         <template v-if="monthDay">
                             <div 
-                            @click.stop="monthDay.currentMonth ? fn.onClickDay(monthDay) : false"
-                            @dblclick.stop="monthDay.currentMonth ? fn.onClickApply() : false"
+                            @click.stop="fn.onClickDay(monthDay)"
+                            @dblclick.stop="fn.onClickApply()"
                             :class="{ 
                                 'active': monthDay.currentMonth && (new Date(picker.date1).getDate() == monthDay.day_index) ,
                                 'offset-date': !monthDay.currentMonth,
