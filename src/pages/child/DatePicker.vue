@@ -203,7 +203,8 @@ const fn = {
     },
     onClickYear: function (year) { 
         let date = new Date(picker.date1);
-        date.setFullYear(year);        date.setFullYear(year);
+        date.setFullYear(year);        
+        date.setFullYear(year);
         picker.date1 = picker.date2 = makeDate(date, FORMATS.date); 
         current_view.value = 'months';
     },
