@@ -246,7 +246,7 @@ const fn = {
             return (
                 (new Date(loopDate) <= new Date(hoverDate.value))
                 && (new Date(date1) < new Date(hoverDate.value))
-                && (new Date(loopDate) >= new Date(date1))
+                && (new Date(loopDate) > new Date(date1))
             );
         }
         return false;
@@ -507,11 +507,16 @@ header i:hover {
     color: #d6d6d6 !important;
 }
 
-main.box>div:not(.offset-date):not(.date-in-selected-range):not(.start-date):not(.end-date):hover,
-main.box>div:not(.hover-date):not(.date-in-selected-range):not(.start-date):not(.end-date):hover
+main.box>div:not(.offset-date):not(.date-in-selected-range):not(.start-date):not(.end-date):hover
  {
     background-color: #ECE0FD;
     border-radius: 8px;
+}
+
+div.hover-date
+ {
+    background-color: #ECE0FD !important;
+    border-radius: 0px !important;
 }
 
 main.box>div:not(.offset-date).active {
