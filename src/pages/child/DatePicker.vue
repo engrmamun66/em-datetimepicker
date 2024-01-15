@@ -24,8 +24,8 @@ const FORMATS = {
 const TODAY = moment().format(FORMATS.date);
 const defaults = {
     displayFormat: FORMATS.forDisplay,
-    startDate: makeDate(options?.startDate ?? TODAY, FORMATS.forDisplay),
-    endDate: moment().date( options?.endDate ?? TODAY ).format( FORMATS.forDisplay ),
+    startDate: makeDate(options?.startDate ?? TODAY, FORMATS.displayFormat),
+    endDate: moment().date( options?.endDate ?? TODAY ).format( FORMATS.displayFormat ),
     rangePicker: options?.rangePicker ?? false,
     adjustWeekday: options?.adjustWeekday ?? 0,
     buttons: (options?.buttons) ?? {
@@ -67,9 +67,9 @@ function makeDate(dateTime, format){
         var date = new Date(dateTime);
     }
     return moment().set({ 
-        year: date.getFullYear(), 
-        month: date.getMonth(),
         date: date.getDate(),
+        month: date.getMonth(),
+        year: date.getFullYear(), 
         hour: date.getHours(),
         minute: date.getMinutes(),
         second: date.getSeconds(),
@@ -148,16 +148,20 @@ const fn = {
                 selecting.value = true;
                 picker.date2 = '';
                 picker.date1 = date;
+                selectingStartDate.value = false;
             } else {
                 picker.date2 = date;
                 selecting.value = false;
+                console.log('here');
+
+                if(!defaults.buttons){
+                    fn.setElementValue();
+                    this.changePicker();
+                    this.closePicker();
+                }
             }
 
-            if(!defaults.buttons){
-                fn.setElementValue();
-                this.changePicker();
-                this.closePicker();
-            }
+            
             
         } else {
             picker.date1 = date;
@@ -298,15 +302,16 @@ const years = computed(() => {
 })
 
 
-
-
+/* -------------------------------------------------------------------------- */
+/*                                  onMounted                                 */
+/* -------------------------------------------------------------------------- */
 onMounted(() => {
     if(!isMounted.value){
         pickerValues.startDate = defaults.startDate;
         pickerValues.endDate = defaults.endDate;
 
-        picker.date1 = defaults.startDate;
-        picker.date2 = defaults.endDate;   
+        picker.date1 = makeDate(defaults.startDate, FORMATS.date);
+        picker.date2 = makeDate(defaults.endDate, FORMATS.date);
         picker.monthIndex = new Date(pickerValues.startDate).getMonth();   
 
         fn.setElementValue();
@@ -339,10 +344,10 @@ onMounted(() => {
                             @click.stop="fn.onClickDay(monthDay)"
                             @dblclick.stop="fn.onClickApply()"
                             :class="{ 
-                                '---active': fn.isEqualBothDate() ,
+                                'active':  (picker.date1 === picker.date2) && (picker.date1 === monthDay.date),
                                 'offset-date': !monthDay.currentMonth,
-                                'start-date': fn.isEqualDate1(monthDay),
-                                'end-date': fn.isEqualDate2(monthDay),
+                                'start-date': (monthDay.date === picker.date1) && (picker.date1 != picker.date2),
+                                'end-date': (monthDay.date === picker.date2) && (picker.date1 != picker.date2),
                                 'date-in-selected-range': fn.isInSelectedDate(monthDay),
                             }">
                                 {{ monthDay.day_index }}
@@ -361,6 +366,9 @@ onMounted(() => {
                         </template>
                     </template>
                 </main>
+                <div>
+                 {{ picker }}
+                </div>
                 <Buttons
                 :defaults="defaults"
                 @onCancel="fn.cancelPicker()"
