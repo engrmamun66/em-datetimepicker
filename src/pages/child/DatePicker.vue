@@ -287,9 +287,20 @@ onMounted(() => {
                         <div class="active">{{ day }}</div>            
                     </template>
                 </main>
-                <main class="main-days box">
+                <main class="main-days box" :class="{'rangePicker': defaults.rangePicker}">
                     <template v-for="(monthDay, index) in monthOfDays" :key="index">
-                        <template v-if="monthDay">
+                        <template v-if="defaults.rangePicker">
+                            <div 
+                            @click.stop="fn.onClickDay(monthDay)"
+                            @dblclick.stop="fn.onClickApply()"
+                            :class="{ 
+                                'active': monthDay.currentMonth && (new Date(picker.date1).getDate() == monthDay.day_index) ,
+                                'offset-date': !monthDay.currentMonth,
+                            }">
+                                {{ monthDay.day_index }}
+                            </div>
+                        </template>
+                        <template v-else>
                             <div 
                             @click.stop="fn.onClickDay(monthDay)"
                             @dblclick.stop="fn.onClickApply()"
