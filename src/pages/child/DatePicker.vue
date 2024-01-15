@@ -209,10 +209,7 @@ const fn = {
         switch (current_view.value) {
             case 'days':
                 picker.monthIndex += 1;
-                break;        
-            case 'months':
-                
-                break;        
+                break;         
             case 'years':
                 if(picker.yearIndex > 0){
                     picker.yearIndex = picker.yearIndex - 1;
