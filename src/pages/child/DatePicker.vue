@@ -467,6 +467,7 @@ header i:hover {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 0px;
+    row-gap: 4px;
 }
 
 .main-months>div {
@@ -498,7 +499,7 @@ header i:hover {
     color: #d6d6d6 !important;
 }
 
-main.box>div:not(.offset-date):not(.date-in-selected-range):hover {
+main.box>div:not(.offset-date):not(.date-in-selected-range):not(.start-date):not(.end-date):hover {
     background-color: #ECE0FD;
     border-radius: 8px;
 }
