@@ -166,10 +166,7 @@ const fn = {
                     this.changePicker();
                     this.closePicker();
                 }
-
-            }
-
-            
+            }           
             
         } else {
             picker.date1 = date;
@@ -236,21 +233,23 @@ const fn = {
     /* -------------------------------------------------------------------------- */
     /*                               Check Functions                              */
     /* -------------------------------------------------------------------------- */
-    isEqualBothDate: function () { 
-        return picker.date1 = picker.date2;
-    },
-    isEqualDate1: function ({date}) { 
-        return picker.date1 = date;
-    },
-    isEqualDate2: function ({date}) { 
-        return picker.date2 = date;
-    },
     isInSelectedDate: function ({date}) { 
         let { date1, date2 } = picker;
         let d1 = new Date(date1);
         let d2 = new Date(date2 || date1);
         let d3 = new Date(date);
         return d3 > d1 && d3 < d2;
+    },
+    isHoverDate: function ({date: loopDate}) { 
+        let { date1, date2 } = picker;  
+        if(!date2){ 
+            return (
+                (new Date(loopDate) <= new Date(hoverDate.value))
+                && (new Date(date1) < new Date(hoverDate.value))
+                && (new Date(loopDate) >= new Date(date1))
+            );
+        }
+        return false;
     },
 };
 
@@ -342,13 +341,22 @@ onMounted(() => {
                         <template v-if="defaults.rangePicker">
                             <div 
                             @click.stop="fn.onClickDay(monthDay)"
-                            @dblclick.stop="fn.onClickApply()"
+                            @dblclick.stop="()=>{
+                                if(picker.date1 && picker.date2){
+                                    selecting.value = false;
+                                    picker.date2 = '';
+                                    picker.date1 = monthDay.date;
+                                    selectingStartDate.value = true;
+                                }
+                            }"
+                            @mouseenter="hoverDate = monthDay.date"
                             :class="{ 
                                 'active':  (picker.date1 === picker.date2) && (picker.date1 === monthDay.date),
                                 'offset-date': !monthDay.currentMonth,
                                 'start-date': (monthDay.date === picker.date1) && (picker.date1 != picker.date2),
                                 'end-date': (monthDay.date === picker.date2) && (picker.date1 != picker.date2),
                                 'date-in-selected-range': fn.isInSelectedDate(monthDay),
+                                'hover-date': fn.isHoverDate(monthDay),
                             }">
                                 {{ monthDay.day_index }}
                             </div>
@@ -499,7 +507,9 @@ header i:hover {
     color: #d6d6d6 !important;
 }
 
-main.box>div:not(.offset-date):not(.date-in-selected-range):not(.start-date):not(.end-date):hover {
+main.box>div:not(.offset-date):not(.date-in-selected-range):not(.start-date):not(.end-date):hover,
+main.box>div:not(.hover-date):not(.date-in-selected-range):not(.start-date):not(.end-date):hover
+ {
     background-color: #ECE0FD;
     border-radius: 8px;
 }
