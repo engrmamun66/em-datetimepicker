@@ -37,7 +37,6 @@ const defaults = {
     row: (options.row && options.row >= 3 && options.row <= 10) ? options.row : 6,
 }; 
 let current_view = ref('days');
-let selecting = ref(true);
 let selectingStartDate = ref(true);
 let hoverDate = ref('');
 
@@ -146,17 +145,15 @@ const fn = {
         if(defaults.rangePicker){
             if(selectingStartDate.value){
                 // For Date 1
-                selecting.value = true;
                 picker.date2 = '';
                 picker.date1 = date;
                 selectingStartDate.value = false;
             } else {
                 if(date >= picker.date1){
                     picker.date2 = date;
-                    selecting.value = false;
+                    selectingStartDate.value = true;
                } else {
                 // return to ► For Date 1
-                    selecting.value = true;
                     picker.date2 = '';
                     picker.date1 = date;
                     selectingStartDate.value = false;
@@ -190,7 +187,12 @@ const fn = {
     },
     onClickToday: function () { 
         let date = makeDate(new Date(), FORMATS.date);
-        this.onClickDay({date});
+        if(defaults.rangePicker){
+            this.onClickDay({date});
+            this.onClickDay({date});
+        } else {
+            this.onClickDay({date});
+        }
         current_view.value = 'days';
     },
     onClickMonth: function (monthIndex) { 
@@ -341,7 +343,6 @@ onMounted(() => {
                             @dblclick.stop="()=>{
                                 if(picker.date1 && picker.date2){
                                     /**Reseting to re-select*/
-                                    selecting.value = false;
                                     picker.date2 = '';
                                     picker.date1 = monthDay.date;
                                     selectingStartDate.value = true;
@@ -372,6 +373,9 @@ onMounted(() => {
                         </template>
                     </template>
                 </main>
+                <pre>
+                    {{ picker }}
+                </pre>
                 <Buttons
                 :defaults="defaults"
                 @onCancel="fn.cancelPicker()"
