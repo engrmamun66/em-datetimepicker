@@ -10,6 +10,7 @@ let { target, options, parentDiv, justInitializeValue } = defineProps(['target',
 const moment = globalThis.moment;
 // local Example: https://docs.mobiscroll.com/javascript/languages
 const FORMATS = {
+    date: 'YYYY-MM-DD', //YYYY-MM-DD HH:mm:ss
     output: 'YYYY-MM-DD', //YYYY-MM-DD HH:mm:ss
     week_index: 'd', // 0 to 6
     day_index: 'D', // 1 to 31
@@ -20,7 +21,7 @@ const FORMATS = {
     month: 'MMMM',
     monthShort: 'MMM',
 };
-const TODAY = moment().format(FORMATS.output);
+const TODAY = moment().format(FORMATS.date);
 const defaults = {
     displayFormat: FORMATS.forDisplay,
     startDate: makeDate(options?.startDate ?? TODAY, FORMATS.forDisplay),
@@ -36,6 +37,9 @@ const defaults = {
     row: (options.row && options.row >= 3 && options.row <= 10) ? options.row : 6,
 }; 
 let current_view = ref('days');
+let selecting = ref(true);
+let selectingStartDate = ref(true);
+let hoverDate = ref('');
 
 const events = reactive( {
     init: function(data={}) {
@@ -78,11 +82,11 @@ function daysOfMonth(year, monthIndex, FORMATS, {currentMonth}={}) {
     for (let day = 1; day <= daysInMonth; day++) {
         const currentDay = firstDayOfMonth.date(day);
         const _day = {
-            date: currentDay.format(FORMATS.output),
+            date: currentDay.format(FORMATS.date),
             week_index: currentDay.format(FORMATS.week_index),
             day_index: currentDay.format(FORMATS.day_index),
             weekday_short: currentDay.format(FORMATS.weekday_short),
-            month_index: new Date(currentDay.format(FORMATS.output)).getMonth(),
+            month_index: new Date(currentDay.format(FORMATS.date)).getMonth(),
             currentMonth: currentMonth ?? false,
         };
         days = [...days, _day];
@@ -132,21 +136,42 @@ const fn = {
             target.value = value;
         }
     },   
+    emitData: function() {
+        
+    },   
     /* -------------------------------------------------------------------------- */
     /*                           Start With Date Picker                           */
     /* -------------------------------------------------------------------------- */
     onClickDay: function ({date}) {
-        picker.date1 = date;
-        picker.date2 = date;
+        if(defaults.rangePicker){
+            if(selectingStartDate.value){
+                selecting.value = true;
+                picker.date2 = '';
+                picker.date1 = date;
+            } else {
+                picker.date2 = date;
+                selecting.value = false;
+            }
 
-        let { date1, date2 } = picker;
-        pickerValues.startDate = date1;
-        pickerValues.endDate = defaults.rangePicker ? date2 : date1; 
+            if(!defaults.buttons){
+                fn.setElementValue();
+                this.changePicker();
+                this.closePicker();
+            }
+            
+        } else {
+            picker.date1 = date;
+            picker.date2 = date;        
 
-        if(!defaults.buttons){
-            fn.setElementValue();
-            this.changePicker();
-            this.closePicker();
+            let { date1, date2 } = picker;
+            pickerValues.startDate = date1;
+            pickerValues.endDate = defaults.rangePicker ? date2 : date1; 
+
+            if(!defaults.buttons){
+                fn.setElementValue();
+                this.changePicker();
+                this.closePicker();
+            }
         }
     },
     onClickApply: function () { 
@@ -155,20 +180,20 @@ const fn = {
         this.closePicker();
     },
     onClickToday: function () { 
-        let date = makeDate(new Date(), FORMATS.output);
+        let date = makeDate(new Date(), FORMATS.date);
         this.onClickDay({date});
         current_view.value = 'days';
     },
     onClickMonth: function (monthIndex) { 
         let date = new Date(picker.date1);
         date.setMonth(monthIndex);
-        picker.date1 = picker.date2 = makeDate(date, FORMATS.output);        
+        picker.date1 = picker.date2 = makeDate(date, FORMATS.date);        
         current_view.value = 'days';
     },
     onClickYear: function (year) { 
         let date = new Date(picker.date1);
         date.setFullYear(year);        date.setFullYear(year);
-        picker.date1 = picker.date2 = makeDate(date, FORMATS.output); 
+        picker.date1 = picker.date2 = makeDate(date, FORMATS.date); 
         current_view.value = 'months';
     },
     onClickNext: function () { 
@@ -199,6 +224,26 @@ const fn = {
             default:
                 break;
         }
+    },
+    /* -------------------------------------------------------------------------- */
+    /*                               Check Functions                              */
+    /* -------------------------------------------------------------------------- */
+    isEqualBothDate: function () { 
+        return picker.date1 = picker.date2;
+    },
+    isEqualDate1: function ({date}) { 
+        return picker.date1 = date;
+    },
+    isEqualDate2: function ({date}) { 
+        return picker.date2 = date;
+    },
+    isInSelectedDate: function ({date}) { 
+        // let { date1, date2 } = picker;
+        // let d1 = new Date(date1);
+        // let d2 = new Date(date2 || date1);
+        // let d3 = new Date(date);
+        // return d3 > d1 && d3 < d2;
+        return false;
     },
 };
 
@@ -294,8 +339,11 @@ onMounted(() => {
                             @click.stop="fn.onClickDay(monthDay)"
                             @dblclick.stop="fn.onClickApply()"
                             :class="{ 
-                                'active': monthDay.currentMonth && (new Date(picker.date1).getDate() == monthDay.day_index) ,
+                                '---active': fn.isEqualBothDate() ,
                                 'offset-date': !monthDay.currentMonth,
+                                'start-date': fn.isEqualDate1(monthDay),
+                                'end-date': fn.isEqualDate2(monthDay),
+                                'date-in-selected-range': fn.isInSelectedDate(monthDay),
                             }">
                                 {{ monthDay.day_index }}
                             </div>
@@ -440,8 +488,8 @@ header i:hover {
     color: #666;
     transition: all 300ms;
 }
-.main-months>div.offset-date,
-.main-days>div.offset-date {
+.main-months>div.offset-date:not(.start-date):not(.end-date),
+.main-days>div.offset-date:not(.start-date):not(.end-date) {
     color: #d6d6d6 !important;
 }
 
@@ -456,6 +504,24 @@ main.box>div:not(.offset-date).active {
     font-weight: 700;
     color: white;
     position: relative;
+}
+
+main.box>div.start-date {
+    background: #6200EE;
+    color: #d6d6d6 !important;
+    border-radius: 8px 0px 0px 8px;
+}
+
+main.box>div.end-date {
+    background: #6200EE;
+    color: #d6d6d6 !important;
+    border-radius: 0px 8px 8px 0px;
+}
+
+main.box>div.date-in-selected-range {
+    background: #6300ee1c;
+    border-radius: 0px;
+    border: 1px dashed #6200EE;
 }
 
 
