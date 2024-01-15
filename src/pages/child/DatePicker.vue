@@ -211,7 +211,6 @@ const fn = {
     onClickPrev: function () { 
         switch (current_view.value) {
             case 'days':
-                if(picker.monthIndex > 0)
                     picker.monthIndex -= 1;
                 break;        
             case 'years':
@@ -329,7 +328,7 @@ onMounted(() => {
             <div class="days-month-box content">
                 <header>
                     <i class='bx bx-chevron-left' @click="fn.onClickPrev()"></i>
-                    <span class="cp" @click="current_view = 'months'">{{ makeDate(picker.date1, FORMATS.forHeading) }}</span>
+                    <span class="cp" @click="current_view = 'months'">{{ makeDate(monthOfDays.filter(d => d.currentMonth)[0]?.date, FORMATS.forHeading) }}</span>
                     <i class='bx bx-chevron-right' @click="fn.onClickNext()"></i>
                 </header>
                 <main class="main-weekdays">
