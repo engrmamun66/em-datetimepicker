@@ -122,16 +122,16 @@ const fn = {
         emits('change');
         target.dispatchEvent(events.change(pickerValues));
     },
-    setElementValue: function() {
-        if(target.tagName == 'INPUT'){
-            let { startDate, endDate } = pickerValues;
-            let _startDate = makeDate(startDate, FORMATS.forDisplay);
-            let _endDate = makeDate(endDate, FORMATS.forDisplay);         
+    setElementValue: function() {        
+        let { startDate, endDate } = pickerValues;
+        let _startDate = makeDate(startDate, FORMATS.forDisplay);
+        let _endDate = makeDate(endDate, FORMATS.forDisplay);         
 
-            let value = _startDate; 
-            if(defaults.rangePicker){
-                value = value + ' - ' + _endDate;
-            }
+        let value = _startDate; 
+        if(defaults.rangePicker){
+            value = value + ' - ' + _endDate;
+        }
+        if(target.tagName == 'INPUT'){
             target.value = value;
         }
     },   
@@ -152,17 +152,21 @@ const fn = {
                 if(date >= picker.date1){
                     picker.date2 = date;
                     selectingStartDate.value = true;
+
+                    let { date1, date2 } = picker;
+                    pickerValues.startDate = date1;
+                    pickerValues.endDate = date2; 
+
+                    if(!defaults.buttons?.applyBtn){
+                        this.onClickApply();
+                    }
                } else {
                 // return to ► For Date 1
                     picker.date2 = '';
                     picker.date1 = date;
                     selectingStartDate.value = false;
                }
-                if(!defaults.buttons){
-                    fn.setElementValue();
-                    this.changePicker();
-                    this.closePicker();
-                }
+                
             }           
             
         } else {
@@ -173,10 +177,8 @@ const fn = {
             pickerValues.startDate = date1;
             pickerValues.endDate = defaults.rangePicker ? date2 : date1; 
 
-            if(!defaults.buttons){
-                fn.setElementValue();
-                this.changePicker();
-                this.closePicker();
+            if(!defaults.buttons?.applyBtn){
+                this.onClickApply();
             }
         }
     },
@@ -187,6 +189,7 @@ const fn = {
     },
     onClickToday: function () { 
         let date = makeDate(new Date(), FORMATS.date);
+        picker.monthIndex = 0;
         if(defaults.rangePicker){
             this.onClickDay({date});
             this.onClickDay({date});
