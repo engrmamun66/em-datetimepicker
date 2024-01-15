@@ -28,7 +28,7 @@ const defaults = {
     adjustWeekday: options?.adjustWeekday ?? 0,
     buttons: options?.buttons ?? true,
     monthShorts: [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ],
-    row: (options.row && options.row >= 2 && options.row <= 10) ? options.row : 5,
+    row: (options.row && options.row >= 3 && options.row <= 10) ? options.row : 6,
 }; 
 let current_view = ref('days');
 
@@ -90,6 +90,7 @@ const fn = {
     onClickDay: function ({date}) { 
         picker.date1 = date;
         picker.date2 = date;
+        console.log(date);
 
         let { date1, date2 } = picker;
         pickerValues.startDate = date1;
@@ -175,12 +176,12 @@ const monthOfDays = computed( () => {
     // Left tailing
     let _date = new Date(picker.date1);
     _date.setMonth(_date.getMonth() - 1);
-    const previous_month_days = helper.daysOfMonth(_date.getFullYear(), monthIndex - 1, FORMATS).slice(-startFrom);
+    const previous_month_days = helper.daysOfMonth(_date.getFullYear(), _date.getMonth(), FORMATS).slice(-startFrom);
     const days_after_left_tailing = startFrom ? [...previous_month_days, ...days] : [...days];
     // Right tailing    
     let __date = new Date(picker.date1);
     __date.setMonth(__date.getMonth() + 1);
-    const next_month_days = helper.daysOfMonth(__date.getFullYear(), monthIndex + 1, FORMATS);
+    const next_month_days = helper.daysOfMonth(__date.getFullYear(), __date.getMonth(), FORMATS);
     const days_after_left_and_right_tailing = [...days_after_left_tailing, ...next_month_days];
     days_after_left_and_right_tailing.length = defaults.row * 7;
     return days_after_left_and_right_tailing;
@@ -340,8 +341,8 @@ header i:hover {
     color: #777;
     transition: all 300ms;
 }
-.main-months>div:not(.offset-date),
-.main-days>div:not(.offset-date)
+.main-months>div,
+.main-days>div
  {
     cursor: pointer;
 }
