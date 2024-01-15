@@ -208,6 +208,16 @@ const fn = {
         picker.date1 = picker.date2 = makeDate(date, FORMATS.date); 
         current_view.value = 'months';
     },
+    onClickPrev: function () { 
+        switch (current_view.value) {
+            case 'days':
+                picker.monthIndex -= 1;
+                break;        
+            case 'years':
+                picker.yearIndex = picker.yearIndex + 1;
+                break; 
+        }
+    },
     onClickNext: function () { 
         switch (current_view.value) {
             case 'days':
@@ -219,17 +229,7 @@ const fn = {
                 }
                 break; 
         }
-    },
-    onClickPrev: function () { 
-        switch (current_view.value) {
-            case 'days':
-                picker.monthIndex -= 1;
-                break;        
-            case 'years':
-                picker.yearIndex = picker.yearIndex + 1;
-                break; 
-        }
-    },
+    },    
     /* -------------------------------------------------------------------------- */
     /*                               Check Functions                              */
     /* -------------------------------------------------------------------------- */
