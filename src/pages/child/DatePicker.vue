@@ -374,9 +374,6 @@ onMounted(() => {
                         </template>
                     </template>
                 </main>
-                <pre>
-                    {{ picker }}
-                </pre>
                 <Buttons
                 :defaults="defaults"
                 @onCancel="fn.cancelPicker()"
