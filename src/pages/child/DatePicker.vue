@@ -513,8 +513,7 @@ main.box>div:not(.offset-date):not(.date-in-selected-range):not(.start-date):not
     border-radius: 8px;
 }
 
-div.hover-date
- {
+div.hover-date {
     background-color: #ECE0FD !important;
     border-radius: 0px !important;
 }
