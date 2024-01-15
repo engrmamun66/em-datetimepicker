@@ -134,7 +134,7 @@ const fn = {
     /* -------------------------------------------------------------------------- */
     /*                           Start With Date Picker                           */
     /* -------------------------------------------------------------------------- */
-    onClickDay: function ({date}) { 
+    onClickDay: function ({date}) {
         picker.date1 = date;
         picker.date2 = date;
 
@@ -152,6 +152,11 @@ const fn = {
         fn.setElementValue();
         this.changePicker();
         this.closePicker();
+    },
+    onClickToday: function () { 
+        let date = makeDate(new Date(), FORMATS.output);
+        this.onClickDay({date});
+        current_view.value = 'days';
     },
     onClickMonth: function (monthIndex) { 
         let date = new Date(picker.date1);
@@ -300,7 +305,7 @@ onMounted(() => {
                 :defaults="defaults"
                 @onCancel="fn.cancelPicker()"
                 @onApply="fn.onClickApply()"
-                @onToday="fn.onClickDay(makeDate(new Date(), FORMATS))"
+                @onToday="fn.onClickToday()"
                 ></Buttons>
             </div>
         </template>
@@ -322,6 +327,7 @@ onMounted(() => {
                 :defaults="defaults"
                 @onCancel="fn.cancelPicker()"
                 @onApply="fn.onClickApply()"
+                @onToday="fn.onClickToday()"
                 :applyBtn="false"
                 ></Buttons>
             </div>
@@ -344,6 +350,7 @@ onMounted(() => {
                 :defaults="defaults"
                 @onCancel="fn.cancelPicker()"
                 @onApply="fn.onClickApply()"
+                @onToday="fn.onClickToday()"
                 :applyBtn="false"
                 ></Buttons>
             </div>

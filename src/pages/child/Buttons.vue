@@ -12,6 +12,9 @@ let { defaults, applyBtn } = defineProps({
 });
 let emits = defineEmits(['onCancel', 'onApply', 'onToday']);
 function handleClick(from=''){
+    if(from == 'today'){
+        emits('onToday');
+    }
     if(from == 'cancel'){
         emits('onCancel');
     }
