@@ -17,6 +17,7 @@ const FORMATS = {
     forDisplay: (options.displayFormat ?? 'DD MMM, YYYY'),
     forHeading: 'MMMM YYYY',
     year: 'YYYY',
+    month: 'MMMM',
     monthShort: 'MMM',
 };
 const TODAY = moment().format(FORMATS.output);
@@ -313,7 +314,7 @@ onMounted(() => {
             <div class="months-box content">
                 <header>
                     <i class='bx bx-chevron-left visibility-hidden'></i>
-                    <span class="cp" @click="current_view = 'years'">{{ makeDate(picker?.date1, FORMATS.year) }}</span>
+                    <span class="cp" @click="current_view = 'years'">{{ makeDate(picker?.date1, FORMATS.month) }}</span>
                     <i class='bx bx-chevron-right visibility-hidden'></i>
                 </header>
                 <main class="main-months box">
