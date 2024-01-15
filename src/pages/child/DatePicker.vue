@@ -343,6 +343,7 @@ onMounted(() => {
                             @click.stop="fn.onClickDay(monthDay)"
                             @dblclick.stop="()=>{
                                 if(picker.date1 && picker.date2){
+                                    /**Reseting to re-select*/
                                     selecting.value = false;
                                     picker.date2 = '';
                                     picker.date1 = monthDay.date;
