@@ -127,7 +127,9 @@ const fn = {
                 
                 break;        
             case 'years':
-                picker.yearIndex = picker.yearIndex + 1;
+                if(picker.yearIndex > 0){
+                    picker.yearIndex = picker.yearIndex - 1;
+                }
                 break;        
             default:
                 break;
@@ -142,7 +144,7 @@ const fn = {
                 
                 break;        
             case 'years':
-                picker.yearIndex = picker.yearIndex - 1;
+                picker.yearIndex = picker.yearIndex + 1;
                 break;        
             default:
                 break;
@@ -190,6 +192,13 @@ const years = computed(() => {
     let start = new Date().getFullYear() - (picker.yearIndex * limit);
     let end = start + limit;
     let rangeArray = Array.from({ length: end - start }, (_, index) => start - index);
+    rangeArray = rangeArray.sort((a, b) => {
+        if(a - b){
+            return -1;
+        } else {
+            1
+        }
+    })
     return rangeArray;
 })
 
@@ -253,9 +262,9 @@ onMounted(() => {
         <template v-else-if="current_view == 'months'">
             <div class="months-box content">
                 <header>
-                    <i class='bx bx-chevron-left'></i>
+                    <i class='bx bx-chevron-left' @click="fn.onClickPrev()"></i>
                     <span class="cp" @click="current_view = 'years'">{{ helper.makeDate(picker?.date1, FORMATS.year) }}</span>
-                    <i class='bx bx-chevron-right'></i>
+                    <i class='bx bx-chevron-right' @click="fn.onClickNext()"></i>
                 </header>
                 <main class="main-months box">
                     <template v-for="(monthShort, index) in defaults.monthShorts" :key="index">
@@ -269,9 +278,9 @@ onMounted(() => {
         <template v-else-if="current_view == 'years'">
             <div class="months-box content">
                 <header>
-                    <i class='bx bx-chevron-left'></i>
-                    <span></span>
-                    <i class='bx bx-chevron-right'></i>
+                    <i class='bx bx-chevron-left' @click="fn.onClickPrev()"></i>
+                    <span>{{ years[0] }} - {{ years[years?.length - 1] }}</span>
+                    <i class='bx bx-chevron-right' @click="fn.onClickNext()"></i>
                 </header>
                 <main class="main-months box">
                     <template v-for="(year, index) in years" :key="index">
