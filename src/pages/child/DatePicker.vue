@@ -90,7 +90,6 @@ const fn = {
     onClickDay: function ({date}) { 
         picker.date1 = date;
         picker.date2 = date;
-        console.log(date);
 
         let { date1, date2 } = picker;
         pickerValues.startDate = date1;
