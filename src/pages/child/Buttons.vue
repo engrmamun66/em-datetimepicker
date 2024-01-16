@@ -62,7 +62,7 @@ function handleClick(from=''){
 }
 .btn-today,
 .btn-cancel{
-    color: black;
+    color: #444;
     background-color: #e2e3ee;
 }
 .btn-cancel:has(~.btn-apply){
