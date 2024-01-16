@@ -39,6 +39,15 @@ const defaults = {
     row: (options.row && options.row >= 3 && options.row <= 10) ? options.row : 5,
 }; 
 
+
+// Fliping Date when, start is larger than end date
+if(new Date(defaults.startDate) > new Date(defaults.endDate)){
+    let __d1 = defaults.startDate;
+    let __d2 = defaults.endDate;
+    defaults.startDate = __d2;
+    defaults.endDate = __d1;
+}
+
 // Checking Min and Max date
 if(defaults.minDate || defaults.maxDate){
     if(defaults.minDate){
@@ -170,7 +179,18 @@ const fn = {
         let date = new Date(makeDate(_date, FORMATS.date));
         let minDate = new Date(makeDate(defaults.minDate, FORMATS.date));
         let maxDate = new Date(makeDate(defaults.maxDate, FORMATS.date));
-        return (date >= minDate) && (date <= maxDate);
+        if(defaults.minDate && defaults.maxDate){
+            return (date >= minDate) && (date <= maxDate);
+        } 
+        else if (!defaults.minDate && !defaults.maxDate){
+            return true;
+        }
+        else if (defaults.minDate && !defaults.maxDate){
+             return (date >= minDate);
+        }
+        else if (!defaults.minDate && defaults.maxDate){
+             return (date <= maxDate);
+        }
     },
     onClickDay: function ({date, currentMonth}) {
         if(!this.isInMinMaxDate(date)) return;
