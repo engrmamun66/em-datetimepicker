@@ -317,10 +317,7 @@ const years = computed(() => {
 /* -------------------------------------------------------------------------- */
 onMounted(() => {
     if(!isMounted.value){
-        console.log(defaults?.startDate, '  >>> ', defaults.startDate);
-        console.log(defaults?.endDate, '  >>> ', defaults.endDate);
-
-
+        
         pickerValues.startDate = defaults.startDate;
         pickerValues.endDate = defaults.endDate;
 
