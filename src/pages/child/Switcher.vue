@@ -8,7 +8,7 @@ let { forDate } = defineProps({
 });
 
 const startText = forDate ? 'Start Date' : 'Start Time';
-const endText = forDate ? 'EndEnd Date' : 'Start Time';
+const endText = forDate ? 'End Date' : 'Start Time';
 
 let defaults = inject('defaults');
 let picker = inject('picker');
