@@ -510,7 +510,7 @@ onMounted(() => {
 .content {
     display: grid;
     grid-template-rows: 40px 1fr;
-    gap: 24px;
+    gap: 20px;
     padding: 32px;
     background-color: #fff;
     box-shadow: 0px 8px 32px rgba(0, 0, 0, .16);
