@@ -19,7 +19,7 @@ let close = (event) => {
 <template>
   <teleport to="body">
     <div class="modal fade show" @click.stop="close()" v-bind="$attrs" style="display:block;">
-      <div class="modal-dialog" :class="[top ? '' : 'modal-dialog-centered']" style="max-width: 700px;height:0px">
+      <div class="modal-dialog" :class="[top ? '' : 'modal-dialog-centered']" style="max-width: 410px;height:0px">
         <div class="modal-content">          
           <div class="modal-body d-flex justify-content-center" @click.stop="false">
               <slot></slot>
