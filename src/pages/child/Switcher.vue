@@ -15,21 +15,19 @@ let picker = inject('picker');
 let selectingStartDate = inject('selectingStartDate');
 
 function handleClick(value){
-    if(value == 'from_left'){
-        }
     if(value == 'from_right'){
         picker.date2 = '';
-        selectingStartDate.value = true;
+        selectingStartDate.value = false;
     }
 }
 </script>
 
 <template>
     <div class="switches-container">
-        <input type="radio" name="switchPlan" value="left" :checked="selectingStartDate" @click.stop="handleClick('from_left')"/>
-        <input type="radio" name="switchPlan" value="right" :checked="!selectingStartDate" @click.stop="handleClick('from_right')"/>
-        <label for="switchMonthly">{{ startText }}</label>
-        <label for="switchYearly">{{ endText }}</label>
+        <input type="radio" name="switchPlan" value="left" :checked="selectingStartDate" />
+        <input type="radio" name="switchPlan" value="right" :checked="!selectingStartDate" />
+        <label for="switchMonthly" @click.stop="handleClick('from_left')">{{ startText }}</label>
+        <label for="switchYearly" @click.stop="handleClick('from_right')">{{ endText }}</label>
         <div class="switch-wrapper">
             <div class="switch">
                 <div>{{ startText }}</div>
