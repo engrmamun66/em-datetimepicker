@@ -9,10 +9,9 @@ let isShowInitilaztionValue = ref(true);
 let isMounted = ref(false);
 const picker = reactive({
     // with Single Date
+    date: '',
     date1: '',
     date2: '',
-    yearIndex: 0,
-    monthIndex: 0,
 })
 const pickerValues = reactive({
     startDate: '',
