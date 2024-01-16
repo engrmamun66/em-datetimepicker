@@ -26,6 +26,8 @@ const defaults = {
     displayFormat: FORMATS.forDisplay,
     startDate: makeDate(options?.startDate ?? new Date(), FORMATS.date),
     endDate: makeDate(options?.endDate ?? (options?.startDate || new Date()), FORMATS.date),
+    minDate: options?.minDate ?? '',
+    maxDate: options?.maxDate ?? '',
     rangePicker: options?.rangePicker ?? false,
     adjustWeekday: options?.adjustWeekday ?? 0,
     buttons: (options?.buttons) ?? {
@@ -34,8 +36,26 @@ const defaults = {
         applyBtn: options?.buttons?.cancelBtn ?? 'Apply',
     },
     monthShorts: options?.monthShorts ?? [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ],
-    row: (options.row && options.row >= 3 && options.row <= 10) ? options.row : 6,
+    row: (options.row && options.row >= 3 && options.row <= 10) ? options.row : 5,
 }; 
+
+// Checking Min and Max date
+if(defaults.minDate || defaults.maxDate){
+    if(defaults.minDate){
+        if(new Date(defaults.startDate) < new Date(defaults.minDate)){
+            console.log('defaults.startDate', defaults.startDate);
+            defaults.startDate = makeDate(defaults.minDate, FORMATS.date);
+            console.log('defaults.startDate', defaults.startDate);
+        }
+    }
+    if(defaults.maxDate){     
+        if(new Date(defaults.endDate) > new Date(defaults.maxDate)){
+            defaults.endDate = makeDate(defaults.maxDate, FORMATS.date);
+        }
+    }
+}
+
+
 let current_view = ref('days');
 let selectingStartDate = ref(true);
 let hoverDate = ref('');
@@ -146,7 +166,14 @@ const fn = {
     /* -------------------------------------------------------------------------- */
     /*                           Start With Date Picker                           */
     /* -------------------------------------------------------------------------- */
+    isInMinMaxDate: function (_date) {
+        let date = new Date(makeDate(_date, FORMATS.date));
+        let minDate = new Date(makeDate(defaults.minDate, FORMATS.date));
+        let maxDate = new Date(makeDate(defaults.maxDate, FORMATS.date));
+        return (date >= minDate) && (date <= maxDate);
+    },
     onClickDay: function ({date, currentMonth}) {
+        if(!this.isInMinMaxDate(date)) return;
         if(defaults.rangePicker){
             if(selectingStartDate.value){
                 // For Date 1
@@ -322,7 +349,7 @@ const years = computed(() => {
 /*                                  onMounted                                 */
 /* -------------------------------------------------------------------------- */
 onMounted(() => {
-    if(!isMounted.value){
+    if(!isMounted.value){        
 
         pickerValues.startDate = defaults.startDate;
         pickerValues.endDate = defaults.endDate;
@@ -380,6 +407,7 @@ onMounted(() => {
                                 'end-date': (monthDay.date === picker.date2) && (picker.date1 != picker.date2),
                                 'date-in-selected-range': fn.isInSelectedDate(monthDay),
                                 'hover-date': fn.isHoverDate(monthDay),
+                                'not-in-minmax-date': !fn.isInMinMaxDate(monthDay.date),
                             }">
                                 {{ monthDay.day_index }}
                             </div>
@@ -528,8 +556,8 @@ header i:hover {
     color: #666;
     transition: all 300ms;
 }
-.main-months>div.offset-date:not(.start-date):not(.end-date):not('.date-in-selected-range'),
-.main-days>div.offset-date:not(.start-date):not(.end-date):not('.date-in-selected-range') {
+.main-months>div.offset-date:not(.start-date):not(.end-date):not(.date-in-selected-range),
+.main-days>div.offset-date:not(.start-date):not(.end-date):not(.date-in-selected-range) {
     color: #d6d6d6 !important;
 }
 
@@ -596,6 +624,10 @@ main.box>div.date-in-selected-range {
 .visibility-hidden{
     visibility: hidden;
     pointer-events: none;
+}
+.not-in-minmax-date{
+    text-decoration: line-through;
+    cursor: no-drop !important;
 }
 </style>
 
