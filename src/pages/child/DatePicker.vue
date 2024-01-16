@@ -42,6 +42,7 @@ let hoverDate = ref('');
 provide('defaults', defaults);
 provide('makeDate', makeDate);
 provide('FORMATS', FORMATS);
+provide('selectingStartDate', selectingStartDate);
 
 const events = reactive( {
     init: function(data={}) {

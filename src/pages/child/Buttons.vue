@@ -55,10 +55,10 @@ function handleClick(from=''){
     justify-content: end;
 }
 .btn-today, .btn-cancel, .btn-apply{
-    padding: 6px 15px;
+    padding: 6px 10px;
     border:none;
     text-align: center;
-    border-radius: 4px;
+    border-radius: 3px;
 }
 .btn-today,
 .btn-cancel{

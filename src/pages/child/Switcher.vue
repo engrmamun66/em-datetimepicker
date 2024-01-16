@@ -1,20 +1,18 @@
 <script setup>
 import { ref, defineProps, inject } from 'vue';
-defineProps({
-    startText: {
-        default: 'Start Date', 
-        required: false,
-    },
-    endText: {
-        default: 'End Date', 
+let { forDate } = defineProps({
+    forDate: {
+        default: true, 
         required: false,
     },
 });
 
+const startText = forDate ? 'Start Date' : 'Start Time';
+const endText = forDate ? 'EndEnd Date' : 'Start Time';
+
 let defaults = inject('defaults');
 let picker = inject('picker');
-let makeDate = inject('makeDate');
-let FORMATS = inject('FORMATS');
+let selectingStartDate = inject('selectingStartDate');
 
 function handleClick(value){
     if(value == 'from_left'){
