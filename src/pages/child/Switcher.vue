@@ -53,14 +53,14 @@ function handleClick(value){
 */
 .switches-container {
     width: 100%;
-    position: relative;
     display: flex;
     padding: 0;
     position: relative;
     line-height: 1rem;
-    border-radius: 0px;
+    border-radius: 0;
     margin-left: auto;
     margin-right: auto;
+    background-color: #fafafa;
 }
 
 /* input (radio) for toggling. hidden - use labels for clicking on */
