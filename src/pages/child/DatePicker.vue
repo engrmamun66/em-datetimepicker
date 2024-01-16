@@ -250,6 +250,9 @@ const fn = {
             this.onClickDay({date});
         }
         current_view.value = 'days';
+        fn.setElementValue();
+        this.changePicker();
+        this.closePicker();
     },
     onClickMonth: function (monthIndex) { 
         let date = new Date(picker.date);
@@ -371,8 +374,8 @@ const years = computed(() => {
 onMounted(() => {
     if(!isMounted.value){        
 
-        pickerValues.startDate = defaults.startDate;
-        pickerValues.endDate = defaults.endDate;
+        pickerValues.startDate = pickerValues.old.startDate = defaults.startDate;
+        pickerValues.endDate = pickerValues.old.endDate =defaults.endDate;
 
         picker.date = makeDate(defaults.startDate, FORMATS.date);
         picker.date1 = makeDate(defaults.startDate, FORMATS.date);
