@@ -195,6 +195,7 @@ const fn = {
     },
     onClickToday: function () { 
         let date = makeDate(new Date(), FORMATS.date);
+        picker.date = date;
         if(defaults.rangePicker){
             this.onClickDay({date});
             this.onClickDay({date});
