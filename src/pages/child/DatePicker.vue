@@ -584,7 +584,7 @@ header i:hover {
     color: #d6d6d6 !important;
 }
 
-main.box>div:not(.offset-date):not(.date-in-selected-range):not(.start-date):not(.end-date):hover
+main.box>div:not(.active):not(.offset-date):not(.date-in-selected-range):not(.start-date):not(.end-date):hover
  {
     background-color: #ECE0FD;
     border-radius: 8px;
