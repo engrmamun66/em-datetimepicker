@@ -1,6 +1,7 @@
 <script setup>
-import { ref, computed, reactive, defineProps, onMounted, inject, defineEmits } from 'vue';
+import { ref, computed, reactive, defineProps, onMounted, inject, provide, defineEmits } from 'vue';
 import Buttons from './Buttons.vue'
+import Switcher from './Switcher.vue'
 const { helper } = inject('utils');
 const isMounted = inject('isMounted');
 const picker = inject('picker');
@@ -38,6 +39,9 @@ const defaults = {
 let current_view = ref('days');
 let selectingStartDate = ref(true);
 let hoverDate = ref('');
+provide('defaults', defaults);
+provide('makeDate', makeDate);
+provide('FORMATS', FORMATS);
 
 const events = reactive( {
     init: function(data={}) {
@@ -317,7 +321,7 @@ const years = computed(() => {
 /* -------------------------------------------------------------------------- */
 onMounted(() => {
     if(!isMounted.value){
-        
+
         pickerValues.startDate = defaults.startDate;
         pickerValues.endDate = defaults.endDate;
 
@@ -342,9 +346,12 @@ onMounted(() => {
                 <header>
                     <i class='bx bx-chevron-left' @click="fn.onClickPrev()"></i>
                     <span class="cp" @click="current_view = 'months'">
-                        {{ makeDate(monthOfDays.filter(d => d.currentMonth)[0]?.date, FORMATS.forHeading) }}</span>
+                        <!-- {{ makeDate(monthOfDays.filter(d => d.currentMonth)[0]?.date, FORMATS.forHeading) }} -->
+                        {{ makeDate(monthOfDays.filter(d => d.currentMonth)[0]?.date, FORMATS.forHeading) }}
+                    </span>
                     <i class='bx bx-chevron-right' @click="fn.onClickNext()"></i>
                 </header>
+                <Switcher v-if="defaults.rangePicker"></Switcher>
                 <main class="main-weekdays">
                     <template v-for="(day, index) in weekDays" :key="index">
                         <div class="active">{{ day }}</div>            
@@ -491,6 +498,9 @@ header i:hover {
     gap: 0px;
     row-gap: 4px;
 }
+.main-weekdays>div{
+    text-align: center;
+}
 
 .main-months>div {
     width: 82px;
@@ -562,7 +572,7 @@ main.box>div.date-in-selected-range {
     justify-content: end;
 }
 .buttons .btn-cancel, .btn-apply{
-    padding: 6px 15px;
+    padding: 6px 10px;
     border:none;
     text-align: center;
     border-radius: 4px;
@@ -570,6 +580,9 @@ main.box>div.date-in-selected-range {
 .buttons .btn-cancel{
     color: black;
     background-color: #e2e3ee;
+}
+.buttons.adjustment-weekday{
+    flex-direction: column;
 }
 .buttons .btn-cancel:has(~.btn-apply){
     margin-right: 10px;
