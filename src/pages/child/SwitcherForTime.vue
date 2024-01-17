@@ -16,9 +16,10 @@ let selectingStartDate = inject('selectingStartDate');
 let selectingStartTime = true;
 
 function handleClick(value){
-    if(value == 'from_right'){
+    console.log(value);
+    if(value == 'right'){
         picker.date2 = '';
-        selectingStartDate.value = false;
+        selectingStartTime.value = false;
     }
 }
 </script>
@@ -27,10 +28,10 @@ function handleClick(value){
     <div class="switches-container">
         <input type="radio" name="switchPlan" value="left" :checked="selectingStartTime" />
         <input type="radio" name="switchPlan" value="right" :checked="!selectingStartTime" />
-        <label for="startTime" @click.stop="handleClick('from_left')">{{ startText }}</label>
-        <label for="EndTime" @click.stop="handleClick('from_right')">{{ endText }}</label>
+        <label for="startTime" @click.stop="handleClick('left')">{{ startText }}</label>
+        <label for="EndTime" @click.stop="handleClick('right')">{{ endText }}</label>
         <div class="switch-wrapper">
-            <div class="switch">
+            <div class="switch" :class="{right: selectingStartTime===false}">
                 <div>{{ startText }}</div>
                 <div>{{ endText }}</div>
             </div>
@@ -95,9 +96,17 @@ function handleClick(value){
 }
 
 .switch {
-    border-radius: 0px;
+    border-radius: 0;
     background: #e2e3ee;
     height: 100%;
+    transition: transform 0.5s;
+}
+.switch.right {
+    border-radius: 0;
+    background: #e2e3ee;
+    height: 100%;
+    transform: translateX(100%);
+    transition: opacity .2s cubic-bezier(.77,0,.175,1) .125s;
 }
 
 .switch div {
@@ -105,27 +114,10 @@ function handleClick(value){
     text-align: center;
     opacity: 0;
     display: block;
-    color: #444;
-    transition: opacity .2s cubic-bezier(.77,0,.175,1) .125s;
-    will-change: opacity;
+    color: #444;    
     position: relative;
     top: 5px;
     left: 0;
 }
 
-.switches-container input:nth-of-type(1):checked~.switch-wrapper {
-    transform: translateX(0%);
-}
-
-.switches-container input:nth-of-type(2):checked~.switch-wrapper {
-    transform: translateX(100%);
-}
-
-.switches-container input:nth-of-type(1):checked~.switch-wrapper .switch div:nth-of-type(1) {
-    opacity: 1;
-}
-
-.switches-container input:nth-of-type(2):checked~.switch-wrapper .switch div:nth-of-type(2) {
-    opacity: 1;
-}
 </style>
