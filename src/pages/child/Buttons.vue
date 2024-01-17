@@ -22,14 +22,17 @@ function handleClick(from=''){
         emits('onApply');
     }
 }
-
+let openTimePicker = inject('openTimePicker');
 </script>
 
 <template>
-    <template v-if="defaults.buttons">
+    <template v-if="defaults.buttons || defaults.timePicker">
         <template v-if="defaults.buttons?.todayBtn && (defaults.buttons?.cancelBtn || defaults.buttons?.applyBtn)">
             <div class="flex-between">
-                <button class="btn-today" @click.stop="handleClick('today')">{{ defaults.buttons?.todayBtn }}</button>
+                <div class="buttons">
+                    <button class="btn-today" @click.stop="handleClick('today')">{{ defaults.buttons?.todayBtn }}</button>
+                    <button v-if="defaults.buttons?.applyBtn && applyBtn" class="pick-time" @click="openTimePicker=true"><i class='bx bx-time'></i></button>
+                </div>
                  <div class="buttons">
                     <button v-if="defaults.buttons?.cancelBtn" class="btn-cancel" @click.stop="handleClick('cancel')">{{ defaults.buttons?.cancelBtn }}</button>
                     <button v-if="defaults.buttons?.applyBtn && applyBtn" class="btn-apply" @click.stop="handleClick('apply')">{{ defaults.buttons?.applyBtn }}</button>
@@ -37,6 +40,9 @@ function handleClick(from=''){
             </div>           
         </template>
         <template v-else>
+            <div class="buttons">
+                <button v-if="defaults.buttons?.applyBtn && applyBtn" class="pick-time" @click="openTimePicker=true"><i class='bx bx-time'></i></button>
+            </div>
             <div class="buttons">
                 <button v-if="defaults.buttons?.cancelBtn" class="btn-cancel" @click.stop="handleClick('cancel')">{{ defaults.buttons?.cancelBtn }}</button>
                 <button v-if="defaults.buttons?.applyBtn && applyBtn" class="btn-apply" @click.stop="handleClick('apply')">{{ defaults.buttons?.applyBtn }}</button>
@@ -54,18 +60,19 @@ function handleClick(from=''){
     display: flex;
     justify-content: end;
 }
-.btn-today, .btn-cancel, .btn-apply{
+.btn-today, .btn-cancel, .btn-apply, .pick-time{
     padding: 6px 10px;
     border:none;
     text-align: center;
     border-radius: 3px;
 }
 .btn-today,
-.btn-cancel{
+.btn-cancel,
+.pick-time{
     color: #444;
     background-color: #e2e3ee;
 }
-.btn-cancel:has(~.btn-apply){
+button:has(~button){
     margin-right: 10px;
 }
 

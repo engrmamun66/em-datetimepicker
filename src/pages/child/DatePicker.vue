@@ -73,12 +73,13 @@ if(defaults.minDate || defaults.maxDate){
 let current_view = ref('days');
 let selectingStartDate = ref(true);
 let hoverDate = ref('');
+let openTimePicker = ref(false);
 provide('defaults', defaults);
 provide('makeDate', makeDate);
 provide('FORMATS', FORMATS);
+provide('openTimePicker', openTimePicker);
 provide('selectingStartDate', selectingStartDate);
 
-let openTimePicker = ref(false);
 
 const events = reactive( {
     init: function(data={}) {
@@ -462,9 +463,7 @@ onMounted(() => {
                     @onApply="fn.onClickApply()"
                     @onToday="fn.onClickToday()"
                     ></Buttons>
-                    <div v-if="defaults.timePicker" class="time-picker-action-area" @click="openTimePicker=false">
-                        <button @click.stop="openTimePicker=true"><i class='bx bx-time'></i></button>
-                    </div>
+                    
                     <div v-if="openTimePicker==true" class="time-picker-display-area" @click.stop="openTimePicker=false">
                         <div class="">
                             <TimePicker></TimePicker>
@@ -702,7 +701,7 @@ div:has(>.time-picker-display-area){
     backdrop-filter: blur(0px);
 }
 .time-picker-display-area>div {
-    animation: modalOpen-5afb13a8 .3s ease-out forwards;
+    animation: modalOpen .3s ease-out forwards;
     box-shadow: 0 4px 96px #0000004d;
 }
 @keyframes modalOpen {

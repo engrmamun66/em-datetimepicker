@@ -19,8 +19,8 @@ function handleClick(value){
     <div class="switches-container">
         <input type="radio" name="switchPlan" value="left" :checked="selectingStartDate" />
         <input type="radio" name="switchPlan" value="right" :checked="!selectingStartDate" />
-        <label for="switchStartDate" @click.stop="handleClick('from_left')">{{ startText }}</label>
-        <label for="switchEndDate" @click.stop="handleClick('from_right')">{{ endText }}</label>
+        <label for="switchStartDate" @click.stop="handleClick('from_left')">{{ selectingStartDate ? '' : startText }}</label>
+        <label for="switchEndDate" @click.stop="handleClick('from_right')">{{ !selectingStartDate ? '' : endText }}</label>
         <div class="switch-wrapper">
             <div class="switch">
                 <div>{{ startText }}</div>
@@ -47,13 +47,13 @@ function handleClick(value){
 .switches-container {
     width: 100%;
     display: flex;
-    padding: 0;
-    position: relative;
+    padding: 1;
     line-height: 1rem;
     border-radius: 0;
     margin-left: auto;
     margin-right: auto;
     background-color: #fafafa;
+    position: relative;
 }
 
 /* input (radio) for toggling. hidden - use labels for clicking on */
@@ -83,7 +83,7 @@ function handleClick(value){
     width: 50%;
     padding: 0;
     z-index: 3;
-    transition: transform .5s cubic-bezier(.77, 0, .175, 1);
+    transition: transform .3s cubic-bezier(.77, 0, .175, 1);
 }
 
 .switch {
@@ -95,7 +95,7 @@ function handleClick(value){
 .switch div {
     width: 100%;
     text-align: center;
-    opacity: 0;
+    opacity: 1;
     display: block;
     color: #444;
     transition: opacity .2s cubic-bezier(.77,0,.175,1) .125s;
