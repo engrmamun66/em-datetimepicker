@@ -2,6 +2,7 @@
 import { ref, computed, reactive, defineProps, onMounted, inject, provide, defineEmits } from 'vue';
 import Buttons from './Buttons.vue'
 import Switcher from './Switcher.vue'
+import TimePicker from './TimePicker.vue'
 const { helper } = inject('utils');
 const isMounted = inject('isMounted');
 const picker = inject('picker');
@@ -391,118 +392,124 @@ onMounted(() => {
 </script>
 
 <template>
-    <template v-if="!justInitializeValue">
-        <!-- days of month -->
-        <template v-if="current_view=='days'">
-            <div class="days-month-box content">
-                <header>
-                    <i class='bx bx-chevron-left' @click="fn.onClickPrev()"></i>
-                    <span class="cp" @click="current_view = 'months'">
-                        <!-- {{ makeDate(monthOfDays.filter(d => d.currentMonth)[0]?.date, FORMATS.forHeading) }} -->
-                        {{ makeDate(monthOfDays.filter(d => d.currentMonth)[0]?.date, FORMATS.forHeading) }}
-                    </span>
-                    <i class='bx bx-chevron-right' @click="fn.onClickNext()"></i>
-                </header>
-                <Switcher v-if="defaults.rangePicker"></Switcher>
-                <main class="main-weekdays">
-                    <template v-for="(day, index) in weekDays" :key="index">
-                        <div class="active">{{ day }}</div>            
-                    </template>
-                </main>
-                <main class="main-days box" :class="{'rangePicker': defaults.rangePicker}">
-                    <template v-for="(monthDay, index) in monthOfDays" :key="index">
-                        <template v-if="defaults.rangePicker">
-                            <div 
-                            @click.stop="fn.onClickDay(monthDay)"
-                            @dblclick.stop="()=>{
-                                if(picker.date1 && picker.date2){
-                                    /**Reseting to re-select*/
-                                    picker.date2 = '';
-                                    picker.date1 = monthDay.date;
-                                    selectingStartDate.value = true;
-                                }
-                            }"
-                            @mouseenter="hoverDate = monthDay.date"
-                            :class="{ 
-                                'active':  (picker.date1 === picker.date2) && (picker.date1 === monthDay.date),
-                                'offset-date': !monthDay.currentMonth,
-                                'start-date': (monthDay.date === picker.date1) && (picker.date1 != picker.date2),
-                                'end-date': (monthDay.date === picker.date2) && (picker.date1 != picker.date2),
-                                'date-in-selected-range': fn.isInSelectedDate(monthDay),
-                                'hover-date': fn.isHoverDate(monthDay),
-                                'not-in-minmax-date': !fn.isInMinMaxDate(monthDay.date),
-                            }">
-                                {{ monthDay.day_index }}
-                            </div>
+
+    <TimePicker></TimePicker>
+    <template>
+        <template v-if="!justInitializeValue">
+            <!-- days of month -->
+            <template v-if="current_view=='days'">
+                <div class="days-month-box content">
+                    <header>
+                        <i class='bx bx-chevron-left' @click="fn.onClickPrev()"></i>
+                        <span class="cp" @click="current_view = 'months'">
+                            <!-- {{ makeDate(monthOfDays.filter(d => d.currentMonth)[0]?.date, FORMATS.forHeading) }} -->
+                            {{ makeDate(monthOfDays.filter(d => d.currentMonth)[0]?.date, FORMATS.forHeading) }}
+                        </span>
+                        <i class='bx bx-chevron-right' @click="fn.onClickNext()"></i>
+                    </header>
+                    <Switcher v-if="defaults.rangePicker"></Switcher>
+                    <main class="main-weekdays">
+                        <template v-for="(day, index) in weekDays" :key="index">
+                            <div class="active">{{ day }}</div>            
                         </template>
-                        <template v-else>
-                            <div 
-                            @click.stop="fn.onClickDay(monthDay)"
-                            @dblclick.stop="fn.onClickApply()"
-                            :class="{ 
-                                'active': monthDay.currentMonth && (new Date(picker.date1).getDate() == monthDay.day_index) ,
-                                'offset-date': !monthDay.currentMonth,
-                            }">
-                                {{ monthDay.day_index }}
-                            </div>
+                    </main>
+                    <main class="main-days box" :class="{'rangePicker': defaults.rangePicker}">
+                        <template v-for="(monthDay, index) in monthOfDays" :key="index">
+                            <template v-if="defaults.rangePicker">
+                                <div 
+                                @click.stop="fn.onClickDay(monthDay)"
+                                @dblclick.stop="()=>{
+                                    if(picker.date1 && picker.date2){
+                                        /**Reseting to re-select*/
+                                        picker.date2 = '';
+                                        picker.date1 = monthDay.date;
+                                        selectingStartDate.value = true;
+                                    }
+                                }"
+                                @mouseenter="hoverDate = monthDay.date"
+                                :class="{ 
+                                    'active':  (picker.date1 === picker.date2) && (picker.date1 === monthDay.date),
+                                    'offset-date': !monthDay.currentMonth,
+                                    'start-date': (monthDay.date === picker.date1) && (picker.date1 != picker.date2),
+                                    'end-date': (monthDay.date === picker.date2) && (picker.date1 != picker.date2),
+                                    'date-in-selected-range': fn.isInSelectedDate(monthDay),
+                                    'hover-date': fn.isHoverDate(monthDay),
+                                    'not-in-minmax-date': !fn.isInMinMaxDate(monthDay.date),
+                                }">
+                                    {{ monthDay.day_index }}
+                                </div>
+                            </template>
+                            <template v-else>
+                                <div 
+                                @click.stop="fn.onClickDay(monthDay)"
+                                @dblclick.stop="fn.onClickApply()"
+                                :class="{ 
+                                    'active': monthDay.currentMonth && (new Date(picker.date1).getDate() == monthDay.day_index) ,
+                                    'offset-date': !monthDay.currentMonth,
+                                }">
+                                    {{ monthDay.day_index }}
+                                </div>
+                            </template>
                         </template>
-                    </template>
-                </main>
-                <Buttons
-                :defaults="defaults"
-                @onCancel="fn.cancelPicker()"
-                @onApply="fn.onClickApply()"
-                @onToday="fn.onClickToday()"
-                ></Buttons>
-            </div>
-        </template>
-        <template v-else-if="current_view == 'months'">
-            <div class="months-box content">
-                <header>
-                    <i class='bx bx-chevron-left visibility-hidden'></i>
-                    <span class="cp" @click="current_view = 'years'">{{ makeDate(picker?.date1, FORMATS.month) }}</span>
-                    <i class='bx bx-chevron-right visibility-hidden'></i>
-                </header>
-                <main class="main-months box">
-                    <template v-for="(monthShort, index) in defaults.monthShorts" :key="index">
-                        <div 
-                        :class="{'active': makeDate(picker?.date1, FORMATS.monthShort) === monthShort}" 
-                        @click="fn.onClickMonth(index)">{{ monthShort }}</div>
-                    </template>
-                </main>
-                <Buttons
-                :defaults="defaults"
-                @onCancel="fn.cancelPicker()"
-                @onApply="fn.onClickApply()"
-                @onToday="fn.onClickToday()"
-                :applyBtn="false"
-                ></Buttons>
-            </div>
-        </template>
-        <template v-else-if="current_view == 'years'">
-            <div class="months-box content">
-                <header>
-                    <i class='bx bx-chevron-left' @click="fn.onClickPrev()"></i>
-                    <span>{{ years[0] }} - {{ years[years?.length - 1] }}</span>
-                    <i class='bx bx-chevron-right' @click="fn.onClickNext()"></i>
-                </header>
-                <main class="main-months box">
-                    <template v-for="(year, index) in years" :key="index">
-                        <div 
-                        :class="{'active': new Date(picker.date1).getFullYear() == year}" 
-                        @click="fn.onClickYear(year)"> {{ year }}</div>
-                    </template>
-                </main>
-                <Buttons
-                :defaults="defaults"
-                @onCancel="fn.cancelPicker()"
-                @onApply="fn.onClickApply()"
-                @onToday="fn.onClickToday()"
-                :applyBtn="false"
-                ></Buttons>
-            </div>
+                    </main>
+                    <Buttons
+                    :defaults="defaults"
+                    @onCancel="fn.cancelPicker()"
+                    @onApply="fn.onClickApply()"
+                    @onToday="fn.onClickToday()"
+                    ></Buttons>
+                </div>
+            </template>
+            <template v-else-if="current_view == 'months'">
+                <div class="months-box content">
+                    <header>
+                        <i class='bx bx-chevron-left visibility-hidden'></i>
+                        <span class="cp" @click="current_view = 'years'">{{ makeDate(picker?.date1, FORMATS.month) }}</span>
+                        <i class='bx bx-chevron-right visibility-hidden'></i>
+                    </header>
+                    <main class="main-months box">
+                        <template v-for="(monthShort, index) in defaults.monthShorts" :key="index">
+                            <div 
+                            :class="{'active': makeDate(picker?.date1, FORMATS.monthShort) === monthShort}" 
+                            @click="fn.onClickMonth(index)">{{ monthShort }}</div>
+                        </template>
+                    </main>
+                    <Buttons
+                    :defaults="defaults"
+                    @onCancel="fn.cancelPicker()"
+                    @onApply="fn.onClickApply()"
+                    @onToday="fn.onClickToday()"
+                    :applyBtn="false"
+                    ></Buttons>
+                </div>
+            </template>
+            <template v-else-if="current_view == 'years'">
+                <div class="months-box content">
+                    <header>
+                        <i class='bx bx-chevron-left' @click="fn.onClickPrev()"></i>
+                        <span>{{ years[0] }} - {{ years[years?.length - 1] }}</span>
+                        <i class='bx bx-chevron-right' @click="fn.onClickNext()"></i>
+                    </header>
+                    <main class="main-months box">
+                        <template v-for="(year, index) in years" :key="index">
+                            <div 
+                            :class="{'active': new Date(picker.date1).getFullYear() == year}" 
+                            @click="fn.onClickYear(year)"> {{ year }}</div>
+                        </template>
+                    </main>
+                    <Buttons
+                    :defaults="defaults"
+                    @onCancel="fn.cancelPicker()"
+                    @onApply="fn.onClickApply()"
+                    @onToday="fn.onClickToday()"
+                    :applyBtn="false"
+                    ></Buttons>
+                </div>
+            </template>
         </template>
     </template>
+
+
 </template>
 
 
