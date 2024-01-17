@@ -1,4 +1,5 @@
 <script setup>
+import Switcher from './Switcher.vue';
 import { ref, computed, reactive, defineProps, onMounted, inject, defineEmits } from 'vue';
 let { defaults, applyBtn } = defineProps({
     defaults: { 
@@ -504,7 +505,8 @@ let minutes_position = [
             </div>
             </div>
         </div><input data-clocklet="format:HH:mm" data-clocklet-inline="" style="display: none;">
-        </div>
+        <Switcher></Switcher>
+    </div>
 </template>
 
 <style scoped>
@@ -546,7 +548,7 @@ let minutes_position = [
     height: 270px;
     margin-top: 1px;
     padding: 8px;
-    border-radius: 3px
+    border-radius: 0px
 }
 
 .clocklet:not(.clocklet--showing) {

@@ -1,8 +1,8 @@
 <script setup>
 import { ref, computed, reactive, defineProps, onMounted, inject, provide, defineEmits } from 'vue';
-import Buttons from './Buttons.vue'
-import Switcher from './Switcher.vue'
-import TimePicker from './TimePicker.vue'
+import Buttons from './Buttons.vue';
+import Switcher from './Switcher.vue';
+import TimePicker from './TimePicker.vue';
 const { helper } = inject('utils');
 const isMounted = inject('isMounted');
 const picker = inject('picker');
