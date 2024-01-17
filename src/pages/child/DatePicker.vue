@@ -1,4 +1,5 @@
 <script setup>
+import moment from 'moment/moment';
 import { ref, computed, reactive, defineProps, onMounted, inject, provide, defineEmits } from 'vue';
 import Buttons from './Buttons.vue';
 import Switcher from './SwitcherForDate.vue';
@@ -9,7 +10,6 @@ const picker = inject('picker');
 const pickerValues = inject('pickerValues');
 let emits = defineEmits(['init', 'open', 'cancel', 'close', 'change']);
 let { target, options, parentDiv, justInitializeValue } = defineProps(['target', 'options', 'parentDiv', 'justInitializeValue']);
-const moment = globalThis.moment;
 // local Example: https://docs.mobiscroll.com/javascript/languages
 const FORMATS = {
     date: 'YYYY-MM-DD', //YYYY-MM-DD HH:mm:ss
@@ -24,12 +24,12 @@ const FORMATS = {
     monthShort: 'MMM',
 };
 const defaults = {
+    rangePicker: options?.rangePicker ?? false,
     displayFormat: FORMATS.forDisplay,
     startDate: makeDate(options?.startDate ?? new Date(), FORMATS.date),
     endDate: makeDate(options?.endDate ?? (options?.startDate || new Date()), FORMATS.date),
     minDate: options?.minDate ?? '',
     maxDate: options?.maxDate ?? '',
-    rangePicker: options?.rangePicker ?? false,
     adjustWeekday: options?.adjustWeekday ?? 0,
     buttons: (options?.buttons) ?? {
         todayBtn: options?.buttons?.todayBtn ?? 'Today',
@@ -38,6 +38,10 @@ const defaults = {
     },
     monthShorts: options?.monthShorts ?? [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ],
     row: (options.row && options.row >= 3 && options.row <= 10) ? options.row : 5,
+    // With Time Picker
+    timePicker: options?.timePicker ?? true,
+    onlyTimePicker: options?.onlyTimePicker ?? false,
+    minuteStep: (options?.minuteStep && [1, 5, 10, 15, 30].includes(options?.minuteStep)) ? options?.minuteStep : 5,
 }; 
 
 
@@ -73,6 +77,8 @@ provide('defaults', defaults);
 provide('makeDate', makeDate);
 provide('FORMATS', FORMATS);
 provide('selectingStartDate', selectingStartDate);
+
+let openTimePicker = ref(false);
 
 const events = reactive( {
     init: function(data={}) {
@@ -392,11 +398,9 @@ onMounted(() => {
 </script>
 
 <template>
-
-    <TimePicker></TimePicker>
-    <template>
-        <template v-if="!justInitializeValue">
-            <!-- days of month -->
+    <template v-if="!justInitializeValue">
+        <!-- days of month -->
+        <template v-if="!defaults.onlyTimePicker">
             <template v-if="current_view=='days'">
                 <div class="days-month-box content">
                     <header>
@@ -458,6 +462,14 @@ onMounted(() => {
                     @onApply="fn.onClickApply()"
                     @onToday="fn.onClickToday()"
                     ></Buttons>
+                    <div v-if="defaults.timePicker" class="time-picker-action-area" @click="openTimePicker=false">
+                        <button @click.stop="openTimePicker=true"><i class='bx bx-time'></i></button>
+                    </div>
+                    <div v-if="openTimePicker==true" class="time-picker-display-area" @click.stop="openTimePicker=false">
+                        <div class="">
+                            <TimePicker></TimePicker>
+                        </div>
+                    </div>
                 </div>
             </template>
             <template v-else-if="current_view == 'months'">
@@ -507,7 +519,11 @@ onMounted(() => {
                 </div>
             </template>
         </template>
+        <template else>
+            <TimePicker v-if="defaults.timePicker"></TimePicker>
+        </template>
     </template>
+
 
 
 </template>
@@ -658,6 +674,46 @@ main.box>div.date-in-selected-range {
 .not-in-minmax-date{
     text-decoration: line-through;
     cursor: no-drop !important;
+}
+div:has(>.time-picker-display-area){
+    position: relative;
+}
+.time-picker-display-area{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 9999999;
+    background-color: #0000008a;
+    backdrop-filter: blur(0px);
+}
+.time-picker-display-area{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 9999999;
+    background-color: #0000008a;
+    -webkit-backdrop-filter: blur(0px);
+    backdrop-filter: blur(0px);
+}
+.time-picker-display-area>div {
+    animation: modalOpen-5afb13a8 .3s ease-out forwards;
+    box-shadow: 0 4px 96px #0000004d;
+}
+@keyframes modalOpen {
+  from {
+    opacity: 0;
+    transform: translate(0%, 60%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0%, 0%) scale(1);
+  }
 }
 </style>
 

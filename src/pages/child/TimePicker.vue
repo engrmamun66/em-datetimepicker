@@ -1,18 +1,36 @@
 <script setup>
+import moment, { min } from 'moment/moment';
 import Switcher from './SwitcherForTime.vue';
 import { hours_position, minutes_position } from './timePicker';
 import { ref, computed, reactive, defineProps, onMounted, inject, defineEmits, watchEffect } from 'vue';
-let { defaults, applyBtn } = defineProps({
-    defaults: { 
-        required: false,
-        default: {},
-    },
-    applyBtn: { 
-        required: false,
-        default: true,        
-    },
-});
-let emits = defineEmits(['onCancel', 'onApply', 'onToday']);
+let defaults = inject('defaults');
+
+
+minutes_position.forEach( minute => {   
+    function makeStepRange(step) {    
+        let limit = Math.floor(60 / step)
+        let start = 0
+        let end = start + limit;
+        let rangeArray = Array.from({ length: end + start  }, (_, index) => (start + index) * step);
+        return rangeArray;    
+    }
+    let  { minuteStep } = defaults;
+    
+    if(minuteStep){
+        let steps = makeStepRange(minuteStep);  
+        if(steps?.length){
+            if(steps?.includes(minute.id)){
+                minute.excluded = false;
+            } else {
+                minute.excluded = true;
+            }
+        }        
+    }    
+})
+
+
+
+let emits = defineEmits(['cancel', 'apply', 'change' ]);
 let ampm = ref('am')
 let selectedHour = ref(hours_position[0]);
 let selectedMinute = ref(minutes_position[0]);
@@ -56,7 +74,7 @@ let move = reactive({
 </script>
 
 <template>
-    <div id="clocklet-inline-container">
+    <div @click.stop="false" id="clocklet-inline-container" style="width:270px">
         <div class="clocklet-container clocklet-container--inline">
             <div class="clocklet clocklet--inline" data-clocklet-format="HH:mm" data-clocklet-value="14:25">
                 <div class="clocklet-plate">
@@ -67,7 +85,10 @@ let move = reactive({
                             <button
                             :style="minute.style"
                             class="clocklet-tick clocklet-tick--minute"
-                            :class="{'clocklet-tick--selected' : selectedMinute.value == minute.value}" 
+                            :class="{
+                                'excluded' : minute.excluded,
+                                'clocklet-tick--selected' : selectedMinute.value == minute.value,
+                            }" 
                             type="button" 
                             :data-clocklet-tick-value="minute.id"
                             @click.stop="selectedMinute = minute"
@@ -258,7 +279,8 @@ let move = reactive({
 }
 
 .clocklet-ampm[data-clocklet-ampm=pm]:before {
-    transform: translateX(1em)
+    transform: translateX(1em);
+    font-size: 13px;
 }
 
 .clocklet-ampm[data-clocklet-ampm-formatted]:not([data-clocklet-ampm-formatted=""]):before {
@@ -358,10 +380,20 @@ let move = reactive({
 
 .clocklet-ampm:before {
     background-color: #57c2ff;
-    color: #fff
+    color: #fff;
+    font-size: 13px;
 }
 
 .clocklet-ampm:hover:before {
     background-color: #7ccfff
+}
+
+
+/* -------------------------------------------------------------------------- */
+/*                             Start Modification                             */
+/* -------------------------------------------------------------------------- */
+.excluded{
+    pointer-events: none  !important;
+    visibility: hidden !important;
 }
 </style>
