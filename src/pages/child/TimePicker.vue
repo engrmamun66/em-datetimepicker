@@ -11,76 +11,86 @@ let { defaults, applyBtn } = defineProps({
     },
 });
 let emits = defineEmits(['onCancel', 'onApply', 'onToday']);
-function handleClick(from=''){
-    if(from == 'today'){
-        emits('onToday');
-    }
-    if(from == 'cancel'){
-        emits('onCancel');
-    }
-    if(from == 'apply'){
-        emits('onApply');
-    }
-}
+
+let selectedHour = ref({
+        "id": 12,
+        "value": "12",
+        "deg": "transform: rotate(0deg);",
+        "style": "left:50%;top:11%"
+    })
+
+
 
 let hours_position = [
     {
-        "value": 12,
+        "id": 12,
+        "value": "12",
         "deg": "transform: rotate(0deg);",
         "style": "left:50%;top:11%"
     },
     {
-        "value": 1,
+        "id": 1,
+        "value": "01",
         "deg": "transform: rotate(30deg);",
         "style": "left:69.5%;top:16.2%"
     },
     {
-        "value": 2,
+        "id": 2,
+        "value": "02",
         "deg": "transform: rotate(60deg);",
         "style": "left:83.8%;top:30.5%"
     },
     {
-        "value": 3,
+        "id": 3,
+        "value": "03",
         "deg": "transform: rotate(90deg);",
         "style": "left:89%;top:50%"
     },
     {
-        "value": 4,
+        "id": 4,
+        "value": "04",
         "deg": "transform: rotate(120deg);",
         "style": "left:83.8%;top:69.5%"
     },
     {
-        "value": 5,
+        "id": 5,
+        "value": "05",
         "deg": "transform: rotate(150deg);",
         "style": "left:69.5%;top:83.8%"
     },
     {
-        "value": 6,
+        "id": 6,
+        "value": "06",
         "deg": "transform: rotate(180deg);",
         "style": "left:50%;top:89%"
     },
     {
-        "value": 7,
+        "id": 7,
+        "value": "07",
         "deg": "transform: rotate(210deg);",
         "style": "left:30.5%;top:83.8%"
     },
     {
-        "value": 8,
+        "id": 8,
+        "value": "08",
         "deg": "transform: rotate(240deg);",
         "style": "left:16.2%;top:69.5%"
     },
     {
-        "value": 9,
+        "id": 9,
+        "value": "09",
         "deg": "transform: rotate(270deg);",
         "style": "left:11%;top:50%"
     },
     {
-        "value": 10,
+        "id": 10,
+        "value": "10",
         "deg": "transform: rotate(300deg);",
         "style": "left:16.2%;top:30.5%"
     },
     {
-        "value": 11,
+        "id": 11,
+        "value": "11",
         "deg": "transform: rotate(330deg);",
         "style": "left:30.5%;top:16.2%"
     }
@@ -94,260 +104,232 @@ let hours_position = [
             <div class="clocklet clocklet--inline" data-clocklet-format="HH:mm" data-clocklet-value="14:25">
             <div class="clocklet-plate">
                 <div class="clocklet-dial clocklet-dial--minute">
-                <div class="clocklet-hand clocklet-hand--minute" style="transform: rotate(150deg);"></div>
-                    <button
-                        class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="0"
-                        style="left:50%;top:11%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--minute" type="button"
-                    data-clocklet-tick-value="1" style="left:54.8%;top:4.3%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="2"
-                    style="left:59.6%;top:5%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--minute" type="button"
-                    data-clocklet-tick-value="3" style="left:64.2%;top:6.3%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="4"
-                    style="left:68.7%;top:8%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--minute" type="button"
-                    data-clocklet-tick-value="5" style="left:69.5%;top:16.2%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="6"
-                    style="left:77%;top:12.8%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--minute" type="button"
-                    data-clocklet-tick-value="7" style="left:80.8%;top:15.8%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="8"
-                    style="left:84.2%;top:19.2%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--minute" type="button"
-                    data-clocklet-tick-value="9" style="left:87.2%;top:23%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="10"
-                    style="left:83.8%;top:30.5%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--minute" type="button"
-                    data-clocklet-tick-value="11" style="left:92%;top:31.3%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="12"
-                    style="left:93.7%;top:35.8%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--minute" type="button"
-                    data-clocklet-tick-value="13" style="left:95%;top:40.4%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="14"
-                    style="left:95.7%;top:45.2%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--minute" type="button"
-                    data-clocklet-tick-value="15" style="left:89%;top:50%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="16"
-                    style="left:95.7%;top:54.8%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--minute" type="button"
-                    data-clocklet-tick-value="17" style="left:95%;top:59.6%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="18"
-                    style="left:93.7%;top:64.2%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--minute" type="button"
-                    data-clocklet-tick-value="19" style="left:92%;top:68.7%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="20"
-                    style="left:83.8%;top:69.5%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--minute" type="button"
-                    data-clocklet-tick-value="21" style="left:87.2%;top:77%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="22"
-                    style="left:84.2%;top:80.8%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--minute" type="button"
-                    data-clocklet-tick-value="23" style="left:80.8%;top:84.2%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="24"
-                    style="left:77%;top:87.2%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--minute clocklet-tick--selected" type="button"
-                    data-clocklet-tick-value="25" style="left:69.5%;top:83.8%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="26"
-                    style="left:68.7%;top:92%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--minute" type="button"
-                    data-clocklet-tick-value="27" style="left:64.2%;top:93.7%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="28"
-                    style="left:59.6%;top:95%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--minute" type="button"
-                    data-clocklet-tick-value="29" style="left:54.8%;top:95.7%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="30"
-                    style="left:50%;top:89%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--minute" type="button"
-                    data-clocklet-tick-value="31" style="left:45.2%;top:95.7%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="32"
-                    style="left:40.4%;top:95%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--minute" type="button"
-                    data-clocklet-tick-value="33" style="left:35.8%;top:93.7%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="34"
-                    style="left:31.3%;top:92%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--minute" type="button"
-                    data-clocklet-tick-value="35" style="left:30.5%;top:83.8%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="36"
-                    style="left:23%;top:87.2%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--minute" type="button"
-                    data-clocklet-tick-value="37" style="left:19.2%;top:84.2%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="38"
-                    style="left:15.8%;top:80.8%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--minute" type="button"
-                    data-clocklet-tick-value="39" style="left:12.8%;top:77%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="40"
-                    style="left:16.2%;top:69.5%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--minute" type="button"
-                    data-clocklet-tick-value="41" style="left:8%;top:68.7%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="42"
-                    style="left:6.3%;top:64.2%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--minute" type="button"
-                    data-clocklet-tick-value="43" style="left:5%;top:59.6%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="44"
-                    style="left:4.3%;top:54.8%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--minute" type="button"
-                    data-clocklet-tick-value="45" style="left:11%;top:50%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="46"
-                    style="left:4.3%;top:45.2%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--minute" type="button"
-                    data-clocklet-tick-value="47" style="left:5%;top:40.4%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="48"
-                    style="left:6.3%;top:35.8%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--minute" type="button"
-                    data-clocklet-tick-value="49" style="left:8%;top:31.3%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="50"
-                    style="left:16.2%;top:30.5%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--minute" type="button"
-                    data-clocklet-tick-value="51" style="left:12.8%;top:23%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="52"
-                    style="left:15.8%;top:19.2%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--minute" type="button"
-                    data-clocklet-tick-value="53" style="left:19.2%;top:15.8%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="54"
-                    style="left:23%;top:12.8%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--minute" type="button"
-                    data-clocklet-tick-value="55" style="left:30.5%;top:16.2%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="56"
-                    style="left:31.3%;top:8%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--minute" type="button"
-                    data-clocklet-tick-value="57" style="left:35.8%;top:6.3%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="58"
-                    style="left:40.4%;top:5%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--minute" type="button"
-                    data-clocklet-tick-value="59" style="left:45.2%;top:4.3%"></button>
+                    <div class="clocklet-hand clocklet-hand--minute" style="transform: rotate(150deg);"></div>
+                        <button
+                            class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="0"
+                            style="left:50%;top:11%">
+                        </button>
+                        <button class="clocklet-tick clocklet-tick--minute" type="button"
+                        data-clocklet-tick-value="1" style="left:54.8%;top:4.3%">
+                        </button>
+                        <button
+                        class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="2"
+                        style="left:59.6%;top:5%">
+                        </button>
+                        <button class="clocklet-tick clocklet-tick--minute" type="button"
+                        data-clocklet-tick-value="3" style="left:64.2%;top:6.3%">
+                        </button>
+                        <button
+                        class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="4"
+                        style="left:68.7%;top:8%">
+                        </button>
+                        <button class="clocklet-tick clocklet-tick--minute" type="button"
+                        data-clocklet-tick-value="5" style="left:69.5%;top:16.2%">
+                        </button>
+                        <button
+                        class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="6"
+                        style="left:77%;top:12.8%">
+                        </button>
+                        <button class="clocklet-tick clocklet-tick--minute" type="button"
+                        data-clocklet-tick-value="7" style="left:80.8%;top:15.8%">
+                        </button>
+                        <button
+                        class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="8"
+                        style="left:84.2%;top:19.2%">
+                        </button>
+                        <button class="clocklet-tick clocklet-tick--minute" type="button"
+                        data-clocklet-tick-value="9" style="left:87.2%;top:23%">
+                        </button>
+                        <button
+                        class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="10"
+                        style="left:83.8%;top:30.5%">
+                        </button>
+                        <button class="clocklet-tick clocklet-tick--minute" type="button"
+                        data-clocklet-tick-value="11" style="left:92%;top:31.3%">
+                        </button>
+                        <button
+                        class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="12"
+                        style="left:93.7%;top:35.8%">
+                        </button>
+                        <button class="clocklet-tick clocklet-tick--minute" type="button"
+                        data-clocklet-tick-value="13" style="left:95%;top:40.4%">
+                        </button>
+                        <button
+                        class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="14"
+                        style="left:95.7%;top:45.2%">
+                        </button>
+                        <button class="clocklet-tick clocklet-tick--minute" type="button"
+                        data-clocklet-tick-value="15" style="left:89%;top:50%">
+                        </button>
+                        <button
+                        class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="16"
+                        style="left:95.7%;top:54.8%">
+                        </button>
+                        <button class="clocklet-tick clocklet-tick--minute" type="button"
+                        data-clocklet-tick-value="17" style="left:95%;top:59.6%">
+                        </button>
+                        <button
+                        class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="18"
+                        style="left:93.7%;top:64.2%">
+                        </button>
+                        <button class="clocklet-tick clocklet-tick--minute" type="button"
+                        data-clocklet-tick-value="19" style="left:92%;top:68.7%">
+                        </button>
+                        <button
+                        class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="20"
+                        style="left:83.8%;top:69.5%">
+                        </button>
+                        <button class="clocklet-tick clocklet-tick--minute" type="button"
+                        data-clocklet-tick-value="21" style="left:87.2%;top:77%">
+                        </button>
+                        <button
+                        class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="22"
+                        style="left:84.2%;top:80.8%">
+                        </button>
+                        <button class="clocklet-tick clocklet-tick--minute" type="button"
+                        data-clocklet-tick-value="23" style="left:80.8%;top:84.2%">
+                        </button>
+                        <button
+                        class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="24"
+                        style="left:77%;top:87.2%">
+                        </button>
+                        <button
+                        class="clocklet-tick clocklet-tick--minute clocklet-tick--selected" type="button"
+                        data-clocklet-tick-value="25" style="left:69.5%;top:83.8%">
+                        </button>
+                        <button
+                        class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="26"
+                        style="left:68.7%;top:92%">
+                        </button>
+                        <button class="clocklet-tick clocklet-tick--minute" type="button"
+                        data-clocklet-tick-value="27" style="left:64.2%;top:93.7%">
+                        </button>
+                        <button
+                        class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="28"
+                        style="left:59.6%;top:95%">
+                        </button>
+                        <button class="clocklet-tick clocklet-tick--minute" type="button"
+                        data-clocklet-tick-value="29" style="left:54.8%;top:95.7%">
+                        </button>
+                        <button
+                        class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="30"
+                        style="left:50%;top:89%">
+                        </button>
+                        <button class="clocklet-tick clocklet-tick--minute" type="button"
+                        data-clocklet-tick-value="31" style="left:45.2%;top:95.7%">
+                        </button>
+                        <button
+                        class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="32"
+                        style="left:40.4%;top:95%">
+                        </button>
+                        <button class="clocklet-tick clocklet-tick--minute" type="button"
+                        data-clocklet-tick-value="33" style="left:35.8%;top:93.7%">
+                        </button>
+                        <button
+                        class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="34"
+                        style="left:31.3%;top:92%">
+                        </button>
+                        <button class="clocklet-tick clocklet-tick--minute" type="button"
+                        data-clocklet-tick-value="35" style="left:30.5%;top:83.8%">
+                        </button>
+                        <button
+                        class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="36"
+                        style="left:23%;top:87.2%">
+                        </button>
+                        <button class="clocklet-tick clocklet-tick--minute" type="button"
+                        data-clocklet-tick-value="37" style="left:19.2%;top:84.2%">
+                        </button>
+                        <button
+                        class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="38"
+                        style="left:15.8%;top:80.8%">
+                        </button>
+                        <button class="clocklet-tick clocklet-tick--minute" type="button"
+                        data-clocklet-tick-value="39" style="left:12.8%;top:77%">
+                        </button>
+                        <button
+                        class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="40"
+                        style="left:16.2%;top:69.5%">
+                        </button>
+                        <button class="clocklet-tick clocklet-tick--minute" type="button"
+                        data-clocklet-tick-value="41" style="left:8%;top:68.7%">
+                        </button>
+                        <button
+                        class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="42"
+                        style="left:6.3%;top:64.2%">
+                        </button>
+                        <button class="clocklet-tick clocklet-tick--minute" type="button"
+                        data-clocklet-tick-value="43" style="left:5%;top:59.6%">
+                        </button>
+                        <button
+                        class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="44"
+                        style="left:4.3%;top:54.8%">
+                        </button>
+                        <button class="clocklet-tick clocklet-tick--minute" type="button"
+                        data-clocklet-tick-value="45" style="left:11%;top:50%">
+                        </button>
+                        <button
+                        class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="46"
+                        style="left:4.3%;top:45.2%">
+                        </button>
+                        <button class="clocklet-tick clocklet-tick--minute" type="button"
+                        data-clocklet-tick-value="47" style="left:5%;top:40.4%">
+                        </button>
+                        <button
+                        class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="48"
+                        style="left:6.3%;top:35.8%">
+                        </button>
+                        <button class="clocklet-tick clocklet-tick--minute" type="button"
+                        data-clocklet-tick-value="49" style="left:8%;top:31.3%">
+                        </button>
+                        <button
+                        class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="50"
+                        style="left:16.2%;top:30.5%">
+                        </button>
+                        <button class="clocklet-tick clocklet-tick--minute" type="button"
+                        data-clocklet-tick-value="51" style="left:12.8%;top:23%">
+                        </button>
+                        <button
+                        class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="52"
+                        style="left:15.8%;top:19.2%">
+                        </button>
+                        <button class="clocklet-tick clocklet-tick--minute" type="button"
+                        data-clocklet-tick-value="53" style="left:19.2%;top:15.8%">
+                        </button>
+                        <button
+                        class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="54"
+                        style="left:23%;top:12.8%">
+                        </button>
+                        <button class="clocklet-tick clocklet-tick--minute" type="button"
+                        data-clocklet-tick-value="55" style="left:30.5%;top:16.2%">
+                        </button>
+                        <button
+                        class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="56"
+                        style="left:31.3%;top:8%">
+                        </button>
+                        <button class="clocklet-tick clocklet-tick--minute" type="button"
+                        data-clocklet-tick-value="57" style="left:35.8%;top:6.3%">
+                        </button>
+                        <button
+                        class="clocklet-tick clocklet-tick--minute" type="button" data-clocklet-tick-value="58"
+                        style="left:40.4%;top:5%">
+                        </button>
+                        <button class="clocklet-tick clocklet-tick--minute" type="button"
+                        data-clocklet-tick-value="59" style="left:45.2%;top:4.3%"></button>
                 </div>
+
+                <!-- Hour picker -->
                 <div class="clocklet-dial clocklet-dial--hour">
-                <div class="clocklet-hand clocklet-hand--hour" style="transform: rotate(60deg);"></div><button
-                    class="clocklet-tick clocklet-tick--hour" type="button" data-clocklet-tick-value="0"
-                    style="left:50%;top:11%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--hour" type="button"
-                    data-clocklet-tick-value="1" style="left:69.5%;top:16.2%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--hour clocklet-tick--selected" type="button" data-clocklet-tick-value="2"
-                    style="left:83.8%;top:30.5%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--hour" type="button"
-                    data-clocklet-tick-value="3" style="left:89%;top:50%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--hour" type="button" data-clocklet-tick-value="4"
-                    style="left:83.8%;top:69.5%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--hour" type="button"
-                    data-clocklet-tick-value="5" style="left:69.5%;top:83.8%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--hour" type="button" data-clocklet-tick-value="6"
-                    style="left:50%;top:89%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--hour" type="button"
-                    data-clocklet-tick-value="7" style="left:30.5%;top:83.8%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--hour" type="button" data-clocklet-tick-value="8"
-                    style="left:16.2%;top:69.5%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--hour" type="button"
-                    data-clocklet-tick-value="9" style="left:11%;top:50%">
-                    </button>
-                    <button
-                    class="clocklet-tick clocklet-tick--hour" type="button" data-clocklet-tick-value="10"
-                    style="left:16.2%;top:30.5%">
-                    </button>
-                    <button class="clocklet-tick clocklet-tick--hour" type="button"
-                    data-clocklet-tick-value="11" style="left:30.5%;top:16.2%"></button>
+                    <div class="clocklet-hand clocklet-hand--hour" :style="selectedHour.deg"></div>
+                    <template v-for="(hour, index) in hours_position" :key="index">
+                        <button 
+                        :style="hour.style"
+                        class="clocklet-tick clocklet-tick--hour"
+                        :class="{'clocklet-tick--selected' : selectedHour.value == hour.value}" 
+                        type="button" :data-clocklet-tick-value="hour.id"
+                        @click.stop="selectedHour = hour"
+                        >
+                        </button>
+                    </template>                   
                 </div>
                 <div class="clocklet-ampm" data-clocklet-ampm="pm" data-clocklet-ampm-formatted=""></div>
                 <div class="clocklet-hand-origin"></div>
