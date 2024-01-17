@@ -1,5 +1,5 @@
 <script setup>
-import Switcher from './Switcher.vue';
+import Switcher from './SwitcherForTime.vue';
 import { ref, computed, reactive, defineProps, onMounted, inject, defineEmits } from 'vue';
 let { defaults, applyBtn } = defineProps({
     defaults: { 
@@ -469,43 +469,44 @@ let minutes_position = [
     <div id="clocklet-inline-container">
         <div class="clocklet-container clocklet-container--inline">
             <div class="clocklet clocklet--inline" data-clocklet-format="HH:mm" data-clocklet-value="14:25">
-            <div class="clocklet-plate">
-                <div class="clocklet-dial clocklet-dial--minute">
-                    <div class="clocklet-hand clocklet-hand--minute" :style="selectedMinute.deg"></div>
-                    <template v-for="(minute, index) in minutes_position" :key="index">
-                        <button
-                        :style="minute.style"
-                        class="clocklet-tick clocklet-tick--minute"
-                        :class="{'clocklet-tick--selected' : selectedMinute.value == minute.value}" 
-                        type="button" 
-                        :data-clocklet-tick-value="minute.id"
-                        @click.stop="selectedMinute = minute"
-                        >
-                        </button>                        
-                    </template>                        
-                </div>
+                <div class="clocklet-plate">
+                    <!-- Minute Picker -->
+                    <div class="clocklet-dial clocklet-dial--minute">
+                        <div class="clocklet-hand clocklet-hand--minute" :style="selectedMinute.deg"></div>
+                        <template v-for="(minute, index) in minutes_position" :key="index">
+                            <button
+                            :style="minute.style"
+                            class="clocklet-tick clocklet-tick--minute"
+                            :class="{'clocklet-tick--selected' : selectedMinute.value == minute.value}" 
+                            type="button" 
+                            :data-clocklet-tick-value="minute.id"
+                            @click.stop="selectedMinute = minute"
+                            >
+                            </button>                        
+                        </template>                        
+                    </div>
 
-                <!-- Hour picker -->
-                <div class="clocklet-dial clocklet-dial--hour">
-                    <div class="clocklet-hand clocklet-hand--hour" :style="selectedHour.deg"></div>
-                    <template v-for="(hour, index) in hours_position" :key="index">
-                        <button 
-                        type="button" 
-                        :style="hour.style"
-                        class="clocklet-tick clocklet-tick--hour"
-                        :class="{'clocklet-tick--selected' : selectedHour.value == hour.value}" 
-                        @click.stop="selectedHour = hour"
-                        :data-clocklet-tick-value="hour.id"
-                        >
-                        </button>
-                    </template>                   
+                    <!-- Hour Picker -->
+                    <div class="clocklet-dial clocklet-dial--hour">
+                        <div class="clocklet-hand clocklet-hand--hour" :style="selectedHour.deg"></div>
+                        <template v-for="(hour, index) in hours_position" :key="index">
+                            <button 
+                            type="button" 
+                            :style="hour.style"
+                            class="clocklet-tick clocklet-tick--hour"
+                            :class="{'clocklet-tick--selected' : selectedHour.value == hour.value}" 
+                            @click.stop="selectedHour = hour"
+                            :data-clocklet-tick-value="hour.id"
+                            >
+                            </button>
+                        </template>                   
+                    </div>
+                    <div class="clocklet-ampm" :data-clocklet-ampm="ampm" @click.stop="ampm=='am' ? ampm='pm' : ampm='am'" data-clocklet-ampm-formatted=""></div>
+                    <div class="clocklet-hand-origin"></div>
                 </div>
-                <div class="clocklet-ampm" :data-clocklet-ampm="ampm" @click.stop="ampm=='am' ? ampm='pm' : ampm='am'" data-clocklet-ampm-formatted=""></div>
-                <div class="clocklet-hand-origin"></div>
             </div>
-            </div>
-        </div><input data-clocklet="format:HH:mm" data-clocklet-inline="" style="display: none;">
-        <Switcher></Switcher>
+            <Switcher></Switcher>
+        </div>
     </div>
 </template>
 
@@ -548,7 +549,8 @@ let minutes_position = [
     height: 270px;
     margin-top: 1px;
     padding: 8px;
-    border-radius: 0px
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
 }
 
 .clocklet:not(.clocklet--showing) {

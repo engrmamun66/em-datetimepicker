@@ -7,12 +7,13 @@ let { forDate } = defineProps({
     },
 });
 
-const startText = forDate ? 'Start Date' : 'Start Time';
-const endText = forDate ? 'End Date' : 'Start Time';
+const startText = 'Start Time';
+const endText ='End Time';
 
 let defaults = inject('defaults');
 let picker = inject('picker');
 let selectingStartDate = inject('selectingStartDate');
+let selectingStartTime = true;
 
 function handleClick(value){
     if(value == 'from_right'){
@@ -24,10 +25,10 @@ function handleClick(value){
 
 <template>
     <div class="switches-container">
-        <input type="radio" name="switchPlan" value="left" :checked="selectingStartDate" />
-        <input type="radio" name="switchPlan" value="right" :checked="!selectingStartDate" />
-        <label for="switchMonthly" @click.stop="handleClick('from_left')">{{ startText }}</label>
-        <label for="switchYearly" @click.stop="handleClick('from_right')">{{ endText }}</label>
+        <input type="radio" name="switchPlan" value="left" :checked="selectingStartTime" />
+        <input type="radio" name="switchPlan" value="right" :checked="!selectingStartTime" />
+        <label for="startTime" @click.stop="handleClick('from_left')">{{ startText }}</label>
+        <label for="EndTime" @click.stop="handleClick('from_right')">{{ endText }}</label>
         <div class="switch-wrapper">
             <div class="switch">
                 <div>{{ startText }}</div>
@@ -107,7 +108,7 @@ function handleClick(value){
     color: #444;
     transition: opacity .2s cubic-bezier(.77,0,.175,1) .125s;
     will-change: opacity;
-    position: absolute;
+    position: relative;
     top: 5px;
     left: 0;
 }
