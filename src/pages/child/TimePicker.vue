@@ -414,7 +414,7 @@ let move = reactive({
 }
 .display-time span{
     font-size: 20px;
-    color: #444;  
+    color: #666;  
 }
 .display-time div{
     width: 2px;
