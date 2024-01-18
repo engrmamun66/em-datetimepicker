@@ -2,7 +2,7 @@
 import moment, { min } from 'moment/moment';
 import SwitcherForTime from './SwitcherForTime.vue';
 import { hours_position, minutes_position } from './timePicker';
-import { ref, computed, reactive, defineProps, onMounted, inject, defineEmits, watchEffect, provide } from 'vue';
+import { ref, computed, reactive, defineProps, onMounted, inject, defineEmits, watch, watchEffect, provide } from 'vue';
 let defaults = inject('defaults');
 let FORMATS = inject('FORMATS');
 let picker = inject('picker');
@@ -36,12 +36,21 @@ let emits = defineEmits(['cancel', 'apply', 'change' ]);
 // mode
 let time1_mode = ref('am');
 let time2_mode = ref('am');
-let mode = computed(()=> {
-    if(selectingStartTime.value){
-        return time1_mode.value;
-    }else{
-        return time2_mode.value;
-    }
+let mode = computed({
+    get: () => {
+        if(selectingStartTime.value){
+            return time1_mode.value;
+        }else{
+            return time2_mode.value;
+        }
+    },
+    set: (modename) => {
+        if(selectingStartTime.value){
+            time1_mode.value = modename;
+        }else{
+            time2_mode.value = modename;
+        }
+    },
 });
 let selectingStartTime = ref(true);
 provide('selectingStartTime', selectingStartTime);
@@ -52,21 +61,38 @@ let time1_selectedMinute = ref(minutes_position[0]);
 // Time2
 let time2_selectedHour = ref(hours_position[0]);
 let time2_selectedMinute = ref(minutes_position[0]);
-let selectedHour = computed(() => {
-    if(selectingStartTime.value){
-        return time1_selectedHour.value;
-    }else{
-        return time2_selectedHour.value;
-    }
+let selectedHour = computed({
+    get: () => {
+        if(selectingStartTime.value){
+            return time1_selectedHour.value;
+        }else{
+            return time2_selectedHour.value;
+        }
+    },
+    set: (hourObject) => {
+        if(selectingStartTime.value){
+            time1_selectedHour.value = hourObject;
+        }else{
+            time2_selectedHour.value = hourObject;
+        }
+    },    
 })
-let selectedMinute = computed(() => {
-    if(selectingStartTime.value){
-        return time1_selectedMinute.value;
-    }else{
-        return time2_selectedMinute.value;
-    }
+let selectedMinute = computed({
+    get: () => {
+        if(selectingStartTime.value){
+            return time1_selectedMinute.value;
+        }else{
+            return time2_selectedMinute.value;
+        }
+    },
+    set: (minuteObject) => {
+        if(selectingStartTime.value){
+            time1_selectedMinute.value = minuteObject;
+        }else{
+            time2_selectedMinute.value = minuteObject;
+        }
+    },
 })
-
 let centerOfclick = ref(null);
 
 onMounted(() => { 
@@ -86,9 +112,32 @@ onMounted(() => {
     time1_selectedMinute.value = minutes_position?.filter(m => m.value == hour1)?.[0] || minutes_position[0];
     time2_selectedMinute.value = minutes_position?.filter(m => m.value == hour2)?.[0] || (time1_selectedMinute.value || minutes_position[0]);
     
-    console.log(selectedHour.value, selectedMinute.value, mode.value);
+    // console.log(time1_selectedHour.value, time2_selectedHour.value);
 })
 
+watchEffect(() => {
+    let { value: hour1 } = time1_selectedHour;
+    let { value: hour2 } = time2_selectedHour;
+
+    let { value: minute1 } = time1_selectedMinute;
+    let { value: minute2 } = time1_selectedMinute;
+
+    let data = {
+        date
+    };
+
+    emits('change')
+})
+
+function printSelectedTime(hourObject, minuteObject, time_mode) {
+    let {value: hour} = hourObject;
+    let {value: minute} = minuteObject;
+    //{hour,minute}
+    let date = new Date();
+    date.setHours(Number(hour) + (time_mode=='pm' ? 12 : 0));
+    date.setMinutes(Number(minute));
+    return makeDate(date, FORMATS.time);
+}
 
 function getCenterOfCircle() {
     if(!centerOfclick.value) return false;
@@ -121,6 +170,8 @@ function setByDegree(event) {
 let move = reactive({
     dragging: false,
 })
+
+
 
 
 
@@ -180,10 +231,10 @@ let move = reactive({
             </div>
 
             <div class="display-time">
-                <span class="start-time">08:25 AM</span>
+                <span class="start-time">{{ printSelectedTime(time1_selectedHour, time1_selectedMinute, time1_mode) }}</span>
                 <template v-if="defaults.rangePicker">
                     <div>&nbsp;</div>
-                    <span class="end-time">10:25 AM</span>
+                    <span class="end-time">{{ printSelectedTime(time2_selectedHour, time2_selectedMinute, time2_mode) }}</span>
                 </template>
             </div>
 
