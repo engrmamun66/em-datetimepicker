@@ -109,9 +109,9 @@ function handleClick(value){
     opacity: 0;
     display: block;
     color: #444;
-    will-change: opacity;
     position: absolute;
     text-align: center;
+    will-change: opacity;
     transition: opacity .2s cubic-bezier(.77,0,.175,1) .125s;
     top: 5px;
     left: 0;
