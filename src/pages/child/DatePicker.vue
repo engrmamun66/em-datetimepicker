@@ -22,6 +22,7 @@ const FORMATS = {
     year: 'YYYY',
     month: 'MMMM',
     monthShort: 'MMM',
+    time: options?.use24Format ? 'HH:mm' : 'hh:mm A'
 };
 const defaults = {
     rangePicker: options?.rangePicker ?? false,
@@ -42,6 +43,8 @@ const defaults = {
     timePicker: options?.timePicker ?? true,
     onlyTimePicker: options?.onlyTimePicker ?? false,
     minuteStep: (options?.minuteStep && [1, 5, 10, 15, 30].includes(options?.minuteStep)) ? options?.minuteStep : 5,
+    use24Format: FORMATS?.time ?? false,
+    timeZone: options?.timeZone ?? Intl.DateTimeFormat().resolvedOptions().timeZone,
 }; 
 
 
@@ -66,6 +69,24 @@ if(defaults.minDate || defaults.maxDate){
         if(new Date(defaults.endDate) > new Date(defaults.maxDate)){
             defaults.endDate = makeDate(defaults.maxDate, FORMATS.date);
         }
+    }
+}
+
+if(defaults.timeZone){
+    let _timezones = [
+        'America/New_York',
+        'Asia/Dhaka',
+        'Europe/London',
+        'Pacific/Honolulu',
+        'Australia/Sydney',
+        'Africa/Cairo',
+        'Asia/Tokyo',
+        'America/Los_Angeles',
+        'Europe/Paris',
+        'Asia/Kolkata',
+    ];
+    if(!_timezones.includes(defaults.timeZone)){
+        defaults.timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     }
 }
 
@@ -99,6 +120,18 @@ const events = reactive( {
     },
 });
 
+function newDate(date) {
+    const currentDate = (date instanceof Date) ? date : new Date();
+    //const timeZone = 'America/New_York';
+    const options = { timeZone: timeZone, hour12: !defaults.use24Format, hour: 'numeric', minute: 'numeric', second: 'numeric' };
+    const dateTimeFormatter = new Intl.DateTimeFormat('en-US', options);
+
+    const formattedDate = dateTimeFormatter.format(currentDate);
+
+console.log(`Current time in ${timeZone}: ${formattedDate}`);
+}
+
+
 function makeDate(dateTime, format){
     if(!dateTime) return;
     if(dateTime instanceof Date){
@@ -106,14 +139,15 @@ function makeDate(dateTime, format){
     } else {
         var date = new Date(dateTime);
     }
-    return moment().set({ 
+    let details = { 
         date: date.getDate(),
         month: date.getMonth(),
         year: date.getFullYear(), 
         hour: date.getHours(),
         minute: date.getMinutes(),
         second: date.getSeconds(),
-        }).format(format);
+    };
+    return moment().set(details).format(format);
 }
 globalThis.makeDate = makeDate;
 function daysOfMonth(year, monthIndex, FORMATS, {currentMonth}={}) {
@@ -389,6 +423,11 @@ onMounted(() => {
         picker.date = makeDate(defaults.startDate, FORMATS.date);
         picker.date1 = makeDate(defaults.startDate, FORMATS.date);
         picker.date2 = makeDate(defaults.endDate, FORMATS.date); 
+
+        if(defaults.timePicker){
+            picker.time1 = makeDate(defaults.startDate, FORMATS.time);
+            picker.time2 = makeDate(defaults.endDate, FORMATS.time);             
+        }
 
         fn.setElementValue();
         fn.initPicker();

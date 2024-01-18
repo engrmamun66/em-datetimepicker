@@ -4,6 +4,8 @@ import SwitcherForTime from './SwitcherForTime.vue';
 import { hours_position, minutes_position } from './timePicker';
 import { ref, computed, reactive, defineProps, onMounted, inject, defineEmits, watchEffect, provide } from 'vue';
 let defaults = inject('defaults');
+let FORMATS = inject('FORMATS');
+let picker = inject('picker');
 
 
 minutes_position.forEach( minute => {   
@@ -31,12 +33,18 @@ minutes_position.forEach( minute => {
 
 
 let emits = defineEmits(['cancel', 'apply', 'change' ]);
-let ampm = ref('am')
+let ampm = ref('am');
 let selectedHour = ref(hours_position[0]);
 let selectedMinute = ref(minutes_position[0]);
 let centerOfclick = ref(null);
 let selectingStartTime = ref(true);
 provide('selectingStartTime', selectingStartTime);
+
+onMounted(() => {
+//   let time1 = 
+    console.log(new Date().getHour());
+})
+
 
 function getCenterOfCircle() {
     if(!centerOfclick.value) return false;

@@ -12,6 +12,8 @@ const picker = reactive({
     date: '',
     date1: '',
     date2: '',
+    time1: '',
+    time2: '',
 })
 const pickerValues = reactive({
     startDate: '',
