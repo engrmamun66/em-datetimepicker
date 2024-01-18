@@ -142,7 +142,7 @@ function latestHourAndMinute(){
 }
 
 function onClickClose(){
-    emits('close');
+    emits('close', false);
     target.dispatchEvent(createEvent('timepicker:close', {...data}));    
 }
 
@@ -161,15 +161,12 @@ function onClickOk(){
     let { hour: hour1, minute: minute1 } = latest.time1;
     let { hour: hour2, minute: minute2 } = latest.time2;
 
-    picker.date1 = makeDate(picker.date1, FORMATS.date, { hour: hour1, minute: minute1 });
-    picker.date2 = makeDate(picker.date2, FORMATS.date, { hour: hour2, minute: minute2 });
-    pickerValues.date1 = makeDate(pickerValues.date1, defaults.displayFormat, { hour: hour1, minute: minute1 })
-    pickerValues.date2 = makeDate(pickerValues.date2, defaults.displayFormat, { hour: hour2, minute: minute2 })
+    
     
     // Emiting
     emits('change', data);
     target.dispatchEvent(createEvent('timepicker:change', data)); 
-    emits('close');
+    emits('close', false);
 }
 
 

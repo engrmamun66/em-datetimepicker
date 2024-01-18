@@ -22,8 +22,7 @@ const FORMATS = {
     year: 'YYYY',
     month: 'MMMM',
     monthShort: 'MMM',
-    time: options?.use24Format ? 'HH:mm' : 'hh:mm A',
-    timeFormat: options?.timeFormat ?? (options?.use24Format ? 'HH:mm' : 'hh:mm A'),
+    time: options?.timeFormat ?? (options?.use24Format ? 'HH:mm' : 'hh:mm A'),
 };
 const defaults = {
     rangePicker: options?.rangePicker ?? false,
@@ -46,7 +45,11 @@ const defaults = {
     minuteStep: (options?.minuteStep && [1, 5, 10, 15, 30].includes(options?.minuteStep)) ? options?.minuteStep : 5,
     use24Format: FORMATS?.time ?? false,
     timeZone: options?.timeZone ?? '',
-}; 
+};
+
+const OUTPUT_FORMAT = computed(()=>{
+    return FORMATS.output + (defaults.timePicker ? (' ' + FORMATS.time) : '');
+})
 
 
 // Fliping Date when, start is larger than end date
@@ -141,8 +144,8 @@ function makeDate(dateTime, format, {hour, minute}={}){
     } else {
         var date = new Date(dateTime);
     }
-    if(hour) date.setHours(hour);
-    if(minute) date.setMinutes(minute);
+    if(hour) date.setHours(Number(hour) || 0);
+    if(minute) date.setMinutes(Number(minute) || 0);
     let details = { 
         date: date.getDate(),
         month: date.getMonth(),
@@ -199,6 +202,16 @@ const fn = {
         target.dispatchEvent(events.close());
     },
     changePicker: function(){
+        let { date1, date2 } = picker;
+        let { hour: hour1, minute: minute1 } = picker.time1;
+        let { hour: hour2, minute: minute2 } = picker.time2;
+        
+        picker.date1 = makeDate(picker.date1, FORMATS.date, { hour: hour1, minute: minute1 });
+        picker.date2 = makeDate(picker.date2, FORMATS.date, { hour: hour2, minute: minute2 });
+
+        pickerValues.startDate = makeDate(date1, OUTPUT_FORMAT.value, { hour: hour1, minute: minute1 });
+        pickerValues.endDate = makeDate(date2, OUTPUT_FORMAT.value, { hour: hour2, minute: minute2 });
+        
         emits('change');
         target.dispatchEvent(events.change(pickerValues));
     },
@@ -249,11 +262,7 @@ const fn = {
             } else {
                 if(date >= picker.date1){
                     picker.date2 = date;
-                    selectingStartDate.value = true;
-
-                    let { date1, date2 } = picker;
-                    pickerValues.startDate = date1;
-                    pickerValues.endDate = date2; 
+                    selectingStartDate.value = true;             
 
                     if(!defaults.buttons?.applyBtn){
                         this.onClickApply();
@@ -270,11 +279,7 @@ const fn = {
         } else {
             picker.date = date;
             picker.date1 = date;
-            picker.date2 = date;        
-
-            let { date1, date2 } = picker;
-            pickerValues.startDate = date1;
-            pickerValues.endDate = defaults.rangePicker ? date2 : date1; 
+            picker.date2 = date; 
 
             if(!defaults.buttons?.applyBtn){
                 this.onClickApply();
@@ -421,8 +426,8 @@ const years = computed(() => {
 onMounted(() => {
     if(!isMounted.value){        
 
-        pickerValues.startDate = pickerValues.old.startDate = defaults.startDate;
-        pickerValues.endDate = pickerValues.old.endDate =defaults.endDate;
+        pickerValues.startDate = defaults.startDate;
+        pickerValues.endDate = defaults.endDate;
 
         picker.date = makeDate(defaults.startDate, FORMATS.date);
         picker.date1 = makeDate(defaults.startDate, FORMATS.date);
