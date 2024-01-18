@@ -7,21 +7,20 @@ let defaults = inject('defaults');
 let FORMATS = inject('FORMATS');
 let picker = inject('picker');
 
-
+function makeStepRange(step) {    
+    let limit = Math.floor(60 / step)
+    let start = 0
+    let end = start + limit;
+    let rangeArray = Array.from({ length: end + start  }, (_, index) => (start + index) * step);
+    return rangeArray;    
+}
+let steps = ref([]);
 minutes_position.forEach( minute => {   
-    function makeStepRange(step) {    
-        let limit = Math.floor(60 / step)
-        let start = 0
-        let end = start + limit;
-        let rangeArray = Array.from({ length: end + start  }, (_, index) => (start + index) * step);
-        return rangeArray;    
-    }
-    let  { minuteStep } = defaults;
-    
+    let  { minuteStep } = defaults;    
     if(minuteStep){
-        let steps = makeStepRange(minuteStep);  
-        if(steps?.length){
-            if(steps?.includes(minute.id)){
+        steps.value = makeStepRange(minuteStep);  
+        if(steps.value?.length){
+            if(steps.value?.includes(minute.id)){
                 minute.excluded = false;
             } else {
                 minute.excluded = true;
