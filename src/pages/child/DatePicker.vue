@@ -27,7 +27,7 @@ const FORMATS = {
 };
 const defaults = {
     rangePicker: options?.rangePicker ?? false,
-    displayFormat: FORMATS.forDisplay,
+    displayFormat: FORMATS.forDisplay + (options?.timePicker ? (' ' + FORMATS.time) : ''),
     startDate: makeDate(options?.startDate ?? new Date(), FORMATS.date),
     endDate: makeDate(options?.endDate ?? (options?.startDate || new Date()), FORMATS.date),
     minDate: options?.minDate ?? '',
@@ -41,7 +41,7 @@ const defaults = {
     monthShorts: options?.monthShorts ?? [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ],
     row: (options.row && options.row >= 3 && options.row <= 10) ? options.row : 6,
     // With Time Picker
-    timePicker: options?.timePicker ?? true,
+    timePicker: options?.timePicker ?? false,
     onlyTimePicker: options?.onlyTimePicker ?? false,
     minuteStep: (options?.minuteStep && [1, 5, 10, 15, 30].includes(options?.minuteStep)) ? options?.minuteStep : 5,
     use24Format: FORMATS?.time ?? false,
@@ -100,6 +100,7 @@ provide('defaults', defaults);
 provide('makeDate', makeDate);
 provide('FORMATS', FORMATS);
 provide('openTimePicker', openTimePicker);
+provide('createEvent', createEvent);
 provide('selectingStartDate', selectingStartDate);
 
 

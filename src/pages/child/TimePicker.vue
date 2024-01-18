@@ -6,6 +6,8 @@ import { ref, computed, reactive, defineProps, onMounted, inject, defineEmits, w
 let defaults = inject('defaults');
 let FORMATS = inject('FORMATS');
 let picker = inject('picker');
+let createEvent = inject('createEvent');
+let openTimePicker = inject('openTimePicker');
 
 function makeStepRange(step) {    
     let limit = Math.floor(60 / step)
@@ -104,28 +106,41 @@ onMounted(() => {
 
     minute1 = minute1.split(' ')[0];
     minute2 = minute2.split(' ')[0];
+    minute1 = minute1 == 12 ? 0 : minute1;
+    minute2 = minute2 == 12 ? 0 : minute2; 
 
     time1_selectedHour.value = hours_position?.filter(h => h.value == hour1)?.[0] || hours_position[0];
     time2_selectedHour.value = hours_position?.filter(h => h.value == hour2)?.[0] || (time1_selectedHour.value || hours_position[0]);
 
-    time1_selectedMinute.value = minutes_position?.filter(m => m.value == hour1)?.[0] || minutes_position[0];
-    time2_selectedMinute.value = minutes_position?.filter(m => m.value == hour2)?.[0] || (time1_selectedMinute.value || minutes_position[0]);
+    time1_selectedMinute.value = minutes_position?.filter(m => m.value == minute1)?.[0] || minutes_position[0];
+    time2_selectedMinute.value = minutes_position?.filter(m => m.value == minute2)?.[0] || (time1_selectedMinute.value || minutes_position[0]);
     
     // console.log(time1_selectedHour.value, time2_selectedHour.value);
 })
 
-watchEffect(() => {
+function latestHourAndMinute(){
     let { value: hour1 } = time1_selectedHour;
     let { value: hour2 } = time2_selectedHour;
 
     let { value: minute1 } = time1_selectedMinute;
     let { value: minute2 } = time1_selectedMinute;
 
-    let data = {
-        date
+    return {
+        time1: {
+            hour: hour1,
+            minute: minute1,
+        },
+        time2: {
+            hour: hour2,
+            minute: minute2,
+        },
     };
+}
 
-    emits('change')
+watch(time1_selectedMinute, (newValue, oldValue)=>{
+    if(defaults.rangePicker && selectingStartTime.value){
+        selectingStartTime.value = false;
+    }
 })
 
 function printSelectedTime(hourObject, minuteObject, time_mode) {
@@ -179,7 +194,9 @@ let move = reactive({
 
 <template>
     <div @click.stop="false" id="clocklet-inline-container" style="width:270px">
-        <div class="clocklet-container clocklet-container--inline">       
+        <div class="clocklet-container clocklet-container--inline" style="position:realative">  
+            <div @click.stop="onClickClose" class="closeIcon"><i class='bx bx-x' ></i></div>     
+            <div @click.stop="onClickOk" class="okIcon"><i class='bx bx-check'></i></div>     
 
             <div class="clocklet clocklet--inline" data-clocklet-format="HH:mm" data-clocklet-value="14:25">
                 <div class="clocklet-plate">
@@ -528,5 +545,28 @@ let move = reactive({
     background: #e2e2e2;
     color: #444;
     text-transform: capitalize;
+}
+.closeIcon,
+.okIcon{
+    position: absolute;
+    top: 230px;
+    z-index: 999999;
+    padding: 5px;
+    cursor: pointer;
+    
+}
+.closeIcon i,
+.okIcon i{
+    font-size: 26px;
+    color: #777;
+    background-color: #ececec;
+    border-radius: 4px;
+    box-shadow: 0 0 22px #fff;
+}
+.closeIcon{
+    left: 10px;
+}
+.okIcon{
+    right: 10px;
 }
 </style>
