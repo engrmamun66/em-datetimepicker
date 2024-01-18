@@ -7,7 +7,7 @@ let target = inject('target');
 let defaults = inject('defaults');
 let FORMATS = inject('FORMATS');
 let picker = inject('picker');
-let pickerValue = inject('pickerValue');
+let pickerValues = inject('pickerValues');
 let createEvent = inject('createEvent');
 let openTimePicker = inject('openTimePicker');
 
@@ -152,15 +152,17 @@ function onClickOk(){
         endTime: time2_text,
     }
 
-    pickerValue.startTime = time1_text;
-    pickerValue.endTime = time2_text;
+    pickerValues.startTime = time1_text;
+    pickerValues.endTime = time2_text;
     
     // Updateing Date
     let latest = latestHourAndMinute();
+    console.log(picker.date1, picker.date2);
     picker.date1 = makeDate(picker.date1, defaults.displayFormat, {hour: latest.time1.hour, minute: latest.time1.minute});
     picker.date2 = makeDate(picker.date2, defaults.displayFormat, {hour: latest.time2.hour, minute: latest.time2.minute});
     
     // Emiting
+    console.log(picker.date1, picker.date2);
     emits('change', data);
     target.dispatchEvent(createEvent('timepicker:change', data)); 
 }
