@@ -138,7 +138,7 @@ function latestHourAndMinute(){
 }
 
 watch(time1_selectedMinute, (newValue, oldValue)=>{
-    if(defaults.rangePicker && selectingStartTime.value){
+    if(defaults.rangePicker){
         selectingStartTime.value = false;
     }
 })
