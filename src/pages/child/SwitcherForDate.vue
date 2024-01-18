@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineProps, inject } from 'vue';
+import { ref, defineProps, inject, onMounted } from 'vue';
 const startText = 'Start Date';
 const endText = 'End Date';
 
@@ -13,14 +13,15 @@ function handleClick(value){
         selectingStartDate.value = false;
     }
 }
+
 </script>
 
 <template>
     <div class="switches-container">
         <input type="radio" name="switchPlan" value="left" :checked="selectingStartDate" />
         <input type="radio" name="switchPlan" value="right" :checked="!selectingStartDate" />
-        <label for="switchStartDate" @click.stop="handleClick('from_left')">{{ selectingStartDate ? '' : startText }}</label>
-        <label for="switchEndDate" @click.stop="handleClick('from_right')">{{ !selectingStartDate ? '' : endText }}</label>
+        <label for="switchStartDate" @click.stop="handleClick('from_left')">{{ startText }}</label>
+        <label for="switchEndDate" @click.stop="handleClick('from_right')">{{ endText }}</label>
         <div class="switch-wrapper">
             <div class="switch">
                 <div>{{ startText }}</div>
@@ -94,13 +95,13 @@ function handleClick(value){
 
 .switch div {
     width: 100%;
-    text-align: center;
-    opacity: 1;
+    opacity: 0;
     display: block;
     color: #444;
-    transition: opacity .2s cubic-bezier(.77,0,.175,1) .125s;
     will-change: opacity;
     position: absolute;
+    text-align: center;
+    transition: opacity .2s cubic-bezier(.77,0,.175,1) .125s;
     top: 5px;
     left: 0;
 }
@@ -113,11 +114,18 @@ function handleClick(value){
     transform: translateX(100%);
 }
 
-.switches-container input:nth-of-type(1):checked~.switch-wrapper .switch div:nth-of-type(1) {
+
+.switches-container input:nth-of-type(1)~.switch-wrapper .switch div:nth-of-type(1) {
     opacity: 1;
+}
+.switches-container input:nth-of-type(1)~.switch-wrapper .switch div:nth-of-type(2) {
+    opacity: 0;
 }
 
 .switches-container input:nth-of-type(2):checked~.switch-wrapper .switch div:nth-of-type(2) {
     opacity: 1;
+}
+.switches-container input:nth-of-type(2):checked~.switch-wrapper .switch div:nth-of-type(1) {
+    opacity: 0;
 }
 </style>

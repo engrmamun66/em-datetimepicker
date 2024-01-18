@@ -12,8 +12,7 @@ const endText ='End Time';
 
 let defaults = inject('defaults');
 let picker = inject('picker');
-let selectingStartDate = inject('selectingStartDate');
-let selectingStartTime = true;
+let selectingStartTime = inject('selectingStartTime');
 
 function handleClick(value){
     console.log(value);
@@ -56,13 +55,13 @@ function handleClick(value){
 .switches-container {
     width: 100%;
     display: flex;
-    padding: 0;
-    position: relative;
+    padding: 1;
     line-height: 1rem;
     border-radius: 0;
     margin-left: auto;
     margin-right: auto;
     background-color: #fafafa;
+    position: relative;
 }
 
 /* input (radio) for toggling. hidden - use labels for clicking on */
@@ -92,32 +91,49 @@ function handleClick(value){
     width: 50%;
     padding: 0;
     z-index: 3;
-    transition: transform .5s cubic-bezier(.77, 0, .175, 1);
+    transition: transform .3s cubic-bezier(.77, 0, .175, 1);
 }
 
 .switch {
-    border-radius: 0;
+    border-radius: 0px;
     background: #e2e3ee;
     height: 100%;
-    transition: transform 0.5s;
-}
-.switch.right {
-    border-radius: 0;
-    background: #e2e3ee;
-    height: 100%;
-    transform: translateX(100%);
-    transition: opacity .2s cubic-bezier(.77,0,.175,1) .125s;
 }
 
 .switch div {
     width: 100%;
-    text-align: center;
     opacity: 0;
     display: block;
-    color: #444;    
-    position: relative;
+    color: #444;
+    will-change: opacity;
+    position: absolute;
+    text-align: center;
+    transition: opacity .2s cubic-bezier(.77,0,.175,1) .125s;
     top: 5px;
     left: 0;
+}
+
+.switches-container input:nth-of-type(1):checked~.switch-wrapper {
+    transform: translateX(0%);
+}
+
+.switches-container input:nth-of-type(2):checked~.switch-wrapper {
+    transform: translateX(100%);
+}
+
+
+.switches-container input:nth-of-type(1)~.switch-wrapper .switch div:nth-of-type(1) {
+    opacity: 1;
+}
+.switches-container input:nth-of-type(1)~.switch-wrapper .switch div:nth-of-type(2) {
+    opacity: 0;
+}
+
+.switches-container input:nth-of-type(2):checked~.switch-wrapper .switch div:nth-of-type(2) {
+    opacity: 1;
+}
+.switches-container input:nth-of-type(2):checked~.switch-wrapper .switch div:nth-of-type(1) {
+    opacity: 0;
 }
 
 </style>

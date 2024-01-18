@@ -37,7 +37,7 @@ const defaults = {
         applyBtn: options?.buttons?.cancelBtn ?? 'Apply',
     },
     monthShorts: options?.monthShorts ?? [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ],
-    row: (options.row && options.row >= 3 && options.row <= 10) ? options.row : 5,
+    row: (options.row && options.row >= 3 && options.row <= 10) ? options.row : 6,
     // With Time Picker
     timePicker: options?.timePicker ?? true,
     onlyTimePicker: options?.onlyTimePicker ?? false,
@@ -284,6 +284,7 @@ const fn = {
                 picker.date = makeDate(date, FORMATS.date);
                 break;        
             case 'years':
+                if(years.value.includes(1924)) return;
                 date = new Date(picker.date);
                 date.setFullYear(date.getFullYear() - 12)
                 picker.date = makeDate(date, FORMATS.date);
@@ -334,8 +335,8 @@ const weekDays = computed( () => {
     const daysOfWeek = [];
     const adjust = defaults.adjustWeekday;
     for (let i = 1; i <= 7; i++) {
-        const currentDate = new Date();
-        currentDate.setDate(currentDate.getDate() - 3 + adjust + i);
+        const currentDate = new Date('1 Jan 2024');
+        currentDate.setDate(currentDate.getDate() - 2 + adjust + i);
         const dayOfWeek = currentDate.toLocaleDateString('en-IN', { weekday: 'short' });
         daysOfWeek.push(dayOfWeek);
     }
@@ -371,7 +372,7 @@ const years = computed(() => {
         } else {
             1
         }
-    })
+    })    
     return rangeArray;
 })
 

@@ -2,7 +2,7 @@
 import moment, { min } from 'moment/moment';
 import Switcher from './SwitcherForTime.vue';
 import { hours_position, minutes_position } from './timePicker';
-import { ref, computed, reactive, defineProps, onMounted, inject, defineEmits, watchEffect } from 'vue';
+import { ref, computed, reactive, defineProps, onMounted, inject, defineEmits, watchEffect, provide } from 'vue';
 let defaults = inject('defaults');
 
 
@@ -35,6 +35,8 @@ let ampm = ref('am')
 let selectedHour = ref(hours_position[0]);
 let selectedMinute = ref(minutes_position[0]);
 let centerOfclick = ref(null);
+let selectingStartTime = ref(true);
+provide('selectingStartTime', selectingStartTime);
 
 function getCenterOfCircle() {
     if(!centerOfclick.value) return false;
@@ -76,6 +78,11 @@ let move = reactive({
 <template>
     <div @click.stop="false" id="clocklet-inline-container" style="width:270px">
         <div class="clocklet-container clocklet-container--inline">
+
+            <div class="display">
+
+            </div>
+
             <div class="clocklet clocklet--inline" data-clocklet-format="HH:mm" data-clocklet-value="14:25">
                 <div class="clocklet-plate">
                     <!-- Minute Picker -->
@@ -326,18 +333,6 @@ let move = reactive({
 
 .clocklet-tick--minute:not([data-clocklet-tick-value$="0"]):not([data-clocklet-tick-value$="5"]) {
     transform: scale(.6)
-}
-
-@media screen and (max-width:480px) {
-    .clocklet {
-        transform: scale(.8)
-    }
-}
-
-@media screen and (max-width:400px) {
-    .clocklet {
-        transform: scale(.75)
-    }
 }
 
 .clocklet {
