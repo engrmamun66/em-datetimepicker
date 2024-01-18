@@ -15,9 +15,10 @@ let picker = inject('picker');
 let selectingStartTime = inject('selectingStartTime');
 
 function handleClick(value){
-    console.log(value);
+    if(value == 'left'){   
+        selectingStartTime.value = true;
+    }
     if(value == 'right'){
-        picker.date2 = '';
         selectingStartTime.value = false;
     }
 }

@@ -1,6 +1,6 @@
 <script setup>
 import moment, { min } from 'moment/moment';
-import Switcher from './SwitcherForTime.vue';
+import SwitcherForTime from './SwitcherForTime.vue';
 import { hours_position, minutes_position } from './timePicker';
 import { ref, computed, reactive, defineProps, onMounted, inject, defineEmits, watchEffect, provide } from 'vue';
 let defaults = inject('defaults');
@@ -130,7 +130,21 @@ let move = reactive({
                     <div ref="centerOfclick" class="clocklet-hand-origin"></div>
                 </div>
             </div>
-            <Switcher></Switcher>
+
+            <div class="display-time">
+                <span class="start-time">08:25 AM</span>
+                <template v-if="defaults.rangePicker">
+                    <div></div>
+                    <span class="end-time">10:25 AM</span>
+                </template>
+                <!-- <div>&nbsp;</div>
+                <span class="end-time">10:25 AM</span> -->
+            </div>
+
+            <template v-if="defaults.rangePicker && defaults.timePicker">
+                <SwitcherForTime></SwitcherForTime>
+            </template>
+            
         </div>
     </div>
 </template>
@@ -390,5 +404,33 @@ let move = reactive({
 .excluded{
     pointer-events: none  !important;
     visibility: hidden !important;
+}
+.display-time{
+    width: 100%;
+    padding: 8px;
+    border: transparent;    
+    background: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.display-time span{
+    font-size: 20px;
+    color: #444;  
+}
+.display-time div{
+    width: 2px;
+    height: 100%;
+    background-color: #e4e4e4;   
+}
+
+.pick-the-time{
+    width: 100%;
+    text-align: center;
+    padding: 8px;
+    border: transparent;
+    background: #e2e2e2;
+    color: #444;
+    text-transform: capitalize;
 }
 </style>
