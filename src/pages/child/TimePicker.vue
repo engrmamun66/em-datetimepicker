@@ -3,9 +3,11 @@ import moment, { min } from 'moment/moment';
 import SwitcherForTime from './SwitcherForTime.vue';
 import { hours_position, minutes_position } from './timePicker';
 import { ref, computed, reactive, defineProps, onMounted, inject, defineEmits, watch, watchEffect, provide } from 'vue';
+let target = inject('target');
 let defaults = inject('defaults');
 let FORMATS = inject('FORMATS');
 let picker = inject('picker');
+let pickerValue = inject('pickerValue');
 let createEvent = inject('createEvent');
 let openTimePicker = inject('openTimePicker');
 
@@ -119,31 +121,60 @@ onMounted(() => {
 })
 
 function latestHourAndMinute(){
-    let { value: hour1 } = time1_selectedHour;
-    let { value: hour2 } = time2_selectedHour;
+    let { value: { value: hour1 } } = time1_selectedHour;
+    let { value: { value: hour2 } } = time2_selectedHour;
 
     let { value: minute1 } = time1_selectedMinute;
     let { value: minute2 } = time1_selectedMinute;
 
     return {
         time1: {
-            hour: hour1,
+            hour: +hour1 + (time1_mode.value=='pm' ? 12 : 0),
             minute: minute1,
         },
         time2: {
-            hour: hour2,
+            hour: +hour2 + (time2_mode.value=='pm' ? 12 : 0),
             minute: minute2,
         },
     };
 }
 
+function onClickClose(){
+    emits('close');
+    target.dispatchEvent(createEvent('timepicker:close', {...data}));    
+}
+
+function onClickOk(){
+    let time1_text = getPrintableTime(time1_selectedHour.value, time1_selectedMinute.value, time1_mode.value);
+    let time2_text = getPrintableTime(time2_selectedHour.value, time2_selectedMinute.value, time2_mode.value);
+    let data = {
+        startTime: time1_text,
+        endTime: time2_text,
+    }
+
+    pickerValue.startTime = time1_text;
+    pickerValue.endTime = time2_text;
+    
+    // Updateing Date
+    let latest = latestHourAndMinute();
+    picker.date1 = makeDate(picker.date1, defaults.displayFormat, {hour: latest.time1.hour, minute: latest.time1.minute});
+    picker.date2 = makeDate(picker.date2, defaults.displayFormat, {hour: latest.time2.hour, minute: latest.time2.minute});
+    
+    // Emiting
+    emits('change', data);
+    target.dispatchEvent(createEvent('timepicker:change', data)); 
+}
+
+
 watch(time1_selectedMinute, (newValue, oldValue)=>{
     if(defaults.rangePicker){
-        selectingStartTime.value = false;
+        setTimeout(() => {
+            // selectingStartTime.value = false;
+        }, 500);
     }
 })
 
-function printSelectedTime(hourObject, minuteObject, time_mode) {
+function getPrintableTime(hourObject, minuteObject, time_mode) {
     let {value: hour} = hourObject;
     let {value: minute} = minuteObject;
     //{hour,minute}
@@ -152,6 +183,8 @@ function printSelectedTime(hourObject, minuteObject, time_mode) {
     date.setMinutes(Number(minute));
     return makeDate(date, FORMATS.time);
 }
+
+
 
 function getCenterOfCircle() {
     if(!centerOfclick.value) return false;
@@ -184,8 +217,6 @@ function setByDegree(event) {
 let move = reactive({
     dragging: false,
 })
-
-
 
 
 
@@ -247,10 +278,10 @@ let move = reactive({
             </div>
 
             <div class="display-time">
-                <span class="start-time">{{ printSelectedTime(time1_selectedHour, time1_selectedMinute, time1_mode) }}</span>
+                <span class="start-time">{{ getPrintableTime(time1_selectedHour, time1_selectedMinute, time1_mode) }}</span>
                 <template v-if="defaults.rangePicker">
                     <div>&nbsp;</div>
-                    <span class="end-time">{{ printSelectedTime(time2_selectedHour, time2_selectedMinute, time2_mode) }}</span>
+                    <span class="end-time">{{ getPrintableTime(time2_selectedHour, time2_selectedMinute, time2_mode) }}</span>
                 </template>
             </div>
 

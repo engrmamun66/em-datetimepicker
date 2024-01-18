@@ -96,6 +96,7 @@ let current_view = ref('days');
 let selectingStartDate = ref(true);
 let hoverDate = ref('');
 let openTimePicker = ref(false);
+provide('target', target);
 provide('defaults', defaults);
 provide('makeDate', makeDate);
 provide('FORMATS', FORMATS);
@@ -133,7 +134,7 @@ function printTimeByZone(date) {
 }
 
 
-function makeDate(dateTime, format){
+function makeDate(dateTime, format, {hour, minute}={}){
     if(!dateTime) return;
     if(dateTime instanceof Date){
         var date = dateTime;
@@ -144,8 +145,8 @@ function makeDate(dateTime, format){
         date: date.getDate(),
         month: date.getMonth(),
         year: date.getFullYear(), 
-        hour: date.getHours(),
-        minute: date.getMinutes(),
+        hour: hour ?? date.getHours(),
+        minute: minute ?? date.getMinutes(),
         second: date.getSeconds(),
     };
     return moment().set(details).format(format);
@@ -507,7 +508,7 @@ onMounted(() => {
                     
                     <div v-if="openTimePicker==true" class="time-picker-display-area" @click.stop="openTimePicker=false">
                         <div>
-                            <TimePicker></TimePicker>
+                            <TimePicker @close="openTimePicker=false"></TimePicker>
                         </div>
                     </div>
                 </div>
@@ -559,9 +560,9 @@ onMounted(() => {
                 </div>
             </template>
         </template>
-        <!-- <template else>
-            <TimePicker v-if="defaults.timePicker"></TimePicker>
-        </template> -->
+        <template else>
+            <TimePicker @close="openTimePicker=false" v-if="defaults.timePicker"></TimePicker>
+        </template>
     </template>
 
 

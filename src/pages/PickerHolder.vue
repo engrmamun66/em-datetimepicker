@@ -21,7 +21,9 @@ const pickerValues = reactive({
     old: {
         startDate: '',
         endDate: '',
-    }
+    },
+    startTime: '',
+    endTime: '',
 });
 provide('isMounted', isMounted);
 provide('picker', picker);
