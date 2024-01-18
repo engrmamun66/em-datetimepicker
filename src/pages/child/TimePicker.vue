@@ -165,6 +165,7 @@ function onClickOk(){
     console.log(picker.date1, picker.date2);
     emits('change', data);
     target.dispatchEvent(createEvent('timepicker:change', data)); 
+    emits('close');
 }
 
 
