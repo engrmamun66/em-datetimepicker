@@ -141,12 +141,14 @@ function makeDate(dateTime, format, {hour, minute}={}){
     } else {
         var date = new Date(dateTime);
     }
+    if(hour) date.setHours(hour);
+    if(minute) date.setMinutes(minute);
     let details = { 
         date: date.getDate(),
         month: date.getMonth(),
         year: date.getFullYear(), 
-        hour: hour ?? date.getHours(),
-        minute: minute ?? date.getMinutes(),
+        hour: date.getHours(),
+        minute: date.getMinutes(),
         second: date.getSeconds(),
     };
     return moment().set(details).format(format);
