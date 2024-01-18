@@ -137,8 +137,6 @@ let move = reactive({
                     <div></div>
                     <span class="end-time">10:25 AM</span>
                 </template>
-                <!-- <div>&nbsp;</div>
-                <span class="end-time">10:25 AM</span> -->
             </div>
 
             <template v-if="defaults.rangePicker && defaults.timePicker">
