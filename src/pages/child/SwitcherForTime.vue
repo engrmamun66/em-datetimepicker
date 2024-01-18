@@ -63,6 +63,9 @@ function handleClick(value){
     margin-right: auto;
     background-color: #fafafa;
     position: relative;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    overflow: hidden;
 }
 
 /* input (radio) for toggling. hidden - use labels for clicking on */

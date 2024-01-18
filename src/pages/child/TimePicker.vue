@@ -407,7 +407,7 @@ let move = reactive({
     width: 100%;
     padding: 8px;
     border: transparent;    
-    background: white;
+    background: #eeeeee;
     display: flex;
     justify-content: space-around;
     align-items: center;
