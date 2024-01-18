@@ -12,8 +12,18 @@ const picker = reactive({
     date: '',
     date1: '',
     date2: '',
-    time1: '',
-    time2: '',
+    time1: {
+        time: '',
+        hour: 0,
+        minute: 0,
+        mode: 'am',
+    },
+    time2: {
+        time: '',
+        hour: 0,
+        minute: 0,
+        mode: 'am',
+    },
 })
 const pickerValues = reactive({
     startDate: '',
