@@ -77,11 +77,7 @@ let move = reactive({
 
 <template>
     <div @click.stop="false" id="clocklet-inline-container" style="width:270px">
-        <div class="clocklet-container clocklet-container--inline">
-
-            <div class="display">
-
-            </div>
+        <div class="clocklet-container clocklet-container--inline">       
 
             <div class="clocklet clocklet--inline" data-clocklet-format="HH:mm" data-clocklet-value="14:25">
                 <div class="clocklet-plate">
