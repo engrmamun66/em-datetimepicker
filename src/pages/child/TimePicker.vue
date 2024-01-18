@@ -99,6 +99,11 @@ let selectedMinute = computed({
 let centerOfclick = ref(null);
 
 onMounted(() => { 
+    if(defaults.onlyTimePicker){
+        picker.date1 = makeDate(new Date(), FORMATS.date);
+        picker.date2 = makeDate(new Date(), FORMATS.date);
+    }
+
     let dateTime1 = makeDate(picker.date1, 'hh:mm A');
     let dateTime2 = makeDate(picker.date1, 'hh:mm A');
     let [hour1, minute1] = dateTime1?.split(':');
@@ -229,7 +234,7 @@ let move = reactive({
 
 <template>
     <div @click.stop="false" id="clocklet-inline-container" style="width:270px">
-        <div class="clocklet-container clocklet-container--inline" style="position:realative">  
+        <div class="clocklet-container clocklet-container--inline" style="position:relative">  
             <div @click.stop="onClickClose" class="closeIcon"><i class='bx bx-x' ></i></div>     
             <div @click.stop="onClickOk" class="okIcon"><i class='bx bx-check'></i></div>     
 

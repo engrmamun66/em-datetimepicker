@@ -10,7 +10,7 @@ const picker = inject('picker');
 const pickerValues = inject('pickerValues');
 let emits = defineEmits(['init', 'open', 'cancel', 'close', 'change']);
 let { target, options, parentDiv, justInitializeValue } = defineProps(['target', 'options', 'parentDiv', 'justInitializeValue']);
-// local Example: https://docs.mobiscroll.com/javascript/languages
+// options Example: https://docs.mobiscroll.com/javascript/eventcalendar#opt-eventOrder
 const FORMATS = {
     date: 'YYYY-MM-DD', //YYYY-MM-DD HH:mm:ss
     output: 'YYYY-MM-DD', //YYYY-MM-DD HH:mm:ss
@@ -26,7 +26,7 @@ const FORMATS = {
 };
 const defaults = {
     rangePicker: options?.rangePicker ?? false,
-    displayFormat: FORMATS.forDisplay + (options?.timePicker ? (' ' + FORMATS.time) : ''),
+    displayFormat: options.onlyTimePicker ? FORMATS.time : (FORMATS.forDisplay + (options?.timePicker ? (' ' + FORMATS.time) : '')),
     startDate: makeDate(options?.startDate ?? new Date(), FORMATS.date),
     endDate: makeDate(options?.endDate ?? (options?.startDate || new Date()), FORMATS.date),
     minDate: options?.minDate ?? '',
@@ -448,6 +448,9 @@ onMounted(() => {
 </script>
 
 <template>
+    <template v-if="defaults.onlyTimePicker">
+            <TimePicker @close="openTimePicker=false" v-if="defaults.timePicker"></TimePicker>
+        </template>
     <template v-if="!justInitializeValue">
         <!-- days of month -->
         <template v-if="!defaults.onlyTimePicker">
@@ -566,10 +569,7 @@ onMounted(() => {
                     ></Buttons>
                 </div>
             </template>
-        </template>
-        <template else>
-            <TimePicker @close="openTimePicker=false" v-if="defaults.timePicker"></TimePicker>
-        </template>
+        </template>        
     </template>
 
 
