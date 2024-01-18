@@ -22,7 +22,8 @@ const FORMATS = {
     year: 'YYYY',
     month: 'MMMM',
     monthShort: 'MMM',
-    time: options?.use24Format ? 'HH:mm' : 'hh:mm A'
+    time: options?.use24Format ? 'HH:mm' : 'hh:mm A',
+    timeFormat: options?.timeFormat ?? (options?.use24Format ? 'HH:mm' : 'hh:mm A'),
 };
 const defaults = {
     rangePicker: options?.rangePicker ?? false,
@@ -44,7 +45,7 @@ const defaults = {
     onlyTimePicker: options?.onlyTimePicker ?? false,
     minuteStep: (options?.minuteStep && [1, 5, 10, 15, 30].includes(options?.minuteStep)) ? options?.minuteStep : 5,
     use24Format: FORMATS?.time ?? false,
-    timeZone: options?.timeZone ?? Intl.DateTimeFormat().resolvedOptions().timeZone,
+    timeZone: options?.timeZone ?? '',
 }; 
 
 
@@ -120,15 +121,14 @@ const events = reactive( {
     },
 });
 
-function newDate(date) {
+function printTimeByZone(date) {
+    const timeZone = defaults.timeZone;
+    if(!timeZone || !date) return date;
     const currentDate = (date instanceof Date) ? date : new Date();
-    //const timeZone = 'America/New_York';
-    const options = { timeZone: timeZone, hour12: !defaults.use24Format, hour: 'numeric', minute: 'numeric', second: 'numeric' };
+    const options = { timeZone: timeZone, hour12: !defaults.use24Format, hour: 'numeric', minute: 'numeric', /*second: 'numeric'*/ };
     const dateTimeFormatter = new Intl.DateTimeFormat('en-US', options);
-
     const formattedDate = dateTimeFormatter.format(currentDate);
-
-console.log(`Current time in ${timeZone}: ${formattedDate}`);
+    console.log(`Current time in ${timeZone}: ${formattedDate}`);
 }
 
 
@@ -505,7 +505,7 @@ onMounted(() => {
                     ></Buttons>
                     
                     <div v-if="openTimePicker==true" class="time-picker-display-area" @click.stop="openTimePicker=false">
-                        <div class="">
+                        <div>
                             <TimePicker></TimePicker>
                         </div>
                     </div>
@@ -558,9 +558,9 @@ onMounted(() => {
                 </div>
             </template>
         </template>
-        <template else>
+        <!-- <template else>
             <TimePicker v-if="defaults.timePicker"></TimePicker>
-        </template>
+        </template> -->
     </template>
 
 

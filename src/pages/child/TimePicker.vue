@@ -33,16 +33,60 @@ minutes_position.forEach( minute => {
 
 
 let emits = defineEmits(['cancel', 'apply', 'change' ]);
-let ampm = ref('am');
-let selectedHour = ref(hours_position[0]);
-let selectedMinute = ref(minutes_position[0]);
-let centerOfclick = ref(null);
+// mode
+let time1_mode = ref('am');
+let time2_mode = ref('am');
+let mode = computed(()=> {
+    if(selectingStartTime.value){
+        return time1_mode.value;
+    }else{
+        return time2_mode.value;
+    }
+});
 let selectingStartTime = ref(true);
 provide('selectingStartTime', selectingStartTime);
+// Time1
+let time1_selectedHour = ref(hours_position[0]);
+let time1_selectedMinute = ref(minutes_position[0]);
 
-onMounted(() => {
-//   let time1 = 
-    console.log(new Date().getHour());
+// Time2
+let time2_selectedHour = ref(hours_position[0]);
+let time2_selectedMinute = ref(minutes_position[0]);
+let selectedHour = computed(() => {
+    if(selectingStartTime.value){
+        return time1_selectedHour.value;
+    }else{
+        return time2_selectedHour.value;
+    }
+})
+let selectedMinute = computed(() => {
+    if(selectingStartTime.value){
+        return time1_selectedMinute.value;
+    }else{
+        return time2_selectedMinute.value;
+    }
+})
+
+let centerOfclick = ref(null);
+
+onMounted(() => { 
+    let dateTime1 = makeDate(picker.date1, 'hh:mm A');
+    let dateTime2 = makeDate(picker.date1, 'hh:mm A');
+    let [hour1, minute1] = dateTime1?.split(':');
+    let [hour2, minute2] = dateTime2?.split(':');  
+    time1_mode.value = minute1.split(' ')[1]?.toLocaleLowerCase(); // am / pm
+    time2_mode.value = minute2.split(' ')[1]?.toLocaleLowerCase(); // am / pm
+
+    minute1 = minute1.split(' ')[0];
+    minute2 = minute2.split(' ')[0];
+
+    time1_selectedHour.value = hours_position?.filter(h => h.value == hour1)?.[0] || hours_position[0];
+    time2_selectedHour.value = hours_position?.filter(h => h.value == hour2)?.[0] || (time1_selectedHour.value || hours_position[0]);
+
+    time1_selectedMinute.value = minutes_position?.filter(m => m.value == hour1)?.[0] || minutes_position[0];
+    time2_selectedMinute.value = minutes_position?.filter(m => m.value == hour2)?.[0] || (time1_selectedMinute.value || minutes_position[0]);
+    
+    console.log(selectedHour.value, selectedMinute.value, mode.value);
 })
 
 
@@ -130,7 +174,7 @@ let move = reactive({
                             </button>
                         </template>                   
                     </div>
-                    <div class="clocklet-ampm" :data-clocklet-ampm="ampm" @click.stop="ampm=='am' ? ampm='pm' : ampm='am'" data-clocklet-ampm-formatted=""></div>
+                    <div class="clocklet-ampm" :data-clocklet-ampm="mode" @click.stop="mode=='am' ? mode='pm' : mode='am'" data-clocklet-ampm-formatted=""></div>
                     <div ref="centerOfclick" class="clocklet-hand-origin"></div>
                 </div>
             </div>
