@@ -472,11 +472,9 @@ onMounted(() => {
         picker.date1 = makeDate(defaults.startDate, FORMATS.date);
         picker.date2 = makeDate(defaults.endDate, FORMATS.date); 
 
-        if(defaults.timePicker){
-            let time1 = makeDate(defaults.startDate, 'hh:mm A');
-            let time2 = makeDate(defaults.endDate, 'hh:mm A');             
+        if(defaults.timePicker){          
             picker.time1.time = makeDate(defaults.startDate, 'hh:mm A');
-            picker.time2.time = makeDate(defaults.endDate, 'hh:mm A');
+            picker.time2.time = makeDate(defaults.endDate, 'hh:mm A');       
         }
 
         fn.setElementValue();
