@@ -45,6 +45,7 @@ const defaults = {
     minuteStep: (options?.minuteStep && [1, 5, 10, 15, 30].includes(options?.minuteStep)) ? options?.minuteStep : 5,
     use24Format: FORMATS?.time ?? false,
     timeZone: options?.timeZone ?? '',
+    endTimeAutoValid: options?.endTimeAutoValid ?? true,
 };
 
 const OUTPUT_FORMAT = computed(()=>{

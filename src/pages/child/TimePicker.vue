@@ -126,11 +126,11 @@ onMounted(() => {
 })
 
 function latestHourAndMinute(){
-    let { value: { value: hour1 } } = time1_selectedHour;
-    let { value: { value: hour2 } } = time2_selectedHour;
+    let { value: { id: hour1 } } = time1_selectedHour;
+    let { value: { id: hour2 } } = time2_selectedHour;
 
-    let { value: minute1 } = time1_selectedMinute;
-    let { value: minute2 } = time1_selectedMinute;
+    let { value: {id: minute1} } = time1_selectedMinute;
+    let { value: {id: minute2} } = time2_selectedMinute;
 
     return {
         time1: {
@@ -173,21 +173,64 @@ watch(time1_selectedHour, (newValue, oldValue)=>{
     if(!defaults.rangePicker){
         time2_selectedHour.value = newValue;
     }
+    if(defaults.endTimeAutoValid){
+        setTimeout(() => {
+            if(!isEqualOrGraterTime2()){
+                time2_selectedHour.value = time1_selectedHour.value;
+                time2_selectedMinute.value = time1_selectedMinute.value;
+            }
+        }, 100);
+    }
+
 })
 watch(time1_selectedMinute, (newValue, oldValue)=>{
     if(!defaults.rangePicker){       
         time2_selectedMinute.value = newValue;        
+    }
+    if(defaults.endTimeAutoValid){
+        setTimeout(() => {
+            if(!isEqualOrGraterTime2()){
+                time2_selectedHour.value = time1_selectedHour.value;
+                time2_selectedMinute.value = time1_selectedMinute.value;
+            }
+        }, 100);
     }
 })
 
 function getPrintableTime(hourObject, minuteObject, time_mode) {
     let {value: hour} = hourObject;
     let {value: minute} = minuteObject;
-    //{hour,minute}
     let date = new Date();
     date.setHours(Number(hour) + (time_mode=='pm' ? 12 : 0));
     date.setMinutes(Number(minute));
     return makeDate(date, FORMATS.time);
+}
+
+function getHoursAndMinutes() {
+    let {id: hour1} = time1_selectedHour.value;
+    let {id: minute1} = time1_selectedMinute.value;
+    let mode1 = mode1.value;
+    if(mode1 == 'pm') hour1 += 12;
+
+    let {id: hour2} = time2_selectedHour.value;
+    let {id: minute2} = time2_selectedMinute.value;
+    let mode2 = mode2.value;
+    if(mode2 == 'pm') hour2 += 12;
+    
+    return {hour1, minute1, hour2, minute2, mode1, mode2};    
+}
+
+function pad2(val){
+    return String(val).padStart(2, '0');
+}
+
+function isEqualOrGraterTime2() {
+    let {time1, time2} = latestHourAndMinute();
+    let dateTime_1 = makeDate(new Date(), FORMATS.date) + ` ${pad2(time1.hour)}:${pad2(time1.minute)}`;
+    let dateTime_2 = makeDate(new Date(), FORMATS.date) + ` ${pad2(time2.hour)}:${pad2(time2.minute)}`;
+
+    console.log(dateTime_1 , dateTime_2);    
+    console.log(new Date(dateTime_1) <= new Date(dateTime_2));    
 }
 
 
