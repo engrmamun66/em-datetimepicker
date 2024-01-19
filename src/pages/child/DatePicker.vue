@@ -48,7 +48,8 @@ const defaults = {
 };
 
 const OUTPUT_FORMAT = computed(()=>{
-    return FORMATS.output + (defaults.timePicker ? (' ' + FORMATS.time) : '');
+    if(defaults.onlyTimePicker) return FORMATS.time;
+    else return FORMATS.output + (defaults.timePicker ? (' ' + FORMATS.time) : '');
 })
 
 
@@ -185,6 +186,14 @@ function createEvent(eventName, data={}){
         detail: data,
     })
 }
+const emitableData = computed(()=>{
+    let { startDate, endDate, startTime, endTime } = pickerValues;
+    if(defaults.onlyTimePicker){
+        return { startTime, endTime };
+    } else {
+        return pickerValues
+    }
+});
 
 
 const fn = {     
@@ -217,20 +226,25 @@ const fn = {
         
         if(emit){
             emits('change');
-            target.dispatchEvent(events.change(pickerValues));
+            target.dispatchEvent(events.change(emitableData.value));
         }
     },
     changeTime: function(data){
         emits('changeTime');
         target.dispatchEvent(events.change(data));
     },
-    setElementValue: function() {        
-        let { startDate, endDate } = pickerValues;
-        let _startDate = makeDate(startDate, defaults.forDisplay);
-        let _endDate = makeDate(endDate, defaults.forDisplay);
-        let value = _startDate; 
-        if(defaults.rangePicker && !defaults.onlyTimePicker){
-            value = value + ' - ' + _endDate;
+    setElementValue: function() {      
+        this.changePicker(false) // updating pickerValues 
+        let { startDate, endDate, startTime, endTime } = pickerValues;
+        let value;
+        if(defaults.onlyTimePicker && defaults.timePicker){
+            value = `${startTime} - ${endTime}`
+        } else {
+            if(defaults.rangePicker){
+                value = `${startDate} - ${endDate}`;
+            } else {
+                value = `${startDate}`;
+            }
         }
         
         if(target.tagName == 'INPUT'){
@@ -238,7 +252,7 @@ const fn = {
         } else {
             target.innerHTML = value;
         }
-        target.setAttribute('data-empicker', value);
+        target.setAttribute('data-empicker', JSON.stringify(value));
     },   
     emitData: function() {
         
