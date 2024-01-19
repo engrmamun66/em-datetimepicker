@@ -335,7 +335,6 @@ onMounted(() => {
             </div>
 
             <template v-if="defaults.rangePicker && defaults.timePicker">
-            <p> {{ mode }} </p>
                 <SwitcherForTime></SwitcherForTime>
             </template>
             
