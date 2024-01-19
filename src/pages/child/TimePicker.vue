@@ -164,7 +164,7 @@ watch(time1_selectedHour, (newValue, oldValue)=>{
                 time2_selectedHour.value = time1_selectedHour.value;
                 time2_selectedMinute.value = time1_selectedMinute.value;
             }
-        }, 10);
+        }, 100);
     }
 
 })
@@ -179,7 +179,7 @@ watch(time1_selectedMinute, (newValue, oldValue)=>{
                 time2_selectedHour.value = time1_selectedHour.value;
                 time2_selectedMinute.value = time1_selectedMinute.value;
             }
-        }, 10);
+        }, 100);
     }
 })
 
