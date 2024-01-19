@@ -184,12 +184,12 @@ function getPrintableTime(hourObject, minuteObject, time_mode) {
 function getHoursAndMinutes() {
     let {id: hour1} = time1_selectedHour.value;
     let {id: minute1} = time1_selectedMinute.value;
-    let mode1 = mode1.value;
+    let mode1 = time1_mode.value;
     if(mode1 == 'pm') hour1 += 12;
 
     let {id: hour2} = time2_selectedHour.value;
     let {id: minute2} = time2_selectedMinute.value;
-    let mode2 = mode2.value;
+    let mode2 = time2_mode.value;
     if(mode2 == 'pm') hour2 += 12;
     
     return {hour1, minute1, hour2, minute2, mode1, mode2};    
