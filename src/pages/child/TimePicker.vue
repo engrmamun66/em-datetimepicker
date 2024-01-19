@@ -161,6 +161,9 @@ function onClickOk(){
     let latest = latestHourAndMinute();
     picker.time1 = {...latest.time1, time: time1_text};
     picker.time2 = {...latest.time2, time: time2_text};
+
+    pickerValues.startTime = data.startTime;
+    pickerValues.endTime = data.endTime;
     
     emits('change', data);    
 }

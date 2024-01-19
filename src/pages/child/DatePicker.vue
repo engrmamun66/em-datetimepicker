@@ -204,7 +204,7 @@ const fn = {
         emits('close');
         target.dispatchEvent(events.close());
     },
-    changePicker: function(){
+    changePicker: function(emit=true){
         let { date1, date2 } = picker;
         let { hour: hour1, minute: minute1 } = picker.time1;
         let { hour: hour2, minute: minute2 } = picker.time2;
@@ -215,8 +215,10 @@ const fn = {
         pickerValues.startDate = makeDate(date1, OUTPUT_FORMAT.value, { hour: hour1, minute: minute1 });
         pickerValues.endDate = makeDate(date2, OUTPUT_FORMAT.value, { hour: hour2, minute: minute2 });
         
-        emits('change');
-        target.dispatchEvent(events.change(pickerValues));
+        if(emit){
+            emits('change');
+            target.dispatchEvent(events.change(pickerValues));
+        }
     },
     changeTime: function(data){
         emits('changeTime');
@@ -224,16 +226,19 @@ const fn = {
     },
     setElementValue: function() {        
         let { startDate, endDate } = pickerValues;
-        let _startDate = makeDate(startDate, FORMATS.forDisplay);
-        let _endDate = makeDate(endDate, FORMATS.forDisplay);         
-
+        let _startDate = makeDate(startDate, defaults.forDisplay);
+        let _endDate = makeDate(endDate, defaults.forDisplay);
         let value = _startDate; 
-        if(defaults.rangePicker){
+        if(defaults.rangePicker && !defaults.onlyTimePicker){
             value = value + ' - ' + _endDate;
         }
+        
         if(target.tagName == 'INPUT'){
             target.value = value;
+        } else {
+            target.innerHTML = value;
         }
+        target.setAttribute('data-empicker', value);
     },   
     emitData: function() {
         
@@ -294,7 +299,7 @@ const fn = {
         }
     },
     onClickApply: function () { 
-        fn.setElementValue();
+        // fn.setElementValue();
         this.changePicker();
         this.closePicker();
     },
