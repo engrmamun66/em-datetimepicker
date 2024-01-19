@@ -100,37 +100,6 @@ let selectedMinute = computed({
 })
 let centerOfclick = ref(null);
 
-onMounted(() => { 
-    if(defaults.onlyTimePicker){
-        picker.date1 = makeDate(new Date(), FORMATS.date);
-        picker.date2 = makeDate(new Date(), FORMATS.date);
-    }
-
-    let dateTime1 = makeDate(picker.date1, 'hh:mm A');
-    let dateTime2 = makeDate(picker.date1, 'hh:mm A');
-    let [hour1, minute1] = dateTime1?.split(':');
-    let [hour2, minute2] = dateTime2?.split(':');  
-    time1_mode.value = minute1.split(' ')[1]?.toLocaleLowerCase(); // am / pm
-    time2_mode.value = minute2.split(' ')[1]?.toLocaleLowerCase(); // am / pm
-
-    minute1 = minute1.split(' ')[0];
-    minute2 = minute2.split(' ')[0];
-    minute1 = minute1 == 12 ? 0 : minute1;
-    minute2 = minute2 == 12 ? 0 : minute2; 
-
-    time1_selectedHour.value = hours_position?.filter(h => h.value == hour1)?.[0] || hours_position[0];
-    time2_selectedHour.value = hours_position?.filter(h => h.value == hour2)?.[0] || (time1_selectedHour.value || hours_position[0]);
-
-    time1_selectedMinute.value = minutes_position?.filter(m => m.value == minute1)?.[0] || minutes_position[0];
-    time2_selectedMinute.value = minutes_position?.filter(m => m.value == minute2)?.[0] || (time1_selectedMinute.value || minutes_position[0]);
-
-
-    if(!isMounted){
-        emits('init')
-    }
-    // console.log(time1_selectedHour.value, time2_selectedHour.value);
-})
-
 function latestHourAndMinute(){
     let { value: { id: hour1 } } = time1_selectedHour;
     let { value: { id: hour2 } } = time2_selectedHour;
@@ -274,7 +243,32 @@ let move = reactive({
 })
 
 
+onMounted(() => { 
+    if(defaults.onlyTimePicker){
+        picker.date1 = makeDate(new Date(), FORMATS.date);
+        picker.date2 = makeDate(new Date(), FORMATS.date);
+    }
 
+    let dateTime1 = makeDate(picker.date1, 'hh:mm A');
+    let dateTime2 = makeDate(picker.date1, 'hh:mm A');
+    let [hour1, minute1] = dateTime1?.split(':');
+    let [hour2, minute2] = dateTime2?.split(':');  
+    time1_mode.value = minute1.split(' ')[1]?.toLocaleLowerCase(); // am / pm
+    time2_mode.value = minute2.split(' ')[1]?.toLocaleLowerCase(); // am / pm
+
+    minute1 = minute1.split(' ')[0];
+    minute2 = minute2.split(' ')[0];
+    minute1 = minute1 == 12 ? 0 : minute1;
+    minute2 = minute2 == 12 ? 0 : minute2; 
+
+    time1_selectedHour.value = hours_position?.filter(h => h.value == hour1)?.[0] || hours_position[0];
+    time2_selectedHour.value = hours_position?.filter(h => h.value == hour2)?.[0] || (time1_selectedHour.value || hours_position[0]);
+
+    time1_selectedMinute.value = minutes_position?.filter(m => m.value == minute1)?.[0] || minutes_position[0];
+    time2_selectedMinute.value = minutes_position?.filter(m => m.value == minute2)?.[0] || (time1_selectedMinute.value || minutes_position[0]);
+
+    // console.log(time1_selectedHour.value, time2_selectedHour.value);
+})
 
 </script>
 
