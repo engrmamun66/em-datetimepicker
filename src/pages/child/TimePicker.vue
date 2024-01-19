@@ -277,8 +277,6 @@ onMounted(() => {
 
     time1_selectedMinute.value = minutes_position?.filter(m => m.value == minute1)?.[0] || minutes_position[0];
     time2_selectedMinute.value = minutes_position?.filter(m => m.value == minute2)?.[0] || (time1_selectedMinute.value || minutes_position[0]);
-
-    // console.log(time1_selectedHour.value, time2_selectedHour.value);
 })
 
 </script>
