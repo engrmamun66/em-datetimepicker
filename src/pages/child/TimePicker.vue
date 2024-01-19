@@ -129,10 +129,9 @@ function onClickClose(){
 function getPrintableTime(hourObject, minuteObject, time_mode) {
     let {value: hour} = hourObject;
     let {value: minute} = minuteObject;
-    let date = new Date();
-    date.setHours(Number(hour) + (time_mode=='pm' ? 12 : 0));
-    date.setMinutes(Number(minute));
-    return makeDate(date, FORMATS.time);
+    hour = Number(hour) + (time_mode=='pm' ? 12 : 0);  
+    let date_text = makeDate( new Date(), FORMATS.time, {hour, minute});
+    return date_text;
 }
 
 
