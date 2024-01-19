@@ -149,8 +149,8 @@ function makeDate(dateTime, format, {hour, minute}={}){
     } else {
         var date = new Date(dateTime);
     }
-    if(hour) date.setHours(Number(hour) || 0);
-    if(minute) date.setMinutes(Number(minute) || 0);
+    date.setHours(Number(hour ?? 0));
+    date.setMinutes(Number(minute ?? 0));
     let details = { 
         date: date.getDate(),
         month: date.getMonth(),
@@ -188,10 +188,10 @@ function createEvent(eventName, data={}){
     })
 }
 const emitableData = computed(()=>{
-    let { startDate, endDate, startTime, endTime } = pickerValues;
+    let { startTime, endTime } = pickerValues;
     if(defaults.onlyTimePicker){
         return { startTime, endTime };
-    } else {
+    } else {        
         return pickerValues
     }
 });
@@ -254,10 +254,8 @@ const fn = {
             target.innerHTML = value;
         }
         target.setAttribute('data-empicker', JSON.stringify(value));
-    },   
-    emitData: function() {
-        
-    },   
+    },  
+      
     /* -------------------------------------------------------------------------- */
     /*                           Start With Date Picker                           */
     /* -------------------------------------------------------------------------- */
