@@ -32,10 +32,10 @@ const defaults = {
     minDate: options?.minDate ?? '',
     maxDate: options?.maxDate ?? '',
     adjustWeekday: options?.adjustWeekday ?? 0,
-    buttons: (options?.buttons) ?? {
-        todayBtn: options?.buttons?.todayBtn ?? 'Today',
-        cancelBtn: options?.buttons?.cancelBtn ?? 'Cancel',
-        applyBtn: options?.buttons?.cancelBtn ?? 'Apply',
+    buttons: {
+        todayBtn: ((options?.buttons?.todayBtn && (typeof options?.buttons?.todayBtn) == 'boolean') ? 'Today' : options?.buttons?.todayBtn) ?? 'Today',
+        cancelBtn: ((options?.buttons?.cancelBtn && (typeof options?.buttons?.cancelBtn) == 'boolean') ? 'Cancel' : options?.buttons?.cancelBtn) ?? 'Cancel',
+        applyBtn: ((options?.buttons?.applyBtn && (typeof options?.buttons?.applyBtn) == 'boolean') ? 'Apply' : options?.buttons?.applyBtn) ?? 'Apply',
     },
     monthShorts: options?.monthShorts ?? [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ],
     row: (options.row && options.row >= 3 && options.row <= 10) ? options.row : 6,
