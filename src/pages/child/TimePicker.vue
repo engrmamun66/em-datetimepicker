@@ -3,6 +3,8 @@ import moment, { min } from 'moment/moment';
 import SwitcherForTime from './SwitcherForTime.vue';
 import { hours_position, minutes_position } from './timePicker';
 import { ref, computed, reactive, defineProps, onMounted, inject, defineEmits, watch, watchEffect, provide } from 'vue';
+let { justInitializeValue } = defineProps(['justInitializeValue']);
+let isMounted = inject('isMounted');
 let target = inject('target');
 let defaults = inject('defaults');
 let FORMATS = inject('FORMATS');
@@ -35,7 +37,7 @@ minutes_position.forEach( minute => {
 
 
 
-let emits = defineEmits(['cancel', 'apply', 'change' ]);
+let emits = defineEmits(['init', 'cancel', 'apply', 'change']);
 // mode
 let time1_mode = ref('am');
 let time2_mode = ref('am');
@@ -121,7 +123,11 @@ onMounted(() => {
 
     time1_selectedMinute.value = minutes_position?.filter(m => m.value == minute1)?.[0] || minutes_position[0];
     time2_selectedMinute.value = minutes_position?.filter(m => m.value == minute2)?.[0] || (time1_selectedMinute.value || minutes_position[0]);
-    
+
+
+    if(!isMounted){
+        emits('init')
+    }
     // console.log(time1_selectedHour.value, time2_selectedHour.value);
 })
 
@@ -273,73 +279,75 @@ let move = reactive({
 </script>
 
 <template>
-    <div @click.stop="false" id="clocklet-inline-container" style="width:270px">
-        <div class="clocklet-container clocklet-container--inline" style="position:relative">  
-            <div @click.stop="onClickClose" class="closeIcon"><i class='bx bx-x' ></i></div>     
-            <div @click.stop="onClickOk" class="okIcon"><i class='bx bx-check'></i></div>     
+    <template v-if="!justInitializeValue">
+        <div @click.stop="false" id="clocklet-inline-container" style="width:270px">
+            <div class="clocklet-container clocklet-container--inline" style="position:relative">  
+                <div @click.stop="onClickClose" class="closeIcon"><i class='bx bx-x' ></i></div>     
+                <div @click.stop="onClickOk" class="okIcon"><i class='bx bx-check'></i></div>     
 
-            <div class="clocklet clocklet--inline" data-clocklet-format="HH:mm" data-clocklet-value="14:25">
-                <div class="clocklet-plate">
-                    <!-- Minute Picker -->
-                    <div class="clocklet-dial clocklet-dial--minute">
-                        <div class="clocklet-hand clocklet-hand--minute" :style="selectedMinute.deg"></div>
-                        <template v-for="(minute, index) in minutes_position" :key="index">
-                            <button
-                            :style="minute.style"
-                            class="clocklet-tick clocklet-tick--minute"
-                            :class="{
-                                'excluded' : minute.excluded,
-                                'clocklet-tick--selected' : selectedMinute.value == minute.value,
-                            }" 
-                            type="button" 
-                            :data-clocklet-tick-value="minute.id"
-                            @click.stop="selectedMinute = minute"
-                            draggable="true"
-                            @dragenter="selectedMinute = minute"
-                            >
-                            </button>                        
-                        </template>                        
-                    </div>
+                <div class="clocklet clocklet--inline" data-clocklet-format="HH:mm" data-clocklet-value="14:25">
+                    <div class="clocklet-plate">
+                        <!-- Minute Picker -->
+                        <div class="clocklet-dial clocklet-dial--minute">
+                            <div class="clocklet-hand clocklet-hand--minute" :style="selectedMinute.deg"></div>
+                            <template v-for="(minute, index) in minutes_position" :key="index">
+                                <button
+                                :style="minute.style"
+                                class="clocklet-tick clocklet-tick--minute"
+                                :class="{
+                                    'excluded' : minute.excluded,
+                                    'clocklet-tick--selected' : selectedMinute.value == minute.value,
+                                }" 
+                                type="button" 
+                                :data-clocklet-tick-value="minute.id"
+                                @click.stop="selectedMinute = minute"
+                                draggable="true"
+                                @dragenter="selectedMinute = minute"
+                                >
+                                </button>                        
+                            </template>                        
+                        </div>
 
-                    <!-- Hour Picker -->
-                    <div class="clocklet-dial clocklet-dial--hour">
-                        <div class="clocklet-hand clocklet-hand--hour" :style="selectedHour.deg"></div>
-                        <template v-for="(hour, index) in hours_position" :key="index">
-                            <button 
-                            type="button" 
-                            :style="hour.style"
-                            class="clocklet-tick clocklet-tick--hour"
-                            :class="{'clocklet-tick--selected' : selectedHour.value == hour.value}" 
-                            @click.stop="selectedHour = hour"
-                            :data-clocklet-tick-value="hour.id"
-                            draggable="true"
-                            @dragstart="move.dragging = true"
-                            @dragenter="/*selectedHour = hour*/ false"
-                            @drag="false"
-                            @dragend="move.dragging = false"
-                            >
-                            </button>
-                        </template>                   
+                        <!-- Hour Picker -->
+                        <div class="clocklet-dial clocklet-dial--hour">
+                            <div class="clocklet-hand clocklet-hand--hour" :style="selectedHour.deg"></div>
+                            <template v-for="(hour, index) in hours_position" :key="index">
+                                <button 
+                                type="button" 
+                                :style="hour.style"
+                                class="clocklet-tick clocklet-tick--hour"
+                                :class="{'clocklet-tick--selected' : selectedHour.value == hour.value}" 
+                                @click.stop="selectedHour = hour"
+                                :data-clocklet-tick-value="hour.id"
+                                draggable="true"
+                                @dragstart="move.dragging = true"
+                                @dragenter="/*selectedHour = hour*/ false"
+                                @drag="false"
+                                @dragend="move.dragging = false"
+                                >
+                                </button>
+                            </template>                   
+                        </div>
+                        <div class="clocklet-ampm" :data-clocklet-ampm="mode" @click.stop="mode=='am' ? mode='pm' : mode='am'" data-clocklet-ampm-formatted=""></div>
+                        <div ref="centerOfclick" class="clocklet-hand-origin"></div>
                     </div>
-                    <div class="clocklet-ampm" :data-clocklet-ampm="mode" @click.stop="mode=='am' ? mode='pm' : mode='am'" data-clocklet-ampm-formatted=""></div>
-                    <div ref="centerOfclick" class="clocklet-hand-origin"></div>
                 </div>
-            </div>
 
-            <div class="display-time">
-                <span class="start-time">{{ getPrintableTime(time1_selectedHour, time1_selectedMinute, time1_mode) }}</span>
-                <template v-if="defaults.rangePicker">
-                    <div>&nbsp;</div>
-                    <span class="end-time">{{ getPrintableTime(time2_selectedHour, time2_selectedMinute, time2_mode) }}</span>
+                <div class="display-time">
+                    <span class="start-time">{{ getPrintableTime(time1_selectedHour, time1_selectedMinute, time1_mode) }}</span>
+                    <template v-if="defaults.rangePicker">
+                        <div>&nbsp;</div>
+                        <span class="end-time">{{ getPrintableTime(time2_selectedHour, time2_selectedMinute, time2_mode) }}</span>
+                    </template>
+                </div>
+
+                <template v-if="defaults.rangePicker && defaults.timePicker">
+                    <SwitcherForTime></SwitcherForTime>
                 </template>
+                
             </div>
-
-            <template v-if="defaults.rangePicker && defaults.timePicker">
-                <SwitcherForTime></SwitcherForTime>
-            </template>
-            
         </div>
-    </div>
+    </template>
 </template>
 
 <style scoped>

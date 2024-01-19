@@ -405,6 +405,8 @@ const fn = {
     onOkTimePicker: function (data) { 
         openTimePicker.value = false;
         fn.changeTime(data);
+        fn.setElementValue();
+        fn.changePicker();
         fn.closePicker();
     },
 };
@@ -486,7 +488,7 @@ onMounted(() => {
 
 <template>
     <template v-if="!justInitializeValue && defaults.onlyTimePicker">
-        <TimePicker 
+        <TimePicker :justInitializeValue="justInitializeValue"
         @close="fn.onCloseTimePicker" 
         @change="fn.onOkTimePicker" 
         v-if="defaults.timePicker"></TimePicker>
@@ -558,8 +560,9 @@ onMounted(() => {
                     
                     <div v-if="openTimePicker==true" class="time-picker-display-area" @click.stop="openTimePicker=false">
                         <div>
-                            <TimePicker 
-                             @close="fn.onCloseTimePicker" 
+                            <TimePicker :justInitializeValue="justInitializeValue"
+                            @init="$emit('init', null)" 
+                            @close="fn.onCloseTimePicker" 
                             @change="fn.onOkTimePicker"></TimePicker>
                         </div>
                     </div>
