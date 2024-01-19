@@ -160,6 +160,7 @@ watch(time1_selectedHour, (newValue, oldValue)=>{
     if(defaults.endTimeAutoValid){
         setTimeout(() => {
             if(!isEqualOrGraterTime2()){
+                time2_mode.value = time1_mode.value;
                 time2_selectedHour.value = time1_selectedHour.value;
                 time2_selectedMinute.value = time1_selectedMinute.value;
             }
@@ -174,6 +175,7 @@ watch(time1_selectedMinute, (newValue, oldValue)=>{
     if(defaults.endTimeAutoValid){
         setTimeout(() => {
             if(!isEqualOrGraterTime2()){
+                time2_mode.value = time1_mode.value;
                 time2_selectedHour.value = time1_selectedHour.value;
                 time2_selectedMinute.value = time1_selectedMinute.value;
             }
