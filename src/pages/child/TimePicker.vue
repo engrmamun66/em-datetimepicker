@@ -182,6 +182,17 @@ watch(time1_selectedMinute, (newValue, oldValue)=>{
         }, 100);
     }
 })
+watch(time1_mode, (newValue, oldValue)=>{
+    if(defaults.endTimeAutoValid){
+        setTimeout(() => {
+            if(!isEqualOrGraterTime2()){
+                time2_mode.value = time1_mode.value;
+                time2_selectedHour.value = time1_selectedHour.value;
+                time2_selectedMinute.value = time1_selectedMinute.value;
+            }
+        }, 100);
+    }
+})
 
 function getHoursAndMinutes() {
     let {id: hour1} = time1_selectedHour.value;
