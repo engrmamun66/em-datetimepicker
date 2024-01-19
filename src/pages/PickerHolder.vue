@@ -39,7 +39,7 @@ onMounted(() => {
     });
 })
 
-function catchEvent(eventName, data=null) {
+function catchEvent(eventName) {
     showModal.value = false;
 }
 </script>
@@ -55,8 +55,8 @@ function catchEvent(eventName, data=null) {
 
     <Modal v-if="showModal" v-model="showModal">
         <Picker 
-        @cancel="(data)=>catchEvent('cancel', data)"
-        @close="(data)=>catchEvent('close', data)"
+        @cancel="catchEvent"
+        @close="catchEvent"
         :target="target" 
         :options="options" 
         :parentDiv="parentDiv" 

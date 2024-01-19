@@ -148,7 +148,7 @@ function latestHourAndMinute(){
 
 function onClickClose(){
     emits('close', false);
-    target.dispatchEvent(createEvent('timepicker:close', {...data}));    
+    target.dispatchEvent(createEvent('timepicker:close', false));    
 }
 
 function onClickOk(){
@@ -158,20 +158,11 @@ function onClickOk(){
         startTime: time1_text,
         endTime: time2_text,
     }
-
     let latest = latestHourAndMinute();
     picker.time1 = {...latest.time1, time: time1_text};
     picker.time2 = {...latest.time2, time: time2_text};
-
-    let { hour: hour1, minute: minute1 } = latest.time1;
-    let { hour: hour2, minute: minute2 } = latest.time2;
-
     
-    
-    // Emiting
-    emits('change', data);
-    target.dispatchEvent(createEvent('timepicker:change', data)); 
-    emits('close', false);
+    emits('change', data);    
 }
 
 

@@ -8,7 +8,7 @@ const { helper } = inject('utils');
 const isMounted = inject('isMounted');
 const picker = inject('picker');
 const pickerValues = inject('pickerValues');
-let emits = defineEmits(['init', 'open', 'cancel', 'close', 'change']);
+let emits = defineEmits(['init', 'open', 'cancel', 'close', 'change', 'changeTime']);
 let { target, options, parentDiv, justInitializeValue } = defineProps(['target', 'options', 'parentDiv', 'justInitializeValue']);
 // options Example: https://docs.mobiscroll.com/javascript/eventcalendar#opt-eventOrder
 const FORMATS = {
@@ -124,6 +124,9 @@ const events = reactive( {
     change: function(data={}) {
         return createEvent('picker:change', {...data})
     },
+    changeTime: function(data={}) {
+        return createEvent('timepicker:change', {...data})
+    },
 });
 
 function printTimeByZone(date) {
@@ -214,6 +217,10 @@ const fn = {
         
         emits('change');
         target.dispatchEvent(events.change(pickerValues));
+    },
+    changeTime: function(data){
+        emits('changeTime');
+        target.dispatchEvent(events.change(data));
     },
     setElementValue: function() {        
         let { startDate, endDate } = pickerValues;
@@ -370,6 +377,20 @@ const fn = {
         }
         return false;
     },
+    /* -------------------------------------------------------------------------- */
+    /*                           with time picker emits                           */
+    /* -------------------------------------------------------------------------- */
+    onCloseTimePicker: function (data) { 
+        console.log('here');
+        console.log(openTimePicker);
+        openTimePicker.value = false;
+        this.closePicker(data);
+    },
+    onOkTimePicker: function (data) { 
+        openTimePicker.value = false;
+        this.changeTime(data);
+        this.closePicker();
+    },
 };
 
 
@@ -448,9 +469,9 @@ onMounted(() => {
 </script>
 
 <template>
-    <template v-if="defaults.onlyTimePicker">
-            <TimePicker @close="openTimePicker=false" v-if="defaults.timePicker"></TimePicker>
-        </template>
+    <template v-if="!justInitializeValue && defaults.onlyTimePicker">
+        <TimePicker @close="onCloseTimePicker" v-if="defaults.timePicker"></TimePicker>
+    </template>
     <template v-if="!justInitializeValue">
         <!-- days of month -->
         <template v-if="!defaults.onlyTimePicker">
