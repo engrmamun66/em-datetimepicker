@@ -164,7 +164,7 @@ watch(time1_selectedHour, (newValue, oldValue)=>{
                 time2_selectedHour.value = time1_selectedHour.value;
                 time2_selectedMinute.value = time1_selectedMinute.value;
             }
-        }, 100);
+        }, 10);
     }
 
 })
@@ -179,7 +179,7 @@ watch(time1_selectedMinute, (newValue, oldValue)=>{
                 time2_selectedHour.value = time1_selectedHour.value;
                 time2_selectedMinute.value = time1_selectedMinute.value;
             }
-        }, 100);
+        }, 10);
     }
 })
 
@@ -249,8 +249,8 @@ onMounted(() => {
         picker.date2 = makeDate(new Date(), FORMATS.date);
     }
 
-    let dateTime1 = makeDate(picker.date1, 'hh:mm A');
-    let dateTime2 = makeDate(picker.date1, 'hh:mm A');
+    let dateTime1 = picker?.startTime || makeDate(picker.date1, 'hh:mm A');
+    let dateTime2 = picker?.endTime ||makeDate(picker.date1, 'hh:mm A');
     let [hour1, minute1] = dateTime1?.split(':');
     let [hour2, minute2] = dateTime2?.split(':');  
     time1_mode.value = minute1.split(' ')[1]?.toLocaleLowerCase(); // am / pm
