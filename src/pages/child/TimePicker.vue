@@ -249,8 +249,8 @@ onMounted(() => {
         picker.date2 = makeDate(new Date(), FORMATS.date);
     }
 
-    let dateTime1 = picker?.startTime || makeDate(picker.date1, 'hh:mm A');
-    let dateTime2 = picker?.endTime || makeDate(picker.date1, 'hh:mm A');
+    let dateTime1 = picker?.time1.time || makeDate(picker.date1, 'hh:mm A');
+    let dateTime2 = picker?.time2.time || makeDate(picker.date1, 'hh:mm A');
     let [hour1, minute1] = dateTime1?.split(':');
     let [hour2, minute2] = dateTime2?.split(':');  
     time1_mode.value = minute1.split(' ')[1]?.toLocaleLowerCase(); // am / pm
