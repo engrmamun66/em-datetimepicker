@@ -3,7 +3,7 @@
 export let hours_position = [
     {
         "id": 12,
-        "value": "12",
+        "value": "0",
         "deg": "transform: rotate(0deg);",
         "style": "left:50%;top:11%"
     },
