@@ -1,5 +1,5 @@
 <script setup>
-import Picker from './child/DatePicker.vue';
+import DateTimePicker from './child/DateTimePicker.vue';
 import Modal from './child/Modal.vue';
 import { ref, provide, reactive, defineProps, onMounted } from 'vue';
 let { target, options, parentDiv } = defineProps(['target', 'options', 'parentDiv']);
@@ -47,22 +47,22 @@ function catchEvent(eventName) {
 </script>
 
 <template>
-    <Picker 
+    <DateTimePicker 
     v-if="isShowInitilaztionValue"
     @init="isShowInitilaztionValue.value = false"
     :target="target" 
     :options="options" 
     :parentDiv="parentDiv" 
-    :justInitializeValue="true"></Picker>
+    :justInitializeValue="true"></DateTimePicker>
 
     <Modal v-if="showModal" v-model="showModal">
-        <Picker 
+        <DateTimePicker 
         @cancel="catchEvent"
         @close="catchEvent"
         :target="target" 
         :options="options" 
         :parentDiv="parentDiv" 
-        :justInitializeValue="false"></Picker>
+        :justInitializeValue="false"></DateTimePicker>
     </Modal>
 </template>
 
