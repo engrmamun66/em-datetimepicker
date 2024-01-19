@@ -166,11 +166,14 @@ function onClickOk(){
 }
 
 
+watch(time1_selectedHour, (newValue, oldValue)=>{
+    if(!defaults.rangePicker){
+        time2_selectedHour.value = newValue;
+    }
+})
 watch(time1_selectedMinute, (newValue, oldValue)=>{
-    if(defaults.rangePicker){
-        setTimeout(() => {
-            // selectingStartTime.value = false;
-        }, 500);
+    if(!defaults.rangePicker){       
+        time2_selectedMinute.value = newValue;        
     }
 })
 

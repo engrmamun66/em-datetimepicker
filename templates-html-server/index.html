@@ -67,8 +67,8 @@
         .on('picker:change', ({detail: data}) => {
             console.log('picker:change', data);
         })
-        .on('picker:cancel', ({detail: data}) => {
-            console.log('picker:cancel', data);
+        .on('picker:close', ({detail: data}) => {
+            console.log('picker:close', data);
         })
         .on('timepicker:change', ({detail: data}) => {
             console.log('timepicker:change', data);

@@ -381,15 +381,13 @@ const fn = {
     /*                           with time picker emits                           */
     /* -------------------------------------------------------------------------- */
     onCloseTimePicker: function (data) { 
-        console.log('here');
-        console.log(openTimePicker);
         openTimePicker.value = false;
-        this.closePicker(data);
+        fn.closePicker();
     },
     onOkTimePicker: function (data) { 
         openTimePicker.value = false;
-        this.changeTime(data);
-        this.closePicker();
+        fn.changeTime(data);
+        fn.closePicker();
     },
 };
 
@@ -470,7 +468,10 @@ onMounted(() => {
 
 <template>
     <template v-if="!justInitializeValue && defaults.onlyTimePicker">
-        <TimePicker @close="onCloseTimePicker" v-if="defaults.timePicker"></TimePicker>
+        <TimePicker 
+        @close="fn.onCloseTimePicker" 
+        @change="fn.onOkTimePicker" 
+        v-if="defaults.timePicker"></TimePicker>
     </template>
     <template v-if="!justInitializeValue">
         <!-- days of month -->
@@ -539,7 +540,9 @@ onMounted(() => {
                     
                     <div v-if="openTimePicker==true" class="time-picker-display-area" @click.stop="openTimePicker=false">
                         <div>
-                            <TimePicker @close="openTimePicker=false"></TimePicker>
+                            <TimePicker 
+                             @close="fn.onCloseTimePicker" 
+                            @change="fn.onOkTimePicker"></TimePicker>
                         </div>
                     </div>
                 </div>
