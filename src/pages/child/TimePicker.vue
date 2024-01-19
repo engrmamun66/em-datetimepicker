@@ -205,9 +205,7 @@ function isEqualOrGraterTime2() {
     let {time1, time2} = latestHourAndMinute();
     let dateTime_1 = makeDate(new Date(), FORMATS.date) + ` ${pad2(time1.hour)}:${pad2(time1.minute)}`;
     let dateTime_2 = makeDate(new Date(), FORMATS.date) + ` ${pad2(time2.hour)}:${pad2(time2.minute)}`;
-
-    console.log(dateTime_1 , dateTime_2);    
-    console.log(new Date(dateTime_1) <= new Date(dateTime_2));    
+    return new Date(dateTime_1) <= new Date(dateTime_2);   
 }
 
 
