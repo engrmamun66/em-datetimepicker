@@ -69,7 +69,22 @@ const defaults = {
     timeZone: options?.timeZone ?? '',
     endTimeAutoValid: options?.endTimeAutoValid ?? true,
     dispayIn: ((options?.dispayIn && desplayPositions.includes(options?.dispayIn ?? 'modal'))) ? options?.dispayIn : 'modal', 
+    colors: {
+        body_bg: options?.colors?.body_bg ?? '#ffffff',
+        primary_bg: options?.colors?.primary_bg ?? '#6200EE',
+        font_dark: options?.colors?.font_dark ?? '#444444',
+        font_light: options?.colors?.font_light ?? '#ffffff',
+
+    },
 };
+
+const {
+    body_bg: color_body_bg,
+    primary_bg: color_primary_bg,
+    font_dark: color_font_dark,
+    font_light: color_font_light,
+} = defaults.colors
+const color_selected_range_bg = color_selected_range_bg + '1c';
 
 const OUTPUT_FORMAT = computed(()=>{
     if(defaults.onlyTimePicker) return FORMATS.time;
@@ -777,7 +792,7 @@ main.box>div.date-in-selected-range {
     border-radius: 4px;
 }
 .buttons .btn-cancel{
-    color: black;
+    color: #444;
     background-color: #e2e3ee;
 }
 .buttons.adjustment-weekday{
