@@ -289,8 +289,8 @@ onMounted(() => {
 <template>
     <div @click.stop="false" style="width:270px">
         <div class="clocklet-container clocklet-container--inline" style="position:relative">  
-            <div @click.stop="onClickClose" class="closeIcon"><i class='bx bx-x' ></i></div>     
-            <div @click.stop="onClickOk" class="okIcon"><i class='bx bx-check'></i></div>     
+            <div @click.stop="onClickClose()" class="closeIcon"><i class='bx bx-x' ></i></div>     
+            <div @click.stop="onClickOk()" class="okIcon"><i class='bx bx-check'></i></div>     
 
             <div class="clocklet clocklet--inline" data-clocklet-format="HH:mm" data-clocklet-value="14:25">
                 <div class="clocklet-plate">

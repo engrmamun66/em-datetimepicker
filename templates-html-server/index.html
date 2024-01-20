@@ -16,22 +16,28 @@
 <body class="m-5 container">
     <div class="row">
         <div class="col-6">
-            <h1>Heading 1</h1>
-        <input id="input1" type="text" class="emDatetimepicker px-2 form-control" data-settings="">   
+            <div class="form-group">
+                <label>Date And Time Picker</label>
+                <input id="input1" type="text" class="emDatetimepicker px-2 form-control" data-settings="">   
+            </div>
+            <div class="form-group">
+                <label>Date Range And Time Picker</label>
+                <input id="input2" type="text" class="emDatetimepicker px-2 form-control" data-settings="">   
+            </div>
+            <div class="form-group">
+                <label>Date Range Picker</label>
+                <input id="input3" type="text" class="emDatetimepicker px-2 form-control" data-settings="">   
+            </div>
+            <div class="form-group">
+                <label>Only Time Picker</label>
+                <input id="input4" type="text" class="emDatetimepicker px-2 form-control" data-settings="">   
+            </div>
         
-        <h1>Heading 2</h1>
-        <input id="input2" type="text" class="emDatetimepicker px-2 form-control" data-settings="">  
+        
         </div>
-    </div>
+    </div>   
     
-    <!-- <button class="btn btn-primary" onclick="setDate()">SET DATE</button> -->
    <script>
-        // let input = document.querySelector('#input2');
-        // emDatetimepicker.init(input)
-        // input.addEventListener('picker:open', (data) => {
-        //     console.log('data', data);
-        // });
-
         
    
         let options = {
@@ -42,7 +48,7 @@
             rangePicker: true,
             adjustWeekday: 0,
             buttons: {
-                todayBtn: false,
+                todayBtn: true,
                 applyBtn: 'Apply',
                 cancelBtn: 'Cancel',
             },
@@ -54,25 +60,37 @@
             use24Format: false,
         }
 
-        function setDate() {
-            
-        }
+        emDatetimepicker.init('#input1', {
+            // rangePicker: true,
+            timePicker: true,
+            // onlyTimePicker: true,
+        });
+        emDatetimepicker.init('#input2', {
+            rangePicker: true,
+            timePicker: true,
+            // onlyTimePicker: true,
+        });
+        emDatetimepicker.init('#input3', {
+            rangePicker: true,
+            // timePicker: true,
+            // onlyTimePicker: true,
+        });
+        emDatetimepicker.init('#input4', {
+            // rangePicker: true,
+            timePicker: true,
+            onlyTimePicker: true,
+        });
 
-        
-        emDatetimepicker.init('#input1', options)
-        $('#input1')
-        .on('picker:open', ({detail: data}) => {
-            console.log('picker:open', data);
-        })
-        .on('picker:change', ({detail: data}) => {
+
+
+
+        $('#input1').on('picker:change', ({detail: data}) => {
             console.log('picker:change', data);
         })
-        .on('picker:close', ({detail: data}) => {
-            console.log('picker:close', data);
+        $('#input1').on('picker:change', ({detail: data}) => {
+            console.log('picker:change', data);
         })
-        .on('timepicker:change', ({detail: data}) => {
-            console.log('timepicker:change', data);
-        })
+        
    </script>
 </body>
 </html>
