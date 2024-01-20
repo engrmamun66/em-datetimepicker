@@ -1,6 +1,6 @@
 <script setup>
 import { ref, inject } from  'vue';
-import PickerHolder from './pages/PickerHolder.vue'
+import EmDateTimePicker from './pages/EmDateTimePicker.vue'
 
 let emDatetimepicker = inject('emDatetimepicker');
 let targets = emDatetimepicker.elements;
@@ -22,6 +22,6 @@ wraperByDiv()
 
 <template>  
     <template v-for="(target, index) in targets" :key="index">   
-        <PickerHolder :target="target.element" :options="target.options" :parentDiv="target_divs[index]"></PickerHolder>
+        <EmDateTimePicker :target="target.element" :options="target.options" :parentDiv="target_divs[index]"></EmDateTimePicker>
     </template>  
 </template>
