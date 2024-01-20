@@ -543,7 +543,7 @@ onMounted(() => {
         <!-- days of month -->
         <template v-if="!defaults.onlyTimePicker">
             <template v-if="current_view=='days'">
-                <div class="days-month-box content">
+                <div class="days-month-box content" @click.stop="false">
                     <header>
                         <i class='bx bx-chevron-left' @click="fn.onClickPrev()"></i>
                         <span class="cp" @click="current_view = 'months'">
@@ -615,7 +615,7 @@ onMounted(() => {
                 </div>
             </template>
             <template v-else-if="current_view == 'months'">
-                <div class="months-box content">
+                <div class="months-box content" @click.stop="false">
                     <header>
                         <i class='bx bx-chevron-left visibility-hidden'></i>
                         <span class="cp" @click="current_view = 'years'">{{ makeDate(picker?.date1, FORMATS.month) }}</span>
@@ -638,7 +638,7 @@ onMounted(() => {
                 </div>
             </template>
             <template v-else-if="current_view == 'years'">
-                <div class="months-box content">
+                <div class="months-box content" @click.stop="false">
                     <header>
                         <i class='bx bx-chevron-left' @click="fn.onClickPrev()"></i>
                         <span>{{ years[0] }} - {{ years[years?.length - 1] }}</span>
