@@ -70,7 +70,10 @@ function onChangeTime(data=null) {
     showModal.value = false;
     emits('changeTime', data);
 }
-const desplayPositions = ['bottom_left', 'bottom_right', 'top_left', 'top_right'];
+const desplayPositions = [
+    'bottom_left', 'bottom_right', 'top_left', 'top_right', 
+    'inline_left', 'inline_right', 'inline_center',
+];
 provide('desplayPositions', desplayPositions);
 let showingPermitInModal = desplayPositions.includes(options?.dispayIn ?? 'modal') == false;
 let teleportDiv = ref(null)
@@ -78,12 +81,13 @@ let teleportDiv = ref(null)
 function setTeleportDiv() {
     let position = options?.dispayIn;
     if(!position || !desplayPositions.includes(position)) return;  
-    let adjacentPosition = position?.startsWith('top_') ? "beforebegin" : "afterend"
+    let adjacentPosition = position?.startsWith('top_') ? "beforebegin" : "afterend";
+    adjacentPosition = position?.startsWith('bottom_') ? "afterend" : "afterend";
     let div = document.createElement('div');
-    div.style.position = 'relative';
     div.style.width = target?.style?.width;
+    div.classList = `em-datepicker-wrapper ${position}`
     target.insertAdjacentElement(adjacentPosition, div);
-    teleportDiv.value = teleportDiv;
+    teleportDiv.value = div;
 }
 setTeleportDiv()
 </script>
@@ -97,16 +101,86 @@ setTeleportDiv()
     :teleportDiv="teleportDiv" 
     :justInitializeValue="true"></DateTimePicker>
 
-    <Modal v-if="showingPermitInModal && showModal" v-model="showModal">
-        <DateTimePicker 
-        @cancel="onCancel"
-        @close="onClose"
-        @change="onChange"
-        @changeTime="onChangeTime"
-        :target="target" 
-        :options="options" 
-        :teleportDiv="teleportDiv" 
-        :justInitializeValue="false"></DateTimePicker>
-    </Modal>
+    <template v-if="showingPermitInModal">
+        <Modal v-if="showModal" v-model="showModal">
+            <DateTimePicker 
+            @cancel="onCancel"
+            @close="onClose"
+            @change="onChange"
+            @changeTime="onChangeTime"
+            :target="target" 
+            :options="options" 
+            :teleportDiv="teleportDiv" 
+            :justInitializeValue="false"></DateTimePicker>
+        </Modal>
+    </template>
+    <template v-else>
+        <template v-if="true">
+            <teleport :to="teleportDiv">
+                <DateTimePicker 
+                @cancel="onCancel"
+                @close="onClose"
+                @change="onChange"
+                @changeTime="onChangeTime"
+                :target="target" 
+                :options="options" 
+                :teleportDiv="teleportDiv" 
+                :justInitializeValue="false"></DateTimePicker>            
+            </teleport>
+        </template>
+    </template>
+
 </template>
+
+<style>
+.em-datepicker-wrapper{
+    position: relative;
+}
+.em-datepicker-wrapper.bottom_left > *,
+.em-datepicker-wrapper.bottom_right > *,
+.em-datepicker-wrapper.top_left > *,
+.em-datepicker-wrapper.top_right > *
+{
+    position: absolute !important;
+}
+
+.em-datepicker-wrapper.bottom_left > *
+{
+    position: absolute !important;
+    top: 0;
+    left: 0;
+}
+
+.em-datepicker-wrapper.bottom_right > *
+{
+    position: absolute !important;
+    top: 0;
+    right: 0;
+}
+.em-datepicker-wrapper.top_left > *
+{
+    position: absolute !important;
+    bottom: 0;
+    left: 0;
+}
+.em-datepicker-wrapper.top_right > *
+{
+    position: absolute !important;
+    bottom: 0;
+    right: 0;
+}
+
+.em-datepicker-wrapper.inline_left{
+    display: flex;
+    justify-content: flex-start;
+}
+.em-datepicker-wrapper.inline_right{
+    display: flex;
+    justify-content: flex-end;
+}
+.em-datepicker-wrapper.inline_center{
+    display: flex;
+    justify-content: center;
+}
+</style>
 
