@@ -36,7 +36,6 @@ minutes_position.forEach( minute => {
 })
 
 
-
 let emits = defineEmits(['init', 'cancel', 'apply', 'change']);
 // mode
 let time1_mode = ref('am');
@@ -289,56 +288,80 @@ onMounted(() => {
 <template>
     <div @click.stop="false" style="width:270px">
         <div class="clocklet-container clocklet-container--inline" style="position:relative">  
-            <div @click.stop="onClickClose()" class="closeIcon"><i class='bx bx-x' ></i></div>     
-            <div @click.stop="onClickOk()" class="okIcon"><i class='bx bx-check'></i></div>     
+            <!-- <div @click.stop="onClickClose()" class="closeIcon"><i class='bx bx-x' ></i></div>     
+            <div @click.stop="onClickOk()" class="okIcon"><i class='bx bx-check'></i></div>      -->
 
-            <div class="clocklet clocklet--inline" data-clocklet-format="HH:mm" data-clocklet-value="14:25">
-                <div class="clocklet-plate">
-                    <!-- Minute Picker -->
-                    <div class="clocklet-dial clocklet-dial--minute">
-                        <div class="clocklet-hand clocklet-hand--minute" :style="selectedMinute.deg"></div>
-                        <template v-for="(minute, index) in minutes_position" :key="index">
-                            <button
-                            :style="minute.style"
-                            class="clocklet-tick clocklet-tick--minute"
-                            :class="{
-                                'excluded' : minute.excluded,
-                                'clocklet-tick--selected' : selectedMinute.value == minute.value,
-                            }" 
-                            type="button" 
-                            :data-clocklet-tick-value="minute.id"
-                            @click.stop="selectedMinute = minute"
-                            draggable="true"
-                            @dragenter="selectedMinute = minute"
-                            >
-                            </button>                        
-                        </template>                        
-                    </div>
+            <template v-if="defaults.timePickerUi == 'standard'">
+                <div class="clocklet clocklet--inline">
+                    <div class="clocklet-plate standard" :class="{ 'need-scroll': [1, 2].includes(defaults.minuteStep) }" >
 
-                    <!-- Hour Picker -->
-                    <div class="clocklet-dial clocklet-dial--hour">
-                        <div class="clocklet-hand clocklet-hand--hour" :style="selectedHour.deg"></div>
-                        <template v-for="(hour, index) in hours_position" :key="index">
-                            <button 
-                            type="button" 
-                            :style="hour.style"
-                            class="clocklet-tick clocklet-tick--hour"
-                            :class="{'clocklet-tick--selected' : selectedHour.value == hour.value}" 
-                            @click.stop="selectedHour = hour"
-                            :data-clocklet-tick-value="hour.id"
-                            draggable="true"
-                            @dragstart="move.dragging = true"
-                            @dragenter="/*selectedHour = hour*/ false"
-                            @drag="false"
-                            @dragend="move.dragging = false"
-                            >
-                            </button>
-                        </template>                   
+                        <ul v-if="false" class="all-hours">
+                            <template v-for="(hour, index) in [...hours_position.slice(1), hours_position[0]]" :key="index">
+                                <li>{{ hour.id }}</li>
+                            </template>
+                        </ul>
+                        <ul v-if="true" class="all-minutes">                        
+                            <template v-for="(minute, index) in minutes_position" :key="index">
+                                <li v-if="!minute.excluded">{{ minute.id }}</li>
+                            </template>
+                        </ul>
                     </div>
-                    <div class="clocklet-ampm" :data-clocklet-ampm="mode" @click.stop="mode=='am' ? mode='pm' : mode='am'" data-clocklet-ampm-formatted=""></div>
-                    <div ref="centerOfclick" class="clocklet-hand-origin"></div>
                 </div>
-            </div>
+            </template>
+            <template v-else>
+
+                <div @click.stop="onClickClose()" class="closeIcon"><i class='bx bx-x' ></i></div>     
+                <div @click.stop="onClickOk()" class="okIcon"><i class='bx bx-check'></i></div>     
+
+                <div class="clocklet clocklet--inline" data-clocklet-format="HH:mm" data-clocklet-value="14:25">
+                    <div class="clocklet-plate">
+                        <!-- Minute Picker -->
+                        <div class="clocklet-dial clocklet-dial--minute">
+                            <div class="clocklet-hand clocklet-hand--minute" :style="selectedMinute.deg"></div>
+                            <template v-for="(minute, index) in minutes_position" :key="index">
+                                <button
+                                :style="minute.style"
+                                class="clocklet-tick clocklet-tick--minute"
+                                :class="{
+                                    'excluded' : minute.excluded,
+                                    'clocklet-tick--selected' : selectedMinute.value == minute.value,
+                                }" 
+                                type="button" 
+                                :data-clocklet-tick-value="minute.id"
+                                @click.stop="selectedMinute = minute"
+                                draggable="true"
+                                @dragenter="selectedMinute = minute"
+                                >
+                                </button>                        
+                            </template>                        
+                        </div>
+
+                        <!-- Hour Picker -->
+                        <div class="clocklet-dial clocklet-dial--hour">
+                            <div class="clocklet-hand clocklet-hand--hour" :style="selectedHour.deg"></div>
+                            <template v-for="(hour, index) in hours_position" :key="index">
+                                <button 
+                                type="button" 
+                                :style="hour.style"
+                                class="clocklet-tick clocklet-tick--hour"
+                                :class="{'clocklet-tick--selected' : selectedHour.value == hour.value}" 
+                                @click.stop="selectedHour = hour"
+                                :data-clocklet-tick-value="hour.id"
+                                draggable="true"
+                                @dragstart="move.dragging = true"
+                                @dragenter="/*selectedHour = hour*/ false"
+                                @drag="false"
+                                @dragend="move.dragging = false"
+                                >
+                                </button>
+                            </template>                   
+                        </div>
+                        <div class="clocklet-ampm" :data-clocklet-ampm="mode" @click.stop="mode=='am' ? mode='pm' : mode='am'" data-clocklet-ampm-formatted=""></div>
+                        <div ref="centerOfclick" class="clocklet-hand-origin"></div>
+                    </div>
+                </div>
+            </template>
+
 
             <div class="display-time">
                 <span class="start-time">{{ getPrintableTime(time1_selectedHour, time1_selectedMinute, time1_mode) }}</span>
@@ -662,5 +685,61 @@ onMounted(() => {
 }
 .okIcon{
     right: 10px;
+}
+
+
+
+
+.clocklet-plate.standard{
+    border-radius: 0 !important;
+    padding: 10px !important;
+    max-height: 250px;
+}
+
+.clocklet-plate.standard.need-scroll{
+    overflow-y: scroll;
+}
+
+.clocklet-plate.standard ul.all-hours{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 16px;
+    row-gap: 14px;
+    list-style: none!important;
+    margin: 0px;
+    padding: 0;
+}
+.clocklet-plate.standard ul.all-hours li{
+    padding: 5px;
+    background-color: #f3f3f3;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.clocklet-plate.standard ul.all-minutes{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 16px;
+    row-gap: 14px;
+    list-style: none!important;
+    margin: 0px;
+    padding: 0;
+}
+.clocklet-plate.standard ul.all-minutes li{
+    padding: 5px;
+    background-color: #f3f3f3;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 3px;
+}
+.clocklet-plate.standard.need-scroll::-webkit-scrollbar {
+    width: 4px !important;
+}
+.clocklet-plate.standard.need-scroll::-webkit-scrollbar-thumb {
+    background: #d8d8d8;
+}
+.clocklet-plate.standard.need-scroll::-webkit-scrollbar-thumb:hover {
+    background: #b6b6b6;
 }
 </style>

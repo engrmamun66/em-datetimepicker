@@ -64,8 +64,9 @@ const defaults = {
     // With Time Picker
     timePicker: options?.timePicker ?? false,
     onlyTimePicker: options?.onlyTimePicker ?? false,
-    minuteStep: (options?.minuteStep && [1, 5, 10, 15, 30].includes(options?.minuteStep)) ? options?.minuteStep : 5,
+    minuteStep: (options?.minuteStep && [1, 2, 3, 5, 10, 15, 20, 30].includes(options?.minuteStep)) ? options?.minuteStep : 5,
     use24Format: FORMATS?.time ?? false,
+    timePickerUi: (options?.timePickerUi && ['classic', 'standard']) ? options?.timePickerUi : 'standard',
     timeZone: options?.timeZone ?? '',
     endTimeAutoValid: options?.endTimeAutoValid ?? true,
     dispayIn: ((options?.dispayIn && desplayPositions.includes(options?.dispayIn ?? 'modal'))) ? options?.dispayIn : 'modal', 
@@ -169,17 +170,6 @@ const events = reactive( {
         return createEvent('timepicker:change', {...data})
     },
 });
-
-function printTimeByZone(date) {
-    const timeZone = defaults.timeZone;
-    if(!timeZone || !date) return date;
-    const currentDate = (date instanceof Date) ? date : new Date();
-    const options = { timeZone: timeZone, hour12: !defaults.use24Format, hour: 'numeric', minute: 'numeric', /*second: 'numeric'*/ };
-    const dateTimeFormatter = new Intl.DateTimeFormat('en-US', options);
-    const formattedDate = dateTimeFormatter.format(currentDate);
-    console.log(`Current time in ${timeZone}: ${formattedDate}`);
-}
-
 
 function makeDate(dateTime, format, {hour, minute}={}){
     if(!dateTime) return;
