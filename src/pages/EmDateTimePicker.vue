@@ -1,6 +1,6 @@
 <script setup>
 import DateTimePicker from './child/DateTimePicker.vue';
-import Modal from './child/Modal.vue';
+import Modal from './childs/Modal.vue';
 import { ref, provide, reactive, defineProps, onMounted, useAttrs } from 'vue';
 let { target, options, parentDiv } = defineProps({
     target: {
@@ -20,6 +20,8 @@ let { target, options, parentDiv } = defineProps({
     },
 });
 options = {...options, ...useAttrs()}
+
+let emits = defineEmits(['init', 'open', 'cancel', 'close', 'change', 'changeTime']);
 
 let showModal = ref(false);
 let isShowInitilaztionValue = ref(true);
@@ -58,7 +60,13 @@ onMounted(() => {
     });
 })
 
-function catchEvent(eventName) {
+function onCancel(data=null) {
+    showModal.value = false;
+}
+function onClose(data=null) {
+    showModal.value = false;
+}
+function onChange(data=null) {
     showModal.value = false;
 }
 </script>
@@ -74,8 +82,9 @@ function catchEvent(eventName) {
 
     <Modal v-if="showModal" v-model="showModal">
         <DateTimePicker 
-        @cancel="catchEvent"
-        @close="catchEvent"
+        @cancel="onCancel"
+        @close="onClose"
+        @change="onChange"
         :target="target" 
         :options="options" 
         :parentDiv="parentDiv" 
