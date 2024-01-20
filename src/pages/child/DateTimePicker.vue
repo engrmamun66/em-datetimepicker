@@ -239,7 +239,7 @@ const fn = {
         let { startDate, endDate, startTime, endTime } = pickerValues;
         let value;
         if(defaults.onlyTimePicker && defaults.timePicker){
-            value = `${startTime} - ${endTime}`
+            value = `${startTime}`;
         } else {
             if(defaults.rangePicker){
                 value = `${startDate} - ${endDate}`;
