@@ -135,7 +135,7 @@ function getPrintableTime(hourObject, minuteObject, time_mode) {
 }
 
 
-function onClickOk(){
+function onClickOk(emit_name='change'){
     let time1_text = getPrintableTime(time1_selectedHour.value, time1_selectedMinute.value, time1_mode.value);
     let time2_text = getPrintableTime(time2_selectedHour.value, time2_selectedMinute.value, time2_mode.value);
     let data = {
@@ -149,8 +149,9 @@ function onClickOk(){
     pickerValues.startTime = data.startTime;
     pickerValues.endTime = data.endTime;
     
-    emits('change', data);    
+    emits(emit_name, data);    
 }
+
 
 
 watch(time1_selectedHour, (newValue, oldValue)=>{
@@ -277,6 +278,10 @@ onMounted(() => {
 
     time1_selectedMinute.value = minutes_position?.filter(m => m.value == minute1)?.[0] || minutes_position[0];
     time2_selectedMinute.value = minutes_position?.filter(m => m.value == minute2)?.[0] || (time1_selectedMinute.value || minutes_position[0]);
+    if(!isMounted.value){
+        onClickOk('init');
+        isMounted.value = true;
+    }
 })
 
 </script>

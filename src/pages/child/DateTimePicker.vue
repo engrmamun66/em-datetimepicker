@@ -398,6 +398,9 @@ const fn = {
     /* -------------------------------------------------------------------------- */
     /*                           with time picker emits                           */
     /* -------------------------------------------------------------------------- */
+    onInitTimePicker: function (data) {
+        fn.setElementValue();
+    },
     onCloseTimePicker: function (data) { 
         openTimePicker.value = false;
         fn.closePicker();
@@ -479,7 +482,9 @@ onMounted(() => {
 
         fn.setElementValue();
         fn.initPicker();
-        isMounted.value = true;
+        if(!defaults.onlyTimePicker){
+            isMounted.value = true;
+        }
     }
 
 })
@@ -489,6 +494,7 @@ onMounted(() => {
 <template>
     <template v-if="!justInitializeValue && defaults.onlyTimePicker">
         <TimePicker :justInitializeValue="justInitializeValue"
+        @init="fn.onInitTimePicker" 
         @close="fn.onCloseTimePicker" 
         @change="fn.onOkTimePicker" 
         v-if="defaults.timePicker"></TimePicker>
@@ -561,7 +567,7 @@ onMounted(() => {
                     <div v-if="openTimePicker==true" class="time-picker-display-area" @click.stop="openTimePicker=false">
                         <div>
                             <TimePicker :justInitializeValue="justInitializeValue"
-                            @init="$emit('init', null)" 
+                            @init="fn.onInitTimePicker"  
                             @close="fn.onCloseTimePicker" 
                             @change="fn.onOkTimePicker"></TimePicker>
                         </div>

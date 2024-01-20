@@ -10,7 +10,6 @@ const props = defineProps({
 });
 let emit = defineEmits(['update:modelValue', 'close', 'is-accepted']);
 let close = (event) => {
-  console.log('herer');
   emit('close');
   emit('update:modelValue', false);
 }
