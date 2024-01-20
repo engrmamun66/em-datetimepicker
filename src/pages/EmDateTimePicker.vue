@@ -174,10 +174,12 @@ setTeleportDiv()
     display: flex;
     justify-content: flex-start;
 }
+
 .em-datepicker-wrapper.inline_right{
     display: flex;
     justify-content: flex-end;
 }
+
 .em-datepicker-wrapper.inline_center{
     display: flex;
     justify-content: center;
