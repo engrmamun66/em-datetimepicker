@@ -8,8 +8,30 @@ const { helper } = inject('utils');
 const isMounted = inject('isMounted');
 const picker = inject('picker');
 const pickerValues = inject('pickerValues');
+const desplayPositions = inject('desplayPositions');
 let emits = defineEmits(['init', 'open', 'cancel', 'close', 'change', 'changeTime']);
-let { target, options, parentDiv, justInitializeValue } = defineProps(['target', 'options', 'parentDiv', 'justInitializeValue']);
+let { target, options, teleportDiv, justInitializeValue } = defineProps({
+    target: {
+        type: [HTMLElement, Object],
+        required: true,
+        default: null,
+    },
+    options: {
+        type: [Object],
+        required: false,
+        default: {},
+    },
+    teleportDiv: {
+        type: [Object],
+        required: false,
+        default: {},
+    },
+    justInitializeValue: {
+        type: [Boolean],
+        required: false,
+        default: {},
+    },
+});
 // options Example: https://docs.mobiscroll.com/javascript/eventcalendar#opt-eventOrder
 const FORMATS = {
     date: 'YYYY-MM-DD', //YYYY-MM-DD HH:mm:ss
@@ -46,6 +68,7 @@ const defaults = {
     use24Format: FORMATS?.time ?? false,
     timeZone: options?.timeZone ?? '',
     endTimeAutoValid: options?.endTimeAutoValid ?? true,
+    dispayIn: ((options?.dispayIn && desplayPositions.includes(options?.dispayIn ?? 'modal'))) ? options?.dispayIn : 'modal', 
 };
 
 const OUTPUT_FORMAT = computed(()=>{
