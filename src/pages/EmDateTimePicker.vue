@@ -51,9 +51,15 @@ provide('pickerValues', pickerValues);
 
 onMounted(() => {
     target.addEventListener('click', (e)=> {
+        e.stopPropagation();
         showModal.value = true;
         showPicker.value = true;
     });
+    function hidePicker(e) {
+        showPicker.value = false;        
+    }
+    document.removeEventListener('click', hidePicker);
+    document.addEventListener('click', hidePicker);
 })
 let emits = defineEmits(['init', 'open', 'cancel', 'close', 'change', 'changeTime']);
 function onCancel(data=null) {

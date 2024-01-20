@@ -48,7 +48,7 @@ function handleClick(value){
 .switches-container {
     width: 100%;
     display: flex;
-    padding: 1;
+    padding: 2px;
     line-height: 1rem;
     border-radius: 0;
     margin-left: auto;
@@ -102,7 +102,7 @@ function handleClick(value){
     position: absolute;
     text-align: center;
     transition: opacity .2s cubic-bezier(.77,0,.175,1) .125s;
-    top: 5px;
+    top: 8px;
     left: 0;
 }
 
