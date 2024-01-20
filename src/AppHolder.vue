@@ -22,6 +22,6 @@ wraperByDiv()
 
 <template>  
     <template v-for="(target, index) in targets" :key="index">   
-        <EmDateTimePicker :target="target.element" :options="target.options" :parentDiv="target_divs[index]"></EmDateTimePicker>
+        <EmDateTimePicker :target="target.element" :parentDiv="target_divs[index]" :options="target.options"></EmDateTimePicker>
     </template>  
 </template>

@@ -1,11 +1,28 @@
 <script setup>
 import DateTimePicker from './child/DateTimePicker.vue';
 import Modal from './child/Modal.vue';
-import { ref, provide, reactive, defineProps, onMounted } from 'vue';
-let { target, options, parentDiv } = defineProps(['target', 'options', 'parentDiv']);
+import { ref, provide, reactive, defineProps, onMounted, useAttrs } from 'vue';
+let { target, options, parentDiv } = defineProps({
+    target: {
+        type: [HTMLElement, Object],
+        required: true,
+        default: null,
+    },
+    parentDiv: {
+        type: [HTMLElement, Object],
+        required: false,
+        default: null,
+    },
+    options: {
+        type: [Object],
+        required: false,
+        default: {},
+    },
+});
+options = {...options, ...useAttrs()}
+
 let showModal = ref(false);
 let isShowInitilaztionValue = ref(true);
-
 let isMounted = ref(false);
 const picker = reactive({
     // with Single Date
