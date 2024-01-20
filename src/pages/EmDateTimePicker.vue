@@ -18,6 +18,7 @@ let { target, options} = defineProps({
 options = {...options, ...useAttrs()}
 
 let showModal = ref(false);
+let showPicker = ref(false);
 let isShowInitilaztionValue = ref(true);
 let isMounted = ref(false);
 const picker = reactive({
@@ -50,6 +51,7 @@ provide('pickerValues', pickerValues);
 
 onMounted(() => {
     target.addEventListener('click', (e)=> {
+        showModal.value = true;
         showModal.value = true;
     });
 })
@@ -115,7 +117,7 @@ setTeleportDiv()
         </Modal>
     </template>
     <template v-else>
-        <template v-if="true">
+        <template v-if="showPicker">
             <teleport :to="teleportDiv">
                 <DateTimePicker 
                 @cancel="onCancel"

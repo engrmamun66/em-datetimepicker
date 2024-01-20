@@ -84,7 +84,8 @@ const {
     font_dark: color_font_dark,
     font_light: color_font_light,
 } = defaults.colors
-const color_selected_range_bg = color_selected_range_bg + '1c';
+const color_hover_date = color_primary_bg + '8c';
+const color_selected_range_bg = color_primary_bg + '1c';
 
 const OUTPUT_FORMAT = computed(()=>{
     if(defaults.onlyTimePicker) return FORMATS.time;
