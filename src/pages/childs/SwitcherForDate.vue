@@ -48,7 +48,6 @@ function handleClick(value){
 .switches-container {
     width: 100%;
     display: flex;
-    padding: 2px;
     line-height: 1rem;
     border-radius: 0;
     margin-left: auto;

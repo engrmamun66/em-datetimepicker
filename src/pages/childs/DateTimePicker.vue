@@ -227,11 +227,15 @@ function createEvent(eventName, data={}){
     })
 }
 const emitableData = computed(()=>{
-    let { startTime, endTime } = pickerValues;
+    let { startDate, endDate, startTime, endTime } = pickerValues;
     if(defaults.onlyTimePicker){
         return { startTime, endTime };
-    } else {        
-        return pickerValues
+    } else {  
+        if(defaults.timePicker){
+            return pickerValues
+        } else {
+            return { startDate, endDate };
+        }
     }
 });
 
@@ -273,7 +277,7 @@ const fn = {
         emits('changeTime');
         target.dispatchEvent(events.change(data));
     },
-    setElementValue: function() {      
+    setTargetValue: function() {      
         this.changePicker(false) // updating pickerValues 
         let { startDate, endDate, startTime, endTime } = pickerValues;
         let value;
@@ -351,7 +355,7 @@ const fn = {
         }
     },
     onClickApply: function () { 
-        fn.setElementValue();
+        fn.setTargetValue();
         this.changePicker();
         this.closePicker();
     },
@@ -365,7 +369,7 @@ const fn = {
             this.onClickDay({date});
         }
         current_view.value = 'days';
-        fn.setElementValue();
+        fn.setTargetValue();
         this.changePicker();
         this.closePicker();
     },
@@ -438,7 +442,7 @@ const fn = {
     /*                           with time picker emits                           */
     /* -------------------------------------------------------------------------- */
     onInitTimePicker: function (data) {
-        fn.setElementValue();
+        fn.setTargetValue();
     },
     onCloseTimePicker: function (data) { 
         openTimePicker.value = false;
@@ -447,7 +451,7 @@ const fn = {
     onOkTimePicker: function (data) { 
         openTimePicker.value = false;
         fn.changeTime(data);
-        fn.setElementValue();
+        fn.setTargetValue();
         fn.changePicker();
         fn.closePicker();
     },
@@ -519,7 +523,7 @@ onMounted(() => {
             picker.time2.time = makeDate(defaults.endDate, 'hh:mm A');       
         }
 
-        fn.setElementValue();
+        fn.setTargetValue();
         fn.initPicker();
         if(!defaults.onlyTimePicker){
             isMounted.value = true;
