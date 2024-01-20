@@ -96,8 +96,14 @@ function setTeleportDiv() {
     let adjacentPosition = position?.startsWith('top_') ? "beforebegin" : "afterend";
     adjacentPosition = position?.startsWith('bottom_') ? "afterend" : adjacentPosition;
     let div = document.createElement('div');
-    div.style.width = target?.style?.width;
     div.classList = `em-datepicker-wrapper ${position}`
+    div.style.width = target?.style?.width;
+    div.setAttribute('position', position)
+    if(position.startsWith('top_')){
+        div.style.boxShadow = `box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px`;
+    } else {
+        div.style.boxShadow = `box-shadow: rgba(50, 50, 93, 0.25) 0px -13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px`;
+    }
     target.insertAdjacentElement(adjacentPosition, div);
     teleportDiv.value = div;
 }
@@ -148,6 +154,13 @@ setTeleportDiv()
 .em-datepicker-wrapper{
     position: relative;
 }
+.em-datepicker-wrapper.top_left[position^="top_"] > *{
+    box-shadow: rgba(50, 50, 93, 0.25) 0px -13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+.em-datepicker-wrapper.top_left:not([position^="top_"]) > *{
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
 .em-datepicker-wrapper.top_left > *,
 .em-datepicker-wrapper.top_right > *,
 .em-datepicker-wrapper.bottom_left > *,
