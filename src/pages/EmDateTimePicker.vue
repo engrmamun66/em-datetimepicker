@@ -72,7 +72,7 @@ function onChangeTime(data=null) {
 }
 const desplayPositions = ['bottom_left', 'bottom_right', 'top_left', 'top_right'];
 provide('desplayPositions', desplayPositions);
-// let showingPermitInModal = desplayPositions.includes(options?.dispayIn ?? 'modal') == false;
+let showingPermitInModal = desplayPositions.includes(options?.dispayIn ?? 'modal') == false;
 let teleportDiv = ref(null)
 
 function setTeleportDiv() {
@@ -83,6 +83,7 @@ function setTeleportDiv() {
     div.style.position = 'relative';
     div.style.width = target?.style?.width;
     target.insertAdjacentElement(adjacentPosition, div);
+    teleportDiv.value = teleportDiv;
 }
 setTeleportDiv()
 </script>
