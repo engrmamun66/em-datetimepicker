@@ -312,7 +312,7 @@ const fn = {
         }
     },
     onClickApply: function () { 
-        // fn.setElementValue();
+        fn.setElementValue();
         this.changePicker();
         this.closePicker();
     },
@@ -497,7 +497,8 @@ onMounted(() => {
         @init="fn.onInitTimePicker" 
         @close="fn.onCloseTimePicker" 
         @change="fn.onOkTimePicker" 
-        v-if="defaults.timePicker"></TimePicker>
+        v-if="defaults.timePicker">
+        </TimePicker>
     </template>
     <template v-if="!justInitializeValue">
         <!-- days of month -->
