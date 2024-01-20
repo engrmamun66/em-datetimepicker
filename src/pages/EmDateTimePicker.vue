@@ -52,28 +52,32 @@ provide('pickerValues', pickerValues);
 onMounted(() => {
     target.addEventListener('click', (e)=> {
         showModal.value = true;
-        showModal.value = true;
+        showPicker.value = true;
     });
 })
 let emits = defineEmits(['init', 'open', 'cancel', 'close', 'change', 'changeTime']);
 function onCancel(data=null) {
     showModal.value = false;
+    showPicker.value = false;
     emits('cancel', data);
 }
 function onClose(data=null) {
     showModal.value = false;
+    showPicker.value = false;
     emits('close', data);
 }
 function onChange(data=null) {
     showModal.value = false;
+    showPicker.value = false;
     emits('change', data);
 }
 function onChangeTime(data=null) {
     showModal.value = false;
+    showPicker.value = false;
     emits('changeTime', data);
 }
 const desplayPositions = [
-    'bottom_left', 'bottom_right', 'top_left', 'top_right', 
+    'top_left', 'top_right', 'bottom_left', 'bottom_right', 
     'inline_left', 'inline_right', 'inline_center',
 ];
 provide('desplayPositions', desplayPositions);
@@ -84,7 +88,7 @@ function setTeleportDiv() {
     let position = options?.dispayIn;
     if(!position || !desplayPositions.includes(position)) return;  
     let adjacentPosition = position?.startsWith('top_') ? "beforebegin" : "afterend";
-    adjacentPosition = position?.startsWith('bottom_') ? "afterend" : "afterend";
+    adjacentPosition = position?.startsWith('bottom_') ? "afterend" : adjacentPosition;
     let div = document.createElement('div');
     div.style.width = target?.style?.width;
     div.classList = `em-datepicker-wrapper ${position}`
@@ -138,10 +142,10 @@ setTeleportDiv()
 .em-datepicker-wrapper{
     position: relative;
 }
-.em-datepicker-wrapper.bottom_left > *,
-.em-datepicker-wrapper.bottom_right > *,
 .em-datepicker-wrapper.top_left > *,
-.em-datepicker-wrapper.top_right > *
+.em-datepicker-wrapper.top_right > *,
+.em-datepicker-wrapper.bottom_left > *,
+.em-datepicker-wrapper.bottom_right > *
 {
     position: absolute !important;
 }
@@ -153,22 +157,24 @@ setTeleportDiv()
     left: 0;
 }
 
-.em-datepicker-wrapper.bottom_right > *
-{
-    position: absolute !important;
-    top: 0;
-    right: 0;
-}
 .em-datepicker-wrapper.top_left > *
 {
     position: absolute !important;
     bottom: 0;
     left: 0;
 }
+
 .em-datepicker-wrapper.top_right > *
 {
     position: absolute !important;
     bottom: 0;
+    right: 0;
+}
+
+.em-datepicker-wrapper.bottom_right > *
+{
+    position: absolute !important;
+    top: 0;
     right: 0;
 }
 
