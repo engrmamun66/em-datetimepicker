@@ -282,7 +282,11 @@ const fn = {
         let { startDate, endDate, startTime, endTime } = pickerValues;
         let value;
         if(defaults.onlyTimePicker && defaults.timePicker){
-            value = `${startTime}`;
+            if(defaults.rangePicker){
+                value = `${startTime || '12:00 AM'} - ${endTime || '12:00 AM'}`;
+            } else {
+                value = `${startTime || '12:00 AM'}`;
+            }
         } else {
             if(defaults.rangePicker){
                 value = `${startDate} - ${endDate}`;
