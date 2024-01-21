@@ -351,14 +351,14 @@ const color_transparent_2 = color_primary_bg + '1c';
                             <div class="column">
                                 <div @click.stop="ui2.incrHour()"> <i class='bx bx-chevron-up'></i> </div>
                                 <button @click.stop="ui2.expand = 'hours'">
-                                    {{ selectedHour?.id }}
+                                    {{ pad2(selectedHour?.id) }}
                                 </button>
                                 <div @click.stop="ui2.decrHour()"> <i class='bx bx-chevron-down'></i> </div>
                             </div>
                             <div class="column">
                                 <div @click.stop="ui2.incrMinute()"> <i class='bx bx-chevron-up'></i> </div>
                                 <button @click.stop="ui2.expand = 'minutes'">
-                                    {{ selectedMinute?.id }}
+                                    {{ pad2(selectedMinute?.id) }}
                                 </button>
                                 <div @click.stop="ui2.decrMinute()"> <i class='bx bx-chevron-down'></i> </div>
                             </div>
@@ -769,11 +769,19 @@ const color_transparent_2 = color_primary_bg + '1c';
 .okIcon i{
     font-size: 26px;
     color: v-bind(color_primary_bg); 
-    background-color: v-bind(color_body_bg);
     border-radius: 4px;
     padding: 2px 7px;
     box-shadow:#0000001f 0 1px 3px, #0000001c 0 1px 2px;
 }
+.theme-light .closeIcon i,
+.theme-light .okIcon i{
+    background-color: v-bind(color_body_bg);
+}
+.theme-dark .closeIcon i,
+.theme-dark .okIcon i{
+    background-color: v-bind(color_bg_grey);
+}
+
 .clocklet:has(.standard) {
     border: 1px solid v-bind(color_font_light);
     background-color:  v-bind(color_body_bg);
@@ -897,11 +905,17 @@ const color_transparent_2 = color_primary_bg + '1c';
     padding: 16px;
     box-shadow: #0006 0 2px 4px, #0000004d 0 -1px 4px -3px, #0000001c 0 -3px inset;
     border-radius: 6px;
+    background-color: v-bind(color_bg_grey);
+    color: v-bind(color_font_dark);
+    font-weight: 500;
 }
+
 .clocklet-plate.standard .columns .column div i
 {
     font-size: 26px;
+    color: v-bind(color_font_dark);
 }
+ 
 
 @keyframes fadeIn {
   from {
