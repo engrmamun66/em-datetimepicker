@@ -708,6 +708,7 @@ onMounted(() => {
     border-radius: 4px;
     box-shadow: 0 0 22px #fff;
     padding: 2px 7px;
+    box-shadow:#0000001f 0 1px 3px, #0000001c 0 1px 2px;
 }
 .clocklet:has(.standard) {
     border: 1px solid #fff;
@@ -720,11 +721,11 @@ onMounted(() => {
 .okIcon{
     right: 10px;
 }
-:has(.clocklet-plate.standard) .closeIcon{
+.closeIcon:has(~div .clocklet-plate.standard){
     top: 210px !important;
     left: 30px !important;
 }
-:has(.clocklet-plate.standard) .okIcon{
+.okIcon:has(~div .clocklet-plate.standard){
     top: 210px!important;
     right: 30px!important;
 }

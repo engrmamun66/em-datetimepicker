@@ -157,10 +157,10 @@ setTeleportDiv()
 .em-datepicker-wrapper > *:has(.clocklet-container){
     border-radius: 6px;
 }
-.em-datepicker-wrapper.top_left[position^="top_"] > *{
+.em-datepicker-wrapper[position^="top_"] > *{
     box-shadow: rgba(50, 50, 93, 0.25) 0px -13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
-.em-datepicker-wrapper.top_left:not([position^="top_"]) > *{
+.em-datepicker-wrapper:not([position^="top_"]) > *{
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 
