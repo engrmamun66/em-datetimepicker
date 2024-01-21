@@ -694,7 +694,7 @@ const color_transparent_2 = color_primary_bg + '1c';
     color: v-bind(color_font_light);
 }
 
-.theme-dark .clocklet-tick--selected {
+.em-theme-dark .clocklet-tick--selected {
     color: v-bind(color_font_dark);
 }
 
@@ -715,7 +715,7 @@ const color_transparent_2 = color_primary_bg + '1c';
     color: v-bind(color_font_light);
 }
 
-.theme-dark .clocklet-ampm:before {
+.em-theme-dark .clocklet-ampm:before {
     color: v-bind(color_font_dark);
 }
 
@@ -771,7 +771,7 @@ const color_transparent_2 = color_primary_bg + '1c';
 .em-theme-light .backIcon i{
    color: v-bind(color_primary_bg);
 }
-.theme-dark .backIcon i{
+.em-theme-dark .backIcon i{
     font-size: 26px;
    color: v-bind(color_font_dark);
 }
@@ -797,8 +797,8 @@ const color_transparent_2 = color_primary_bg + '1c';
     color: v-bind(color_primary_bg);
     background-color: v-bind(color_body_bg);
 }
-.theme-dark .closeIcon i,
-.theme-dark .okIcon i{
+.em-theme-dark .closeIcon i,
+.em-theme-dark .okIcon i{
     color: v-bind(color_font_dark);
     background-color: v-bind(color_bg_grey);
 }
