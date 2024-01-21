@@ -936,11 +936,18 @@ const color_transparent_2 = color_primary_bg + '1c';
 {
     border: transparent;
     padding: 16px;
-    box-shadow: #0006 0 2px 4px, #0000004d 0 -1px 4px -3px, #0000001c 0 -3px inset;
+    box-shadow: rgb(0 0 0 / 15%) 0px 1px 4px;
     border-radius: 6px;
-    background-color: v-bind(color_bg_grey);
     color: v-bind(color_font_dark);
     font-weight: 500;
+}
+.em-theme-light .clocklet-plate.standard .columns .column button
+{
+    background-color: v-bind(color_body_bg);
+}
+.em-theme-dark .clocklet-plate.standard .columns .column button
+{
+    background-color: v-bind(color_bg_grey);
 }
 
 .clocklet-plate.standard .columns .column div i
