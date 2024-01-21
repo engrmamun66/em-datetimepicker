@@ -3,6 +3,7 @@ import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import App from './App.vue';
 import emDatetimepicker from './EventEmitter';
+import { send_css_in_header, minified_css } from './minified-css';
 import { emitter, utils, components } from './import-hub';
 import moment from 'moment/moment';
 

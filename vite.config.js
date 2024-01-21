@@ -23,12 +23,12 @@ export default defineConfig({
     minify: true,
     chunkSizeWarningLimit: 1600,
     watch: {
-      include: ['src/**', 'templates/**'],
+      include: ['src/**'],
       exclude: 'node_modules/**, .git/**, dist/**, .vscode/**',
     },
     rollupOptions: {
       output: {
-        entryFileNames: 'assets/script.js',
+        entryFileNames: 'assets/em-datetimepicker.js',
         // assetFileNames: 'assets/[name].[ext]',
         assetFileNames: 'assets/style.[ext]',
       },
