@@ -12,6 +12,9 @@ let picker = inject('picker');
 let pickerValues = inject('pickerValues');
 let createEvent = inject('createEvent');
 let openTimePicker = inject('openTimePicker');
+let ui2 = reactive({
+    expand: null, // null | hours | minutes
+});
 
 function makeStepRange(step) {    
     let limit = Math.floor(60 / step)
@@ -288,21 +291,42 @@ onMounted(() => {
 <template>
     <div @click.stop="false" style="width:270px">
         <div class="clocklet-container clocklet-container--inline" style="position:relative">  
-            <!-- <div @click.stop="onClickClose()" class="closeIcon"><i class='bx bx-x' ></i></div>     
-            <div @click.stop="onClickOk()" class="okIcon"><i class='bx bx-check'></i></div>      -->
 
             <template v-if="defaults.timePickerUi == 'standard'">
-                <div class="clocklet clocklet--inline">
-                    <div class="clocklet-plate standard" :class="{ 'need-scroll': [1, 2].includes(defaults.minuteStep) }" >
 
-                        <ul v-if="false" class="all-hours">
+                <template v-if="ui2.expand == null">
+                    <div @click.stop="onClickClose()" class="closeIcon"><i class='bx bx-x' ></i></div>     
+                    <div @click.stop="onClickOk()" class="okIcon"><i class='bx bx-check'></i></div> 
+                </template>    
+
+                <div class="clocklet clocklet--inline">
+                    <div class="clocklet-plate standard" :class="{ 'need-scroll': defaults.minuteStep < 3 && ui2.expand != null }" >
+
+                        <div v-if="ui2.expand == null" class="columns fade-in">
+                            <div class="column">
+                                <div> <i class='bx bx-chevron-up'></i> </div>
+                                <button @click.stop="ui2.expand = 'hours'">12</button>
+                                <div> <i class='bx bx-chevron-down'></i> </div>
+                            </div>
+                            <div class="column">
+                                <div> <i class='bx bx-chevron-up'></i> </div>
+                                <button @click.stop="ui2.expand = 'minutes'">12</button>
+                                <div> <i class='bx bx-chevron-down'></i> </div>
+                            </div>
+                            <div class="column">
+                                <div @click.stop="mode=='am' ? mode='pm' : mode='am'"> <i class='bx bx-chevron-up'></i> </div>
+                                <button @click.stop="mode=='am' ? mode='pm' : mode='am'">{{ mode?.toUpperCase() }}</button>
+                                <div @click.stop="mode=='am' ? mode='pm' : mode='am'"> <i class='bx bx-chevron-down'></i> </div>
+                            </div>
+                        </div>
+                        <ul v-if="ui2.expand == 'hours'" class="all-hours fade-in">
                             <template v-for="(hour, index) in [...hours_position.slice(1), hours_position[0]]" :key="index">
-                                <li>{{ hour.id }}</li>
+                                <li @click.stop="selectedHour = hour; ui2.expand=null">{{ hour.id }}</li>
                             </template>
                         </ul>
-                        <ul v-if="true" class="all-minutes">                        
+                        <ul v-else-if="ui2.expand == 'minutes'" class="all-minutes fade-in">                        
                             <template v-for="(minute, index) in minutes_position" :key="index">
-                                <li v-if="!minute.excluded">{{ minute.id }}</li>
+                                <li v-if="!minute.excluded" @click.stop="selectedMinute = minute; ui2.expand=null">{{ minute.id }}</li>
                             </template>
                         </ul>
                     </div>
@@ -686,9 +710,14 @@ onMounted(() => {
 .okIcon{
     right: 10px;
 }
-
-
-
+:has(.clocklet-plate.standard) .closeIcon{
+    top: 210px !important;
+    left: 30px !important;
+}
+:has(.clocklet-plate.standard) .okIcon{
+    top: 210px!important;
+    right: 30px!important;
+}
 
 .clocklet-plate.standard{
     border-radius: 0 !important;
@@ -742,4 +771,58 @@ onMounted(() => {
 .clocklet-plate.standard.need-scroll::-webkit-scrollbar-thumb:hover {
     background: #b6b6b6;
 }
+
+.clocklet-plate.standard .columns {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 16px;
+    row-gap: 14px;
+}
+
+.clocklet-plate.standard .columns .column{
+    display: grid;
+    text-align: center;
+    row-gap: 0px;
+}
+
+.clocklet-plate.standard .columns .column div
+{
+    cursor: pointer;
+    padding: 15px 5px;
+    border: transparent;
+    background-color: #f5f5f567;
+    transition: all 0.3s;
+}
+.clocklet-plate.standard .columns .column div:first-child:hover
+{
+    box-shadow: 0px -12px 15px #0202022a;
+}
+.clocklet-plate.standard .columns .column div:last-child:hover
+{
+    box-shadow: 0px 12px 15px #0202022a;
+}
+.clocklet-plate.standard .columns .column button
+{
+    border: transparent;
+    padding: 16px;
+
+}
+.clocklet-plate.standard .columns .column div i
+{
+    font-size: 26px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 1s ease-in-out; /* Adjust the duration and timing function as needed */
+}
+
 </style>
