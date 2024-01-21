@@ -82,6 +82,7 @@ const defaults = {
     dispayIn: ((options?.dispayIn && desplayPositions.includes(options?.dispayIn ?? 'modal'))) ? options?.dispayIn : 'modal', 
     theme: theme,
     colors: {
+        // Just change -----> [primary_bg] to adjust color according any theme color
         body_bg: isHexColor(options?.colors?.body_bg) ? options?.colors?.body_bg : (theme=='light' ? color_vars_light.body_bg : '#0d111e'),
         primary_bg: isHexColor(options?.colors?.primary_bg) ? options?.colors?.primary_bg : (theme=='light' ? color_vars_light.primary_bg : color_vars_light.primary_bg),
         bg_grey: isHexColor(options?.colors?.bg_grey) ? options?.colors?.bg_grey : (theme=='light' ? color_vars_light.bg_grey : '#282f36'),
