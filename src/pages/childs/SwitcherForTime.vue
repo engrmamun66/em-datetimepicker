@@ -10,6 +10,7 @@ let { forDate } = defineProps({
 const startText = 'Start Time';
 const endText ='End Time';
 
+let theme = inject('theme');
 let defaults = inject('defaults');
 let picker = inject('picker');
 let selectingStartTime = inject('selectingStartTime');
@@ -42,7 +43,7 @@ const color_transparent_2 = color_primary_bg + '1c';
         <input type="radio" name="switchPlan" value="right" :checked="!selectingStartTime" />
         <label for="startTime" @click.stop="handleClick('left')">{{ startText }}</label>
         <label for="EndTime" @click.stop="handleClick('right')">{{ endText }}</label>
-        <div class="switch-wrapper">
+        <div class="switch-wrapper" :class="{[`theme-${theme}`]: true}">
             <div class="switch" :class="{right: selectingStartTime===false}">
                 <div>{{ startText }}</div>
                 <div>{{ endText }}</div>
@@ -137,18 +138,28 @@ const color_transparent_2 = color_primary_bg + '1c';
 }
 
 
-.switches-container input:nth-of-type(1)~.switch-wrapper .switch div:nth-of-type(1) {
+.switches-container input:nth-of-type(1)~.switch-wrapper.theme-light .switch div:nth-of-type(1) {
     opacity: 1;
+    color: v-bind(color_font_light);
 }
+.switches-container input:nth-of-type(1)~.switch-wrapper.theme-dark .switch div:nth-of-type(1) {
+    opacity: 1;
+    color: v-bind(color_font_dark);
+}
+
 .switches-container input:nth-of-type(1)~.switch-wrapper .switch div:nth-of-type(2) {
     opacity: 0;
 }
 
-.switches-container input:nth-of-type(2):checked~.switch-wrapper .switch div:nth-of-type(2) {
+.switches-container input:nth-of-type(2):checked~.switch-wrapper.theme-light .switch div:nth-of-type(2) {
     opacity: 1;
+    color: v-bind(color_font_light);
+}
+.switches-container input:nth-of-type(2):checked~.switch-wrapper.theme-dark .switch div:nth-of-type(2) {
+    opacity: 1;
+    color: v-bind(color_font_dark);
 }
 .switches-container input:nth-of-type(2):checked~.switch-wrapper .switch div:nth-of-type(1) {
     opacity: 0;
 }
-
 </style>

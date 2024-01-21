@@ -63,8 +63,11 @@
             use24Format: false,
         }
 
+        let theme = 'light';
+        // let theme = 'dark';
         // left col-6
         emDatetimepicker.init('#input1', {
+            theme,
             // rangePicker: true,
             timePicker: true,
             // onlyTimePicker: true,
@@ -73,7 +76,7 @@
             rangePicker: true,
             timePicker: true,
             // onlyTimePicker: true,
-            // theme: 'dark',
+            theme,
             dispayIn: 'bottom_left',
             colors: {
                 primary_bg: '#12834f',
@@ -81,17 +84,20 @@
         });
         emDatetimepicker.init('#input3', {
             rangePicker: true,
+            theme,
             // timePicker: true,
             // onlyTimePicker: true,
         });
         emDatetimepicker.init('#input4', {
             rangePicker: true,
             timePicker: true,
+            theme,
             onlyTimePicker: true,
             timePickerUi: 'classic',
             dispayIn: 'bottom_left',
         });
         emDatetimepicker.init('#input5', {
+            theme,
             rangePicker: true,
             timePicker: true,
             onlyTimePicker: true,

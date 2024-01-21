@@ -3,6 +3,7 @@ import { ref, defineProps, inject, onMounted } from 'vue';
 const startText = 'Start Date';
 const endText = 'End Date';
 
+let theme = inject('theme');
 let defaults = inject('defaults');
 let picker = inject('picker');
 let selectingStartDate = inject('selectingStartDate');
@@ -33,7 +34,7 @@ const color_transparent_2 = color_primary_bg + '1c';
         <input type="radio" name="switchPlan" value="right" :checked="!selectingStartDate" />
         <label for="switchStartDate" @click.stop="handleClick('from_left')">{{ startText }}</label>
         <label for="switchEndDate" @click.stop="handleClick('from_right')">{{ endText }}</label>
-        <div class="switch-wrapper">
+        <div class="switch-wrapper" :class="{[`theme-${theme}`]: true}">
             <div class="switch">
                 <div>{{ startText }}</div>
                 <div>{{ endText }}</div>
@@ -99,7 +100,7 @@ const color_transparent_2 = color_primary_bg + '1c';
 
 .switch {
     border-radius: 0px;
-    background: v-bind(color_transparent_1);
+    background: v-bind(color_primary_bg);
     height: 100%;
 }
 
@@ -107,14 +108,15 @@ const color_transparent_2 = color_primary_bg + '1c';
     width: 100%;
     opacity: 0;
     display: block;
-    color: transparent;
     will-change: opacity;
     position: absolute;
     text-align: center;
     transition: opacity .2s cubic-bezier(.77,0,.175,1) .125s;
-    top: 8px;
+    color: v-bind(color_font_light);
+    top: 7px;
     left: 0;
 }
+
 
 .switches-container input:nth-of-type(1):checked~.switch-wrapper {
     transform: translateX(0%);
@@ -125,15 +127,26 @@ const color_transparent_2 = color_primary_bg + '1c';
 }
 
 
-.switches-container input:nth-of-type(1)~.switch-wrapper .switch div:nth-of-type(1) {
+.switches-container input:nth-of-type(1)~.switch-wrapper.theme-light .switch div:nth-of-type(1) {
     opacity: 1;
+    color: v-bind(color_font_light);
 }
+.switches-container input:nth-of-type(1)~.switch-wrapper.theme-dark .switch div:nth-of-type(1) {
+    opacity: 1;
+    color: v-bind(color_font_dark);
+}
+
 .switches-container input:nth-of-type(1)~.switch-wrapper .switch div:nth-of-type(2) {
     opacity: 0;
 }
 
-.switches-container input:nth-of-type(2):checked~.switch-wrapper .switch div:nth-of-type(2) {
+.switches-container input:nth-of-type(2):checked~.switch-wrapper.theme-light .switch div:nth-of-type(2) {
     opacity: 1;
+    color: v-bind(color_font_light);
+}
+.switches-container input:nth-of-type(2):checked~.switch-wrapper.theme-dark .switch div:nth-of-type(2) {
+    opacity: 1;
+    color: v-bind(color_font_dark);
 }
 .switches-container input:nth-of-type(2):checked~.switch-wrapper .switch div:nth-of-type(1) {
     opacity: 0;

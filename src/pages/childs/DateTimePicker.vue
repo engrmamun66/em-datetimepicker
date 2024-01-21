@@ -48,6 +48,14 @@ const FORMATS = {
     monthShort: 'MMM',
     time: options?.timeFormat ?? (options?.use24Format ? 'HH:mm' : 'hh:mm A'),
 };
+const color_vars_light = {
+    body_bg: '#ffffff',
+    primary_bg: '#12834f',
+    bg_grey: '#e2e3ee',
+    font_dark: '#444444',
+    font_dark_low: '#777777',
+    font_light: '#efefef',
+};
 const defaults = {
     rangePicker: options?.rangePicker ?? false,
     displayFormat: options.onlyTimePicker ? FORMATS.time : (FORMATS.forDisplay + (options?.timePicker ? (' ' + FORMATS.time) : '')),
@@ -74,17 +82,17 @@ const defaults = {
     dispayIn: ((options?.dispayIn && desplayPositions.includes(options?.dispayIn ?? 'modal'))) ? options?.dispayIn : 'modal', 
     theme: theme,
     colors: {
-        body_bg: isHexColor(options?.colors?.body_bg) ? options?.colors?.body_bg : (theme=='light' ? '#ffffff' : '#0d111e'),
-        primary_bg: isHexColor(options?.colors?.primary_bg) ? options?.colors?.primary_bg : '#12834f',
-        bg_grey: isHexColor(options?.colors?.bg_grey) ? options?.colors?.bg_grey : '#e2e3ee',
-        font_dark: isHexColor(options?.colors?.font_dark) ? options?.colors?.font_dark : '#444444',
-        font_dark_low: isHexColor(options?.colors?.font_dark) ? options?.colors?.font_dark : '#777777',
-        font_light: isHexColor(options?.colors?.font_light) ? options?.colors?.font_light : '#efefef',
+        body_bg: isHexColor(options?.colors?.body_bg) ? options?.colors?.body_bg : (theme=='light' ? color_vars_light.body_bg : '#0d111e'),
+        primary_bg: isHexColor(options?.colors?.primary_bg) ? options?.colors?.primary_bg : (theme=='light' ? color_vars_light.primary_bg : color_vars_light.primary_bg),
+        bg_grey: isHexColor(options?.colors?.bg_grey) ? options?.colors?.bg_grey : (theme=='light' ? color_vars_light.bg_grey : '#282f36'),
+        font_dark: isHexColor(options?.colors?.font_dark) ? options?.colors?.font_dark : (theme=='light' ? color_vars_light.font_dark : color_vars_light.font_light),
+        font_dark_low: isHexColor(options?.colors?.font_dark_low) ? options?.colors?.font_dark_low : (theme=='light' ? color_vars_light.font_dark_low : color_vars_light.font_dark_low),
+        font_light: isHexColor(options?.colors?.font_light) ? options?.colors?.font_light : (theme=='light' ? color_vars_light.font_light : color_vars_light.font_dark),
     },
 };
 
 /**
- * This color variable must be same all .vue files 
+ * This color variable must be samcolor_vars*.ll .vue files 
  * ...............
  * DateTimePicker.vue
  * TimePicker.vue
@@ -597,6 +605,7 @@ onMounted(() => {
                                     'date-in-selected-range': fn.isInSelectedDate(monthDay),
                                     'hover-date': fn.isHoverDate(monthDay),
                                     'not-in-minmax-date': !fn.isInMinMaxDate(monthDay.date),
+                                    ['theme-' + theme]: true,
                                 }">
                                     {{ monthDay.day_index }}
                                 </div>
@@ -609,6 +618,7 @@ onMounted(() => {
                                 :class="{ 
                                     'active': monthDay.currentMonth && (new Date(picker.date1).getDate() == monthDay.day_index) ,
                                     'offset-date': !monthDay.currentMonth,
+                                    ['theme-' + theme]: true,
                                 }">
                                     {{ monthDay.day_index }}
                                 </div>
@@ -758,7 +768,7 @@ header i:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: v-bind(color_font_dark_low);
+    color: v-bind(color_font_dark);
     transition: all 300ms;
 }
 .main-months>div.offset-date:not(.start-date):not(.end-date):not(.date-in-selected-range),
@@ -779,24 +789,50 @@ div.hover-date {
     border-radius: 0px !important;
 }
 
+main.box>div:not(.offset-date),
+main.box>div:not(.offset-date).active 
+{
+    border-radius: 4px;
+}
+
 main.box>div:not(.offset-date).active {
     background: v-bind(color_primary_bg);
-    border-radius: 8px;
     font-weight: 700;
-    color: v-bind(color_font_light);
     position: relative;
+}
+
+main.box>div:not(.offset-date).theme-light.active {
+    color: v-bind(color_font_light) !important;
+}
+
+main.box>div:not(.offset-date).theme-dark.active {
+    color: v-bind(color_font_dark) !important;
 }
 
 main.box>div.start-date {
     background: v-bind(color_primary_bg);
-    color: v-bind(color_font_light) !important;
     border-radius: 8px 0px 0px 8px;
+}
+
+main.box>div.start-date.theme-light {
+    color: v-bind(color_font_light) !important;
+}
+
+main.box>div.start-date.theme-dark {
+    color: v-bind(color_font_dark) !important;
 }
 
 main.box>div.end-date {
     background: v-bind(color_primary_bg);
-    color: v-bind(color_font_light) !important;
     border-radius: 0px 8px 8px 0px;
+}
+
+main.box>div.end-date.theme-light {
+    color: v-bind(color_font_light) !important;
+}
+
+main.box>div.end-date.theme-dark {
+    color: v-bind(color_font_dark) !important;
 }
 
 main.box>div.date-in-selected-range {
