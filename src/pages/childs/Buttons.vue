@@ -10,8 +10,7 @@ let { defaults, applyBtn } = defineProps({
         default: true,        
     },
 });
-
-
+const theme = inject('theme');
 const {
     body_bg: color_body_bg,
     primary_bg: color_primary_bg,
@@ -50,7 +49,7 @@ let openTimePicker = inject('openTimePicker');
                 </div>
                  <div class="buttons">
                     <button v-if="defaults.buttons?.cancelBtn" class="btn-cancel" @click.stop="handleClick('cancel')">{{ defaults.buttons?.cancelBtn }}</button>
-                    <button v-if="defaults.buttons?.applyBtn && applyBtn" class="btn-apply" @click.stop="handleClick('apply')">{{ defaults.buttons?.applyBtn }}</button>
+                    <button v-if="defaults.buttons?.applyBtn && applyBtn" class="btn-apply" :class="{[`theme-${theme}`]: true}" @click.stop="handleClick('apply')">{{ defaults.buttons?.applyBtn }}</button>
                 </div>
             </div>           
         </template>
@@ -58,7 +57,7 @@ let openTimePicker = inject('openTimePicker');
             <div class="buttons">
                 <button v-if="defaults.timePicker" class="pick-time" @click="openTimePicker=true"><i class='bx bx-time'></i> Pick Time</button>
                 <button v-if="defaults.buttons?.cancelBtn" class="btn-cancel" @click.stop="handleClick('cancel')">{{ defaults.buttons?.cancelBtn }}</button>
-                <button v-if="defaults.buttons?.applyBtn && applyBtn" class="btn-apply" @click.stop="handleClick('apply')">{{ defaults.buttons?.applyBtn }}</button>
+                <button v-if="defaults.buttons?.applyBtn && applyBtn" class="btn-apply" :class="{[`theme-${theme}`]: true}" @click.stop="handleClick('apply')">{{ defaults.buttons?.applyBtn }}</button>
             </div>
         </template>
     </template>
@@ -96,7 +95,14 @@ button:has(~button){
 
 .btn-apply
 {
-    color: v-bind(color_font_light);
     background-color: v-bind(color_primary_bg);
+}
+.btn-apply.theme-light
+{
+    color: v-bind(color_font_light);
+}
+.btn-apply.theme-dark
+{
+    color: v-bind(color_font_dark);
 }
 </style>

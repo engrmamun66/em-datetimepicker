@@ -334,7 +334,7 @@ const color_transparent_2 = color_primary_bg + '1c';
 </script>
 
 <template>
-    <div @click.stop="false" style="width:270px" :class="{[`theme-${theme}`]: true}">
+    <div @click.stop="false" style="width:270px" :class="{[`em-theme-${theme}`]: true}">
         <div class="clocklet-container clocklet-container--inline" style="position:relative">  
 
             <template v-if="defaults.timePickerUi == 'standard'">
@@ -690,7 +690,7 @@ const color_transparent_2 = color_primary_bg + '1c';
     background-color: v-bind(color_primary_bg);
 }
 
-.theme-light .clocklet-tick--selected {
+.em-theme-light .clocklet-tick--selected {
     color: v-bind(color_font_light);
 }
 
@@ -711,7 +711,7 @@ const color_transparent_2 = color_primary_bg + '1c';
     font-size: 13px;
 }
 
-.theme-light .clocklet-ampm:before {
+.em-theme-light .clocklet-ampm:before {
     color: v-bind(color_font_light);
 }
 
@@ -768,7 +768,7 @@ const color_transparent_2 = color_primary_bg + '1c';
     cursor: pointer; 
     text-align: center;
 }
-.theme-light .backIcon i{
+.em-theme-light .backIcon i{
    color: v-bind(color_primary_bg);
 }
 .theme-dark .backIcon i{
@@ -792,8 +792,8 @@ const color_transparent_2 = color_primary_bg + '1c';
     padding: 2px 7px;
     box-shadow:#0000001f 0 1px 3px, #0000001c 0 1px 2px;
 }
-.theme-light .closeIcon i,
-.theme-light .okIcon i{
+.em-theme-light .closeIcon i,
+.em-theme-light .okIcon i{
     color: v-bind(color_primary_bg);
     background-color: v-bind(color_body_bg);
 }
