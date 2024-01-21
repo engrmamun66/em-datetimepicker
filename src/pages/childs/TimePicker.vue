@@ -12,9 +12,6 @@ let picker = inject('picker');
 let pickerValues = inject('pickerValues');
 let createEvent = inject('createEvent');
 let openTimePicker = inject('openTimePicker');
-let ui2 = reactive({
-    expand: null, // null | hours | minutes
-});
 
 function makeStepRange(step) {    
     let limit = Math.floor(60 / step)
@@ -100,6 +97,42 @@ let selectedMinute = computed({
         }
     },
 })
+let ui2 = reactive({
+    expand: null, // null | hours | minutes
+    incrHour: function(){
+        let hour = selectedHour.value; 
+        let index = hours_position.findIndex(item => item.id == hour.id);
+        index = index + 1;
+        if(index > 11) index = 0;
+        selectedHour.value = hours_position[index];
+    
+    },
+    decrHour: function(){
+        let hour = selectedHour.value;        
+        let index = hours_position.findIndex(item => item.id == hour.id);
+        index = index - 1;
+        if(index < 0) index = 11;
+        selectedHour.value = hours_position[index];              
+    },
+    incrMinute: function(){
+        let {id, value} = selectedMinute.value; 
+        let indexInSteps = steps.value.findIndex(m => m==value);
+        let rightPartOfSteps = steps.value.slice(indexInSteps);
+        let next_minute = rightPartOfSteps?.[1] || steps.value[0];
+        let index = minutes_position.findIndex(m => m.id == next_minute);           
+        selectedMinute.value = minutes_position[index];
+    },
+    decrMinute: function(){
+        let {id, value} = selectedMinute.value; 
+        let indexInSteps = steps.value.findIndex(m => m==value);
+        let leftPartOfSteps = steps.value.slice(0, indexInSteps);
+        let next_minute = leftPartOfSteps?.[leftPartOfSteps.length - 1] || steps.value[steps.value?.length - 1];
+        let index = minutes_position.findIndex(m => m.id == next_minute);           
+        selectedMinute.value = minutes_position[index];     
+    },
+});
+
+
 let centerOfclick = ref(null);
 
 function latestHourAndMinute(){
@@ -304,18 +337,18 @@ onMounted(() => {
 
                         <div v-if="ui2.expand == null" class="columns fade-in">
                             <div class="column">
-                                <div> <i class='bx bx-chevron-up'></i> </div>
+                                <div @click.stop="ui2.incrHour()"> <i class='bx bx-chevron-up'></i> </div>
                                 <button @click.stop="ui2.expand = 'hours'">
                                     {{ selectedHour?.id }}
                                 </button>
-                                <div> <i class='bx bx-chevron-down'></i> </div>
+                                <div @click.stop="ui2.decrHour()"> <i class='bx bx-chevron-down'></i> </div>
                             </div>
                             <div class="column">
-                                <div> <i class='bx bx-chevron-up'></i> </div>
+                                <div @click.stop="ui2.incrMinute()"> <i class='bx bx-chevron-up'></i> </div>
                                 <button @click.stop="ui2.expand = 'minutes'">
                                     {{ selectedMinute?.id }}
                                 </button>
-                                <div> <i class='bx bx-chevron-down'></i> </div>
+                                <div @click.stop="ui2.decrMinute()"> <i class='bx bx-chevron-down'></i> </div>
                             </div>
                             <div class="column">
                                 <div @click.stop="mode=='am' ? mode='pm' : mode='am'"> <i class='bx bx-chevron-up'></i> </div>
