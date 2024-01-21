@@ -356,16 +356,22 @@ onMounted(() => {
                                 <div @click.stop="mode=='am' ? mode='pm' : mode='am'"> <i class='bx bx-chevron-down'></i> </div>
                             </div>
                         </div>
-                        <ul v-if="ui2.expand == 'hours'" class="all-hours fade-in">
-                            <template v-for="(hour, index) in [...hours_position.slice(1), hours_position[0]]" :key="index">
-                                <li @click.stop="selectedHour = hour; ui2.expand=null">{{ hour.id }}</li>
-                            </template>
-                        </ul>
-                        <ul v-else-if="ui2.expand == 'minutes'" class="all-minutes fade-in">                        
-                            <template v-for="(minute, index) in minutes_position" :key="index">
-                                <li v-if="!minute.excluded" @click.stop="selectedMinute = minute; ui2.expand=null">{{ minute.id }}</li>
-                            </template>
-                        </ul>
+                        <template v-if="ui2.expand == 'hours'">
+                            <div class="label-of-selection">Select Hour</div>
+                            <ul class="all-hours fade-in">
+                                <template v-for="(hour, index) in [...hours_position.slice(1), hours_position[0]]" :key="index">
+                                    <li @click.stop="selectedHour = hour; ui2.expand=null">{{ hour.id }}</li>
+                                </template>
+                            </ul>
+                        </template>
+                        <template v-else-if="ui2.expand == 'minutes'" >
+                            <div class="label-of-selection">Select Minute</div>
+                            <ul class="all-minutes fade-in">                        
+                                <template v-for="(minute, index) in minutes_position" :key="index">
+                                    <li v-if="!minute.excluded" @click.stop="selectedMinute = minute; ui2.expand=null">{{ minute.id }}</li>
+                                </template>
+                            </ul>
+                        </template>
                     </div>
                 </div>
             </template>
@@ -771,6 +777,13 @@ onMounted(() => {
 
 .clocklet-plate.standard.need-scroll{
     overflow-y: scroll;
+}
+
+.clocklet-plate.standard .label-of-selection{
+    text-align: center;
+    font-size: 18px;
+    color: #444;
+    margin-bottom: 15px;
 }
 
 .clocklet-plate.standard ul.all-hours{
