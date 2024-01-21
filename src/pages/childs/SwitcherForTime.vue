@@ -112,7 +112,7 @@ const color_transparent_2 = color_primary_bg + '1c';
 
 .switch {
     border-radius: 0px;
-    background: v-bind(color_transparent_1);
+    background: v-bind(color_primary_bg);
     height: 100%;
 }
 
@@ -120,7 +120,6 @@ const color_transparent_2 = color_primary_bg + '1c';
     width: 100%;
     opacity: 0;
     display: block;
-    color: transparent;
     position: absolute;
     text-align: center;
     will-change: opacity;
