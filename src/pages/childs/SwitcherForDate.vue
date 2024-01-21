@@ -107,7 +107,7 @@ const color_transparent_2 = color_primary_bg + '1c';
     width: 100%;
     opacity: 0;
     display: block;
-    color: v-bind(color_font_dark_low);
+    color: transparent;
     will-change: opacity;
     position: absolute;
     text-align: center;

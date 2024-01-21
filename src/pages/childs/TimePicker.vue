@@ -319,6 +319,17 @@ onMounted(() => {
     }
 })
 
+const {
+    body_bg: color_body_bg,
+    primary_bg: color_primary_bg,
+    bg_grey: color_bg_grey,
+    font_dark: color_font_dark,
+    font_dark_low: color_font_dark_low,
+    font_light: color_font_light,
+} = defaults.colors
+const color_transparent_1 = color_primary_bg + '3d';
+const color_transparent_2 = color_primary_bg + '1c';
+
 </script>
 
 <template>
@@ -647,8 +658,8 @@ onMounted(() => {
 }
 
 .clocklet {
-    border: 1px solid #ddd;
-    background-color: #eee
+    border: 1px solid v-bind(color_font_light);
+    background-color: v-bind(color_bg_grey);
 }
 
 [data-clocklet-placement=top] {
@@ -660,38 +671,38 @@ onMounted(() => {
 }
 
 .clocklet-plate {
-    background-color: #fff
+    background-color: v-bind(color_body_bg);
 }
 
 .clocklet-hand {
-    background-color: #a1ddff
+    background-color: v-bind(color_transparent_1);
 }
 
 .clocklet-hand-origin {
-    background-color: #4bf
+    background-color: v-bind(color_primary_bg);
 }
 
 .clocklet-tick--selected {
-    background-color: #6200EE;
-    color: #fff
+    background-color: v-bind(color_primary_bg);
+    color: v-bind(color_font_light);
 }
 
 .clocklet--hoverable:not(.clocklet--dragging) .clocklet-tick:hover {
-    background-color: #7ccfff
+    background-color: v-bind(color_transparent_2);
 }
 
 .clocklet-ampm {
-    background-color: hsla(0, 0%, 80%, .6)
+    background-color: v-bind(color_bg_grey);
 }
 
 .clocklet-ampm:before {
-    background-color: #6200EE;
-    color: #fff;
+    background-color: v-bind(color_primary_bg);
+    color: v-bind(color_font_light);
     font-size: 13px;
 }
 
 .clocklet-ampm:hover:before {
-    background-color: #7ccfff
+    background-color: v-bind(color_primary_bg);
 }
 
 
@@ -718,7 +729,7 @@ onMounted(() => {
 .display-time div{
     width: 2px;
     height: 100%;
-    background-color: #e4e4e4;   
+    background-color: v-bind(color_transparent_2);   
 }
 
 .pick-the-time{
@@ -726,8 +737,8 @@ onMounted(() => {
     text-align: center;
     padding: 8px;
     border: transparent;
-    background: #e2e2e2;
-    color: #444;
+    background: v-bind(color_transparent_2);  
+    color: v-bind(color_font_dark);  
     text-transform: capitalize;
 }
 .closeIcon,
@@ -742,16 +753,15 @@ onMounted(() => {
 .closeIcon i,
 .okIcon i{
     font-size: 26px;
-    color: #777;
-    background-color: #ececec;
+    color: v-bind(color_primary_bg); 
+    background-color: v-bind(color_bg_grey);
     border-radius: 4px;
-    box-shadow: 0 0 22px #fff;
     padding: 2px 7px;
     box-shadow:#0000001f 0 1px 3px, #0000001c 0 1px 2px;
 }
 .clocklet:has(.standard) {
-    border: 1px solid #fff;
-    background-color: #fff;
+    border: 1px solid v-bind(color_font_light);
+    background-color:  v-bind(color_body_bg);
 }
 
 .closeIcon{
@@ -782,7 +792,7 @@ onMounted(() => {
 .clocklet-plate.standard .label-of-selection{
     text-align: center;
     font-size: 18px;
-    color: #444;
+    color: v-bind(color_font_dark);
     margin-bottom: 15px;
 }
 
@@ -797,7 +807,7 @@ onMounted(() => {
 }
 .clocklet-plate.standard ul.all-hours li{
     padding: 5px;
-    background-color: #f3f3f3;
+    background-color: v-bind(color_body_bg);
     text-align: center;
     cursor: pointer;
     border-radius: 3px;
@@ -814,7 +824,7 @@ onMounted(() => {
 }
 .clocklet-plate.standard ul.all-minutes li{
     padding: 5px;
-    background-color: #f3f3f3;
+    background-color: v-bind(color_bg_grey);
     text-align: center;
     cursor: pointer;
     border-radius: 3px;
@@ -847,7 +857,7 @@ onMounted(() => {
     cursor: pointer;
     padding: 15px 5px;
     border: transparent;
-    background-color: #f5f5f567;
+    background-color: v-bind(color_bg_grey);
     transition: all 0.3s;
 }
 .clocklet-plate.standard .columns .column div:first-child

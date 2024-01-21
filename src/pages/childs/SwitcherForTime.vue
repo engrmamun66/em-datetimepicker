@@ -22,6 +22,18 @@ function handleClick(value){
         selectingStartTime.value = false;
     }
 }
+
+const {
+    body_bg: color_body_bg,
+    primary_bg: color_primary_bg,
+    bg_grey: color_bg_grey,
+    font_dark: color_font_dark,
+    font_dark_low: color_font_dark_low,
+    font_light: color_font_light,
+} = defaults.colors
+const color_transparent_1 = color_primary_bg + '3d';
+const color_transparent_2 = color_primary_bg + '1c';
+
 </script>
 
 <template>
@@ -47,7 +59,7 @@ function handleClick(value){
     padding: 0px;
     margin-left: auto;
     margin-right: auto;
-    background-color: #f9f9f9;
+    background-color: v-bind(color_bg_grey);
 }
 
 /* container for all of the switch elements 
@@ -60,7 +72,7 @@ function handleClick(value){
     border-radius: 0;
     margin-left: auto;
     margin-right: auto;
-    background-color: #fafafa;
+    background-color: v-bind(color_bg_grey);
     position: relative;
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
@@ -81,7 +93,7 @@ function handleClick(value){
     margin: 0;
     text-align: center;
     cursor: pointer;
-    color: #ccc;
+    color: v-bind(color_font_dark);
 }
 
 /* switch highlighters wrapper (sliding left / right) 
@@ -99,7 +111,7 @@ function handleClick(value){
 
 .switch {
     border-radius: 0px;
-    background: #e2e3ee;
+    background: v-bind(color_transparent_1);
     height: 100%;
 }
 
@@ -107,7 +119,7 @@ function handleClick(value){
     width: 100%;
     opacity: 0;
     display: block;
-    color: #444;
+    color: transparent;
     position: absolute;
     text-align: center;
     will-change: opacity;
