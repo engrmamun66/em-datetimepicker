@@ -9,6 +9,7 @@ const isMounted = inject('isMounted');
 const picker = inject('picker');
 const pickerValues = inject('pickerValues');
 const desplayPositions = inject('desplayPositions');
+const isHexColor = inject('isHexColor');
 let emits = defineEmits(['init', 'open', 'cancel', 'close', 'change', 'changeTime']);
 let { target, options, teleportDiv, justInitializeValue } = defineProps({
     target: {
@@ -71,10 +72,10 @@ const defaults = {
     endTimeAutoValid: options?.endTimeAutoValid ?? true,
     dispayIn: ((options?.dispayIn && desplayPositions.includes(options?.dispayIn ?? 'modal'))) ? options?.dispayIn : 'modal', 
     colors: {
-        body_bg: options?.colors?.body_bg ?? '#ffffff',
-        primary_bg: options?.colors?.primary_bg ?? '#6200EE',
-        font_dark: options?.colors?.font_dark ?? '#444444',
-        font_light: options?.colors?.font_light ?? '#ffffff',
+        body_bg: isHexColor(options?.colors?.body_bg) || '#ffffff',
+        primary_bg: isHexColor(options?.colors?.primary_bg) || '#6200EE',
+        font_dark: isHexColor(options?.colors?.font_dark) || '#444444',
+        font_light: isHexColor(options?.colors?.font_light) || '#ffffff',
 
     },
 };
@@ -674,7 +675,7 @@ onMounted(() => {
     grid-template-rows: 40px 1fr;
     gap: 20px;
     padding: 32px;
-    background-color: #fff;
+    background-color: v-bind(color_body_bg);
     box-shadow: 0px 8px 32px rgba(0, 0, 0, .16);
     border-radius: 6px;
     width: fit-content;
@@ -685,13 +686,13 @@ header {
     align-items: center;
     justify-content: space-between;
     font-weight: 700;
-    color: #333;
+    color: v-bind(color_font_dark);
 }
 
 header i {
     padding: 16px;
     border-radius: 50%;
-    color: #666;
+    color: v-bind(color_font_dark);
     font-size: 20px;
     cursor: pointer;
 }

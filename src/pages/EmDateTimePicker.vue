@@ -108,6 +108,12 @@ function setTeleportDiv() {
     teleportDiv.value = div;
 }
 setTeleportDiv()
+function isHexColor(color){
+    if(!color) return false;
+    if(!(typeof color == 'string')) return false;
+    return color.startsWith('#') && color.length == 7;
+}
+provide('isHexColor', isHexColor)
 </script>
 
 <template>

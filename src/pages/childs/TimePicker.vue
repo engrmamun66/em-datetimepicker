@@ -672,7 +672,7 @@ onMounted(() => {
 }
 
 .clocklet-tick--selected {
-    background-color: #57c2ff;
+    background-color: #6200EE;
     color: #fff
 }
 
@@ -685,7 +685,7 @@ onMounted(() => {
 }
 
 .clocklet-ampm:before {
-    background-color: #57c2ff;
+    background-color: #6200EE;
     color: #fff;
     font-size: 13px;
 }
@@ -734,7 +734,7 @@ onMounted(() => {
 .okIcon{
     position: absolute;
     top: 230px;
-    z-index: 999999;
+    z-index: 1;
     padding: 5px;
     cursor: pointer;
     
