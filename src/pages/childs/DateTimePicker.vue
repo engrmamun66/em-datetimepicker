@@ -553,7 +553,7 @@ onMounted(() => {
                     <Switcher v-if="defaults.rangePicker"></Switcher>
                     <main class="main-weekdays">
                         <template v-for="(day, index) in weekDays" :key="index">
-                            <div class="active">{{ day }}</div>            
+                            <div class="active fade-in">{{ day }}</div>            
                         </template>
                     </main>
                     <main class="main-days box" :class="{'rangePicker': defaults.rangePicker}">
@@ -570,6 +570,7 @@ onMounted(() => {
                                     }
                                 }"
                                 @mouseenter="hoverDate = monthDay.date"
+                                class="fade-in"
                                 :class="{ 
                                     'active':  (picker.date1 === picker.date2) && (picker.date1 === monthDay.date),
                                     'offset-date': !monthDay.currentMonth,
@@ -586,6 +587,7 @@ onMounted(() => {
                                 <div 
                                 @click.stop="fn.onClickDay(monthDay)"
                                 @dblclick.stop="fn.onClickApply()"
+                                class="fade-in"
                                 :class="{ 
                                     'active': monthDay.currentMonth && (new Date(picker.date1).getDate() == monthDay.day_index) ,
                                     'offset-date': !monthDay.currentMonth,
@@ -851,6 +853,19 @@ div:has(>.time-picker-display-area){
     opacity: 1;
     transform: translate(0%, 0%) scale(1);
   }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out; /* Adjust the duration and timing function as needed */
 }
 </style>
 
