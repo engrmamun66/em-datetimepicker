@@ -10,6 +10,21 @@ let { defaults, applyBtn } = defineProps({
         default: true,        
     },
 });
+
+
+const {
+    body_bg: color_body_bg,
+    primary_bg: color_primary_bg,
+    bg_grey: color_bg_grey,
+    font_dark: color_font_dark,
+    font_dark_low: color_font_dark_low,
+    font_light: color_font_light,
+} = defaults.colors
+const color_transparent_1 = color_primary_bg + '3d';
+const color_transparent_2 = color_primary_bg + '1c';
+
+
+
 let emits = defineEmits(['onCancel', 'onApply', 'onToday']);
 function handleClick(from=''){
     if(from == 'today'){
@@ -67,8 +82,8 @@ let openTimePicker = inject('openTimePicker');
 .btn-today,
 .btn-cancel,
 .pick-time{
-    color: #444;
-    background-color: #e2e3ee;
+    color: v-bind(color_font_dark);
+    background-color: v-bind(color_bg_grey);
 }
 .pick-time i{
     font-size: 18px;
@@ -81,7 +96,7 @@ button:has(~button){
 
 .btn-apply
 {
-    color: white;
-    background-color: #6200EE;
+    color: v-bind(color_font_light);
+    background-color: v-bind(color_primary_bg);
 }
 </style>

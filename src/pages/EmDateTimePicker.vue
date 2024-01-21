@@ -45,9 +45,11 @@ const pickerValues = reactive({
     startTime: '',
     endTime: '',
 });
+let theme = (options?.theme && options?.theme=='dark') ? options?.theme : 'light';
 provide('isMounted', isMounted);
 provide('picker', picker);
 provide('pickerValues', pickerValues);
+provide('theme', theme);
 
 onMounted(() => {
     target.addEventListener('click', (e)=> {

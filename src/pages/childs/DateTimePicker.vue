@@ -9,6 +9,7 @@ const isMounted = inject('isMounted');
 const picker = inject('picker');
 const pickerValues = inject('pickerValues');
 const desplayPositions = inject('desplayPositions');
+const theme = inject('theme');
 const isHexColor = inject('isHexColor');
 let emits = defineEmits(['init', 'open', 'cancel', 'close', 'change', 'changeTime']);
 let { target, options, teleportDiv, justInitializeValue } = defineProps({
@@ -71,23 +72,39 @@ const defaults = {
     timeZone: options?.timeZone ?? '',
     endTimeAutoValid: options?.endTimeAutoValid ?? true,
     dispayIn: ((options?.dispayIn && desplayPositions.includes(options?.dispayIn ?? 'modal'))) ? options?.dispayIn : 'modal', 
+    theme: theme,
     colors: {
-        body_bg: isHexColor(options?.colors?.body_bg) || '#ffffff',
-        primary_bg: isHexColor(options?.colors?.primary_bg) || '#6200EE',
-        font_dark: isHexColor(options?.colors?.font_dark) || '#444444',
-        font_light: isHexColor(options?.colors?.font_light) || '#ffffff',
-
+        body_bg: isHexColor(options?.colors?.body_bg) ? options?.colors?.body_bg : (theme=='light' ? '#ffffff' : '#0d111e'),
+        primary_bg: isHexColor(options?.colors?.primary_bg) ? options?.colors?.primary_bg : '#12834f',
+        bg_grey: isHexColor(options?.colors?.bg_grey) ? options?.colors?.bg_grey : '#e2e3ee',
+        font_dark: isHexColor(options?.colors?.font_dark) ? options?.colors?.font_dark : '#444444',
+        font_dark_low: isHexColor(options?.colors?.font_dark) ? options?.colors?.font_dark : '#777777',
+        font_light: isHexColor(options?.colors?.font_light) ? options?.colors?.font_light : '#efefef',
     },
 };
+
+/**
+ * This color variable must be same all .vue files 
+ * ...............
+ * DateTimePicker.vue
+ * TimePicker.vue
+ * Buttons.vue
+ * Modal.vue
+ * SwitcherForDate.vue
+ * SwitcherForTime.vue
+*/
 
 const {
     body_bg: color_body_bg,
     primary_bg: color_primary_bg,
+    bg_grey: color_bg_grey,
     font_dark: color_font_dark,
+    font_dark_low: color_font_dark_low,
     font_light: color_font_light,
 } = defaults.colors
-const color_hover_date = color_primary_bg + '8c';
-const color_selected_range_bg = color_primary_bg + '1c';
+const color_transparent_1 = color_primary_bg + '3d';
+const color_transparent_2 = color_primary_bg + '1c';
+/* --------------- End color variables -------------- */
 
 const OUTPUT_FORMAT = computed(()=>{
     if(defaults.onlyTimePicker) return FORMATS.time;
@@ -698,7 +715,8 @@ header i {
 }
 
 header i:hover {
-    background-color: #ECE0FD;
+    /*background-color: #ECE0FD;*/
+    background-color: v-bind(color_transparent_1);
 }
 
 .main-months {
@@ -716,6 +734,7 @@ header i:hover {
 }
 .main-weekdays>div{
     text-align: center;
+    color: v-bind(color_font_dark);
 }
 
 .main-months>div {
@@ -724,7 +743,7 @@ header i:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #777;
+    color: v-bind(color_font_dark_low);
     transition: all 300ms;
 }
 .main-months>div,
@@ -739,47 +758,50 @@ header i:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #666;
+    color: v-bind(color_font_dark_low);
     transition: all 300ms;
 }
 .main-months>div.offset-date:not(.start-date):not(.end-date):not(.date-in-selected-range),
 .main-days>div.offset-date:not(.start-date):not(.end-date):not(.date-in-selected-range) {
     color: #d6d6d6 !important;
+    color: v-bind(color_font_light) !important;
 }
 
 main.box>div:not(.active):not(.offset-date):not(.date-in-selected-range):not(.start-date):not(.end-date):hover
  {
-    background-color: #ECE0FD;
+    background-color: v-bind(color_transparent_1);
+    color: v-bind(color_font_dark);
     border-radius: 8px;
 }
 
 div.hover-date {
-    background-color: #ECE0FD !important;
+    background-color: v-bind(color_transparent_1) !important;
+    color: v-bind(color_font_dark);
     border-radius: 0px !important;
 }
 
 main.box>div:not(.offset-date).active {
-    background: #6200EE;
+    background: v-bind(color_primary_bg);
     border-radius: 8px;
     font-weight: 700;
-    color: white;
+    color: v-bind(color_font_light);
     position: relative;
 }
 
 main.box>div.start-date {
-    background: #6200EE;
-    color: #d6d6d6 !important;
+    background: v-bind(color_primary_bg);
+    color: v-bind(color_font_light) !important;
     border-radius: 8px 0px 0px 8px;
 }
 
 main.box>div.end-date {
-    background: #6200EE;
-    color: #d6d6d6 !important;
+    background: v-bind(color_primary_bg);
+    color: v-bind(color_font_light) !important;
     border-radius: 0px 8px 8px 0px;
 }
 
 main.box>div.date-in-selected-range {
-    background: #6300ee1c;
+    background: v-bind(color_transparent_1);
     border-radius: 0px;
 }
 
@@ -794,8 +816,8 @@ main.box>div.date-in-selected-range {
     border-radius: 4px;
 }
 .buttons .btn-cancel{
-    color: #444;
-    background-color: #e2e3ee;
+    color: v-bind(color_font_dark);
+    background-color: v-bind(color_bg_grey);
 }
 .buttons.adjustment-weekday{
     flex-direction: column;
@@ -804,8 +826,8 @@ main.box>div.date-in-selected-range {
     margin-right: 10px;
 }
 .buttons .btn-apply{
-    color: white;
-    background-color: #6200EE;
+    color: v-bind(color_font_light);
+    background-color: v-bind(color_primary_bg);
 }
 .visibility-hidden{
     visibility: hidden;
