@@ -106,7 +106,7 @@ const color_transparent_2 = color_primary_bg + '1c';
     bottom: 0;
     width: 50%;
     padding: 0;
-    z-index: 3;
+    z-index: 0;
     transition: transform .3s cubic-bezier(.77, 0, .175, 1);
 }
 

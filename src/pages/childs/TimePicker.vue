@@ -330,7 +330,7 @@ const {
 } = defaults.colors
 const color_transparent_1 = color_primary_bg + '3d';
 const color_transparent_2 = color_primary_bg + '1c';
-
+let maxHeight = defaults.timePickerButton ? '270px' : '200px';
 </script>
 
 <template>
@@ -339,12 +339,14 @@ const color_transparent_2 = color_primary_bg + '1c';
 
             <template v-if="defaults.timePickerUi == 'standard'">
 
-                <template v-if="ui2.expand == null">
-                    <div @click.stop="onClickClose()" class="closeIcon"><i class='bx bx-x' ></i></div>     
-                    <div @click.stop="onClickOk()" class="okIcon"><i class='bx bx-check'></i></div> 
-                </template>    
-                <template v-else>
-                    <div @click.stop="ui2.expand = null" class="backIcon"><i class='bx bx-chevron-left'></i></div> 
+                <template v-if="defaults.timePickerButton">
+                    <template v-if="ui2.expand == null">
+                        <div @click.stop="onClickClose()" class="closeIcon"><i class='bx bx-x' ></i></div>     
+                        <div @click.stop="onClickOk()" class="okIcon"><i class='bx bx-check'></i></div> 
+                    </template>    
+                    <template v-else>
+                        <div @click.stop="ui2.expand = null" class="backIcon"><i class='bx bx-chevron-left'></i></div> 
+                    </template>    
                 </template>    
 
                 <div class="clocklet clocklet--inline">
@@ -391,9 +393,10 @@ const color_transparent_2 = color_primary_bg + '1c';
                 </div>
             </template>
             <template v-else>
-
-                <div @click.stop="onClickClose()" class="closeIcon"><i class='bx bx-x' ></i></div>     
-                <div @click.stop="onClickOk()" class="okIcon"><i class='bx bx-check'></i></div>     
+                <template v-if="defaults.timePickerButton">
+                    <div @click.stop="onClickClose()" class="closeIcon"><i class='bx bx-x' ></i></div>     
+                    <div @click.stop="onClickOk()" class="okIcon"><i class='bx bx-check'></i></div>     
+                </template>
 
                 <div class="clocklet clocklet--inline" data-clocklet-format="HH:mm" data-clocklet-value="14:25">
                     <div class="clocklet-plate">
@@ -498,7 +501,7 @@ const color_transparent_2 = color_primary_bg + '1c';
 .clocklet {
     font-size: 16px;
     width: 270px;
-    height: 270px;
+    height: v-bind(maxHeight);
     margin-top: 1px;
     padding: 8px;
     border-top-left-radius: 6px;
