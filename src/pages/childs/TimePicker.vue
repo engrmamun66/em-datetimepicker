@@ -343,6 +343,9 @@ const color_transparent_2 = color_primary_bg + '1c';
                     <div @click.stop="onClickClose()" class="closeIcon"><i class='bx bx-x' ></i></div>     
                     <div @click.stop="onClickOk()" class="okIcon"><i class='bx bx-check'></i></div> 
                 </template>    
+                <template v-else>
+                    <div @click.stop="ui2.expand = null" class="backIcon"><i class='bx bx-chevron-left'></i></div> 
+                </template>    
 
                 <div class="clocklet clocklet--inline">
                     <div class="clocklet-plate standard" :class="{ 'need-scroll': defaults.minuteStep < 3 && ui2.expand != null }" >
@@ -756,6 +759,22 @@ const color_transparent_2 = color_primary_bg + '1c';
     color: v-bind(color_font_dark);  
     text-transform: capitalize;
 }
+.backIcon{
+   position: absolute;
+    top: 14px;
+    left: 10px;
+    z-index: 1;
+    padding: 5px;
+    cursor: pointer; 
+    text-align: center;
+}
+.theme-light .backIcon i{
+   color: v-bind(color_primary_bg);
+}
+.theme-dark .backIcon i{
+    font-size: 26px;
+   color: v-bind(color_font_dark);
+}
 .closeIcon,
 .okIcon{
     position: absolute;
@@ -775,10 +794,12 @@ const color_transparent_2 = color_primary_bg + '1c';
 }
 .theme-light .closeIcon i,
 .theme-light .okIcon i{
+    color: v-bind(color_primary_bg);
     background-color: v-bind(color_body_bg);
 }
 .theme-dark .closeIcon i,
 .theme-dark .okIcon i{
+    color: v-bind(color_font_dark);
     background-color: v-bind(color_bg_grey);
 }
 
@@ -830,7 +851,8 @@ const color_transparent_2 = color_primary_bg + '1c';
 }
 .clocklet-plate.standard ul.all-hours li{
     padding: 5px;
-    background-color: v-bind(color_body_bg);
+    color: v-bind(color_font_dark);
+    background-color: v-bind(color_bg_grey);
     text-align: center;
     cursor: pointer;
     border-radius: 3px;
@@ -847,6 +869,7 @@ const color_transparent_2 = color_primary_bg + '1c';
 }
 .clocklet-plate.standard ul.all-minutes li{
     padding: 5px;
+    color: v-bind(color_font_dark);
     background-color: v-bind(color_bg_grey);
     text-align: center;
     cursor: pointer;
@@ -893,11 +916,21 @@ const color_transparent_2 = color_primary_bg + '1c';
 }
 .clocklet-plate.standard .columns .column div:first-child:hover
 {
-    box-shadow: 0px -12px 15px #0202022a;
+    box-shadow: 0 -5px 5px #0202022a;
 }
 .clocklet-plate.standard .columns .column div:last-child:hover
 {
-    box-shadow: 0px 12px 15px #0202022a;
+    box-shadow: 0 5px 5px #0202022a;
+}
+.clocklet-plate.standard .columns .column div:first-child:hover > i
+{
+    transform: translateY(-2px);
+    scale: 1.05;
+}
+.clocklet-plate.standard .columns .column div:last-child:hover > i
+{
+    transform: translateY(2px);
+    scale: 1.05;
 }
 .clocklet-plate.standard .columns .column button
 {
@@ -913,7 +946,8 @@ const color_transparent_2 = color_primary_bg + '1c';
 .clocklet-plate.standard .columns .column div i
 {
     font-size: 26px;
-    color: v-bind(color_font_dark);
+    color: v-bind(color_font_dark_low);
+    transition: all 0.15s;
 }
  
 
