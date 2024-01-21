@@ -717,14 +717,14 @@ const color_transparent_2 = color_primary_bg + '1c';
     width: 100%;
     padding: 8px;
     border: transparent;    
-    background: #eeeeee;
+    background: v-bind(color_bg_grey);
     display: flex;
     justify-content: space-around;
     align-items: center;
 }
 .display-time span{
     font-size: 20px;
-    color: #666;  
+    color: v-bind(color_font_dark);  
 }
 .display-time div{
     width: 2px;
@@ -754,7 +754,7 @@ const color_transparent_2 = color_primary_bg + '1c';
 .okIcon i{
     font-size: 26px;
     color: v-bind(color_primary_bg); 
-    background-color: v-bind(color_bg_grey);
+    background-color: v-bind(color_body_bg);
     border-radius: 4px;
     padding: 2px 7px;
     box-shadow:#0000001f 0 1px 3px, #0000001c 0 1px 2px;
@@ -857,7 +857,7 @@ const color_transparent_2 = color_primary_bg + '1c';
     cursor: pointer;
     padding: 15px 5px;
     border: transparent;
-    background-color: v-bind(color_bg_grey);
+    background-color: transparent;
     transition: all 0.3s;
 }
 .clocklet-plate.standard .columns .column div:first-child

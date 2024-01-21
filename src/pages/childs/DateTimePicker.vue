@@ -763,7 +763,6 @@ header i:hover {
 }
 .main-months>div.offset-date:not(.start-date):not(.end-date):not(.date-in-selected-range),
 .main-days>div.offset-date:not(.start-date):not(.end-date):not(.date-in-selected-range) {
-    color: #d6d6d6 !important;
     color: v-bind(color_font_light) !important;
 }
 

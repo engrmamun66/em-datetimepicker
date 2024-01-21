@@ -63,7 +63,7 @@ const color_transparent_2 = color_primary_bg + '1c';
     border-radius: 0;
     margin-left: auto;
     margin-right: auto;
-    background-color: v-bind(color_bg_grey);
+    background-color: v-bind(color_body_bg);
     position: relative;
 }
 
