@@ -305,12 +305,16 @@ onMounted(() => {
                         <div v-if="ui2.expand == null" class="columns fade-in">
                             <div class="column">
                                 <div> <i class='bx bx-chevron-up'></i> </div>
-                                <button @click.stop="ui2.expand = 'hours'">12</button>
+                                <button @click.stop="ui2.expand = 'hours'">
+                                    {{ selectedHour?.id }}
+                                </button>
                                 <div> <i class='bx bx-chevron-down'></i> </div>
                             </div>
                             <div class="column">
                                 <div> <i class='bx bx-chevron-up'></i> </div>
-                                <button @click.stop="ui2.expand = 'minutes'">12</button>
+                                <button @click.stop="ui2.expand = 'minutes'">
+                                    {{ selectedMinute?.id }}
+                                </button>
                                 <div> <i class='bx bx-chevron-down'></i> </div>
                             </div>
                             <div class="column">
@@ -384,16 +388,16 @@ onMounted(() => {
                         <div ref="centerOfclick" class="clocklet-hand-origin"></div>
                     </div>
                 </div>
+                <div class="display-time">
+                    <span class="start-time">{{ getPrintableTime(time1_selectedHour, time1_selectedMinute, time1_mode) }}</span>
+                    <template v-if="defaults.rangePicker">
+                        <div>&nbsp;</div>
+                        <span class="end-time">{{ getPrintableTime(time2_selectedHour, time2_selectedMinute, time2_mode) }}</span>
+                    </template>
+                </div>
             </template>
 
 
-            <div class="display-time">
-                <span class="start-time">{{ getPrintableTime(time1_selectedHour, time1_selectedMinute, time1_mode) }}</span>
-                <template v-if="defaults.rangePicker">
-                    <div>&nbsp;</div>
-                    <span class="end-time">{{ getPrintableTime(time2_selectedHour, time2_selectedMinute, time2_mode) }}</span>
-                </template>
-            </div>
 
             <template v-if="defaults.rangePicker && defaults.timePicker">
                 <SwitcherForTime></SwitcherForTime>
@@ -703,7 +707,13 @@ onMounted(() => {
     background-color: #ececec;
     border-radius: 4px;
     box-shadow: 0 0 22px #fff;
+    padding: 2px 7px;
 }
+.clocklet:has(.standard) {
+    border: 1px solid #fff;
+    background-color: #fff;
+}
+
 .closeIcon{
     left: 10px;
 }
@@ -793,6 +803,14 @@ onMounted(() => {
     background-color: #f5f5f567;
     transition: all 0.3s;
 }
+.clocklet-plate.standard .columns .column div:first-child
+{
+    border-radius: 5px 5px 0px 0px;
+}
+.clocklet-plate.standard .columns .column div:last-child
+{
+    border-radius: 0px 0px 5px 5px;
+}
 .clocklet-plate.standard .columns .column div:first-child:hover
 {
     box-shadow: 0px -12px 15px #0202022a;
@@ -805,7 +823,8 @@ onMounted(() => {
 {
     border: transparent;
     padding: 16px;
-
+    box-shadow: #0006 0 2px 4px, #0000004d 0 -1px 4px -3px, #0000001c 0 -3px inset;
+    border-radius: 6px;
 }
 .clocklet-plate.standard .columns .column div i
 {
@@ -822,7 +841,7 @@ onMounted(() => {
 }
 
 .fade-in {
-  animation: fadeIn 1s ease-in-out; /* Adjust the duration and timing function as needed */
+  animation: fadeIn 0.3s ease-in-out; /* Adjust the duration and timing function as needed */
 }
 
 </style>
