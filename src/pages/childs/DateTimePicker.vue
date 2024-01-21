@@ -79,7 +79,7 @@ const defaults = {
     timePickerUi: (options?.timePickerUi && ['classic', 'standard']?.includes(options?.timePickerUi)) ? options?.timePickerUi : 'standard',
     timeZone: options?.timeZone ?? '',
     endTimeAutoValid: options?.endTimeAutoValid ?? true,
-    dispayIn: ((options?.dispayIn && desplayPositions.includes(options?.dispayIn ?? 'modal'))) ? options?.dispayIn : 'modal', 
+    displayIn: ((options?.displayIn && desplayPositions.includes(options?.displayIn ?? 'modal'))) ? options?.displayIn : 'modal', 
     theme: theme,
     colors: {
         // Just change -----> "primary_bg" to adjust color according any theme color

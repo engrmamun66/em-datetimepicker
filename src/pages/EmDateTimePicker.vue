@@ -89,11 +89,11 @@ const desplayPositions = [
     'inline_left', 'inline_right', 'inline_center',
 ];
 provide('desplayPositions', desplayPositions);
-let showingPermitInModal = desplayPositions.includes(options?.dispayIn ?? 'modal') == false;
+let showingPermitInModal = desplayPositions.includes(options?.displayIn ?? 'modal') == false;
 let teleportDiv = ref(null)
 
 function setTeleportDiv() {
-    let position = options?.dispayIn;
+    let position = options?.displayIn;
     if(!position || !desplayPositions.includes(position)) return;  
     let adjacentPosition = position?.startsWith('top_') ? "beforebegin" : "afterend";
     adjacentPosition = position?.startsWith('bottom_') ? "afterend" : adjacentPosition;
