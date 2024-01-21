@@ -66,7 +66,7 @@ const defaults = {
     onlyTimePicker: options?.onlyTimePicker ?? false,
     minuteStep: (options?.minuteStep && options?.minuteStep >= 1 && options?.minuteStep <= 30) ? options?.minuteStep : 5,
     use24Format: FORMATS?.time ?? false,
-    timePickerUi: (options?.timePickerUi && ['classic', 'standard']) ? options?.timePickerUi : 'standard',
+    timePickerUi: (options?.timePickerUi && ['classic', 'standard']?.includes(options?.timePickerUi)) ? options?.timePickerUi : 'standard',
     timeZone: options?.timeZone ?? '',
     endTimeAutoValid: options?.endTimeAutoValid ?? true,
     dispayIn: ((options?.dispayIn && desplayPositions.includes(options?.dispayIn ?? 'modal'))) ? options?.dispayIn : 'modal', 
