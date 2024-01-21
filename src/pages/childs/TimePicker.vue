@@ -5,6 +5,7 @@ import { hours_position, minutes_position } from './timePicker';
 import { ref, computed, reactive, defineProps, onMounted, inject, defineEmits, watch, watchEffect, provide } from 'vue';
 let { justInitializeValue } = defineProps(['justInitializeValue']);
 let isMounted = inject('isMounted');
+let theme = inject('theme');
 let target = inject('target');
 let defaults = inject('defaults');
 let FORMATS = inject('FORMATS');
@@ -333,7 +334,7 @@ const color_transparent_2 = color_primary_bg + '1c';
 </script>
 
 <template>
-    <div @click.stop="false" style="width:270px">
+    <div @click.stop="false" style="width:270px" :class="{[`theme-${theme}`]: true}">
         <div class="clocklet-container clocklet-container--inline" style="position:relative">  
 
             <template v-if="defaults.timePickerUi == 'standard'">
@@ -567,9 +568,9 @@ const color_transparent_2 = color_primary_bg + '1c';
     border: 0;
     cursor: pointer;
     background-color: transparent;
-    color: inherit;
     font-family: inherit;
-    font-weight: inherit
+    color: v-bind(color_font_dark);
+    font-weight: inherit;
 }
 
 .clocklet-tick:before {
@@ -684,7 +685,14 @@ const color_transparent_2 = color_primary_bg + '1c';
 
 .clocklet-tick--selected {
     background-color: v-bind(color_primary_bg);
+}
+
+.theme-light .clocklet-tick--selected {
     color: v-bind(color_font_light);
+}
+
+.theme-dark .clocklet-tick--selected {
+    color: v-bind(color_font_dark);
 }
 
 .clocklet--hoverable:not(.clocklet--dragging) .clocklet-tick:hover {
@@ -697,8 +705,15 @@ const color_transparent_2 = color_primary_bg + '1c';
 
 .clocklet-ampm:before {
     background-color: v-bind(color_primary_bg);
-    color: v-bind(color_font_light);
     font-size: 13px;
+}
+
+.theme-light .clocklet-ampm:before {
+    color: v-bind(color_font_light);
+}
+
+.theme-dark .clocklet-ampm:before {
+    color: v-bind(color_font_dark);
 }
 
 .clocklet-ampm:hover:before {
