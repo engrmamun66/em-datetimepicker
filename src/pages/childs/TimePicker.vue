@@ -350,7 +350,9 @@ let maxHeight = defaults.timePickerButton ? '270px' : '200px';
                 </template>    
 
                 <div class="clocklet clocklet--inline">
-                    <div class="clocklet-plate standard" :class="{ 'need-scroll': defaults.minuteStep < 3 && ui2.expand != null }" >
+                    <div class="clocklet-plate standard" :class="{ 
+                        'need-scroll': defaults.timePickerButton ? (defaults.minuteStep < 3 && ui2.expand != null) : (ui2.expand != null),
+                        }" >
 
                         <div v-if="ui2.expand == null" class="columns fade-in">
                             <div class="column">
@@ -882,10 +884,10 @@ let maxHeight = defaults.timePickerButton ? '270px' : '200px';
     width: 4px !important;
 }
 .clocklet-plate.standard.need-scroll::-webkit-scrollbar-thumb {
-    background: #d8d8d8;
+    background: v-bind(color_bg_grey);
 }
 .clocklet-plate.standard.need-scroll::-webkit-scrollbar-thumb:hover {
-    background: #b6b6b6;
+    background: v-bind(color_bg_grey);
 }
 
 .clocklet-plate.standard .columns {
