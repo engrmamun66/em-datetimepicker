@@ -64,7 +64,7 @@ const defaults = {
     // With Time Picker
     timePicker: options?.timePicker ?? false,
     onlyTimePicker: options?.onlyTimePicker ?? false,
-    minuteStep: (options?.minuteStep && [1, 2, 3, 5, 10, 15, 20, 30].includes(options?.minuteStep)) ? options?.minuteStep : 5,
+    minuteStep: (options?.minuteStep && options?.minuteStep >= 1 && options?.minuteStep <= 30) ? options?.minuteStep : 5,
     use24Format: FORMATS?.time ?? false,
     timePickerUi: (options?.timePickerUi && ['classic', 'standard']) ? options?.timePickerUi : 'standard',
     timeZone: options?.timeZone ?? '',
