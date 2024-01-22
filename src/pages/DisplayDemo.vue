@@ -82,7 +82,6 @@ let inputElement = ref(null);
 let autoOpenForQuickView = ref(!!localStorage.getItem('autoOpenForQuickView'));
 let timeout = null;
 watch(optionsForAttrs, (a, b)=>{
-    localStorage.setItem('autoOpenForQuickView', !!autoOpenForQuickView.value);
     clearTimeout(timeout);
     showPicker.value = false;
     timeout = setTimeout(() => {
@@ -93,6 +92,13 @@ watch(optionsForAttrs, (a, b)=>{
             }, 0);
         }
     }, 400);
+})
+watch(autoOpenForQuickView, (a, b)=>{
+    if(a){
+        localStorage.setItem('autoOpenForQuickView', String(a));
+    } else {
+        localStorage.removeItem('autoOpenForQuickView');
+    }
 })
 
 onMounted(() => {
