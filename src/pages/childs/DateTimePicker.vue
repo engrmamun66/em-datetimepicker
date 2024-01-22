@@ -637,7 +637,10 @@ onMounted(() => {
                     <main class="main-months box">
                         <template v-for="(monthShort, index) in defaults.monthShorts" :key="index">
                             <div 
-                            :class="{'active': makeDate(picker?.date1, FORMATS.monthShort) === monthShort}" 
+                            :class="{
+                                ['theme-' + theme]: true,
+                                'active': makeDate(picker?.date1, FORMATS.monthShort) === monthShort
+                                }" 
                             @click="fn.onClickMonth(index)">{{ monthShort }}</div>
                         </template>
                     </main>
@@ -660,7 +663,10 @@ onMounted(() => {
                     <main class="main-months box">
                         <template v-for="(year, index) in years" :key="index">
                             <div 
-                            :class="{'active': new Date(picker.date1).getFullYear() == year}" 
+                            :class="{
+                                ['theme-' + theme]: true,
+                                'active': new Date(picker.date1).getFullYear() == year
+                                }" 
                             @click="fn.onClickYear(year)"> {{ year }}</div>
                         </template>
                     </main>
