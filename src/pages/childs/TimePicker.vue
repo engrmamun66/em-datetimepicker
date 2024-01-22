@@ -308,7 +308,6 @@ function setByDegree(event) {
         angle += 360;
     }
     let degree = (angle / 30) - (angle % 30);
-    console.log(Math.floor(angle)-280,  Math.floor(degree));
 }
 
 let move = reactive({
