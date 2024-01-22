@@ -78,7 +78,7 @@ const defaults = {
     use24Format: FORMATS?.time ?? false,
     timePickerUi: (options?.timePickerUi && ['classic', 'standard']?.includes(options?.timePickerUi)) ? options?.timePickerUi : 'standard',
     timeZone: options?.timeZone ?? '',
-    timePickerButton: options?.timePickerButton ?? false,
+    timePickerButtons: options?.timePickerButtons ?? false,
     endTimeAutoValid: options?.endTimeAutoValid ?? true,
     displayIn: ((options?.displayIn && desplayPositions.includes(options?.displayIn ?? 'modal'))) ? options?.displayIn : 'modal',
     theme: theme,
