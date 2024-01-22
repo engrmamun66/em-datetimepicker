@@ -57,7 +57,7 @@ const color_vars_light = {
     font_light: '#efefef',
 };
 const defaults = {
-    rangePicker: options?.rangePicker || false,
+    rangePicker: options?.rangePicker ?? false,
     displayFormat: options.onlyTimePicker ? FORMATS.time : (FORMATS.forDisplay + (options?.timePicker ? (' ' + FORMATS.time) : '')),
     startDate: makeDate(options?.startDate || new Date(), FORMATS.date),
     endDate: makeDate(options?.endDate || (options?.startDate || new Date()), FORMATS.date),
