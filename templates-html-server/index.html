@@ -36,6 +36,10 @@
                 <label>Time Picker</label>
                 <input id="input5" type="text" class="emDatetimepicker px-2 form-control" data-settings="">   
             </div>       
+            <div class="form-group mb-3">
+                <label>Time Picker</label>
+                <input id="input6" type="text" class="emDatetimepicker px-2 form-control" data-settings="">   
+            </div>       
         
         </div>
     </div>   
@@ -63,8 +67,8 @@
             use24Format: false,
         }
 
-        // let theme = 'light';
-        let theme = 'dark';
+        let theme = 'light';
+        // let theme = 'dark';
         // left col-6
         emDatetimepicker.init('#input1', {
             theme,
@@ -100,6 +104,16 @@
         emDatetimepicker.init('#input5', {
             theme,
             rangePicker: true,
+            timePicker: true,
+            onlyTimePicker: true,
+            displayIn: 'bottom_left',
+            timePickerUi: 'default',
+            minuteStep: 15,            
+            timePickerButton: false,            
+        });
+        emDatetimepicker.init('#input6', {
+            theme,
+            rangePicker: false,
             timePicker: true,
             onlyTimePicker: true,
             displayIn: 'bottom_left',
