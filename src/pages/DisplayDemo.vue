@@ -79,19 +79,22 @@ let optionsForAttrs = computed(() => {
 
 let showPicker = ref(true);
 let inputElement = ref(null);
-let autoOpenForQuickView = ref(false);
+let autoOpenForQuickView = ref(!!localStorage.getItem('autoOpenForQuickView'));
 let timeout = null;
 watch(optionsForAttrs, (a, b)=>{
+    localStorage.setItem('autoOpenForQuickView', !!autoOpenForQuickView.value);
     clearTimeout(timeout);
     showPicker.value = false;
     timeout = setTimeout(() => {
         showPicker.value = true;
         if(autoOpenForQuickView.value){
-            console.log(inputElement.value);
-            inputElement.value.click();
+            setTimeout(() => {
+                inputElement.value.click();
+            }, 0);
         }
     }, 400);
 })
+
 
 
 </script>
@@ -232,7 +235,7 @@ watch(optionsForAttrs, (a, b)=>{
 
 
                 <div class="col-12">
-                    <h3>Show out accrording to you config</h3>
+                    <h5>Show output</h5>
 
                     <div class="form-check mb-2 options-selection">
                         <input class="form-check-input" type="checkbox" id="autoOpenForQuickView" v-model="autoOpenForQuickView">
