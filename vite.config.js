@@ -30,7 +30,7 @@ export default defineConfig({
       output: {
         entryFileNames: 'assets/em-datetimepicker.js',
         // assetFileNames: 'assets/[name].[ext]',
-        assetFileNames: 'assets/style.[ext]',
+        assetFileNames: 'assets/em-datetimepicker.[ext]',
       },
     },
   }
