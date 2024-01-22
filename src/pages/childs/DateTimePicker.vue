@@ -273,7 +273,7 @@ const fn = {
         }
     },
     changeTime: function(data){
-        emits('changeTime');
+        emits('changeTime', data);
         target.dispatchEvent(events.change(data));
     },
     setTargetValue: function() {      
