@@ -268,7 +268,7 @@ onMounted(() => {
 
                     <div class="form-group mb-2">
                         <label for="inputElement">&nbsp;</label>
-                        <input ref="inputElement" type="text" class="form-control" id="inputElement">
+                        <input ref="inputElement" type="text" class="form-control" id="inputElement" style="border: 3px solid #a9a469;">
                         <template v-if="inputElement && showPicker">
                             <EmDateTimePicker @change="(data)=>eventData=data" :target="inputElement" :options="optionsForAttrs"></EmDateTimePicker>
                         </template>
