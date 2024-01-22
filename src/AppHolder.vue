@@ -3,7 +3,8 @@ import { ref, inject } from  'vue';
 import EmDateTimePicker from './pages/EmDateTimePicker.vue'
 import DisplayDemo from './pages/DisplayDemo.vue'
 
-
+let emDatetimepicker = inject('emDatetimepicker');
+let targets = emDatetimepicker.elements;
 </script>
 
 <template>  

@@ -3,6 +3,7 @@ import moment from 'moment/moment';
 import DateTimePicker from './childs/DateTimePicker.vue';
 import Modal from './childs/Modal.vue';
 import { ref, provide, reactive, defineProps, onMounted, useAttrs } from 'vue';
+console.log(444);
 let { target, options} = defineProps({
     target: {
         type: [HTMLElement, Object],
