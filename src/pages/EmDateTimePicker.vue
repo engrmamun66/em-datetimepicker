@@ -15,8 +15,7 @@ let { target, options} = defineProps({
         default: {},
     },
 });
-options = {...options, ...useAttrs()}
-options = {...options, ...useAttrs()}
+options = {...options, ...useAttrs()};
 
 let showModal = ref(false);
 let showPicker = ref(false);
