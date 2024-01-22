@@ -22,37 +22,6 @@ function makeDate(dateTime, format, {hour, minute}={}){
     return moment().set(details).format(format);
 }
 
-let options_default = {
-    rangePicker: false,
-    displayFormat: '',
-    startDate: makeDate(new Date(), 'DD MMM, YYYY'),
-    endDate: makeDate(new Date(), 'DD MMM, YYYY'),
-    minDate: '',
-    maxDate: '',
-    adjustWeekday: 0,
-    buttons: {
-        todayBtn: 'Today',
-        cancelBtn: 'Cancel',
-        applyBtn: 'Apply',
-    },
-    // With Time Picker
-    timePicker: false,
-    onlyTimePicker: false,
-    minuteStep: 5,
-    use24Format: false,
-    timePickerUi: 'standard',
-    timePickerButtons: false,
-    endTimeAutoValid: true,
-    displayIn: 'modal',
-    theme: 'light',
-    colors: {
-        // Just change -----> "primary_bg" to adjust color according any theme color
-        body_bg: '#ffffff',
-        primary_bg: '#12834f',      
-    },
-}
-
-
 
 let options = reactive({
     rangePicker: false,
@@ -84,13 +53,25 @@ let options = reactive({
     },
 });
 
+let options_default = JSON.parse(JSON.stringify(options));
+
 let optionsForDisplay = computed(() => {
     let output = {};
     Object.keys(options).forEach(key => {
         let item = options[key];
         let item_default = options_default[key];
-        if(item_default != item){
-            output[key] = item;
+        if((typeof item == 'object') && !Array.isArray(item)){
+            output[key] = {};
+            Object.keys(options[key]).forEach(_key => {        
+                if(item_default[_key] != item[_key]){
+                    output[key][_key] = options[key][_key];
+                }
+            })
+            if(Object.keys(output[key])?.length == 0) delete output[key];
+        } else {
+            if(item_default != item){
+                output[key] = item;
+            }
         }
     })
     return output;
@@ -98,12 +79,16 @@ let optionsForDisplay = computed(() => {
 
 let showPicker = ref(true);
 let inputElement = ref(null);
+let autoOpenForQuickView = ref(false);
 let timeout = null;
 watch(optionsForDisplay, (a, b)=>{
     clearTimeout(timeout);
     showPicker.value = false;
     timeout = setTimeout(() => {
         showPicker.value = true;
+        if(autoOpenForQuickView){
+            inputElement.value.click();
+        }
     }, 400);
 })
 
@@ -120,7 +105,7 @@ watch(optionsForDisplay, (a, b)=>{
                     <label class="form-check-label" for="rangePicker">
                         rangePicker
                     </label>
-                </div>
+                </div>                
                 <div class="form-check mb-2">
                     <input class="form-check-input" type="checkbox" id="timePicker" v-model="options.timePicker">
                     <label class="form-check-label" for="timePicker">
@@ -233,6 +218,15 @@ watch(optionsForDisplay, (a, b)=>{
             <div class="col-md-6 col-6">
                 <div class="col-12">
                     <h3>Show out accrording to you config</h3>
+
+                    <div class="form-check mb-2 options-selection">
+                        <input class="form-check-input" type="checkbox" id="autoOpenForQuickView" v-model="options.autoOpenForQuickView">
+                        <label class="form-check-label" for="autoOpenForQuickView">
+                            Auto open for quick view;
+                        </label>
+                    </div>
+
+
                     <div class="form-group mb-2 d-flex justify-content-between align-items-center">
                         <label for="inputElement">Picker Output</label>
                         <input ref="inputElement" type="text" class="form-control" id="inputElement">
