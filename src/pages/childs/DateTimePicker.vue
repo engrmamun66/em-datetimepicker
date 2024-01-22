@@ -76,7 +76,7 @@ const defaults = {
     timePicker: options?.onlyTimePicker ? true : (options?.timePicker ?? false),
     onlyTimePicker: options?.onlyTimePicker ?? false,
     minuteStep: (options?.minuteStep && options?.minuteStep >= 1 && options?.minuteStep <= 30) ? options?.minuteStep : 5,
-    use24Format: FORMATS?.time ?? false,
+    use24Format: FORMATS?.use24Format ?? false,
     timePickerUi: (options?.timePickerUi && ['classic', 'standard']?.includes(options?.timePickerUi)) ? options?.timePickerUi : 'standard',
     timePickerButtons: options?.timePickerButtons ?? false,
     endTimeAutoValid: options?.endTimeAutoValid ?? true,
