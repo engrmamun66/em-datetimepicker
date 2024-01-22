@@ -452,11 +452,11 @@ const fn = {
         fn.closePicker();
     },
     onOkTimePicker: function (data) { 
-        openTimePicker.value = false;
         fn.changeTime(data);
         fn.setTargetValue();
         fn.changePicker();
         if(!data.do_not_hide){
+            openTimePicker.value = false;
             fn.closePicker();
         }
     },

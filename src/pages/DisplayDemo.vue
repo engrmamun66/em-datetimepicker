@@ -294,7 +294,7 @@ onMounted(() => {
     justify-content: center;
 }
 #em-datetimepicker-visual-demo > div.emdemo{
-    max-width: 800px;
+    max-width: 1000px;
 }
 </style>
 
