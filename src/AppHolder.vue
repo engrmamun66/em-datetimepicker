@@ -11,7 +11,7 @@ let targets = emDatetimepicker.elements;
     <template v-for="(target, index) in targets" :key="index">   
         <EmDateTimePicker :target="target.element" :options="target.options"></EmDateTimePicker>
     </template>  
-    <teleport to="#emdemo">
+    <teleport to="#em-datetimepicker-visual-demo">
         <DisplayDemo></DisplayDemo>
     </teleport>
 </template>

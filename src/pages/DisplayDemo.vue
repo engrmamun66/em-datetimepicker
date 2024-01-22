@@ -287,7 +287,20 @@ onMounted(() => {
     </div>
 </template>
 
+<style>
+#em-datetimepicker-visual-demo:has(>div.emdemo){
+    display: flex;
+    justify-items: center;
+    justify-content: center;
+}
+#em-datetimepicker-visual-demo > div.emdemo{
+    max-width: 800px;
+}
+</style>
+
 <style scoped>
+
+
 .options-selection select,
 .options-selection input[type=text],
 .options-selection input[type=color],
