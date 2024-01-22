@@ -76,6 +76,7 @@ function filterOnlyPassableOptions() {
             }
         }
     })
+    if(output.displayIn == 'modal') delete output.displayIn;
     return output;
 }
 let optionsForAttrs = computed(() => {
