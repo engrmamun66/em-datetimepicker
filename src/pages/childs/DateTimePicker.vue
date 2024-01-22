@@ -57,12 +57,12 @@ const color_vars_light = {
     font_light: '#efefef',
 };
 const defaults = {
-    rangePicker: options?.rangePicker ?? false,
+    rangePicker: options?.rangePicker || false,
     displayFormat: options.onlyTimePicker ? FORMATS.time : (FORMATS.forDisplay + (options?.timePicker ? (' ' + FORMATS.time) : '')),
-    startDate: makeDate(options?.startDate ?? new Date(), FORMATS.date),
-    endDate: makeDate(options?.endDate ?? (options?.startDate || new Date()), FORMATS.date),
-    minDate: options?.minDate ?? '',
-    maxDate: options?.maxDate ?? '',
+    startDate: makeDate(options?.startDate || new Date(), FORMATS.date),
+    endDate: makeDate(options?.endDate || (options?.startDate || new Date()), FORMATS.date),
+    minDate: options?.minDate || '',
+    maxDate: options?.maxDate || '',
     adjustWeekday: options?.adjustWeekday ?? 0,
     buttons: {
         todayBtn: ((options?.buttons?.todayBtn && (typeof options?.buttons?.todayBtn) == 'boolean') ? 'Today' : options?.buttons?.todayBtn) ?? 'Today',
@@ -478,7 +478,8 @@ const monthOfDays = computed( () => {
     let date = new Date(picker.date);
     const monthIndex = new Date(picker.date).getMonth();
     const days = daysOfMonth(date.getFullYear(), monthIndex, FORMATS, {currentMonth: true});
-    const first_weekday_short = days[0]['weekday_short'];
+    const first_weekday_short = days?.[0]?.['weekday_short'];
+    console.log('days', days);
     const startFrom = weekDays.value.findIndex(weekday => weekday === first_weekday_short);
     // Left tailing
     let _date = new Date(picker.date);

@@ -1,11 +1,64 @@
 <script setup>
+import moment from 'moment/moment';
 import EmDateTimePicker from './EmDateTimePicker.vue'
-import { ref, provide, reactive, computed, defineProps, onMounted, useAttrs } from 'vue';
+import { ref, provide, reactive, computed, defineProps, watch, onMounted, useAttrs } from 'vue';
+function makeDate(dateTime, format, {hour, minute}={}){
+    if(!dateTime) return;
+    if(dateTime instanceof Date){
+        var date = dateTime;
+    } else {
+        var date = new Date(dateTime);
+    }
+    date.setHours(Number(hour ?? 0));
+    date.setMinutes(Number(minute ?? 0));
+    let details = { 
+        date: date.getDate(),
+        month: date.getMonth(),
+        year: date.getFullYear(), 
+        hour: date.getHours(),
+        minute: date.getMinutes(),
+        second: date.getSeconds(),
+    };
+    return moment().set(details).format(format);
+}
+
+let options_default = {
+    rangePicker: false,
+    displayFormat: '',
+    startDate: makeDate(new Date(), 'DD MMM, YYYY'),
+    endDate: makeDate(new Date(), 'DD MMM, YYYY'),
+    minDate: '',
+    maxDate: '',
+    adjustWeekday: 0,
+    buttons: {
+        todayBtn: 'Today',
+        cancelBtn: 'Cancel',
+        applyBtn: 'Apply',
+    },
+    // With Time Picker
+    timePicker: false,
+    onlyTimePicker: false,
+    minuteStep: 5,
+    use24Format: false,
+    timePickerUi: 'standard',
+    timePickerButtons: false,
+    endTimeAutoValid: true,
+    displayIn: 'modal',
+    theme: 'light',
+    colors: {
+        // Just change -----> "primary_bg" to adjust color according any theme color
+        body_bg: '#ffffff',
+        primary_bg: '#12834f',      
+    },
+}
+
+
+
 let options = reactive({
     rangePicker: false,
     displayFormat: '',
-    startDate: '',
-    endDate: '',
+    startDate: makeDate(new Date(), 'DD MMM, YYYY'),
+    endDate: makeDate(new Date(), 'DD MMM, YYYY'),
     minDate: '',
     maxDate: '',
     adjustWeekday: 0,
@@ -31,12 +84,30 @@ let options = reactive({
     },
 });
 
-const optionsFinal = computed(() => {
-    let final = {};
-
+let optionsForDisplay = computed(() => {
+    let output = {};
+    Object.keys(options).forEach(key => {
+        let item = options[key];
+        let item_default = options_default[key];
+        if(item_default != item){
+            output[key] = item;
+        }
+    })
+    return output;
 })
 
-console.log(3333);
+let showPicker = ref(true);
+let inputElement = ref(null);
+let timeout = null;
+watch(optionsForDisplay, (a, b)=>{
+    clearTimeout(timeout);
+    showPicker.value = false;
+    timeout = setTimeout(() => {
+        showPicker.value = true;
+    }, 400);
+})
+
+
 </script>
 
 <template>
@@ -150,7 +221,7 @@ console.log(3333);
                     </select>
                 </div>       
                 <div class="form-group mb-2 d-flex justify-content-between align-items-center">
-                    <label for="body_bg">primary_bg</label> 
+                    <label for="body_bg">body_bg</label> 
                     <input type="color" class="form-control" id="applyBtn" v-model="options.colors.body_bg">
                 </div>              
                 <div class="form-group mb-2 d-flex justify-content-between align-items-center">
@@ -160,6 +231,22 @@ console.log(3333);
 
             </div>
             <div class="col-md-6 col-6">
+                <div class="col-12">
+                    <h3>Show out accrording to you config</h3>
+                    <div class="form-group mb-2 d-flex justify-content-between align-items-center">
+                        <label for="inputElement">Picker Output</label>
+                        <input ref="inputElement" type="text" class="form-control" id="inputElement">
+                        <template v-if="inputElement && showPicker">
+                            <EmDateTimePicker :target="inputElement" :options="options"></EmDateTimePicker>
+                        </template>
+                    </div> 
+                </div>
+                <div class="col-12">
+                    <h3>All Options</h3>
+                    <pre>
+                        {{ optionsForDisplay }}
+                    </pre>
+                </div>
             </div>
        </div>
     </div>
@@ -179,6 +266,11 @@ console.log(3333);
 .options-selection label:has(~select)
 {
     width: 200px;
+}
+pre{
+    background-color: #696969;
+    color: #fff;
+    padding: 20px 50px;
 }
 </style>
 
