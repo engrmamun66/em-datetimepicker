@@ -54,7 +54,8 @@ const color_vars_light = {
     bg_grey: '#e2e3ee',
     font_dark: '#444444',
     font_dark_low: '#777777',
-    font_light: '#efefef',
+    font_light: '#f7f7f7',
+    date_disable: '#cacaca',
 };
 const defaults = {
     rangePicker: options?.rangePicker ?? false,
@@ -89,6 +90,7 @@ const defaults = {
         font_dark: isHexColor(options?.colors?.font_dark) ? options?.colors?.font_dark : (theme=='light' ? color_vars_light.font_dark : color_vars_light.font_light),
         font_dark_low: isHexColor(options?.colors?.font_dark_low) ? options?.colors?.font_dark_low : (theme=='light' ? color_vars_light.font_dark_low : color_vars_light.font_dark_low),
         font_light: isHexColor(options?.colors?.font_light) ? options?.colors?.font_light : (theme=='light' ? color_vars_light.font_light : color_vars_light.font_dark),
+        date_disable: isHexColor(options?.colors?.date_disable) ? options?.colors?.date_disable : (theme=='light' ? color_vars_light.date_disable : color_vars_light.font_dark),
     },
 };
 
@@ -110,6 +112,7 @@ const {
     font_dark: color_font_dark,
     font_dark_low: color_font_dark_low,
     font_light: color_font_light,
+    date_disable: color_date_disable,
 } = defaults.colors
 const color_transparent_1 = color_primary_bg + '3d';
 const color_transparent_2 = color_primary_bg + '1c';
@@ -755,7 +758,7 @@ header i:hover {
 }
 .main-months>div.offset-date:not(.start-date):not(.end-date):not(.date-in-selected-range),
 .main-days>div.offset-date:not(.start-date):not(.end-date):not(.date-in-selected-range) {
-    color: v-bind(color_font_light) !important;
+    color: v-bind(color_date_disable) !important;
 }
 
 main.box>div:not(.active):not(.offset-date):not(.date-in-selected-range):not(.start-date):not(.end-date):hover
