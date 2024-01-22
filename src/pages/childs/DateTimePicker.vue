@@ -554,12 +554,12 @@ onMounted(() => {
             <template v-if="current_view=='days'">
                 <div class="days-month-box content" @click.stop="false">
                     <header>
-                        <i class='bx bx-chevron-left' @click="fn.onClickPrev()"></i>
-                        <span class="cp" @click="current_view = 'months'">
+                        <i class='bx bx-chevron-left' @click.stop="fn.onClickPrev()"></i>
+                        <span class="cp" @click.stop="current_view = 'months'">
                             <!-- {{ makeDate(monthOfDays.filter(d => d.currentMonth)[0]?.date, FORMATS.forHeading) }} -->
                             {{ makeDate(monthOfDays.filter(d => d.currentMonth)[0]?.date, FORMATS.forHeading) }}
                         </span>
-                        <i class='bx bx-chevron-right' @click="fn.onClickNext()"></i>
+                        <i class='bx bx-chevron-right' @click.stop="fn.onClickNext()"></i>
                     </header>
                     <Switcher v-if="defaults.rangePicker"></Switcher>
                     <main class="main-weekdays">
@@ -631,14 +631,14 @@ onMounted(() => {
                 <div class="months-box content" @click.stop="false">
                     <header>
                         <i class='bx bx-chevron-left visibility-hidden'></i>
-                        <span class="cp" @click="current_view = 'years'">{{ makeDate(picker?.date1, FORMATS.month) }}</span>
+                        <span class="cp" @click.stop="current_view = 'years'">{{ makeDate(picker?.date1, FORMATS.month) }}</span>
                         <i class='bx bx-chevron-right visibility-hidden'></i>
                     </header>
                     <main class="main-months box">
                         <template v-for="(monthShort, index) in defaults.monthShorts" :key="index">
                             <div 
                             :class="{'active': makeDate(picker?.date1, FORMATS.monthShort) === monthShort}" 
-                            @click="fn.onClickMonth(index)">{{ monthShort }}</div>
+                            @click.stop="fn.onClickMonth(index)">{{ monthShort }}</div>
                         </template>
                     </main>
                     <Buttons
@@ -653,15 +653,15 @@ onMounted(() => {
             <template v-else-if="current_view == 'years'">
                 <div class="months-box content" @click.stop="false">
                     <header>
-                        <i class='bx bx-chevron-left' @click="fn.onClickPrev()"></i>
+                        <i class='bx bx-chevron-left' @click.stop="fn.onClickPrev()"></i>
                         <span>{{ years[0] }} - {{ years[years?.length - 1] }}</span>
-                        <i class='bx bx-chevron-right' @click="fn.onClickNext()"></i>
+                        <i class='bx bx-chevron-right' @click.stop="fn.onClickNext()"></i>
                     </header>
                     <main class="main-months box">
                         <template v-for="(year, index) in years" :key="index">
                             <div 
                             :class="{'active': new Date(picker.date1).getFullYear() == year}" 
-                            @click="fn.onClickYear(year)"> {{ year }}</div>
+                            @click.stop="fn.onClickYear(year)"> {{ year }}</div>
                         </template>
                     </main>
                     <Buttons
