@@ -252,7 +252,7 @@ onMounted(() => {
 
 
                     <div class="form-group mb-2">
-                        <label for="inputElement">Picker Output</label>
+                        <label for="inputElement">&nbsp;</label>
                         <input ref="inputElement" type="text" class="form-control" id="inputElement">
                         <template v-if="inputElement && showPicker">
                             <EmDateTimePicker :target="inputElement" :options="optionsForAttrs"></EmDateTimePicker>
