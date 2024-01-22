@@ -302,10 +302,5 @@ onMounted(() => {
 {
     width: 200px;
 }
-pre{
-    background-color: #fbfbfb;
-    color: #2b4ec6;
-    padding: 20px 50px;
-}
 </style>
 
