@@ -6,7 +6,7 @@ import { ref, provide, reactive, defineProps, onMounted, useAttrs } from 'vue';
 let { target, options} = defineProps({
     target: {
         type: [HTMLElement, Object],
-        required: true,
+        required: false,
         default: null,
     },
     options: {
