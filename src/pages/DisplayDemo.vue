@@ -55,7 +55,7 @@ let options = reactive({
 
 let options_default = JSON.parse(JSON.stringify(options));
 
-let optionsForDisplay = computed(() => {
+let optionsForAttrs = computed(() => {
     let output = {};
     Object.keys(options).forEach(key => {
         let item = options[key];
@@ -81,13 +81,13 @@ let showPicker = ref(true);
 let inputElement = ref(null);
 let autoOpenForQuickView = ref(false);
 let timeout = null;
-watch(optionsForDisplay, (a, b)=>{
+watch(optionsForAttrs, (a, b)=>{
     clearTimeout(timeout);
     showPicker.value = false;
     timeout = setTimeout(() => {
         showPicker.value = true;
         if(autoOpenForQuickView.value){
-            console.log('asdf');
+            console.log(inputElement.value);
             inputElement.value.click();
         }
     }, 400);
@@ -100,6 +100,8 @@ watch(optionsForDisplay, (a, b)=>{
     <div class="emdemo">
        <div class="row">
             <div class="col-md-6 col-12 options-selection">
+
+               
 
                 <div class="form-check mb-2">
                     <input class="form-check-input" type="checkbox" id="rangePicker" v-model="options.rangePicker">
@@ -138,6 +140,7 @@ watch(optionsForDisplay, (a, b)=>{
                     </label>
                 </div>
 
+                
 
                 <div class="form-group mb-2 d-flex justify-content-between align-items-center">
                     <label for="startDate">startDate</label>
@@ -186,37 +189,48 @@ watch(optionsForDisplay, (a, b)=>{
                         <option value="classic">classic</option>
                     </select>
                 </div>              
-                <div class="form-group mb-2 d-flex justify-content-between align-items-center">
-                    <label for="displayIn">displayIn</label>             
-                    <select class="form-control" id="displayIn" v-model="options.displayIn">
-                        <option value="modal">modal</option>
-                        <option value="top_left">top_left</option>
-                        <option value="top_right">top_right</option>
-                        <option value="bottom_left">bottom_left</option>
-                        <option value="bottom_right">bottom_right</option>
-                        <option value="inline_left">inline_left</option>
-                        <option value="inline_right">inline_right</option>
-                        <option value="inline_center">inline_center</option>
-                    </select>
-                </div>              
-                <div class="form-group mb-2 d-flex justify-content-between align-items-center">
-                    <label for="theme">theme</label>             
-                    <select class="form-control" id="theme" v-model="options.theme">
-                        <option value="light">light</option>
-                        <option value="dark">dark</option>
-                    </select>
-                </div>       
-                <div class="form-group mb-2 d-flex justify-content-between align-items-center">
-                    <label for="body_bg">body_bg</label> 
-                    <input type="color" class="form-control" id="applyBtn" v-model="options.colors.body_bg">
-                </div>              
-                <div class="form-group mb-2 d-flex justify-content-between align-items-center">
-                    <label for="primary_bg">primary_bg</label> 
-                    <input type="color" class="form-control" id="applyBtn" v-model="options.colors.primary_bg">
-                </div>              
+                
+                             
 
             </div>
             <div class="col-md-6 col-6">
+                <div class="options-selection mb-5">
+                    <div class="form-group mb-2 d-flex justify-content-between align-items-center">
+                        <label for="theme">theme</label>             
+                        <select class="form-control" id="theme" v-model="options.theme">
+                            <option value="light">light</option>
+                            <option value="dark">dark</option>
+                        </select>
+                    </div> 
+            
+                        
+                    <div class="form-group mb-2 d-flex justify-content-between align-items-center">
+                        <label for="body_bg">body_bg</label> 
+                        <input type="color" class="form-control" id="applyBtn" v-model="options.colors.body_bg">
+                    </div>              
+                    <div class="form-group mb-2 d-flex justify-content-between align-items-center">
+                        <label for="primary_bg">primary_bg</label> 
+                        <input type="color" class="form-control" id="applyBtn" v-model="options.colors.primary_bg">
+                    </div> 
+
+                    <div class="form-group mb-2 d-flex justify-content-between align-items-center">
+                        <label for="displayIn">displayIn</label>             
+                        <select class="form-control" id="displayIn" v-model="options.displayIn">
+                            <option value="modal">modal</option>
+                            <option value="bottom_left">bottom_left</option>
+                            <option value="bottom_right">bottom_right</option>
+                            <option value="top_left">top_left</option>
+                            <option value="top_right">top_right</option>
+                            <option value="inline_left">inline_left</option>
+                            <option value="inline_right">inline_right</option>
+                            <option value="inline_center">inline_center</option>
+                        </select>
+                    </div>  
+
+                </div>
+
+
+
                 <div class="col-12">
                     <h3>Show out accrording to you config</h3>
 
@@ -228,18 +242,18 @@ watch(optionsForDisplay, (a, b)=>{
                     </div>
 
 
-                    <div class="form-group mb-2 d-flex justify-content-between align-items-center">
+                    <div class="form-group mb-2">
                         <label for="inputElement">Picker Output</label>
                         <input ref="inputElement" type="text" class="form-control" id="inputElement">
                         <template v-if="inputElement && showPicker">
-                            <EmDateTimePicker :target="inputElement" :options="options"></EmDateTimePicker>
+                            <EmDateTimePicker :target="inputElement" :options="optionsForAttrs"></EmDateTimePicker>
                         </template>
                     </div> 
                 </div>
                 <div class="col-12">
                     <h3>All Options</h3>
                     <pre>
-                        {{ optionsForDisplay }}
+                        {{ optionsForAttrs }}
                     </pre>
                 </div>
             </div>
