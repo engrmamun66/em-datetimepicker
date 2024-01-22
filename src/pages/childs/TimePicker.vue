@@ -177,6 +177,7 @@ function onClickOk(emit_name='change'){
     let data = {
         startTime: time1_text,
         endTime: time2_text,
+        do_not_hide: defaults.timePickerButton === false,
     }
     let latest = latestHourAndMinute();
     picker.time1 = {...latest.time1, time: time1_text};
@@ -201,7 +202,7 @@ watch(time1_selectedHour, (newValue, oldValue)=>{
                 time2_selectedHour.value = time1_selectedHour.value;
                 time2_selectedMinute.value = time1_selectedMinute.value;
             }
-        }, 100);
+        }, 50);
     }
 
 })
@@ -216,7 +217,7 @@ watch(time1_selectedMinute, (newValue, oldValue)=>{
                 time2_selectedHour.value = time1_selectedHour.value;
                 time2_selectedMinute.value = time1_selectedMinute.value;
             }
-        }, 100);
+        }, 50);
     }
 })
 watch(time1_mode, (newValue, oldValue)=>{
@@ -227,8 +228,32 @@ watch(time1_mode, (newValue, oldValue)=>{
                 time2_selectedHour.value = time1_selectedHour.value;
                 time2_selectedMinute.value = time1_selectedMinute.value;
             }
-        }, 100);
+        }, 50);
     }
+})
+/* -------------------------------------------------------------------------- */
+/*                      Auto Emit Without OK button click                     */
+/* -------------------------------------------------------------------------- */
+watch(selectedHour, (newValue, oldValue)=>{
+    setTimeout(() => {
+        if(!defaults.timePickerButton){
+            onClickOk();
+        }
+    }, 100);    
+})
+watch(selectedMinute, (newValue, oldValue)=>{
+    setTimeout(() => {
+        if(!defaults.timePickerButton){
+            onClickOk();
+        }
+    }, 100);    
+})
+watch(mode, (newValue, oldValue)=>{
+    setTimeout(() => {
+        if(!defaults.timePickerButton){
+            onClickOk();
+        }
+    }, 100);    
 })
 
 function getHoursAndMinutes() {
@@ -330,7 +355,7 @@ const {
 } = defaults.colors
 const color_transparent_1 = color_primary_bg + '3d';
 const color_transparent_2 = color_primary_bg + '1c';
-let maxHeight = defaults.timePickerButton ? '270px' : '200px';
+let maxHeight = (defaults.timePickerButton || defaults.timePickerUi == 'classic') ? '270px' : '200px';
 </script>
 
 <template>

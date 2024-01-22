@@ -75,13 +75,9 @@ function onClose(data=null) {
     emits('close', data);
 }
 function onChange(data=null) {
-    showModal.value = false;
-    showPicker.value = false;
     emits('change', data);
 }
 function onChangeTime(data=null) {
-    showModal.value = false;
-    showPicker.value = false;
     emits('changeTime', data);
 }
 const desplayPositions = [

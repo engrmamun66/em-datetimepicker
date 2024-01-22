@@ -475,7 +475,9 @@ const fn = {
         fn.changeTime(data);
         fn.setTargetValue();
         fn.changePicker();
-        fn.closePicker();
+        if(!data.do_not_hide){
+            fn.closePicker();
+        }
     },
 };
 
