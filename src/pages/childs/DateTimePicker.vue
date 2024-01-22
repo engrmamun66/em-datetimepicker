@@ -46,7 +46,7 @@ const FORMATS = {
     year: 'YYYY',
     month: 'MMMM',
     monthShort: 'MMM',
-    time: options?.timeFormat ?? (options?.use24Format ? 'HH:mm' : 'hh:mm A'),
+    time: options?.timeFormat ?? (options?.use24Format ? 'HH:mm A' : 'hh:mm A'),
 };
 const color_vars_light = {
     body_bg: '#ffffff',

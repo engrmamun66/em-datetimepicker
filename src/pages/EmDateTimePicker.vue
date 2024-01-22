@@ -81,8 +81,13 @@ function onChangeTime(data=null) {
     emits('changeTime', data);
 }
 const desplayPositions = [
-    'top_left', 'top_right', 'bottom_left', 'bottom_right', 
-    'inline_left', 'inline_right', 'inline_center',
+    'top_left', 
+    'top_right', 
+    'bottom_left', 
+    'bottom_right',     
+    'inline_left', 
+    'inline_right', 
+    'inline_center',
 ];
 provide('desplayPositions', desplayPositions);
 let showingPermitInModal = desplayPositions.includes(options?.displayIn ?? 'modal') == false;

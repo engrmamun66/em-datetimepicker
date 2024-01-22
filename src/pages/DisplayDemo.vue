@@ -44,7 +44,7 @@ let options = reactive({
     timePickerUi: 'standard',
     timePickerButtons: false,
     endTimeAutoValid: true,
-    displayIn: 'modal',
+    displayIn: 'bottom_left',
     theme: 'light',
     colors: {
         // Just change -----> "primary_bg" to adjust color according any theme color
@@ -54,9 +54,11 @@ let options = reactive({
 });
 
 let options_default = JSON.parse(JSON.stringify(options));
+options_default.displayIn = '';
+let output = {};
 
-let optionsForAttrs = computed(() => {
-    let output = {};
+function filterOnlyPassableOptions() {
+    output = {};    
     Object.keys(options).forEach(key => {
         let item = options[key];
         let item_default = options_default[key];
@@ -75,6 +77,9 @@ let optionsForAttrs = computed(() => {
         }
     })
     return output;
+}
+let optionsForAttrs = computed(() => {
+    return filterOnlyPassableOptions()    
 })
 
 let showPicker = ref(true);
@@ -108,12 +113,14 @@ onMounted(() => {
             inputElement.value.click();     
         }
     }, 200);
+    filterOnlyPassableOptions()
 })
 
 </script>
 
 <template>
     <div class="emdemo">
+        <h1>Em Datetime Picker</h1>
        <div class="row">
             <div class="col-md-6 col-12 options-selection">
 

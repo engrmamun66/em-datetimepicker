@@ -14,6 +14,20 @@ let pickerValues = inject('pickerValues');
 let createEvent = inject('createEvent');
 let openTimePicker = inject('openTimePicker');
 
+if(defaults.use24Format){
+    // let clone_copy = JSON.parse(JSON.stringify(hours_position));
+    // clone_copy.forEach((item, index) => {
+    //     if(index == 0){
+    //         item.id = 12;
+    //         item.value = '12';
+    //     } else {
+    //         item.id = item.id + 12;
+    //         item.value = pad2(Number(item.value) + 12);
+    //     }
+    //     hours_position.push(item);
+    // })
+}
+
 function makeStepRange(step) {    
     let limit = Math.floor(60 / step)
     let start = 0
@@ -355,6 +369,8 @@ const {
 const color_transparent_1 = color_primary_bg + '3d';
 const color_transparent_2 = color_primary_bg + '1c';
 let maxHeight = (defaults.timePickerButtons || defaults.timePickerUi == 'classic') ? '270px' : '210px';
+const area_radius = defaults.rangePicker ? '6px 6px 0px 0px' : '6px';
+const gird_template_repeat = defaults.use24Format ? 'repeat(2,1fr)' : 'repeat(3,1fr)';
 </script>
 
 <template>
@@ -393,11 +409,13 @@ let maxHeight = (defaults.timePickerButtons || defaults.timePickerUi == 'classic
                                 </button>
                                 <div @click.stop="ui2.decrMinute()"> <i class='bx bx-chevron-down'></i> </div>
                             </div>
-                            <div class="column">
-                                <div @click.stop="mode=='am' ? mode='pm' : mode='am'"> <i class='bx bx-chevron-up'></i> </div>
-                                <button @click.stop="mode=='am' ? mode='pm' : mode='am'">{{ mode?.toUpperCase() }}</button>
-                                <div @click.stop="mode=='am' ? mode='pm' : mode='am'"> <i class='bx bx-chevron-down'></i> </div>
-                            </div>
+                            <template v-if="!defaults.use24Format">
+                                <div class="column">
+                                    <div @click.stop="mode=='am' ? mode='pm' : mode='am'"> <i class='bx bx-chevron-up'></i> </div>
+                                    <button @click.stop="mode=='am' ? mode='pm' : mode='am'">{{ mode?.toUpperCase() }}</button>
+                                    <div @click.stop="mode=='am' ? mode='pm' : mode='am'"> <i class='bx bx-chevron-down'></i> </div>
+                                </div>
+                            </template>
                         </div>
                         <template v-if="ui2.expand == 'hours'">
                             <div class="label-of-selection">Select Hour</div>
@@ -530,8 +548,7 @@ let maxHeight = (defaults.timePickerButtons || defaults.timePickerUi == 'classic
     height: v-bind(maxHeight);
     margin-top: 1px;
     padding: 8px;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
+    border-radius: v-bind(area_radius);
 }
 
 .clocklet:not(.clocklet--showing) {
@@ -916,7 +933,7 @@ let maxHeight = (defaults.timePickerButtons || defaults.timePickerUi == 'classic
 
 .clocklet-plate.standard .columns {
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: v-bind(gird_template_repeat);
     gap: 16px;
     row-gap: 14px;
 }
