@@ -1,9 +1,8 @@
 <script setup>
 import { ref, inject } from  'vue';
 import EmDateTimePicker from './pages/EmDateTimePicker.vue'
+import DisplayDemo from './pages/DisplayDemo.vue'
 
-let emDatetimepicker = inject('emDatetimepicker');
-let targets = emDatetimepicker.elements;
 
 </script>
 
@@ -11,4 +10,7 @@ let targets = emDatetimepicker.elements;
     <template v-for="(target, index) in targets" :key="index">   
         <EmDateTimePicker :target="target.element" :options="target.options"></EmDateTimePicker>
     </template>  
+    <teleport to="#emdemo">
+        <DisplayDemo></DisplayDemo>
+    </teleport>
 </template>

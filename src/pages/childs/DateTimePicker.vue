@@ -77,7 +77,6 @@ const defaults = {
     minuteStep: (options?.minuteStep && options?.minuteStep >= 1 && options?.minuteStep <= 30) ? options?.minuteStep : 5,
     use24Format: FORMATS?.time ?? false,
     timePickerUi: (options?.timePickerUi && ['classic', 'standard']?.includes(options?.timePickerUi)) ? options?.timePickerUi : 'standard',
-    timeZone: options?.timeZone ?? '',
     timePickerButtons: options?.timePickerButtons ?? false,
     endTimeAutoValid: options?.endTimeAutoValid ?? true,
     displayIn: ((options?.displayIn && desplayPositions.includes(options?.displayIn ?? 'modal'))) ? options?.displayIn : 'modal',
@@ -145,25 +144,6 @@ if(defaults.minDate || defaults.maxDate){
         }
     }
 }
-
-if(defaults.timeZone){
-    let _timezones = [
-        'America/New_York',
-        'Asia/Dhaka',
-        'Europe/London',
-        'Pacific/Honolulu',
-        'Australia/Sydney',
-        'Africa/Cairo',
-        'Asia/Tokyo',
-        'America/Los_Angeles',
-        'Europe/Paris',
-        'Asia/Kolkata',
-    ];
-    if(!_timezones.includes(defaults.timeZone)){
-        defaults.timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    }
-}
-
 
 let current_view = ref('days');
 let selectingStartDate = ref(true);
