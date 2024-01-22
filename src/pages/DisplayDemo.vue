@@ -150,11 +150,11 @@ console.log(3333);
                     </select>
                 </div>       
                 <div class="form-group mb-2 d-flex justify-content-between align-items-center">
-                    <label for="body_bg">primary_bg</label> <span>Color-code: {{ options.colors.body_bg }} </span>
+                    <label for="body_bg">primary_bg</label> 
                     <input type="color" class="form-control" id="applyBtn" v-model="options.colors.body_bg">
                 </div>              
                 <div class="form-group mb-2 d-flex justify-content-between align-items-center">
-                    <label for="primary_bg">primary_bg</label> <span>Color-code: {{ options.colors.primary_bg }} </span>
+                    <label for="primary_bg">primary_bg</label> 
                     <input type="color" class="form-control" id="applyBtn" v-model="options.colors.primary_bg">
                 </div>              
 
