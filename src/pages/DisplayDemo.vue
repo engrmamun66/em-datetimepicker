@@ -275,15 +275,11 @@ onMounted(() => {
                 </div>
                 <div class="col-12 mb-3">
                     <h3>All Options</h3>
-<pre>
-    {{ optionsForAttrs }}
-</pre>
+<pre>{{ optionsForAttrs }}</pre>
                 </div>
                 <div class="col-12 mb-3">
                     <h3>Selected Value</h3>
-<pre>
-    {{ eventData }}
-</pre>
+<pre>{{ eventData }}</pre>
                 </div>
             </div>
        </div>
