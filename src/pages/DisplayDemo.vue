@@ -116,19 +116,19 @@ watch(optionsForDisplay, (a, b)=>{
             <div class="col-md-6 col-12 options-selection">
 
                 <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" value="" id="rangePicker" v-model="options.rangePicker">
+                    <input class="form-check-input" type="checkbox" id="rangePicker" v-model="options.rangePicker">
                     <label class="form-check-label" for="rangePicker">
                         rangePicker
                     </label>
                 </div>
                 <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" value="" id="timePicker" :v-model="options.timePicker">
+                    <input class="form-check-input" type="checkbox" id="timePicker" v-model="options.timePicker">
                     <label class="form-check-label" for="timePicker">
                         timePicker
                     </label>
                 </div>
                 <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" value="" id="onlyTimePicker" v-model="options.onlyTimePicker">
+                    <input class="form-check-input" type="checkbox" id="onlyTimePicker" v-model="options.onlyTimePicker">
                     <label class="form-check-label" for="onlyTimePicker">
                         onlyTimePicker
                     </label>
