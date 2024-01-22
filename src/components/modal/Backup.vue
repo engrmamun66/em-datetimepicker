@@ -92,14 +92,14 @@ function isCheckedAll(){
         <div @click.stop="false" class="modal-content RentMyWrapper" wrapper-is-ready style="--duration:0.3s">
           <div class="modal-header">
               <h6 class="modal-title"> {{ title }} </h6>
-              <button @click.stop="close()" type="button" class="btn-close" aria-label="Close" style="background-color:transparent !important"><i class="la la-close"></i></button>
+              <button @click="close()" type="button" class="btn-close" aria-label="Close" style="background-color:transparent !important"><i class="la la-close"></i></button>
           </div>
           
           <div class="modal-body p-2 px-4">
               <div v-html="content" ref="contentDiv"></div>
           </div>     
            <div class="modal-footer d-flex justify-content-end">
-            <button :disabled="hasCheckboxes ? !status : false" :style="hasCheckboxes ? `opacity:${status ? '1' : '0.5'}` : ''" @click.stop="close()" type="button" class="RentMyBtn">{{ hasCheckboxes ? 'Continue' : 'OK' }}</button>
+            <button :disabled="hasCheckboxes ? !status : false" :style="hasCheckboxes ? `opacity:${status ? '1' : '0.5'}` : ''" @click="close()" type="button" class="RentMyBtn">{{ hasCheckboxes ? 'Continue' : 'OK' }}</button>
           </div>     
         </div>      
       </div>
