@@ -133,9 +133,7 @@ if(new Date(defaults.startDate) > new Date(defaults.endDate)){
 if(defaults.minDate || defaults.maxDate){
     if(defaults.minDate){
         if(new Date(defaults.startDate) < new Date(defaults.minDate)){
-            console.log('defaults.startDate', defaults.startDate);
             defaults.startDate = makeDate(defaults.minDate, FORMATS.date);
-            console.log('defaults.startDate', defaults.startDate);
         }
     }
     if(defaults.maxDate){     
@@ -479,7 +477,6 @@ const monthOfDays = computed( () => {
     const monthIndex = new Date(picker.date).getMonth();
     const days = daysOfMonth(date.getFullYear(), monthIndex, FORMATS, {currentMonth: true});
     const first_weekday_short = days?.[0]?.['weekday_short'];
-    console.log('days', days);
     const startFrom = weekDays.value.findIndex(weekday => weekday === first_weekday_short);
     // Left tailing
     let _date = new Date(picker.date);

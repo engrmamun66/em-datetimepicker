@@ -86,7 +86,8 @@ watch(optionsForDisplay, (a, b)=>{
     showPicker.value = false;
     timeout = setTimeout(() => {
         showPicker.value = true;
-        if(autoOpenForQuickView){
+        if(autoOpenForQuickView.value){
+            console.log('asdf');
             inputElement.value.click();
         }
     }, 400);
@@ -220,7 +221,7 @@ watch(optionsForDisplay, (a, b)=>{
                     <h3>Show out accrording to you config</h3>
 
                     <div class="form-check mb-2 options-selection">
-                        <input class="form-check-input" type="checkbox" id="autoOpenForQuickView" v-model="options.autoOpenForQuickView">
+                        <input class="form-check-input" type="checkbox" id="autoOpenForQuickView" v-model="autoOpenForQuickView">
                         <label class="form-check-label" for="autoOpenForQuickView">
                             Auto open for quick view;
                         </label>
