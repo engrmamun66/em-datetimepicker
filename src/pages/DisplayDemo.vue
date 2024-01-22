@@ -95,7 +95,13 @@ watch(optionsForAttrs, (a, b)=>{
     }, 400);
 })
 
-
+onMounted(() => {
+    setTimeout(() => {
+        if(autoOpenForQuickView.value){
+            inputElement.value.click();     
+        }
+    }, 200);
+})
 
 </script>
 
