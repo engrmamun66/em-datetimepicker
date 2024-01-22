@@ -72,7 +72,7 @@ const defaults = {
     monthShorts: options?.monthShorts ?? [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ],
     row: (options.row && options.row >= 3 && options.row <= 10) ? options.row : 6,
     // With Time Picker
-    timePicker: options?.timePicker ?? false,
+    timePicker: options?.onlyTimePicker ? true : (options?.timePicker ?? false),
     onlyTimePicker: options?.onlyTimePicker ?? false,
     minuteStep: (options?.minuteStep && options?.minuteStep >= 1 && options?.minuteStep <= 30) ? options?.minuteStep : 5,
     use24Format: FORMATS?.time ?? false,
@@ -265,7 +265,7 @@ const fn = {
         pickerValues.endDate = makeDate(date2, OUTPUT_FORMAT.value, { hour: hour2, minute: minute2 });
         
         if(emit){
-            emits('change');
+            emits('change', emitableData.value);
             target.dispatchEvent(events.change(emitableData.value));
         }
     },

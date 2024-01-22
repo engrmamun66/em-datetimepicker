@@ -79,6 +79,7 @@ let optionsForAttrs = computed(() => {
 
 let showPicker = ref(true);
 let inputElement = ref(null);
+let eventData = ref({});
 let autoOpenForQuickView = ref(!!localStorage.getItem('autoOpenForQuickView'));
 let timeout = null;
 watch(optionsForAttrs, (a, b)=>{
@@ -261,14 +262,20 @@ onMounted(() => {
                         <label for="inputElement">&nbsp;</label>
                         <input ref="inputElement" type="text" class="form-control" id="inputElement">
                         <template v-if="inputElement && showPicker">
-                            <EmDateTimePicker :target="inputElement" :options="optionsForAttrs"></EmDateTimePicker>
+                            <EmDateTimePicker @change="(data)=>eventData=data" :target="inputElement" :options="optionsForAttrs"></EmDateTimePicker>
                         </template>
                     </div> 
                 </div>
-                <div class="col-12">
+                <div class="col-12 mb-3">
                     <h3>All Options</h3>
                     <pre>
                         {{ optionsForAttrs }}
+                    </pre>
+                </div>
+                <div class="col-12 mb-3">
+                    <h3>Change Log</h3>
+                    <pre>
+                        {{ eventData }}
                     </pre>
                 </div>
             </div>
@@ -292,8 +299,8 @@ onMounted(() => {
     width: 200px;
 }
 pre{
-    background-color: #696969;
-    color: #fff;
+    background-color: #fbfbfb;
+    color: #2b4ec6;
     padding: 20px 50px;
 }
 </style>
