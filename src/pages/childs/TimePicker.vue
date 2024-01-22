@@ -177,7 +177,7 @@ function onClickOk(emit_name='change'){
     let data = {
         startTime: time1_text,
         endTime: time2_text,
-        do_not_hide: defaults.timePickerButton === false,
+        do_not_hide: defaults.timePickerButtons === false,
     }
     let latest = latestHourAndMinute();
     picker.time1 = {...latest.time1, time: time1_text};
@@ -236,21 +236,21 @@ watch(time1_mode, (newValue, oldValue)=>{
 /* -------------------------------------------------------------------------- */
 watch(selectedHour, (newValue, oldValue)=>{
     setTimeout(() => {
-        if(!defaults.timePickerButton){
+        if(!defaults.timePickerButtons){
             onClickOk();
         }
     }, 100);    
 })
 watch(selectedMinute, (newValue, oldValue)=>{
     setTimeout(() => {
-        if(!defaults.timePickerButton){
+        if(!defaults.timePickerButtons){
             onClickOk();
         }
     }, 100);    
 })
 watch(mode, (newValue, oldValue)=>{
     setTimeout(() => {
-        if(!defaults.timePickerButton){
+        if(!defaults.timePickerButtons){
             onClickOk();
         }
     }, 100);    
@@ -355,7 +355,7 @@ const {
 } = defaults.colors
 const color_transparent_1 = color_primary_bg + '3d';
 const color_transparent_2 = color_primary_bg + '1c';
-let maxHeight = (defaults.timePickerButton || defaults.timePickerUi == 'classic') ? '270px' : '200px';
+let maxHeight = (defaults.timePickerButtons || defaults.timePickerUi == 'classic') ? '270px' : '210px';
 </script>
 
 <template>
@@ -364,7 +364,7 @@ let maxHeight = (defaults.timePickerButton || defaults.timePickerUi == 'classic'
 
             <template v-if="defaults.timePickerUi == 'standard'">
 
-                <template v-if="defaults.timePickerButton">
+                <template v-if="defaults.timePickerButtons">
                     <template v-if="ui2.expand == null">
                         <div @click.stop="onClickClose()" class="closeIcon"><i class='bx bx-x' ></i></div>     
                         <div @click.stop="onClickOk()" class="okIcon"><i class='bx bx-check'></i></div> 
@@ -376,7 +376,7 @@ let maxHeight = (defaults.timePickerButton || defaults.timePickerUi == 'classic'
 
                 <div class="clocklet clocklet--inline">
                     <div class="clocklet-plate standard" :class="{ 
-                        'need-scroll': defaults.timePickerButton ? (defaults.minuteStep < 3 && ui2.expand != null) : (ui2.expand != null),
+                        'need-scroll': defaults.timePickerButtons ? (defaults.minuteStep < 3 && ui2.expand != null) : (ui2.expand != null),
                         }" >
 
                         <div v-if="ui2.expand == null" class="columns fade-in">
@@ -420,7 +420,7 @@ let maxHeight = (defaults.timePickerButton || defaults.timePickerUi == 'classic'
                 </div>
             </template>
             <template v-else>
-                <template v-if="defaults.timePickerButton">
+                <template v-if="defaults.timePickerButtons">
                     <div @click.stop="onClickClose()" class="closeIcon"><i class='bx bx-x' ></i></div>     
                     <div @click.stop="onClickOk()" class="okIcon"><i class='bx bx-check'></i></div>     
                 </template>
