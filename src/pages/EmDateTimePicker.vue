@@ -4,29 +4,16 @@ import DateTimePicker from './childs/DateTimePicker.vue';
 import Modal from './childs/Modal.vue';
 import { h, ref, provide, reactive, defineProps, onMounted, useAttrs, computed } from 'vue';
 let emits = defineEmits([ 'update:modelValue', 'init', 'open', 'cancel', 'close', 'change', 'changeTime']);
-let { modelValue, options, size } = defineProps({
+let { modelValue, options } = defineProps({
     modelValue: {
         type: [Boolean],
         required: true,
         default: true,
     },
-    autoOpen: {
-        type: [Boolean],
-        required: false,
-        default: false,
-    },
     options: {
         type: [Object],
         required: false,
         default: {},
-    },
-    size: {
-        type: [String],
-        required: true,
-        default: 'md',
-        validator: (value) => {
-            return ['sm', 'md', 'lg'].includes(value);
-        }
     },
 });
 let target = ref(null);
@@ -49,6 +36,7 @@ if(typeof modelValue == 'object'){
 let showPicker = ref(false);
 let isShowInitilaztionValue = ref(true);
 let isMounted = ref(false);
+let isMountedSelf = ref(false);
 const picker = reactive({
     // with Single Date
     date: '',
@@ -90,6 +78,9 @@ onMounted(() => {
     if(options?.autoOpen){
         target.value.click()
     }
+    setTimeout(() => {
+        isMountedSelf.value = true;
+    }, 2000);
 })
 function updateModalValue(data=null){
     emits('update:modelValue', data);
@@ -140,7 +131,7 @@ function isHexColor(color){
 }
 provide('isHexColor', isHexColor);
 
-const dynamicTag = () => {
+const dynamicElement = () => {
     let tagName = options?.tagName ?? 'input';
     return h(tagName, {
         class: [
@@ -211,14 +202,14 @@ const dynamicTag = () => {
         }"
     /> -->
 
-    <dynamicTag ref="target" 
+    <dynamicElement ref="target" 
         v-bind="{
             class: $attrs?.class, 
             style: $attrs?.style,
             for: $attrs?.for,
             title: $attrs?.title,
         }">
-    </dynamicTag>
+    </dynamicElement>
 
     <template v-if="showPicker && target && div.position != 'modal' && div.diplayIn == 'bottom'">
         <div :class="{[div.classList] : true}" :style="div.boxShadow">
