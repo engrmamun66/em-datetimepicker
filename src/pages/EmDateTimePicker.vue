@@ -137,8 +137,7 @@ provide('isHexColor', isHexColor);
         v-if="isShowInitilaztionValue"
         @init="isShowInitilaztionValue.value = false"
         :target="target" 
-        :options="options" 
-        :teleportDiv="teleportDiv" 
+        :options="options"
         :justInitializeValue="true"></DateTimePicker>
     </template>
 
@@ -151,7 +150,6 @@ provide('isHexColor', isHexColor);
             @changeTime="onChangeTime"
             :target="target" 
             :options="options" 
-            :teleportDiv="teleportDiv" 
             :justInitializeValue="false"></DateTimePicker>
         </Modal>
     </template>
@@ -165,8 +163,7 @@ provide('isHexColor', isHexColor);
             @change="onChange"
             @changeTime="onChangeTime"
             :target="target" 
-            :options="options" 
-            :teleportDiv="teleportDiv" 
+            :options="options"
             :justInitializeValue="false"></DateTimePicker> 
         </div>
     </template>
@@ -184,7 +181,6 @@ provide('isHexColor', isHexColor);
             @changeTime="onChangeTime"
             :target="target" 
             :options="options" 
-            :teleportDiv="teleportDiv" 
             :justInitializeValue="false"></DateTimePicker> 
         </div>
     </template>

@@ -12,18 +12,13 @@ const desplayPositions = inject('desplayPositions');
 const theme = inject('theme');
 const isHexColor = inject('isHexColor');
 let emits = defineEmits(['init', 'open', 'cancel', 'close', 'change', 'changeTime']);
-let { target, options, teleportDiv, justInitializeValue } = defineProps({
+let { target, options, justInitializeValue } = defineProps({
     target: {
         type: [HTMLElement, Object],
         required: true,
         default: null,
     },
     options: {
-        type: [Object],
-        required: false,
-        default: {},
-    },
-    teleportDiv: {
         type: [Object],
         required: false,
         default: {},
