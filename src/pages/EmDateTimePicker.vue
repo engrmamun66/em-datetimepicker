@@ -4,7 +4,7 @@ import DateTimePicker from './childs/DateTimePicker.vue';
 import Modal from './childs/Modal.vue';
 import { h, ref, provide, reactive, defineProps, onMounted, useAttrs, computed } from 'vue';
 let emits = defineEmits([ 'update:modelValue', 'init', 'open', 'cancel', 'close', 'change', 'changeTime']);
-let { modelValue, options, size, autoOpen, invisible } = defineProps({
+let { modelValue, options, size } = defineProps({
     modelValue: {
         type: [Boolean],
         required: true,
@@ -16,11 +16,6 @@ let { modelValue, options, size, autoOpen, invisible } = defineProps({
         default: true,
     },
     autoOpen: {
-        type: [Boolean],
-        required: false,
-        default: false,
-    },
-    invisible: {
         type: [Boolean],
         required: false,
         default: false,
@@ -97,7 +92,7 @@ onMounted(() => {
     }
     document.removeEventListener('click', hidePicker);
     document.addEventListener('click', hidePicker);
-    if(autoOpen){
+    if(options?.autoOpen){
         setTimeout(()=> target.value.click(), 500);
     }
 })
@@ -193,7 +188,7 @@ provide('isHexColor', isHexColor);
     :class="{[`theme-${theme}`]: theme}"
     @click.stop="showPicker=true" 
     ref="target" type="text"
-    :style="invisible ? 'display:none': ''"
+    :style="options?.invisible ? 'display:none': ''"
     v-bind="{
         class: $attrs?.class, 
         style: $attrs?.style,

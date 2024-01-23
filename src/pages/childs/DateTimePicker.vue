@@ -78,6 +78,8 @@ const defaults = {
     endTimeAutoValid: options?.endTimeAutoValid ?? true,
     displayIn: ((options?.displayIn && desplayPositions.includes(options?.displayIn ?? 'modal'))) ? options?.displayIn : 'modal',
     theme: theme,
+    autoOpen: options?.autoOpen ?? false,
+    invisible: options?.invisible ?? false,
     colors: {
         // Just change -----> "primary_bg" to adjust color according any theme color
         body_bg: isHexColor(options?.colors?.body_bg) ? options?.colors?.body_bg : (theme=='light' ? color_vars_light.body_bg : '#0d111e'),

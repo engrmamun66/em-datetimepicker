@@ -51,6 +51,8 @@ let options = reactive({
         body_bg: '#ffffff',
         primary_bg: '#12834f',      
     },
+    autoOpen: false,
+    invisible: false,
 });
 
 let options_default = JSON.parse(JSON.stringify(options));
@@ -86,34 +88,17 @@ let optionsForAttrs = computed(() => {
 let showPicker = ref(true);
 let inputElement = ref(null);
 let eventData = ref({});
-let autoOpenForQuickView = ref(!!localStorage.getItem('autoOpenForQuickView'));
 let timeout = null;
 watch(optionsForAttrs, (a, b)=>{
     clearTimeout(timeout);
-    showPicker.value = false;
+    showPicker.value = false;    
     timeout = setTimeout(() => {
         showPicker.value = true;
-        if(autoOpenForQuickView.value){
-            // setTimeout(() => {
-            //     inputElement.value.click();
-            // }, 0);
-        }
     }, 400);
 })
-watch(autoOpenForQuickView, (a, b)=>{
-    if(a){
-        localStorage.setItem('autoOpenForQuickView', String(a));
-    } else {
-        localStorage.removeItem('autoOpenForQuickView');
-    }
-})
 
-onMounted(() => {
-    setTimeout(() => {
-        // if(autoOpenForQuickView.value){
-        //     inputElement.value.click();     
-        // }
-    }, 50);
+
+onMounted(() => {  
     filterOnlyPassableOptions()
 })
 </script>
@@ -258,17 +243,23 @@ onMounted(() => {
                     <h5>Show output</h5>
 
                     <div class="form-check mb-2 options-selection">
-                        <input class="form-check-input" type="checkbox" id="autoOpenForQuickView" v-model="autoOpenForQuickView">
-                        <label class="form-check-label" for="autoOpenForQuickView">
-                            Auto open for quick view;
+                        <input class="form-check-input" type="checkbox" id="autoOpen" v-model="options.autoOpen">
+                        <label class="form-check-label" for="autoOpen">
+                            Auto open
                         </label>
                     </div>
                     <div class="form-check mb-2 options-selection">
-                        <input class="form-check-input" type="checkbox" id="showPicker" v-model="showPicker">
-                        <label class="form-check-label" for="showPicker">
-                            Show Picker
+                        <input class="form-check-input" type="checkbox" id="invisible" v-model="options.invisible">
+                        <label class="form-check-label" for="invisible">
+                            invisible
                         </label>
                     </div>
+                    <!-- <div class="form-check mb-2 options-selection">
+                        <input class="form-check-input" type="checkbox" id="showPicker2" v-model="showPicker">
+                        <label class="form-check-label" for="showPicker2">
+                            Show Picker
+                        </label>
+                    </div> -->
 
 
                     <div class="form-group mb-2">
@@ -279,8 +270,6 @@ onMounted(() => {
                             class="form-control"
                             for="for"
                             style="border: 3px solid #a9a469;"
-                            :autoOpen="autoOpenForQuickView"
-                            :invisible="true"
                             ></EmDateTimePicker>
                         </template>
                     </div> 
