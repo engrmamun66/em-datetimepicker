@@ -94,9 +94,9 @@ watch(optionsForAttrs, (a, b)=>{
     timeout = setTimeout(() => {
         showPicker.value = true;
         if(autoOpenForQuickView.value){
-            setTimeout(() => {
-                inputElement.value.click();
-            }, 0);
+            // setTimeout(() => {
+            //     inputElement.value.click();
+            // }, 0);
         }
     }, 400);
 })
@@ -110,9 +110,9 @@ watch(autoOpenForQuickView, (a, b)=>{
 
 onMounted(() => {
     setTimeout(() => {
-        if(autoOpenForQuickView.value){
-            inputElement.value.click();     
-        }
+        // if(autoOpenForQuickView.value){
+        //     inputElement.value.click();     
+        // }
     }, 50);
     filterOnlyPassableOptions()
 })
@@ -267,10 +267,11 @@ onMounted(() => {
 
                     <div class="form-group mb-2">
                         <label for="inputElement">&nbsp;</label>
-                        <template v-if="inputElement && showPicker">
+                        <template v-if="showPicker">
                             <EmDateTimePicker v-model="eventData" @change="(data)=>{/*eventData=data*/}" 
                             :options="optionsForAttrs"
                             class="form-control"
+                            for="for"
                             style="border: 3px solid #a9a469;"
                             :autoOpen="autoOpenForQuickView"
                             ></EmDateTimePicker>
