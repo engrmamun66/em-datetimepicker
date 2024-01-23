@@ -113,7 +113,7 @@ onMounted(() => {
         if(autoOpenForQuickView.value){
             inputElement.value.click();     
         }
-    }, 200);
+    }, 50);
     filterOnlyPassableOptions()
 })
 let showPicker2 = ref(true);
@@ -273,6 +273,7 @@ let showPicker2 = ref(true);
                             <EmDateTimePicker v-model="showPicker2" @change="(data)=>eventData=data" :target="inputElement" :options="optionsForAttrs"
                             class="form-control"
                             style="border:1px solid red"
+                            :autoOpen="autoOpenForQuickView"
                             ></EmDateTimePicker>
                         </template>
                     </div> 

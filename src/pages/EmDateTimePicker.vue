@@ -4,7 +4,7 @@ import DateTimePicker from './childs/DateTimePicker.vue';
 import Modal from './childs/Modal.vue';
 import { h, ref, provide, reactive, defineProps, onMounted, useAttrs, computed } from 'vue';
 let emits = defineEmits([ 'update:modelValue', 'init', 'open', 'cancel', 'close', 'change', 'changeTime']);
-let { modelValue, options, size } = defineProps({
+let { modelValue, options, size, autoOpen } = defineProps({
     modelValue: {
         type: [Boolean],
         required: true,
@@ -14,6 +14,11 @@ let { modelValue, options, size } = defineProps({
         type: [Boolean],
         required: false,
         default: true,
+    },
+    autoOpen: {
+        type: [Boolean],
+        required: false,
+        default: false,
     },
     options: {
         type: [Object],
@@ -73,6 +78,9 @@ onMounted(() => {
     }
     document.removeEventListener('click', hidePicker);
     document.addEventListener('click', hidePicker);
+    if(autoOpen){
+        setTimeout(()=> target.value.click(), 0);
+    }
 })
 function updateModalValue(booleanVal){
     emits('update:modelValue', booleanVal);
@@ -134,8 +142,8 @@ provide('isHexColor', isHexColor);
         :justInitializeValue="true"></DateTimePicker>
     </template>
 
-    <template v-if="showPicker && target && modelValue && div.position == 'modal'">
-        <Modal @makeFalse="updateModalValue">
+    <template v-if="showPicker && div.position == 'modal'">
+        <Modal @makeFalse="showPicker=false">
             <DateTimePicker 
             @cancel="onCancel"
             @close="onClose"
