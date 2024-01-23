@@ -2,17 +2,12 @@
 import moment from 'moment/moment';
 import DateTimePicker from './childs/DateTimePicker.vue';
 import Modal from './childs/Modal.vue';
-import { h, ref, provide, reactive, defineProps, onMounted, useAttrs, computed } from 'vue';
+import { ref, provide, reactive, defineProps, onMounted, useAttrs, computed } from 'vue';
 let emits = defineEmits([ 'update:modelValue', 'init', 'open', 'cancel', 'close', 'change', 'changeTime']);
 let { modelValue, options, size } = defineProps({
     modelValue: {
         type: [Boolean],
         required: true,
-        default: true,
-    },
-    isDisabled: {
-        type: [Boolean],
-        required: false,
         default: true,
     },
     autoOpen: {
@@ -188,8 +183,8 @@ provide('isHexColor', isHexColor);
     :class="{[`theme-${theme}`]: theme}"
     @click.stop="showPicker=true" 
     ref="target" type="text"
-    :disabled="isDisabled"
     :style="options?.invisible ? 'display:none': ''"
+    :disabled="options?.isDisabled"
     v-bind="{
         class: $attrs?.class, 
         style: $attrs?.style,

@@ -254,6 +254,12 @@ onMounted(() => {
                             invisible
                         </label>
                     </div>
+                    <div class="form-check mb-2 options-selection">
+                        <input class="form-check-input" type="checkbox" id="isDisabled" v-model="options.isDisabled">
+                        <label class="form-check-label" for="isDisabled">
+                            isDisabled
+                        </label>
+                    </div>
                     <!-- <div class="form-check mb-2 options-selection">
                         <input class="form-check-input" type="checkbox" id="showPicker2" v-model="showPicker">
                         <label class="form-check-label" for="showPicker2">
