@@ -2,22 +2,36 @@
 import moment from 'moment/moment';
 import DateTimePicker from './childs/DateTimePicker.vue';
 import Modal from './childs/Modal.vue';
-import { ref, provide, reactive, defineProps, onMounted, useAttrs } from 'vue';
-let { target, options} = defineProps({
-    target: {
-        type: [HTMLElement, Object],
+import { h, ref, provide, reactive, defineProps, onMounted, useAttrs, computed } from 'vue';
+let emits = defineEmits([ 'update:modelValue', 'init', 'open', 'cancel', 'close', 'change', 'changeTime']);
+let { modelValue, options, size } = defineProps({
+    modelValue: {
+        type: [Boolean],
+        required: true,
+        default: true,
+    },
+    isDisabled: {
+        type: [Boolean],
         required: false,
-        default: null,
+        default: true,
     },
     options: {
         type: [Object],
         required: false,
         default: {},
     },
+    size: {
+        type: [String],
+        required: true,
+        default: 'md',
+        validator: (value) => {
+            return ['sm', 'md', 'lg'].includes(value);
+        }
+    },
 });
+let target = ref(null);
 options = {...options, ...useAttrs()};
 
-let showModal = ref(false);
 let showPicker = ref(false);
 let isShowInitilaztionValue = ref(true);
 let isMounted = ref(false);
@@ -46,31 +60,28 @@ const pickerValues = reactive({
     endTime: '',
 });
 let theme = (options?.theme && options?.theme=='dark') ? options?.theme : 'light';
-provide('isMounted', isMounted);
-provide('picker', picker);
-provide('pickerValues', pickerValues);
 provide('theme', theme);
+provide('picker', picker);
+provide('isMounted', isMounted);
+provide('pickerValues', pickerValues);
 
-onMounted(() => {
-    target.addEventListener('click', (e)=> {
-        e.stopPropagation();
-        showModal.value = true;
-        showPicker.value = true;
-    });
+onMounted(() => {    
     function hidePicker(e) {
-        showPicker.value = false;        
+        e.stopPropagation();
+        updateModalValue(false);   
+        showPicker.value = false;
     }
     document.removeEventListener('click', hidePicker);
     document.addEventListener('click', hidePicker);
 })
-let emits = defineEmits(['init', 'open', 'cancel', 'close', 'change', 'changeTime']);
+function updateModalValue(booleanVal){
+    emits('update:modelValue', booleanVal);
+}
 function onCancel(data=null) {
-    showModal.value = false;
     showPicker.value = false;
     emits('cancel', data);
 }
 function onClose(data=null) {
-    showModal.value = false;
     showPicker.value = false;
     emits('close', data);
 }
@@ -90,46 +101,41 @@ const desplayPositions = [
     'inline_center',
 ];
 provide('desplayPositions', desplayPositions);
-let showingPermitInModal = desplayPositions.includes(options?.displayIn ?? 'modal') == false;
-let teleportDiv = ref(null)
 
-function setTeleportDiv() {
-    let position = options?.displayIn;
-    if(!position || !desplayPositions.includes(position)) return;  
-    let adjacentPosition = position?.startsWith('top_') ? "beforebegin" : "afterend";
-    adjacentPosition = position?.startsWith('bottom_') ? "afterend" : adjacentPosition;
-    let div = document.createElement('div');
-    div.classList = `em-datepicker-wrapper ${position}`
-    div.style.width = target?.style?.width;
-    div.setAttribute('position', position)
-    if(position.startsWith('top_')){
-        div.style.boxShadow = `box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px`;
-    } else {
-        div.style.boxShadow = `box-shadow: rgba(50, 50, 93, 0.25) 0px -13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px`;
-    }
-    target.insertAdjacentElement(adjacentPosition, div);
-    teleportDiv.value = div;
-}
-setTeleportDiv()
+const div = computed(() => {
+    let position = ((options?.displayIn && desplayPositions.includes(options?.displayIn ?? 'modal'))) ? options?.displayIn : 'modal';
+    let boxShadow =  `box-shadow: rgba(50, 50, 93, 0.25) 0px ${position?.startsWith('top_') ? '' : '-'}13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px`;
+    let attrs = {
+        position,
+        boxShadow,
+        diplayIn: position?.startsWith('top_') ? 'top' : 'bottom',
+        classList: `em-datepicker-wrapper ${position}`,
+    } 
+    return attrs;
+});
+
 function isHexColor(color){
     if(!color) return false;
     if(!(typeof color == 'string')) return false;
     return color.startsWith('#') && color.length == 7;
 }
-provide('isHexColor', isHexColor)
+provide('isHexColor', isHexColor);
 </script>
 
 <template>
-    <DateTimePicker 
-    v-if="isShowInitilaztionValue"
-    @init="isShowInitilaztionValue.value = false"
-    :target="target" 
-    :options="options" 
-    :teleportDiv="teleportDiv" 
-    :justInitializeValue="true"></DateTimePicker>
+    <!-- Just auto initilization -->
+    <template v-if="target">
+        <DateTimePicker 
+        v-if="isShowInitilaztionValue"
+        @init="isShowInitilaztionValue.value = false"
+        :target="target" 
+        :options="options" 
+        :teleportDiv="teleportDiv" 
+        :justInitializeValue="true"></DateTimePicker>
+    </template>
 
-    <template v-if="showingPermitInModal">
-        <Modal v-if="showModal" v-model="showModal">
+    <template v-if="showPicker && target && modelValue && div.position == 'modal'">
+        <Modal @makeFalse="updateModalValue">
             <DateTimePicker 
             @cancel="onCancel"
             @close="onClose"
@@ -141,21 +147,40 @@ provide('isHexColor', isHexColor)
             :justInitializeValue="false"></DateTimePicker>
         </Modal>
     </template>
-    <template v-else>
-        <template v-if="showPicker">
-            <teleport :to="teleportDiv">
-                <DateTimePicker 
-                @cancel="onCancel"
-                @close="onClose"
-                @change="onChange"
-                @changeTime="onChangeTime"
-                :target="target" 
-                :options="options" 
-                :teleportDiv="teleportDiv" 
-                :justInitializeValue="false"></DateTimePicker>            
-            </teleport>
-        </template>
+
+    <template v-if="showPicker && target && div.position != 'modal' && div.diplayIn == 'top'">
+        <h1>TOP</h1>
+        <div :class="{[div.classList] : true}" :style="div.boxShadow">
+            <DateTimePicker 
+            @cancel="onCancel"
+            @close="onClose"
+            @change="onChange"
+            @changeTime="onChangeTime"
+            :target="target" 
+            :options="options" 
+            :teleportDiv="teleportDiv" 
+            :justInitializeValue="false"></DateTimePicker> 
+        </div>
     </template>
+
+    <input class="em-datetimepicker" @click.stop="showPicker=true" ref="target" type="text"
+    v-bind="{class: $attrs?.class, style: $attrs?.style}"
+    />
+
+    <template v-if="showPicker && target && div.position != 'modal' && div.diplayIn == 'bottom'">
+        <div :class="{[div.classList] : true}" :style="div.boxShadow">
+            <DateTimePicker 
+            @cancel="onCancel"
+            @close="onClose"
+            @change="onChange"
+            @changeTime="onChangeTime"
+            :target="target" 
+            :options="options" 
+            :teleportDiv="teleportDiv" 
+            :justInitializeValue="false"></DateTimePicker> 
+        </div>
+    </template>
+    
 
 </template>
 

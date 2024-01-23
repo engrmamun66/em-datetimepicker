@@ -1,24 +1,18 @@
 <script setup>
 import { ref, defineProps, defineEmits, onMounted } from 'vue';
 
-const props = defineProps({
-  modelValue: {
-    type: Boolean,
-    default: false,
-    required: true
-  },
-});
-let emit = defineEmits(['update:modelValue', 'close', 'is-accepted']);
-let close = (event) => {
-  emit('close');
-  emit('update:modelValue', false);
-}
+const props = defineProps({ });
 
+let emit = defineEmits(['makeFalse']);
+let close = (event) => {
+  emit('makeFalse', false);
+}
+ 
 </script>
 
 <template>
   <teleport to="body">
-    <div class="modal fade show" @click.stop="close()" v-bind="$attrs" style="display:block;">
+    <div class="modal fade show" @click.stop="close()" v-bind="$attrs" style="display:block">
       <div class="modal-dialog" :class="[top ? '' : 'modal-dialog-centered']" style="max-width: 410px;height:0px">
         <div class="modal-content">          
           <div class="modal-body d-flex justify-content-center" @click.stop="false">
@@ -31,6 +25,23 @@ let close = (event) => {
 </template>
 
 <style scoped>
+.modal {
+  background-color: rgba(0, 0, 0, 0.678) !important;
+}
+
+.modal.show .modal-body{
+    animation: openModal 0.3s;
+}
+@keyframes openModal {
+  from {
+    transform: translateY(10px); 
+    scale: 0.7;
+  }
+  to {
+    transform: translateY(0px);
+    scale: 1;
+  }
+}
 .modal-dialog{
   max-width: 0px;
   height:0px;

@@ -514,25 +514,29 @@ const years = computed(() => {
 /*                                  onMounted                                 */
 /* -------------------------------------------------------------------------- */
 onMounted(() => {
-    if(!isMounted.value){        
+    try {
+        if(!isMounted.value){        
 
-        pickerValues.startDate = defaults.startDate;
-        pickerValues.endDate = defaults.endDate;
+            pickerValues.startDate = defaults.startDate;
+            pickerValues.endDate = defaults.endDate;
 
-        picker.date = makeDate(defaults.startDate, FORMATS.date);
-        picker.date1 = makeDate(defaults.startDate, FORMATS.date);
-        picker.date2 = makeDate(defaults.endDate, FORMATS.date); 
+            picker.date = makeDate(defaults.startDate, FORMATS.date);
+            picker.date1 = makeDate(defaults.startDate, FORMATS.date);
+            picker.date2 = makeDate(defaults.endDate, FORMATS.date); 
 
-        if(defaults.timePicker){          
-            picker.time1.time = makeDate(defaults.startDate, 'hh:mm A');
-            picker.time2.time = makeDate(defaults.endDate, 'hh:mm A');       
+            if(defaults.timePicker){          
+                picker.time1.time = makeDate(defaults.startDate, 'hh:mm A');
+                picker.time2.time = makeDate(defaults.endDate, 'hh:mm A');       
+            }
+
+            fn.setTargetValue();
+            fn.initPicker();
+            if(!defaults.onlyTimePicker){
+                isMounted.value = true;
+            }
         }
-
-        fn.setTargetValue();
-        fn.initPicker();
-        if(!defaults.onlyTimePicker){
-            isMounted.value = true;
-        }
+    } catch (error) {
+        console.warn('mounted >> ', error);
     }
 
 })
@@ -540,14 +544,14 @@ onMounted(() => {
 </script>
 
 <template>
-    <template v-if="!justInitializeValue && defaults.onlyTimePicker">
+    <!-- <template v-if="!justInitializeValue && defaults.onlyTimePicker">
         <TimePicker :justInitializeValue="justInitializeValue"
         @init="fn.onInitTimePicker" 
         @close="fn.onCloseTimePicker" 
         @change="fn.onOkTimePicker" 
         v-if="defaults.timePicker">
         </TimePicker>
-    </template>
+    </template> -->
     <template v-if="!justInitializeValue">
         <!-- days of month -->
         <template v-if="!defaults.onlyTimePicker">
@@ -601,11 +605,11 @@ onMounted(() => {
                                 @dblclick.stop="fn.onClickApply()"
                                 class="fade-in"
                                 :class="{ 
-                                    'active': monthDay.currentMonth && (new Date(picker.date1).getDate() == monthDay.day_index) ,
-                                    'offset-date': !monthDay.currentMonth,
+                                    'active': monthDay?.currentMonth && (new Date(picker.date1).getDate() == monthDay.day_index) ,
+                                    'offset-date': !monthDay?.currentMonth,
                                     ['theme-' + theme]: true,
                                 }">
-                                    {{ monthDay.day_index }}
+                                    {{ monthDay?.day_index }}
                                 </div>
                             </template>
                         </template>
