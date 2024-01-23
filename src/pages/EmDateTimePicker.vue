@@ -169,7 +169,11 @@ provide('isHexColor', isHexColor);
         </div>
     </template>
 
-    <input class="em-datetimepicker" @click.stop="showPicker=true" ref="target" type="text"
+    <input 
+    class="em-datetimepicker" 
+    :class="{[`theme-${theme}`]: theme}"
+    @click.stop="showPicker=true" 
+    ref="target" type="text"
     v-bind="{
         class: $attrs?.class, 
         style: $attrs?.style,
