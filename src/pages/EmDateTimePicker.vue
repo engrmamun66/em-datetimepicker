@@ -93,7 +93,7 @@ onMounted(() => {
     document.removeEventListener('click', hidePicker);
     document.addEventListener('click', hidePicker);
     if(options?.autoOpen){
-        setTimeout(()=> target.value.click(), 500);
+        target.value.click()
     }
 })
 function updateModalValue(data=null){
