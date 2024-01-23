@@ -77,10 +77,7 @@ const defaults = {
     timePickerButtons: options?.timePickerButtons ?? false,
     endTimeAutoValid: options?.endTimeAutoValid ?? true,
     displayIn: ((options?.displayIn && desplayPositions.includes(options?.displayIn ?? 'modal'))) ? options?.displayIn : 'modal',
-    theme: theme,
-    autoOpen: options?.autoOpen ?? false,
-    invisible: options?.invisible ?? false,
-    isDisabled: options?.isDisabled ?? false,
+    theme: theme,   
     colors: {
         // Just change -----> "primary_bg" to adjust color according any theme color
         body_bg: isHexColor(options?.colors?.body_bg) ? options?.colors?.body_bg : (theme=='light' ? color_vars_light.body_bg : '#0d111e'),
@@ -91,6 +88,10 @@ const defaults = {
         font_light: isHexColor(options?.colors?.font_light) ? options?.colors?.font_light : (theme=='light' ? color_vars_light.font_light : color_vars_light.font_dark),
         date_disable: isHexColor(options?.colors?.date_disable) ? options?.colors?.date_disable : (theme=='light' ? color_vars_light.date_disable : color_vars_light.font_dark),
     },
+    autoOpen: options?.autoOpen ?? false,
+    invisible: options?.invisible ?? false,
+    isDisabled: options?.isDisabled ?? false,
+    tagName: options?.tagName ?? 'input',
 };
 
 /**

@@ -53,6 +53,7 @@ let options = reactive({
     },
     autoOpen: false,
     invisible: false,
+    tagName: 'input',
 });
 
 let options_default = JSON.parse(JSON.stringify(options));
@@ -189,6 +190,10 @@ onMounted(() => {
                 <div class="form-group mb-2 d-flex justify-content-between align-items-center">
                     <label for="applyBtn">applyBtn</label>
                     <input type="text" class="form-control" id="applyBtn" v-model="options.buttons.applyBtn">
+                </div>              
+                <div class="form-group mb-2 d-flex justify-content-between align-items-center">
+                    <label for="tag">tag</label>
+                    <input type="text" class="form-control" id="tag" v-model="options.tagName">
                 </div>              
                 <div class="form-group mb-2 d-flex justify-content-between align-items-center">
                     <label for="timePickerUi">timePickerUi</label>             

@@ -2,7 +2,7 @@
 import moment from 'moment/moment';
 import DateTimePicker from './childs/DateTimePicker.vue';
 import Modal from './childs/Modal.vue';
-import { ref, provide, reactive, defineProps, onMounted, useAttrs, computed } from 'vue';
+import { h, ref, provide, reactive, defineProps, onMounted, useAttrs, computed } from 'vue';
 let emits = defineEmits([ 'update:modelValue', 'init', 'open', 'cancel', 'close', 'change', 'changeTime']);
 let { modelValue, options, size } = defineProps({
     modelValue: {
@@ -139,6 +139,24 @@ function isHexColor(color){
     return color.startsWith('#') && color.length == 7;
 }
 provide('isHexColor', isHexColor);
+
+const dynamicTag = () => {
+    let tagName = options?.tagName ?? 'input';
+    return h(tagName, {
+        class: [
+            'em-datetimepicker form-control',
+            { [`theme-${theme}`]: theme }
+        ],
+        type: 'text',
+        style: options?.invisible ? 'display:none' : '',
+        disabled: options?.isDisabled,
+        onClick: (event) => {
+            event.stopPropagation()
+            showPicker.value = true
+        },
+        
+    })
+}
 </script>
 
 <template>
@@ -178,7 +196,7 @@ provide('isHexColor', isHexColor);
         </div>
     </template>
 
-    <input 
+    <!-- <input 
     class="em-datetimepicker" 
     :class="{[`theme-${theme}`]: theme}"
     @click.stop="showPicker=true" 
@@ -191,7 +209,16 @@ provide('isHexColor', isHexColor);
         for: $attrs?.for,
         title: $attrs?.title,
         }"
-    />
+    /> -->
+
+    <dynamicTag ref="target" 
+        v-bind="{
+            class: $attrs?.class, 
+            style: $attrs?.style,
+            for: $attrs?.for,
+            title: $attrs?.title,
+        }">
+    </dynamicTag>
 
     <template v-if="showPicker && target && div.position != 'modal' && div.diplayIn == 'bottom'">
         <div :class="{[div.classList] : true}" :style="div.boxShadow">
