@@ -4,7 +4,7 @@ import DateTimePicker from './childs/DateTimePicker.vue';
 import Modal from './childs/Modal.vue';
 import { h, ref, provide, reactive, defineProps, onMounted, useAttrs, computed } from 'vue';
 let emits = defineEmits([ 'update:modelValue', 'init', 'open', 'cancel', 'close', 'change', 'changeTime']);
-let { modelValue, options } = defineProps({
+let props = defineProps({
     modelValue: {
         type: [Boolean],
         required: true,
@@ -17,19 +17,19 @@ let { modelValue, options } = defineProps({
     },
 });
 let target = ref(null);
-options = {...options, ...useAttrs()};
-if(typeof modelValue == 'object'){
-    if(modelValue?.startDate){
-        options = {...options, ...{startDate: modelValue.startDate}};
+props.options = {...props.options, ...useAttrs()};
+if(typeof props.modelValue == 'object'){
+    if(props.modelValue?.startDate){
+        props.options = {...props.options, ...{startDate: props.modelValue.startDate}};
     }
-    if(modelValue?.endDate){
-        options = {...options, ...{endDate: modelValue.endDate}};
+    if(props.modelValue?.endDate){
+        props.options = {...props.options, ...{endDate: props.modelValue.endDate}};
     }
-    if(modelValue?.startTime){
-        options = {...options, ...{startTime: modelValue.startTime}};
+    if(props.modelValue?.startTime){
+        props.options = {...props.options, ...{startTime: props.modelValue.startTime}};
     }
-    if(modelValue?.endTime){
-        options = {...options, ...{endTime: modelValue.endTime}};
+    if(props.modelValue?.endTime){
+        props.options = {...props.options, ...{endTime: props.modelValue.endTime}};
     }
 }
 
@@ -61,12 +61,12 @@ const pickerValues = reactive({
     startTime: '',
     endTime: '',
 });
-let theme = (options?.theme && options?.theme=='dark') ? options?.theme : 'light';
+let theme = (props.options?.theme && props.options?.theme=='dark') ? props.options?.theme : 'light';
 provide('theme', theme);
 provide('picker', picker);
 provide('isMounted', isMounted);
 provide('pickerValues', pickerValues);
-provide('modelValue', modelValue);
+provide('modelValue', props.modelValue);
 
 onMounted(() => {    
     function hidePicker(e) {
@@ -75,7 +75,7 @@ onMounted(() => {
     }
     document.removeEventListener('click', hidePicker);
     document.addEventListener('click', hidePicker);
-    if(options?.autoOpen){
+    if(props.options?.autoOpen){
         target.value.click()
     }
     setTimeout(() => {
@@ -113,7 +113,7 @@ const desplayPositions = [
 provide('desplayPositions', desplayPositions);
 
 const div = computed(() => {
-    let position = ((options?.displayIn && desplayPositions.includes(options?.displayIn ?? 'modal'))) ? options?.displayIn : 'modal';
+    let position = ((props.options?.displayIn && desplayPositions.includes(props.options?.displayIn ?? 'modal'))) ? props.options?.displayIn : 'modal';
     let boxShadow =  `box-shadow: rgba(50, 50, 93, 0.25) 0px ${position?.startsWith('top_') ? '' : '-'}13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px`;
     let attrs = {
         position,
@@ -132,15 +132,15 @@ function isHexColor(color){
 provide('isHexColor', isHexColor);
 
 const dynamicElement = () => {
-    let tagName = options?.tagName ?? 'input';
+    let tagName = props.options?.tagName ?? 'input';
     return h(tagName, {
         class: [
             'em-datetimepicker form-control',
             { [`theme-${theme}`]: theme }
         ],
         type: 'text',
-        style: options?.invisible ? 'display:none' : '',
-        disabled: options?.isDisabled,
+        style: props.options?.invisible ? 'display:none' : '',
+        disabled: props.options?.isDisabled,
         onClick: (event) => {
             event.stopPropagation()
             showPicker.value = true
@@ -192,8 +192,8 @@ const dynamicElement = () => {
     :class="{[`theme-${theme}`]: theme}"
     @click.stop="showPicker=true" 
     ref="target" type="text"
-    :style="options?.invisible ? 'display:none': ''"
-    :disabled="options?.isDisabled"
+    :style="props.options?.invisible ? 'display:none': ''"
+    :disabled="props.options?.isDisabled"
     v-bind="{
         class: $attrs?.class, 
         style: $attrs?.style,
