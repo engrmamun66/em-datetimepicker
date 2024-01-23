@@ -132,7 +132,7 @@ provide('isHexColor', isHexColor);
 
 <template>
     <!-- Just auto initilization -->
-    <!-- <template v-if="target">
+    <template v-if="target">
         <DateTimePicker 
         v-if="isShowInitilaztionValue"
         @init="isShowInitilaztionValue.value = false"
@@ -140,7 +140,7 @@ provide('isHexColor', isHexColor);
         :options="options" 
         :teleportDiv="teleportDiv" 
         :justInitializeValue="true"></DateTimePicker>
-    </template> -->
+    </template>
 
     <template v-if="showPicker && div.position == 'modal'">
         <Modal @makeFalse="showPicker=false">
