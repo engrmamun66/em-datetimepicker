@@ -263,6 +263,12 @@ onMounted(() => {
                             Auto open for quick view;
                         </label>
                     </div>
+                    <div class="form-check mb-2 options-selection">
+                        <input class="form-check-input" type="checkbox" id="showPicker" v-model="showPicker">
+                        <label class="form-check-label" for="showPicker">
+                            Show Picker
+                        </label>
+                    </div>
 
 
                     <div class="form-group mb-2">
@@ -274,6 +280,7 @@ onMounted(() => {
                             for="for"
                             style="border: 3px solid #a9a469;"
                             :autoOpen="autoOpenForQuickView"
+                            :invisible="true"
                             ></EmDateTimePicker>
                         </template>
                     </div> 

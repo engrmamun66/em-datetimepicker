@@ -4,7 +4,7 @@ import DateTimePicker from './childs/DateTimePicker.vue';
 import Modal from './childs/Modal.vue';
 import { h, ref, provide, reactive, defineProps, onMounted, useAttrs, computed } from 'vue';
 let emits = defineEmits([ 'update:modelValue', 'init', 'open', 'cancel', 'close', 'change', 'changeTime']);
-let { modelValue, options, size, autoOpen } = defineProps({
+let { modelValue, options, size, autoOpen, invisible } = defineProps({
     modelValue: {
         type: [Boolean],
         required: true,
@@ -16,6 +16,11 @@ let { modelValue, options, size, autoOpen } = defineProps({
         default: true,
     },
     autoOpen: {
+        type: [Boolean],
+        required: false,
+        default: false,
+    },
+    invisible: {
         type: [Boolean],
         required: false,
         default: false,
@@ -36,6 +41,20 @@ let { modelValue, options, size, autoOpen } = defineProps({
 });
 let target = ref(null);
 options = {...options, ...useAttrs()};
+if(typeof modelValue == 'object'){
+    if(modelValue?.startDate){
+        options = {...options, ...{startDate: modelValue.startDate}};
+    }
+    if(modelValue?.endDate){
+        options = {...options, ...{endDate: modelValue.endDate}};
+    }
+    if(modelValue?.startTime){
+        options = {...options, ...{startTime: modelValue.startTime}};
+    }
+    if(modelValue?.endTime){
+        options = {...options, ...{endTime: modelValue.endTime}};
+    }
+}
 
 let showPicker = ref(false);
 let isShowInitilaztionValue = ref(true);
@@ -174,6 +193,7 @@ provide('isHexColor', isHexColor);
     :class="{[`theme-${theme}`]: theme}"
     @click.stop="showPicker=true" 
     ref="target" type="text"
+    :style="invisible ? 'display:none': ''"
     v-bind="{
         class: $attrs?.class, 
         style: $attrs?.style,
