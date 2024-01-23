@@ -6,6 +6,7 @@ import { ref, computed, reactive, defineProps, onMounted, inject, defineEmits, w
 let { justInitializeValue } = defineProps(['justInitializeValue']);
 let isMounted = inject('isMounted');
 let theme = inject('theme');
+const modelValue = inject('modelValue');
 let target = inject('target');
 let defaults = inject('defaults');
 let FORMATS = inject('FORMATS');
@@ -342,10 +343,10 @@ onMounted(() => {
         picker.date2 = makeDate(new Date(), FORMATS.date);
     }
 
-    let dateTime1 = picker?.time1.time || makeDate(picker.date1, 'hh:mm A');
-    let dateTime2 = picker?.time2.time || makeDate(picker.date1, 'hh:mm A');
-    let [hour1, minute1] = dateTime1?.split(':');
-    let [hour2, minute2] = dateTime2?.split(':');  
+    let dateTime1 = (picker?.time1.time || makeDate(picker.date1, 'hh:mm A'));
+    let dateTime2 = (picker?.time2.time || makeDate(picker.date1, 'hh:mm A'));
+    let [hour1, minute1] = modelValue?.startTime ?? dateTime1?.split(':');
+    let [hour2, minute2] = modelValue?.endTime ?? dateTime2?.split(':');  
     time1_mode.value = minute1.split(' ')[1]?.toLocaleLowerCase(); // am / pm
     time2_mode.value = minute2.split(' ')[1]?.toLocaleLowerCase(); // am / pm
 
@@ -354,8 +355,11 @@ onMounted(() => {
     minute1 = minute1 == 12 ? 0 : minute1;
     minute2 = minute2 == 12 ? 0 : minute2; 
 
-    time1_selectedHour.value = hours_position?.filter(h => h.value == hour1)?.[0] || hours_position[0];
-    time2_selectedHour.value = hours_position?.filter(h => h.value == hour2)?.[0] || (time1_selectedHour.value || hours_position[0]);
+    let __hours_position = (defaults.use24Format && defaults.timePickerUi == 'standard') ? hours_position_for_24.value : hours_position;
+
+
+    time1_selectedHour.value = __hours_position?.filter(h => h.value == hour1)?.[0] || __hours_position[0];
+    time2_selectedHour.value = __hours_position?.filter(h => h.value == hour2)?.[0] || (time1_selectedHour.value || __hours_position[0]);
 
     time1_selectedMinute.value = minutes_position?.filter(m => m.value == minute1)?.[0] || minutes_position[0];
     time2_selectedMinute.value = minutes_position?.filter(m => m.value == minute2)?.[0] || (time1_selectedMinute.value || minutes_position[0]);

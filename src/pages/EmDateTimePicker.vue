@@ -69,6 +69,7 @@ provide('theme', theme);
 provide('picker', picker);
 provide('isMounted', isMounted);
 provide('pickerValues', pickerValues);
+provide('modelValue', modelValue);
 
 onMounted(() => {    
     function hidePicker(e) {

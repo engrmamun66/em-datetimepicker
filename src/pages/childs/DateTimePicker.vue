@@ -7,6 +7,7 @@ import TimePicker from './TimePicker.vue';
 const { helper } = inject('utils');
 const isMounted = inject('isMounted');
 const picker = inject('picker');
+const modelValue = inject('modelValue');
 const pickerValues = inject('pickerValues');
 const desplayPositions = inject('desplayPositions');
 const theme = inject('theme');
@@ -520,8 +521,8 @@ onMounted(() => {
             picker.date2 = makeDate(defaults.endDate, FORMATS.date); 
 
             if(defaults.timePicker){          
-                picker.time1.time = makeDate(defaults.startDate, 'hh:mm A');
-                picker.time2.time = makeDate(defaults.endDate, 'hh:mm A');       
+                picker.time1.time = modelValue?.startTime ?? makeDate(defaults.startDate, 'hh:mm A');
+                picker.time2.time = modelValue?.endTime ?? makeDate(defaults.endDate, 'hh:mm A');       
             }
 
             fn.setTargetValue();
