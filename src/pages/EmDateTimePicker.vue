@@ -188,6 +188,7 @@ provide('isHexColor', isHexColor);
     :class="{[`theme-${theme}`]: theme}"
     @click.stop="showPicker=true" 
     ref="target" type="text"
+    :disabled="isDisabled"
     :style="options?.invisible ? 'display:none': ''"
     v-bind="{
         class: $attrs?.class, 
