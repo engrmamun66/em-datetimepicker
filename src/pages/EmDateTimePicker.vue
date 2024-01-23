@@ -79,7 +79,7 @@ onMounted(() => {
     document.removeEventListener('click', hidePicker);
     document.addEventListener('click', hidePicker);
     if(autoOpen){
-        setTimeout(()=> target.value.click(), 0);
+        setTimeout(()=> target.value.click(), 500);
     }
 })
 function updateModalValue(booleanVal){
@@ -132,7 +132,7 @@ provide('isHexColor', isHexColor);
 
 <template>
     <!-- Just auto initilization -->
-    <template v-if="target">
+    <!-- <template v-if="target">
         <DateTimePicker 
         v-if="isShowInitilaztionValue"
         @init="isShowInitilaztionValue.value = false"
@@ -140,7 +140,7 @@ provide('isHexColor', isHexColor);
         :options="options" 
         :teleportDiv="teleportDiv" 
         :justInitializeValue="true"></DateTimePicker>
-    </template>
+    </template> -->
 
     <template v-if="showPicker && div.position == 'modal'">
         <Modal @makeFalse="showPicker=false">
