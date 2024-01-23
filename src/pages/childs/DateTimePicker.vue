@@ -41,7 +41,7 @@ const FORMATS = {
     year: 'YYYY',
     month: 'MMMM',
     monthShort: 'MMM',
-    time: options?.timeFormat ?? (options?.use24Format ? 'HH:mm A' : 'hh:mm A'),
+    time: options?.timeFormat ?? (options?.use24Format ? 'HH:mm' : 'hh:mm A'),
 };
 const color_vars_light = {
     body_bg: '#ffffff',
@@ -539,14 +539,14 @@ onMounted(() => {
 </script>
 
 <template>
-    <!-- <template v-if="!justInitializeValue && defaults.onlyTimePicker">
+    <template v-if="!justInitializeValue && defaults.onlyTimePicker">
         <TimePicker :justInitializeValue="justInitializeValue"
         @init="fn.onInitTimePicker" 
         @close="fn.onCloseTimePicker" 
         @change="fn.onOkTimePicker" 
         v-if="defaults.timePicker">
         </TimePicker>
-    </template> -->
+    </template>
     <template v-if="!justInitializeValue">
         <!-- days of month -->
         <template v-if="!defaults.onlyTimePicker">

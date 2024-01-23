@@ -72,8 +72,7 @@ provide('pickerValues', pickerValues);
 
 onMounted(() => {    
     function hidePicker(e) {
-        e.stopPropagation();
-        updateModalValue(false);   
+        e.stopPropagation();  
         showPicker.value = false;
     }
     document.removeEventListener('click', hidePicker);
@@ -82,8 +81,8 @@ onMounted(() => {
         setTimeout(()=> target.value.click(), 500);
     }
 })
-function updateModalValue(booleanVal){
-    emits('update:modelValue', booleanVal);
+function updateModalValue(data=null){
+    emits('update:modelValue', data);
 }
 function onCancel(data=null) {
     showPicker.value = false;
@@ -94,9 +93,11 @@ function onClose(data=null) {
     emits('close', data);
 }
 function onChange(data=null) {
+    updateModalValue(data);
     emits('change', data);
 }
 function onChangeTime(data=null) {
+    updateModalValue(data);
     emits('changeTime', data);
 }
 const desplayPositions = [
@@ -155,7 +156,6 @@ provide('isHexColor', isHexColor);
     </template>
 
     <template v-if="showPicker && target && div.position != 'modal' && div.diplayIn == 'top'">
-        <h1>TOP</h1>
         <div :class="{[div.classList] : true}" :style="div.boxShadow">
             <DateTimePicker 
             @cancel="onCancel"
@@ -169,7 +169,12 @@ provide('isHexColor', isHexColor);
     </template>
 
     <input class="em-datetimepicker" @click.stop="showPicker=true" ref="target" type="text"
-    v-bind="{class: $attrs?.class, style: $attrs?.style}"
+    v-bind="{
+        class: $attrs?.class, 
+        style: $attrs?.style,
+        for: $attrs?.for,
+        title: $attrs?.title,
+        }"
     />
 
     <template v-if="showPicker && target && div.position != 'modal' && div.diplayIn == 'bottom'">

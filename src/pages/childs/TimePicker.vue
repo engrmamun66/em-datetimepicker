@@ -14,19 +14,22 @@ let pickerValues = inject('pickerValues');
 let createEvent = inject('createEvent');
 let openTimePicker = inject('openTimePicker');
 
-if(defaults.use24Format){
-    // let clone_copy = JSON.parse(JSON.stringify(hours_position));
-    // clone_copy.forEach((item, index) => {
-    //     if(index == 0){
-    //         item.id = 12;
-    //         item.value = '12';
-    //     } else {
-    //         item.id = item.id + 12;
-    //         item.value = pad2(Number(item.value) + 12);
-    //     }
-    //     hours_position.push(item);
-    // })
-}
+let hours_position_for_24 = computed(() => {
+    if(defaults.use24Format && defaults.timePickerUi == 'standard'){
+        let clone = (data) => JSON.parse(JSON.stringify(data));
+        let first_1_to_11 = clone(hours_position).slice(1);
+        let next_12_to_23 = clone(hours_position).map(item => {
+            item.id = item.id + 12;
+            item.value = pad2(Number(item.value) + 12);
+            return item;
+        })
+        var last_24 = clone(hours_position)[0];
+        last_24.id = 0;
+        last_24.value = '00';    
+        let result = [last_24, ...first_1_to_11, ...next_12_to_23];
+        return result;
+    }
+})
 
 function makeStepRange(step) {    
     let limit = Math.floor(60 / step)
@@ -116,18 +119,22 @@ let ui2 = reactive({
     expand: null, // null | hours | minutes
     incrHour: function(){
         let hour = selectedHour.value; 
-        let index = hours_position.findIndex(item => item.id == hour.id);
+        let using24Format = defaults.use24Format && defaults.timePickerUi == 'standard';
+        let hours__positions = using24Format ? hours_position_for_24.value : hours_position
+        let index = hours__positions.findIndex(item => item.id == hour.id);
         index = index + 1;
-        if(index > 11) index = 0;
-        selectedHour.value = hours_position[index];
+        if(index > (using24Format ? 23 : 11)) index = 0;
+        selectedHour.value = hours__positions[index];
     
     },
     decrHour: function(){
-        let hour = selectedHour.value;        
-        let index = hours_position.findIndex(item => item.id == hour.id);
+        let hour = selectedHour.value;    
+        let using24Format = defaults.use24Format && defaults.timePickerUi == 'standard';
+        let hours__positions = using24Format ? hours_position_for_24.value : hours_position
+        let index = hours__positions.findIndex(item => item.id == hour.id);
         index = index - 1;
-        if(index < 0) index = 11;
-        selectedHour.value = hours_position[index];              
+        if(index < 0) index = (using24Format ? 23 : 11);
+        selectedHour.value = hours__positions[index];              
     },
     incrMinute: function(){
         let {id, value} = selectedMinute.value; 
@@ -420,8 +427,15 @@ const gird_template_repeat = defaults.use24Format ? 'repeat(2,1fr)' : 'repeat(3,
                         <template v-if="ui2.expand == 'hours'">
                             <div class="label-of-selection">Select Hour</div>
                             <ul class="all-hours fade-in">
-                                <template v-for="(hour, index) in [...hours_position.slice(1), hours_position[0]]" :key="index">
-                                    <li @click.stop="selectedHour = hour; ui2.expand=null">{{ hour.id }}</li>
+                                <template v-if="defaults.use24Format && defaults.timePickerUi == 'standard'">
+                                    <template v-for="(hour, index) in hours_position_for_24" :key="index">
+                                        <li @click.stop="selectedHour = hour; ui2.expand=null">{{ hour.id }}</li>
+                                    </template>
+                                </template>
+                                <template v-else>
+                                    <template v-for="(hour, index) in [...hours_position.slice(1), hours_position[0]]" :key="index">
+                                        <li @click.stop="selectedHour = hour; ui2.expand=null">{{ hour.id }}</li>
+                                    </template>
                                 </template>
                             </ul>
                         </template>

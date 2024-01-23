@@ -116,7 +116,6 @@ onMounted(() => {
     }, 50);
     filterOnlyPassableOptions()
 })
-let showPicker2 = ref(true);
 </script>
 
 <template>
@@ -268,11 +267,11 @@ let showPicker2 = ref(true);
 
                     <div class="form-group mb-2">
                         <label for="inputElement">&nbsp;</label>
-                        <input ref="inputElement" type="text" class="form-control" id="inputElement" style="border: 3px solid #a9a469;">
                         <template v-if="inputElement && showPicker">
-                            <EmDateTimePicker v-model="showPicker2" @change="(data)=>eventData=data" :target="inputElement" :options="optionsForAttrs"
+                            <EmDateTimePicker v-model="eventData" @change="(data)=>{/*eventData=data*/}" 
+                            :options="optionsForAttrs"
                             class="form-control"
-                            style="border:1px solid red"
+                            style="border: 3px solid #a9a469;"
                             :autoOpen="autoOpenForQuickView"
                             ></EmDateTimePicker>
                         </template>
