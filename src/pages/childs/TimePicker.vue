@@ -699,8 +699,11 @@ const gird_template_repeat = defaults.use24Format ? 'repeat(2,1fr)' : 'repeat(3,
     width: 8px
 }
 
-.clocklet-tick--hour[data-clocklet-tick-value="0"]:before {
+.clocklet-tick--hour[data-clocklet-tick-value="0"]:not(.hour-24-format):before {
     content: "12"
+}
+.clocklet-tick--hour[data-clocklet-tick-value="0"].hour-24-format:before {
+    content: "0"
 }
 
 .clocklet-dial--minute {
