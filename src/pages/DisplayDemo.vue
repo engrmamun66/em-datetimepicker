@@ -266,9 +266,8 @@ onMounted(() => {
 
 
                 <div class="col-12">  
-                    <h5>Show output</h5>
                     <div class="form-group mb-2">
-                        <label for="inputElement">&nbsp;</label>
+                        <label for="inputElement"> <strong>Show output</strong> </label>
                         <template v-if="showPicker">
                             <EmDateTimePicker 
                             v-model="eventData" 
