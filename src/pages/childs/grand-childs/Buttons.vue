@@ -45,7 +45,7 @@ let openTimePicker = inject('openTimePicker');
             <div class="flex-between">
                 <div class="buttons">
                     <button class="btn-today" @click.stop="handleClick('today')">{{ defaults.buttons?.todayBtn }}</button>
-                    <button v-if="defaults.timePicker" class="pick-time" @click="openTimePicker=true"><i class='bx bx-time'></i> Pick Time</button>
+                    <button v-if="defaults.timePicker" class="pick-time" @click="openTimePicker=true"><i class='bx bx-time'></i>Time</button>
                 </div>
                  <div class="buttons">
                     <button v-if="defaults.buttons?.cancelBtn" class="btn-cancel" @click.stop="handleClick('cancel')">{{ defaults.buttons?.cancelBtn }}</button>

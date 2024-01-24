@@ -766,7 +766,7 @@ header i:hover {
 }
 
 .main-days>div {
-    width: 50px;
+    width: 44px;
     height: 40px;
     display: flex;
     align-items: center;
