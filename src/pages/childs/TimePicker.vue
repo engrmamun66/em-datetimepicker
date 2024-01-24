@@ -362,7 +362,6 @@ let {
 } = defaults.colors
 const color_transparent_1 = color_primary_bg + '3d';
 const color_transparent_2 = color_primary_bg + '1c';
-color_primary_bg = `var(--em-primary-bg, ${color_primary_bg})`;
 
 let maxHeight = (defaults.timePickerButtons || defaults.timePickerUi == 'classic') ? '270px' : '210px';
 const area_radius = defaults.rangePicker ? '6px 6px 0px 0px' : '6px';

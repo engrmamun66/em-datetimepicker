@@ -307,6 +307,7 @@ onMounted(() => {
 #em-datetimepicker-visual-demo > div.emdemo{
     max-width: 1000px;
 }
+:root { --em-primary-bg: #03915b; }
 </style>
 
 <style scoped>

@@ -116,7 +116,6 @@ let {
 } = defaults.colors
 const color_transparent_1 = (color_primary_bg + '3d');
 const color_transparent_2 = (color_primary_bg + '1c');
-color_primary_bg = `var(--em-primary-bg, ${color_primary_bg})`;
 /* --------------- End color variables -------------- */
 
 const OUTPUT_FORMAT = computed(()=>{
@@ -614,7 +613,7 @@ onMounted(() => {
                                 @dblclick.stop="fn.onClickApply()"
                                 class="fade-in"
                                 :class="{ 
-                                    'active': monthDay?.currentMonth && (new Date(picker.date1).getDate() == monthDay.day_index) ,
+                                    'active': makeDate(pickerValues.startDate, FORMATS.date) == monthDay.date,
                                     'offset-date': !monthDay?.currentMonth,
                                     ['theme-' + theme]: true,
                                 }">
