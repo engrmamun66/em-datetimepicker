@@ -104,6 +104,7 @@ onMounted(() => {
 })
 </script>
 
+
 <template>
     <div class="emdemo">
         <h1>Em Datetime Picker</h1>
@@ -225,6 +226,13 @@ onMounted(() => {
                         <label for="primary_bg">primary_bg</label> 
                         <input type="color" class="form-control" id="applyBtn" v-model="options.colors.primary_bg">
                     </div> 
+                        <small> 
+                        Change color globally 
+                        :root{
+                            --em-primary-bg: #03915b;
+                        }
+                        </small>
+                    
 
                     <div class="form-group mb-2 d-flex justify-content-between align-items-center">
                         <label for="displayIn">displayIn</label>             

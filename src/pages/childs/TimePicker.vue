@@ -352,7 +352,7 @@ onMounted(() => {
     }
 })
 
-const {
+let {
     body_bg: color_body_bg,
     primary_bg: color_primary_bg,
     bg_grey: color_bg_grey,
@@ -360,8 +360,10 @@ const {
     font_dark_low: color_font_dark_low,
     font_light: color_font_light,
 } = defaults.colors
+color_primary_bg = `var(--em-primary-bg, ${color_primary_bg})`;
 const color_transparent_1 = color_primary_bg + '3d';
 const color_transparent_2 = color_primary_bg + '1c';
+
 let maxHeight = (defaults.timePickerButtons || defaults.timePickerUi == 'classic') ? '270px' : '210px';
 const area_radius = defaults.rangePicker ? '6px 6px 0px 0px' : '6px';
 const gird_template_repeat = defaults.use24Format ? 'repeat(2,1fr)' : 'repeat(3,1fr)';
