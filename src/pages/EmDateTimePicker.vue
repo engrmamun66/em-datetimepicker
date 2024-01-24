@@ -36,7 +36,6 @@ if(typeof props.modelValue == 'object'){
 let showPicker = ref(false);
 let isShowInitilaztionValue = ref(true);
 let isMounted = ref(false);
-let isMountedSelf = ref(false);
 const picker = reactive({
     // with Single Date
     date: '',
@@ -76,11 +75,10 @@ onMounted(() => {
     document.removeEventListener('click', hidePicker);
     document.addEventListener('click', hidePicker);
     if(props.options?.autoOpen){
-        target.value.click()
+        setTimeout(() => {
+            target.value.click()
+        }, 100);
     }
-    setTimeout(() => {
-        isMountedSelf.value = true;
-    }, 2000);
 })
 function updateModalValue(data=null){
     emits('update:modelValue', data);
@@ -162,7 +160,7 @@ const dynamicElement = () => {
     </template>
 
     <template v-if="showPicker && div.position == 'modal'">
-        <Modal @makeFalse="showPicker=false">
+        <Modal @makeFalse="showPicker=false;onClose()">
             <DateTimePicker 
             @cancel="onCancel"
             @close="onClose"
