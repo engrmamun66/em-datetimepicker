@@ -49,7 +49,7 @@ let options = reactive({
     colors: {
         // Just change -----> "primary_bg" to adjust color according any theme color
         body_bg: '#ffffff',
-        primary_bg: '#12834f',      
+        primary_bg: '#1d1b1b',      
     },
     autoOpen: false,
     invisible: false,
@@ -276,7 +276,9 @@ onMounted(() => {
                     <div class="form-group mb-2">
                         <label for="inputElement">&nbsp;</label>
                         <template v-if="showPicker">
-                            <EmDateTimePicker v-model="eventData" @change="(data)=>{/*eventData=data*/}" 
+                            <EmDateTimePicker 
+                            v-model="eventData" 
+                            @change="(data)=>{eventData=data}" 
                             :options="optionsForAttrs"
                             class="form-control"
                             for="for"

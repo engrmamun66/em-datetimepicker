@@ -46,7 +46,7 @@ const FORMATS = {
 };
 const color_vars_light = {
     body_bg: '#ffffff',
-    primary_bg: '#12834f',
+    primary_bg: '#1d1b1b',
     bg_grey: '#e2e3ee',
     font_dark: '#444444',
     font_dark_low: '#777777',
@@ -55,7 +55,7 @@ const color_vars_light = {
 };
 const defaults = {
     rangePicker: options?.rangePicker ?? false,
-    displayFormat: options.onlyTimePicker ? FORMATS.time : (FORMATS.forDisplay + (options?.timePicker ? (' ' + FORMATS.time) : '')),
+    displayFormat: options.onlyTimePicker ? FORMATS.time : (FORMATS.forDisplay + ((options?.timePicker || options?.onlyTimePicker) ? (' ' + FORMATS.time) : '')),
     startDate: makeDate(options?.startDate || new Date(), FORMATS.date),
     endDate: makeDate(options?.endDate || (options?.startDate || new Date()), FORMATS.date),
     minDate: options?.minDate || '',
