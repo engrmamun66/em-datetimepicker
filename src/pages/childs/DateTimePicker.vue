@@ -55,7 +55,7 @@ const color_vars_light = {
 };
 const defaults = {
     rangePicker: options?.rangePicker ?? false,
-    displayFormat: options.onlyTimePicker ? FORMATS.time : (FORMATS.forDisplay + ((options?.timePicker || options?.onlyTimePicker) ? (' ' + FORMATS.time) : '')),
+    displayFormat: options.onlyTimePicker ? FORMATS.time : FORMATS.forDisplay,
     startDate: makeDate(options?.startDate || new Date(), FORMATS.date),
     endDate: makeDate(options?.endDate || (options?.startDate || new Date()), FORMATS.date),
     minDate: options?.minDate || '',
@@ -120,7 +120,7 @@ const color_transparent_2 = color_primary_bg + '1c';
 
 const OUTPUT_FORMAT = computed(()=>{
     if(defaults.onlyTimePicker) return FORMATS.time;
-    else return FORMATS.output + (defaults.timePicker ? (' ' + FORMATS.time) : '');
+    else return FORMATS.output;
 })
 
 
@@ -256,7 +256,7 @@ const fn = {
         emits('close');
         target.dispatchEvent(events.close());
     },
-    changePicker: function(emit=true){
+    changePickerAndUpdateData: function(emit=true){
         let { date1, date2 } = picker;
         let { hour: hour1, minute: minute1 } = picker.time1;
         let { hour: hour2, minute: minute2 } = picker.time2;
@@ -277,16 +277,24 @@ const fn = {
         target.dispatchEvent(events.change(data));
     },
     setTargetValue: function() {      
-        this.changePicker(false) // updating pickerValues 
+        this.changePickerAndUpdateData(false) // updating pickerValues 
         let { startDate, endDate, startTime, endTime } = pickerValues;
+        startDate = makeDate(startDate, defaults.displayFormat);
+        endDate = makeDate(endDate, defaults.displayFormat);
+        startTime = startTime || '12:00 AM';
+        endTime = endTime || '12:00 AM';
         let value;
         if(defaults.onlyTimePicker && defaults.timePicker){
             if(defaults.rangePicker){
-                value = `${startTime || '12:00 AM'} - ${endTime || '12:00 AM'}`;
+                value = `${startTime} - ${endTime}`;
             } else {
-                value = `${startTime || '12:00 AM'}`;
+                value = `${startTime}`;
             }
         } else {
+            if(defaults?.timePicker){
+                startDate += (' ' + startTime)
+                endDate += (' ' + endTime)
+            }
             if(defaults.rangePicker){
                 value = `${startDate} - ${endDate}`;
             } else {
@@ -359,7 +367,7 @@ const fn = {
     },
     onClickApply: function () { 
         fn.setTargetValue();
-        this.changePicker();
+        this.changePickerAndUpdateData();
         this.closePicker();
     },
     onClickToday: function () { 
@@ -373,7 +381,7 @@ const fn = {
         }
         current_view.value = 'days';
         fn.setTargetValue();
-        this.changePicker();
+        this.changePickerAndUpdateData();
         this.closePicker();
     },
     onClickMonth: function (monthIndex) { 
@@ -454,7 +462,7 @@ const fn = {
     onOkTimePicker: function (data) { 
         fn.changeTime(data);
         fn.setTargetValue();
-        fn.changePicker();
+        fn.changePickerAndUpdateData();
         if(!data.do_not_hide){
             openTimePicker.value = false;
             fn.closePicker();

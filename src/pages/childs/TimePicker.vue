@@ -330,8 +330,8 @@ onMounted(() => {
     let dateTime2 = (picker?.time2.time || makeDate(picker.date1, 'hh:mm A'));
     let [hour1, minute1] = modelValue?.startTime ?? dateTime1?.split(':');
     let [hour2, minute2] = modelValue?.endTime ?? dateTime2?.split(':');  
-    time1_mode.value = minute1.split(' ')[1]?.toLocaleLowerCase(); // am / pm
-    time2_mode.value = minute2.split(' ')[1]?.toLocaleLowerCase(); // am / pm
+    time1_mode.value = minute1?.split(' ')?.[1]?.toLocaleLowerCase() || 'am'; // am / pm
+    time2_mode.value = minute2?.split(' ')?.[1]?.toLocaleLowerCase() || 'am'; // am / pm
 
     minute1 = minute1.split(' ')[0];
     minute2 = minute2.split(' ')[0];

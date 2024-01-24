@@ -18,20 +18,6 @@ let props = defineProps({
 });
 let target = ref(null);
 props.options = {...props.options, ...useAttrs()};
-if(typeof props.modelValue == 'object'){
-    if(props.modelValue?.startDate){
-        props.options = {...props.options, ...{startDate: props.modelValue.startDate}};
-    }
-    if(props.modelValue?.endDate){
-        props.options = {...props.options, ...{endDate: props.modelValue.endDate}};
-    }
-    if(props.modelValue?.startTime){
-        props.options = {...props.options, ...{startTime: props.modelValue.startTime}};
-    }
-    if(props.modelValue?.endTime){
-        props.options = {...props.options, ...{endTime: props.modelValue.endTime}};
-    }
-}
 
 let showPicker = ref(false);
 let isShowInitilaztionValue = ref(true);
@@ -66,6 +52,21 @@ provide('picker', picker);
 provide('isMounted', isMounted);
 provide('pickerValues', pickerValues);
 provide('modelValue', props.modelValue);
+
+if(typeof props.modelValue == 'object'){
+    if(props.modelValue?.startDate){
+        props.options = {...props.options, ...{startDate: props.modelValue.startDate}};
+    }
+    if(props.modelValue?.endDate){
+        props.options = {...props.options, ...{endDate: props.modelValue.endDate}};
+    }
+    if(props.modelValue?.startTime){
+        picker.time1.time = props.modelValue.startTime;
+    }
+    if(props.modelValue?.endTime){
+        picker.time2.time = props.modelValue.endTime;
+    }
+}
 
 onMounted(() => {    
     function hidePicker(e) {
