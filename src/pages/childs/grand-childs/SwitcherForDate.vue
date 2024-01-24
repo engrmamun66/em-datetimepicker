@@ -23,9 +23,9 @@ let {
     font_dark_low: color_font_dark_low,
     font_light: color_font_light,
 } = defaults.colors
-color_primary_bg = `var(--em-primary-bg, ${color_primary_bg})`;
 const color_transparent_1 = color_primary_bg + '3d';
 const color_transparent_2 = color_primary_bg + '1c';
+color_primary_bg = `var(--em-primary-bg, ${color_primary_bg})`;
 
 </script>
 

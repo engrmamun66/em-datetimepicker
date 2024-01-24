@@ -114,9 +114,9 @@ let {
     font_light: color_font_light,
     date_disable: color_date_disable,
 } = defaults.colors
+const color_transparent_1 = (color_primary_bg + '3d');
+const color_transparent_2 = (color_primary_bg + '1c');
 color_primary_bg = `var(--em-primary-bg, ${color_primary_bg})`;
-const color_transparent_1 = color_primary_bg + '3d';
-const color_transparent_2 = color_primary_bg + '1c';
 /* --------------- End color variables -------------- */
 
 const OUTPUT_FORMAT = computed(()=>{
