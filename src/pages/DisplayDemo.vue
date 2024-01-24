@@ -225,13 +225,19 @@ onMounted(() => {
                     <div class="form-group mb-2 d-flex justify-content-between align-items-center">
                         <label for="primary_bg">primary_bg</label> 
                         <input type="color" class="form-control" id="applyBtn" v-model="options.colors.primary_bg">
-                    </div> 
-                        <small> 
-                        Change color globally 
-                        :root{
-                            --em-primary-bg: #03915b;
-                        }
-                        </small>
+                    </div>                     
+                    <strong> Change color 'primary_bg' globally </strong>
+                    <div class="alert alert-warning" role="alert">
+                     <code>
+                        &lt;style&gt;
+                            <br>
+                            :root {
+                                --em-primary-bg: #03915b;
+                            }
+                            <br>
+                        &lt;/style&gt;
+                     </code>
+                    </div>
                     
 
                     <div class="form-group mb-2 d-flex justify-content-between align-items-center">
