@@ -459,7 +459,7 @@ const gird_template_repeat = defaults.use24Format ? 'repeat(2,1fr)' : 'repeat(3,
                                 type="button" 
                                 :data-clocklet-tick-value="minute.id"
                                 @click.stop="selectedMinute = minute"
-                                draggable="true"
+                                draggable="falses"
                                 @dragenter="selectedMinute = minute"
                                 >
                                 </button>                        
@@ -480,7 +480,7 @@ const gird_template_repeat = defaults.use24Format ? 'repeat(2,1fr)' : 'repeat(3,
                                     }" 
                                 @click.stop="selectedHour = hour"
                                 :data-clocklet-tick-value="hour.id"
-                                draggable="true"
+                                draggable="false"
                                 @dragstart="move.dragging = true"
                                 @dragenter="/*selectedHour = hour*/ false"
                                 @drag="false"
