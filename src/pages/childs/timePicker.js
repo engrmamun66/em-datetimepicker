@@ -2,7 +2,7 @@
 
 export let hours_position = [
     {
-        "id": 12,
+        "id": 0,
         "value": "0",
         "deg": "transform: rotate(0deg);",
         "style": "left:50%;top:11%"
@@ -73,6 +73,152 @@ export let hours_position = [
         "deg": "transform: rotate(330deg);",
         "style": "left:30.5%;top:16.2%"
     }
+]
+export let hours_position24 = [
+    {
+        "id": 0,
+        "value": "0",
+        "deg": "transform: rotate(0deg);",
+        "style": "left:50%;top:11%"
+    },
+    {
+        "id": 1,
+        "value": "01",
+        "deg": "transform: rotate(15deg);",
+        "style": "left: 61.5%;top: 13.2%;"
+    },
+    {
+        "id": 2,
+        "value": "02",
+        "deg": "transform: rotate(30deg);",
+        "style": "left:69.5%;top:16.2%"
+    },
+    {
+        "id": 3,
+        "value": "03",
+        "deg": "transform: rotate(45deg);",
+        "style": "left: 77.8%;top: 22.5%;"
+    },
+    {
+        "id": 4,
+        "value": "04",
+        "deg": "transform: rotate(60deg);",
+        "style": "left:83.8%;top:30.5%"
+    },
+    {
+        "id": 5,
+        "value": "05",
+        "deg": "transform: rotate(75deg);",
+        "style": "left: 88%;top: 40%;"
+    },
+    {
+        "id": 6,
+        "value": "06",
+        "deg": "transform: rotate(90deg);",
+        "style": "left:89%;top:50%"
+    },
+    {
+        "id": 7,
+        "value": "07",
+        "deg": "transform: rotate(105deg);",
+        "style": "left: 88.8%;top: 60.5%;"
+    },
+    {
+        "id": 8,
+        "value": "08",
+        "deg": "transform: rotate(120deg);",
+        "style": "left: 86.5%;top: 69.8%;"
+    },
+    {
+        "id": 9,
+        "value": "09",
+        "deg": "transform: rotate(135deg);",
+        "style": "left: 81.5%;top: 78.8%;"
+    },
+    {
+        "id": 10,
+        "value": "10",
+        "deg": "transform: rotate(150deg);",
+        "style": "left: 72%;top: 86%;"
+    },
+    {
+        "id": 11,
+        "value": "11",
+        "deg": "transform: rotate(165deg);",
+        "style": "left: 60%;top: 89%;"
+    },
+    {
+        "id": 12,
+        "value": "12",
+        "deg": "transform: rotate(180deg);",
+        "style": "left: 49.5%; top: 89.8%;"
+    },
+    {
+        "id": 13,
+        "value": "13",
+        "deg": "transform: rotate(195deg);",
+        "style": "left: 39.5%;top: 90%;"
+    },
+    {
+        "id": 14,
+        "value": "14",
+        "deg": "transform: rotate(210deg);",
+        "style": "left: 28.2%;top: 87.5%;"
+    },
+    {
+        "id": 15,
+        "value": "15",
+        "deg": "transform: rotate(225deg);",
+        "style": "left: 18.2%;top: 80.5%;"
+    },
+    {
+        "id": 16,
+        "value": "16",
+        "deg": "transform: rotate(240deg);",
+        "style": "left: 12%;top: 70%;"
+    },
+    {
+        "id": 17,
+        "value": "17",
+        "deg": "transform: rotate(255deg);",
+        "style": "left: 9%;top: 61%;"
+    },
+    {
+        "id": 18,
+        "value": "18",
+        "deg": "transform: rotate(270deg);",
+        "style": "left: 8.2%;top: 50.5%;"
+    },
+    {
+        "id": 19,
+        "value": "19",
+        "deg": "transform: rotate(285deg);",
+        "style": "left: 8.2%;top: 40.5%;"
+    },
+    {
+        "id": 20,
+        "value": "20",
+        "deg": "transform: rotate(300deg);",
+        "style": "left: 12.5%;top: 31.2%;"
+    },
+    {
+        "id": 21,
+        "value": "21",
+        "deg": "transform: rotate(315deg);",
+        "style": "left: 19.5%;top: 22.2%;"
+    },
+    {
+        "id": 22,
+        "value": "22",
+        "deg": "transform: rotate(330deg);",
+        "style": "left: 27.5%;top: 15.2%;"
+    },
+    {
+        "id": 23,
+        "value": "23",
+        "deg": "transform: rotate(345deg);",
+        "style": "left: 39%;top: 11%;"
+    },
 ]
 export let minutes_position = [
     {

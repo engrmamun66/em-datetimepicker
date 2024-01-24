@@ -1,7 +1,7 @@
 <script setup>
 import moment, { min } from 'moment/moment';
 import SwitcherForTime from './SwitcherForTime.vue';
-import { hours_position, minutes_position } from './timePicker';
+import { hours_position, hours_position24, minutes_position } from './timePicker';
 import { ref, computed, reactive, defineProps, onMounted, inject, defineEmits, watch, watchEffect, provide } from 'vue';
 let { justInitializeValue } = defineProps(['justInitializeValue']);
 let isMounted = inject('isMounted');
@@ -14,24 +14,7 @@ let picker = inject('picker');
 let pickerValues = inject('pickerValues');
 let createEvent = inject('createEvent');
 let openTimePicker = inject('openTimePicker');
-
-let hours_position_for_24 = computed(() => {
-    if(defaults.use24Format && defaults.timePickerUi == 'standard'){
-        let clone = (data) => JSON.parse(JSON.stringify(data));
-        let first_1_to_11 = clone(hours_position).slice(1);
-        let next_12_to_23 = clone(hours_position).map(item => {
-            item.id = item.id + 12;
-            item.value = pad2(Number(item.value) + 12);
-            return item;
-        })
-        var last_24 = clone(hours_position)[0];
-        last_24.id = 0;
-        last_24.value = '00';    
-        let result = [last_24, ...first_1_to_11, ...next_12_to_23];
-        return result;
-    }
-})
-
+ 
 function makeStepRange(step) {    
     let limit = Math.floor(60 / step)
     let start = 0
@@ -120,8 +103,8 @@ let ui2 = reactive({
     expand: null, // null | hours | minutes
     incrHour: function(){
         let hour = selectedHour.value; 
-        let using24Format = defaults.use24Format && defaults.timePickerUi == 'standard';
-        let hours__positions = using24Format ? hours_position_for_24.value : hours_position
+        let using24Format = defaults.use24Format;
+        let hours__positions = using24Format ? hours_position24 : hours_position
         let index = hours__positions.findIndex(item => item.id == hour.id);
         index = index + 1;
         if(index > (using24Format ? 23 : 11)) index = 0;
@@ -130,8 +113,8 @@ let ui2 = reactive({
     },
     decrHour: function(){
         let hour = selectedHour.value;    
-        let using24Format = defaults.use24Format && defaults.timePickerUi == 'standard';
-        let hours__positions = using24Format ? hours_position_for_24.value : hours_position
+        let using24Format = defaults.use24Format;
+        let hours__positions = using24Format ? hours_position24 : hours_position
         let index = hours__positions.findIndex(item => item.id == hour.id);
         index = index - 1;
         if(index < 0) index = (using24Format ? 23 : 11);
@@ -355,7 +338,7 @@ onMounted(() => {
     minute1 = minute1 == 12 ? 0 : minute1;
     minute2 = minute2 == 12 ? 0 : minute2; 
 
-    let __hours_position = (defaults.use24Format && defaults.timePickerUi == 'standard') ? hours_position_for_24.value : hours_position;
+    let __hours_position = (defaults.use24Format) ? hours_position24 : hours_position;
 
 
     time1_selectedHour.value = __hours_position?.filter(h => h.value == hour1)?.[0] || __hours_position[0];
@@ -431,13 +414,13 @@ const gird_template_repeat = defaults.use24Format ? 'repeat(2,1fr)' : 'repeat(3,
                         <template v-if="ui2.expand == 'hours'">
                             <div class="label-of-selection">Select Hour</div>
                             <ul class="all-hours fade-in">
-                                <template v-if="defaults.use24Format && defaults.timePickerUi == 'standard'">
-                                    <template v-for="(hour, index) in hours_position_for_24" :key="index">
+                                <template v-if="defaults.use24Format">
+                                    <template v-for="(hour, index) in hours_position24" :key="index">
                                         <li @click.stop="selectedHour = hour; ui2.expand=null">{{ hour.id }}</li>
                                     </template>
                                 </template>
                                 <template v-else>
-                                    <template v-for="(hour, index) in [...hours_position.slice(1), hours_position[0]]" :key="index">
+                                    <template v-for="(hour, index) in hours_position" :key="index">
                                         <li @click.stop="selectedHour = hour; ui2.expand=null">{{ hour.id }}</li>
                                     </template>
                                 </template>
@@ -486,12 +469,15 @@ const gird_template_repeat = defaults.use24Format ? 'repeat(2,1fr)' : 'repeat(3,
                         <!-- Hour Picker -->
                         <div class="clocklet-dial clocklet-dial--hour">
                             <div class="clocklet-hand clocklet-hand--hour" :style="selectedHour.deg"></div>
-                            <template v-for="(hour, index) in hours_position" :key="index">
+                            <template v-for="(hour, index) in (defaults.use24Format ? hours_position24 : hours_position)" :key="index">
                                 <button 
                                 type="button" 
                                 :style="hour.style"
                                 class="clocklet-tick clocklet-tick--hour"
-                                :class="{'clocklet-tick--selected' : selectedHour.value == hour.value}" 
+                                :class="{
+                                    'hour-24-format': defaults.use24Format,
+                                    'clocklet-tick--selected' : selectedHour.value == hour.value
+                                    }" 
                                 @click.stop="selectedHour = hour"
                                 :data-clocklet-tick-value="hour.id"
                                 draggable="true"
@@ -503,7 +489,9 @@ const gird_template_repeat = defaults.use24Format ? 'repeat(2,1fr)' : 'repeat(3,
                                 </button>
                             </template>                   
                         </div>
-                        <div class="clocklet-ampm" :data-clocklet-ampm="mode" @click.stop="mode=='am' ? mode='pm' : mode='am'" data-clocklet-ampm-formatted=""></div>
+                        <template v-if="!defaults.use24Format">
+                            <div class="clocklet-ampm" :data-clocklet-ampm="mode" @click.stop="mode=='am' ? mode='pm' : mode='am'" data-clocklet-ampm-formatted=""></div>
+                        </template>
                         <div ref="centerOfclick" class="clocklet-hand-origin"></div>
                     </div>
                 </div>
@@ -638,6 +626,9 @@ const gird_template_repeat = defaults.use24Format ? 'repeat(2,1fr)' : 'repeat(3,
     font-family: inherit;
     color: v-bind(color_font_dark);
     font-weight: inherit;
+}
+.clocklet-tick.hour-24-format {
+    font-size: 13px;
 }
 
 .clocklet-tick:before {
