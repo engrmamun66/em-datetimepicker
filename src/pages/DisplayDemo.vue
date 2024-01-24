@@ -149,6 +149,25 @@ onMounted(() => {
                         endTimeAutoValid
                     </label>
                 </div>
+                <div class="form-check mb-2 options-selection">
+                    <input class="form-check-input" type="checkbox" id="isDisabled" v-model="options.isDisabled">
+                    <label class="form-check-label" for="isDisabled">
+                        isDisabled
+                    </label>
+                </div>
+                <div class="form-check mb-2 options-selection">
+                    <input class="form-check-input" type="checkbox" id="autoOpen" v-model="options.autoOpen">
+                    <label class="form-check-label" for="autoOpen">
+                        Auto open
+                    </label>
+                </div>
+                <div class="form-check mb-2 options-selection">
+                    <input class="form-check-input" type="checkbox" id="invisible" v-model="options.invisible">
+                    <label class="form-check-label" for="invisible">
+                        invisible
+                    </label>
+                </div>
+
 
                 
 
@@ -228,15 +247,7 @@ onMounted(() => {
                     </div>                     
                     <strong> Change color 'primary_bg' globally </strong>
                     <div class="alert alert-warning" role="alert">
-                     <code>
-                        &lt;style&gt;
-                            <br>
-                            :root {
-                                --em-primary-bg: #03915b;
-                            }
-                            <br>
-                        &lt;/style&gt;
-                     </code>
+                      &lt;style&gt; :root { --em-primary-bg: #03915b; } &lt;/style&gt;
                     </div>
                     
 
@@ -258,35 +269,8 @@ onMounted(() => {
 
 
 
-                <div class="col-12">
+                <div class="col-12">  
                     <h5>Show output</h5>
-
-                    <div class="form-check mb-2 options-selection">
-                        <input class="form-check-input" type="checkbox" id="autoOpen" v-model="options.autoOpen">
-                        <label class="form-check-label" for="autoOpen">
-                            Auto open
-                        </label>
-                    </div>
-                    <div class="form-check mb-2 options-selection">
-                        <input class="form-check-input" type="checkbox" id="invisible" v-model="options.invisible">
-                        <label class="form-check-label" for="invisible">
-                            invisible
-                        </label>
-                    </div>
-                    <div class="form-check mb-2 options-selection">
-                        <input class="form-check-input" type="checkbox" id="isDisabled" v-model="options.isDisabled">
-                        <label class="form-check-label" for="isDisabled">
-                            isDisabled
-                        </label>
-                    </div>
-                    <!-- <div class="form-check mb-2 options-selection">
-                        <input class="form-check-input" type="checkbox" id="showPicker2" v-model="showPicker">
-                        <label class="form-check-label" for="showPicker2">
-                            Show Picker
-                        </label>
-                    </div> -->
-
-
                     <div class="form-group mb-2">
                         <label for="inputElement">&nbsp;</label>
                         <template v-if="showPicker">
