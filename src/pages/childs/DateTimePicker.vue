@@ -766,8 +766,8 @@ header i:hover {
 }
 
 .main-days>div {
-    width: 44px;
-    height: 40px;
+    width: 43px;
+    height: 35px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -783,7 +783,7 @@ main.box>div:not(.active):not(.offset-date):not(.date-in-selected-range):not(.st
  {
     background-color: v-bind(color_transparent_1);
     color: v-bind(color_font_dark);
-    border-radius: 8px;
+    border-radius: 3px;
 }
 
 div.hover-date {
