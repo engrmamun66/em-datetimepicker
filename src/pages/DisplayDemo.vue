@@ -53,6 +53,7 @@ let options = reactive({
     },
     autoOpen: false,
     invisible: false,
+    isDisabled: false,
     tagName: 'input',
 });
 
