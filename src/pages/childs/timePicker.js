@@ -211,13 +211,13 @@ export let hours_position24 = [
         "id": 22,
         "value": "22",
         "deg": "transform: rotate(330deg);",
-        "style": "left: 27.5%;top: 15.2%;"
+        "style": "left: 27.5%;top: 16.2%;"
     },
     {
         "id": 23,
         "value": "23",
         "deg": "transform: rotate(345deg);",
-        "style": "left: 39%;top: 11%;"
+        "style": "left: 39%;top: 12%;"
     },
 ]
 export let minutes_position = [
