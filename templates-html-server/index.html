@@ -11,9 +11,40 @@
     <link rel="stylesheet" href="http://localhost:4545/assets/em-datetimepicker.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     
-
+<style>
+    @font-face {
+    font-family: boxicons;
+    font-weight: 400;
+    font-style: normal;
+    src: url(../fonts/boxicons.eot);
+    src: url(../fonts/boxicons.eot) format('embedded-opentype'),url(../fonts/boxicons.woff2) format('woff2'),url(../fonts/boxicons.woff) format('woff'),url(../fonts/boxicons.ttf) format('truetype'),url(../fonts/boxicons.svg?#boxicons) format('svg')
+}
+.em-icon {
+    font-family: boxicons!important;
+    font-weight: 400;
+    font-style: normal;
+    font-variant: normal;
+    line-height: 1;
+    text-rendering: auto;
+    display: inline-block;
+    text-transform: none;
+    speak: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: red;
+}
+.em-icon .arrow-left::before {
+    content: "\ea57";
+}
+</style>
 </head>
 <body class="m-5 container">
+
+    <i class="em-icon arrow-left"></i>
+    <i class="em-icon arrow-right"></i>
+
+
+
     <div class="row">
         <div class="col-6">
             <div class="form-group mb-3">

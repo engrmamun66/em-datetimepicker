@@ -1,7 +1,7 @@
 <script setup>
-import moment, { min } from 'moment/moment';
-import SwitcherForTime from './SwitcherForTime.vue';
-import { hours_position, hours_position24, minutes_position } from './timePicker';
+import moment from 'moment/moment';
+import SwitcherForTime from './grand-childs/SwitcherForTime.vue';
+import { hours_position, hours_position24, minutes_position } from './grand-childs/timePicker';
 import { ref, computed, reactive, defineProps, onMounted, inject, defineEmits, watch, watchEffect, provide } from 'vue';
 let { justInitializeValue } = defineProps(['justInitializeValue']);
 let isMounted = inject('isMounted');

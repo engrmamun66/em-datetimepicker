@@ -1,8 +1,8 @@
 <script setup>
 import moment from 'moment/moment';
 import { ref, computed, reactive, defineProps, onMounted, inject, provide, defineEmits } from 'vue';
-import Buttons from './Buttons.vue';
-import Switcher from './SwitcherForDate.vue';
+import Buttons from './grand-childs/Buttons.vue';
+import Switcher from './grand-childs/SwitcherForDate.vue';
 import TimePicker from './TimePicker.vue';
 const { helper } = inject('utils');
 const isMounted = inject('isMounted');

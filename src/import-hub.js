@@ -14,30 +14,3 @@ export const utils = {
     http,
     cookie,
 }
-
-/* -------------------------------------------------------------------------- */
-/*                                  toaster                                   */
-/* -------------------------------------------------------------------------- */
-/**
- >>> Usecase
-import { Toaster } from '@/import-hub';
- Toaster().success('Message here')
- Toaster().warning('Message here')
- Toaster().error('Message here')
- */
-import { useToaster } from '@/stores/toaster';
-export const Toaster = useToaster;
-
-
-/* -------------------------------------------------------------------------- */
-/*                                 Components                                 */
-/* -------------------------------------------------------------------------- */
-import Loader from '@components/Loader.vue';
-import LoaderGlobal from '@components/LoaderGlobal.vue';
-import toaster from '@components/Toaster.vue';
-
-export const components = {
-    Loader,
-    LoaderGlobal,
-    Toaster: toaster,
-}

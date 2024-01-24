@@ -1,7 +1,7 @@
 <script setup>
 import moment from 'moment/moment';
 import DateTimePicker from './childs/DateTimePicker.vue';
-import Modal from './childs/Modal.vue';
+import Modal from './childs/grand-childs/Modal.vue';
 import { h, ref, provide, reactive, defineProps, onMounted, useAttrs, computed } from 'vue';
 let emits = defineEmits([ 'update:modelValue', 'init', 'open', 'cancel', 'close', 'change', 'changeTime']);
 let props = defineProps({
