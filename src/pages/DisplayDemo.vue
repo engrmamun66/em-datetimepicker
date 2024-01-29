@@ -103,6 +103,17 @@ watch(optionsForAttrs, (a, b)=>{
 onMounted(() => {  
     filterOnlyPassableOptions()
 })
+
+ let availableInDates = [
+    {
+        "available": 45489,
+        "date": "2024-02-1T00:00:00",
+    },
+    {
+        "available": 45489,
+        "date": "2024-02-3T01:00:00",
+    },
+]
 </script>
 
 
@@ -272,10 +283,14 @@ onMounted(() => {
                             <EmDateTimePicker 
                             v-model="eventData" 
                             @change="(data)=>{eventData=data}" 
+                            @nextPrevious="(data)=>{
+                                console.log(data)
+                            }"
                             :options="optionsForAttrs"
                             class="form-control"
                             for="for"
                             style="border: 3px solid #a9a469;"
+                            :availableInDates="availableInDates"
                             ></EmDateTimePicker>
                         </template>
                     </div> 

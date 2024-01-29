@@ -4,6 +4,7 @@ import { ref, computed, reactive, defineProps, onMounted, inject, provide, defin
 import Buttons from './grand-childs/Buttons.vue';
 import Switcher from './grand-childs/SwitcherForDate.vue';
 import TimePicker from './TimePicker.vue';
+import {isValidAvailableData, isAvailableByDate} from './grand-childs/helper';
 const { helper } = inject('utils');
 const isMounted = inject('isMounted');
 const picker = inject('picker');
@@ -12,7 +13,7 @@ const pickerValues = inject('pickerValues');
 const desplayPositions = inject('desplayPositions');
 const theme = inject('theme');
 const isHexColor = inject('isHexColor');
-let emits = defineEmits(['init', 'open', 'cancel', 'close', 'change', 'changeTime']);
+let emits = defineEmits(['init', 'open', 'cancel', 'close', 'change', 'changeTime', 'nextPrevious']);
 let { target, options, justInitializeValue } = defineProps({
     target: {
         type: [HTMLElement, Object],
@@ -92,6 +93,8 @@ const defaults = {
     invisible: options?.invisible ?? false,
     isDisabled: options?.isDisabled ?? false,
     tagName: options?.tagName ?? 'input',
+    // availableInDates -- to display availableInDates under date
+    availableInDates: options?.availableInDates,
 };
 
 /**
@@ -180,7 +183,7 @@ const events = reactive( {
     },
 });
 
-function makeDate(dateTime, format, {hour, minute}={}){
+function makeDate(dateTime, format=FORMATS.date, {hour, minute}={}){
     if(!dateTime) return;
     if(dateTime instanceof Date){
         var date = dateTime;
@@ -397,6 +400,16 @@ const fn = {
         picker.date = makeDate(date, FORMATS.date); 
         current_view.value = 'months';
     },
+    emitNextPrevious: function(){
+        setTimeout(() => {
+            let currect_month = monthOfDays.value.filter(day => day.currentMonth);
+            let data = {
+                startDate: currect_month[0]?.date,
+                endDate: currect_month[currect_month.length - 1]?.date,
+            };
+            emits('nextPrevious', data);
+        }, 50);
+    },
     onClickPrev: function () { 
         let date;
         switch (current_view.value) {
@@ -412,6 +425,7 @@ const fn = {
                 picker.date = makeDate(date, FORMATS.date);
                 break; 
         }
+        this.emitNextPrevious();
     },
     onClickNext: function () { 
         let date;
@@ -427,6 +441,8 @@ const fn = {
                 picker.date = makeDate(date, FORMATS.date);
                 break; 
         }
+        this.emitNextPrevious();
+        
     },    
     /* -------------------------------------------------------------------------- */
     /*                               Check Functions                              */
@@ -549,6 +565,69 @@ onMounted(() => {
 
 })
 
+/* -------------------------------------------------------------------------- */
+/*                   With Highlight availableInDates in calendar                  */
+/* -------------------------------------------------------------------------- */
+/**
+ --- availabiblity data structure: 1---
+ let availableInDates = [
+    {
+        "available": 45489,
+        "date": "2024-02-1T00:00:00",
+    },
+    {
+        "available": 45489,
+        "date": "2024-02-3T01:00:00",
+    },
+]
+  ---- or --
+  --- availabiblity data structure: 2---
+   let availableInDates = {
+    aiasesKey: {
+        available: 'tota_available_in_store',
+        date: 'date'
+    },
+    data: [...itemObjects]
+   }
+*/
+let availableInDates = {
+    aiasesKey: {
+        available: 'total',
+        date: 'time',
+    },
+    data: [
+    {
+        "total": 45489,
+        "time": "2024-01-01",
+    },
+    {
+        "total": 45489,
+        "time": "2024-01-02",
+    },
+]
+}
+const availables = isValidAvailableData(availableInDates); // Rerurnig Exact Data
+
+
+// let availableInDates =  [
+//     {
+//         "available": 45489,
+//         "date": "2024-01-01",
+//     },
+//     {
+//         "available": 45489,
+//         "date": "2024-01-02",
+//     },
+// ]
+const get_row_gap = computed(() => {
+    if(availables.length){
+        return '20px';
+    } else {
+        return '4px';
+    }
+    
+})
+
 </script>
 
 <template>
@@ -605,6 +684,9 @@ onMounted(() => {
                                     ['theme-' + theme]: true,
                                 }">
                                     {{ monthDay.day_index }}
+                                    <template v-if="availables?.length">
+                                        <div class="availableInDates">{{ isAvailableByDate(availables, makeDate, monthDay)?.['available'] }}</div>
+                                    </template>
                                 </div>
                             </template>
                             <template v-else>
@@ -613,11 +695,15 @@ onMounted(() => {
                                 @dblclick.stop="fn.onClickApply()"
                                 class="fade-in"
                                 :class="{ 
-                                    'active': makeDate(pickerValues.startDate, FORMATS.date) == monthDay.date,
+                                    'active': makeDate(picker.date1, FORMATS.date) == monthDay.date,
                                     'offset-date': !monthDay?.currentMonth,
                                     ['theme-' + theme]: true,
-                                }">
+                                }
+                                ">
                                     {{ monthDay?.day_index }}
+                                    <template v-if="availables?.length">
+                                        <div class="availableInDates">{{ isAvailableByDate(availables, makeDate, monthDay)?.['available'] }}</div>
+                                    </template>
                                 </div>
                             </template>
                         </template>
@@ -704,7 +790,7 @@ onMounted(() => {
     display: grid;
     grid-template-rows: 40px 1fr;
     gap: 20px;
-    padding: 32px;
+    padding: 22px;
     background-color: v-bind(color_body_bg);
     box-shadow: 0px 8px 32px rgba(0, 0, 0, .16);
     border-radius: 6px;
@@ -743,7 +829,7 @@ header i:hover {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 0px;
-    row-gap: 4px;
+    row-gap: v-bind(get_row_gap);
 }
 .main-weekdays>div{
     text-align: center;
@@ -769,10 +855,27 @@ header i:hover {
     width: 43px;
     height: 35px;
     display: flex;
+    position: relative;
     align-items: center;
     justify-content: center;
     color: v-bind(color_font_dark);
     transition: all 300ms;
+}
+.main-days>div > .availableInDates:not(:empty) {
+    position: absolute;
+    width: calc(100% - 4px);
+    height: 16px;
+    background: v-bind(color_transparent_2);
+    color: v-bind(color_primary_bg);
+    text-align: center;
+    bottom: -17px;
+    left: 2px;
+    font-size: 10px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+.main-days>div > .availableInDates:empty {
+    display: none;
 }
 .main-months>div.offset-date:not(.start-date):not(.end-date):not(.date-in-selected-range),
 .main-days>div.offset-date:not(.start-date):not(.end-date):not(.date-in-selected-range) {

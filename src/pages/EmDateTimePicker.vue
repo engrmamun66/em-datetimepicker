@@ -3,7 +3,7 @@ import moment from 'moment/moment';
 import DateTimePicker from './childs/DateTimePicker.vue';
 import Modal from './childs/grand-childs/Modal.vue';
 import { h, ref, provide, reactive, defineProps, onMounted, useAttrs, computed } from 'vue';
-let emits = defineEmits([ 'update:modelValue', 'init', 'open', 'cancel', 'close', 'change', 'changeTime']);
+let emits = defineEmits([ 'update:modelValue', 'init', 'open', 'cancel', 'close', 'change', 'changeTime', 'nextPrevious']);
 let props = defineProps({
     modelValue: {
         type: [Boolean],
@@ -84,6 +84,9 @@ onMounted(() => {
 function updateModalValue(data=null){
     emits('update:modelValue', data);
 }
+function nextPrevious(data=null) {
+    emits('nextPrevious', data);
+}
 function onCancel(data=null) {
     showPicker.value = false;
     emits('cancel', data);
@@ -163,6 +166,7 @@ const dynamicElement = () => {
     <template v-if="showPicker && div.position == 'modal'">
         <Modal @makeFalse="showPicker=false;onClose()">
             <DateTimePicker 
+            @nextPrevious="nextPrevious"
             @cancel="onCancel"
             @close="onClose"
             @change="onChange"
@@ -176,6 +180,7 @@ const dynamicElement = () => {
     <template v-if="showPicker && target && div.position != 'modal' && div.diplayIn == 'top'">
         <div :class="{[div.classList] : true}" :style="div.boxShadow">
             <DateTimePicker 
+            @nextPrevious="nextPrevious"
             @cancel="onCancel"
             @close="onClose"
             @change="onChange"
@@ -213,6 +218,7 @@ const dynamicElement = () => {
     <template v-if="showPicker && target && div.position != 'modal' && div.diplayIn == 'bottom'">
         <div :class="{[div.classList] : true}" :style="div.boxShadow">
             <DateTimePicker 
+            @nextPrevious="nextPrevious"
             @cancel="onCancel"
             @close="onClose"
             @change="onChange"
