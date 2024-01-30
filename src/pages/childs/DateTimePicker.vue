@@ -620,14 +620,13 @@ const availables = isValidAvailableData(defaults.availableInDates); // Rerurnig 
 //     },
 // ]
 const get_row_gap = computed(() => {
-    if(availables.length){
+    if(availables?.length){
         return '20px';
     } else {
         return '4px';
     }
     
 })
-console.log('color_body_bg', color_body_bg);
 </script>
 
 <template>
