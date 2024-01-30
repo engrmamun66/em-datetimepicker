@@ -94,7 +94,7 @@ const defaults = {
     isDisabled: options?.isDisabled ?? false,
     tagName: options?.tagName ?? 'input',
     // availableInDates -- to display availableInDates under date
-    availableInDates: options?.availableInDates,
+    availableInDates: options?.availableInDates ?? null,
 };
 
 /**
@@ -590,23 +590,23 @@ onMounted(() => {
     data: [...itemObjects]
    }
 */
-let availableInDates = {
-    aiasesKey: {
-        available: 'total',
-        date: 'time',
-    },
-    data: [
-    {
-        "total": 45489,
-        "time": "2024-01-01",
-    },
-    {
-        "total": 45489,
-        "time": "2024-01-02",
-    },
-]
-}
-const availables = isValidAvailableData(availableInDates); // Rerurnig Exact Data
+// let availableInDates = {
+//     aiasesKey: {
+//         available: 'total',
+//         date: 'time',
+//     },
+//     data: [
+//     {
+//         "total": 45489,
+//         "time": "2024-01-01",
+//     },
+//     {
+//         "total": 45489,
+//         "time": "2024-01-02",
+//     },
+// ]
+// }
+const availables = isValidAvailableData(defaults.availableInDates); // Rerurnig Exact Data
 
 
 // let availableInDates =  [
@@ -627,7 +627,7 @@ const get_row_gap = computed(() => {
     }
     
 })
-
+console.log('color_body_bg', color_body_bg);
 </script>
 
 <template>
